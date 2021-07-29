@@ -34,14 +34,23 @@ module.exports = {
 
     //Values needed
     let rod = player.data.equipment.fishing.rod
-    let catched = ''
-    let sc = ''
+    let sea_creature_chance = player.data.stats.sea_creature_chance
+    let isCreature = ''
+    let fish_caught = 0
+    let sea_creatures_killed = 0
+    let rod_casted = false
+    let creature_caught = false
 
     //Buttons for Catching Fish
     const bcatch = new Discord.MessageButton()
       .setCustomId('cast')
       .setLabel('Cast Rod')
       .setStyle('PRIMARY')
+     
+     const blure = new Discord.MessageButton()
+     .setCustomId('lure')
+     .setLabel('Lure Rod')
+     .setStyle('PRIMARY')
 
     //Buttons for Killing Sea Creatures
     const bkillsc = new Discord.MessageButton()
@@ -65,6 +74,8 @@ module.exports = {
     const row = new Discord.MessageActionRow()
       .addComponents(bcatch, bkillscoff, bcancel)
     const row1 = new Discord.MessageActionRow()
+    .addComponents(blure, bkillscoff, bcancel)
+    const row2 = new Discord.MessageActionRow()
       .addComponents(bcatch, bkillsc, bcancel)
 
     //Pond Embed
@@ -72,7 +83,9 @@ module.exports = {
       .setTitle('Fishing Pond')
       .setColor('BLUE')
       .setFooter('Skyblock Simulator')
-      .setDescription(`Fish Caught: **0**\nCreatures killed: **0**\n\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n`)
+      .setDescription(`${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n`)
+
+.addField(`Info`, `Fish caught: ${fish_caught}`, true)
 
     const menu = await message.channel.send({ embeds: [pond], components: [row] })
 
@@ -84,11 +97,23 @@ module.exports = {
     const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 1000000 })
 
     collector.on('collect', async i => {
-      if (i.customId === 'cast') {
-        pond.setColor('RED')
-        menu.edit({embeds: [pond]})
+      if (i.customId === 'cast' && rod_casted === false) {
+        rod_casted = true
+        
+        menu.edit({embeds: [pond], components: [row1]})
 
-      } else if (i.customId === 'killsc') {
+      } else if (i.customId === 'lure' && rod_casted === true) {
+        let creature = isSeaCreature(sea_creature_chance, isCreature)
+        if(creature === 'yes') {
+          message.channel.send('SC Found')
+        }
+        rod_casted = false
+        fish_caught = fish_caught += 1
+        pond.fields = [];
+        pond.addField(`Info`, `Fish caught: ${fish_caught}`)
+     
+       menu.edit({embeds: [pond], components: [row]})
+        } else if (i.customId === 'killsc') {
 
       } else if (i.customId === 'cancel') {
         collector.stop()
@@ -96,7 +121,20 @@ module.exports = {
     })
 
     collector.on('end', async collected => {
+      
       menu.edit({ components: [] })
     });
   }
 };
+
+function isSeaCreature(sea_creature_chance, isCreature) {
+  let rn = Math.floor(Math.random() * 100) + 1
+  if(rn < sea_creature_chance) {
+    isCreature = 'yes'
+    return isCreature
+  } else {
+    isCreature = 'no'
+    return isCreature
+  }
+  
+}
