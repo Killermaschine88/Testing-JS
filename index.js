@@ -17,7 +17,7 @@ const MongoClient = require('mongodb').MongoClient;
 const mclient = new MongoClient(urii, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
-/*//Topgg votes detection
+/*//Topgg votes detections
 const Topgg = require("@top-gg/sdk")
 const express = require("express")
 
