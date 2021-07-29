@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const prefix = require("@replit/database");
 const prefixx = new prefix();
+const getLevelByXp = require('../../Various/Skyblock/skilllvl.js')
+
 
 
 module.exports = {
@@ -14,14 +16,10 @@ module.exports = {
   async execute(client, message, args, mclient) {
 
 
-    const collection1 = mclient.db('SkyblockSim').collection('Main');
-    let found1 = await collection1.findOne({ _id: message.author.id })
+    const collection = mclient.db('SkyblockSim').collection('Players');
+    let player = await collection.findOne({ _id: message.author.id })
 
-    const collection2 = mclient.db('SkyblockSim').collection('Stats');
-    let found2 = await collection2.findOne({ _id: message.author.id })
-
-
-    if (found1 === null) {
+    if (player === null) {
       const nodata = new Discord.MessageEmbed()
         .setColor('RED')
         .setDescription(`No Profile found for <@${message.author.id}>`)
@@ -44,10 +42,15 @@ module.exports = {
     const menu = await message.channel.send({ embeds: [start], components: [row] })
 
     //Player Stats
-    let php = found2.health
-    let damage = found2.damage
-    let strength = found2.strength
-    let pdmg = (5 + damage) * (1 + (strength / 100))
+    let php = player.data.stats.health
+    let damage = player.data.stats.damage
+    let strength = player.data.stats.strength
+    let combatlvl = getLevelByXp(player.data.skills.combat).level
+    let critchance = player.data.stats.crit_chance
+    let critdmg = player.data.stats.crit_damage
+    let critted = ''
+    let pdmg = ''
+
 
     //Mob Stats
     let mhp = 50
@@ -64,13 +67,25 @@ module.exports = {
     collector.on('collect', async i => {
       if (i.customId === 'dmg' && php >= 0) {
 
+        let crit = isCrit(critchance, critted)
+        let pdmg = ''
+        if (crit === 'yes') {
+          pdmg = Math.floor((((5 + damage) * (1 + (strength / 100))) * (1 + (combatlvl * 0.04)))) * (1 + critdmg / 100)
+        } else {
+          pdmg = Math.floor(((5 + damage) * (1 + (strength / 100))) * (1 + (combatlvl * 0.04)))
+        }
+
         php = dmgtaken(php, mdmg)
         mhp = dmgdealt(mhp, pdmg)
 
         const mobembed = new Discord.MessageEmbed()
           .setFooter('Skyblock Simulator')
           .setColor('90EE90')
-          .setDescription(`Player Health: ❤️ ${php} (-<:berserker:852079613052059658> ${mdmg})\nMob Health: ❤️ ${mhp} (-<:berserker:852079613052059658> ${pdmg})`)
+        if (crit === 'yes') {
+          mobembed.setDescription(`Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (-<:crit:870306942806020106> ${pdmg})`)
+        } else {
+          mobembed.setDescription(`Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (- ${pdmg})`)
+        }
         menu.edit({ embeds: [mobembed] })
 
         if (i.customId === 'dmg' && mhp <= 0) {
@@ -123,4 +138,15 @@ function dmgtaken(php, mdmg) {
 function dmgdealt(mhp, pdmg) {
   mhp -= pdmg
   return mhp;
+}
+
+function isCrit(critchance, critted) {
+  let hit = Math.floor(Math.random() * 100) + 1
+  if (hit < critchance) {
+    critted = 'yes'
+    return critted
+  } else {
+    critted = 'no'
+    return critted
+  }
 }

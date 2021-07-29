@@ -72,11 +72,11 @@ module.exports = {
       .setTitle('Fishing Pond')
       .setColor('BLUE')
       .setFooter('Skyblock Simulator')
-      .setDescription(`Fish Caught: ${player.data.misc.temp.fishes}\nCreatures killed: ${player.data.misc.temp.creatures}\n\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n`)
+      .setDescription(`Fish Caught: **0**\nCreatures killed: **0**\n\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n`)
 
     const menu = await message.channel.send({ embeds: [pond], components: [row] })
 
-    /*const filter = i => {
+    const filter = i => {
       i.deferUpdate();
       return i.user.id === message.author.id;
     };
@@ -85,19 +85,8 @@ module.exports = {
 
     collector.on('collect', async i => {
       if (i.customId === 'cast') {
-        if (player.data.misc.temp.casted === false) {
-          await collection.updateOne(
-            { _id: message.author.id },
-            { $set: { "data.misc.temp.casted": true } },
-            { upsert: true })
-          console.log('Started Fishing')
-        } else {
-          await collection.updateOne(
-            { _id: message.author.id },
-            { $set: { "data.misc.temp.casted": false } },
-            { upsert: true })
-          console.log('Stopped Fishing')
-        }
+        pond.setColor('RED')
+        menu.edit({embeds: [pond]})
 
       } else if (i.customId === 'killsc') {
 
@@ -107,11 +96,7 @@ module.exports = {
     })
 
     collector.on('end', async collected => {
-      await collection.updateOne(
-        { _id: message.author.id },
-        { $set: { "data.misc.temp.fishing": false } },
-        { upsert: true })
       menu.edit({ components: [] })
-    });*/
+    });
   }
 };
