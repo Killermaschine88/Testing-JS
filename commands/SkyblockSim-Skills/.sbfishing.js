@@ -35,8 +35,9 @@ module.exports = {
 
 
     //Values needed
-    let rod = player.data.equipment.fishing.rod
-    let sea_creature_chance = player.data.stats.sea_creature_chance
+    let rod = player.data.equipment.fishing.rod.name
+    let rod_speed = player.data.equipment.fishing.rod.fishing_speed
+    let sea_creature_chance = player.data.stats.sea_creature_chance + player.data.equipment.fishing.rod.sea_creature_chance + player.data.equipment.fishing.armor.sea_creature_chance
     let fishinglvl = getLevel(player.data.skills.fishing).level
     let isCreature = ''
     let mob = ''
@@ -44,6 +45,19 @@ module.exports = {
     let sea_creatures_killed = 0
     let rod_casted = false
     let creature_caught = false
+    let foundmob = '#'
+
+    //Fight Values
+    let php = player.data.stats.health
+    let damage = player.data.stats.damage
+    let strength = player.data.stats.strength
+    let combatlvl = getLevel(player.data.skills.combat).level
+    let critchance = player.data.stats.crit_chance
+    let critdmg = player.data.stats.crit_damage
+    let critted = ''
+    let pdmg = ''
+    let mhp = ''
+    let mdmg = ''
 
     //Buttons for Catching Fish
     const bcatch = new Discord.MessageButton()
@@ -55,6 +69,12 @@ module.exports = {
       .setCustomId('lure')
       .setLabel('Lure Rod')
       .setStyle('PRIMARY')
+
+    const bcatchoff = new Discord.MessageButton()
+      .setCustomId('a')
+      .setLabel('Cast Rod')
+      .setStyle('PRIMARY')
+      .setDisabled(true)
 
     //Buttons for Killing Sea Creatures
     const bkillsc = new Discord.MessageButton()
@@ -80,7 +100,8 @@ module.exports = {
     const row1 = new Discord.MessageActionRow()
       .addComponents(blure, bkillscoff, bcancel)
     const row2 = new Discord.MessageActionRow()
-      .addComponents(bcatch, bkillsc, bcancel)
+      .addComponents(bcatchoff, bkillsc, bcancel)
+
 
     //Pond Embed
     let pond = new Discord.MessageEmbed()
@@ -109,16 +130,58 @@ module.exports = {
       } else if (i.customId === 'lure' && rod_casted === true) {
         let creature = isSeaCreature(sea_creature_chance, isCreature)
         if (creature === 'yes') {
-          let foundmob = getSeaCreatureStats(mob, mobs, fishinglvl)
-          message.channel.send(`**Seacreature:** ${foundmob.name}\n**Stats:**\nHP: ${foundmob.hp}\nDamage: ${foundmob.dmg}\nXP: ${foundmob.xp}`)
-        }
-        rod_casted = false
-        fish_caught = fish_caught += 1
-        pond.fields = [];
-        pond.addField(`Info`, `Fish caught: ${fish_caught}`)
+          foundmob = getSeaCreatureStats(mob, mobs, fishinglvl)
+          mhp = foundmob.hp
+          mdmg = foundmob.dmg
+          pond.fields = []
+          pond.setColor('ORANGE')
+          pond.addField(`${foundmob.name} caught!`, `Player Health: ❤️ ${php}\nMob Health: ❤️ ${mhp}`)
+          menu.edit({ embeds: [pond], components: [row2] })
+          rod_casted = false
+        } else {
+          rod_casted = false
+          fish_caught = fish_caught += 1
+          pond.fields = [];
+          pond.addField(`Info`, `Fish caught: ${fish_caught}`)
 
-        menu.edit({ embeds: [pond], components: [row] })
+          menu.edit({ embeds: [pond], components: [row] })
+        }
       } else if (i.customId === 'killsc') {
+        let crit = isCrit(critchance, critted)
+        if (crit === 'yes') {
+          pdmg = Math.floor((((5 + damage) * (1 + (strength / 100))) * (1 + (combatlvl * 0.04)))) * (1 + critdmg / 100)
+        } else {
+          pdmg = Math.floor(((5 + damage) * (1 + (strength / 100))) * (1 + (combatlvl * 0.04)))
+        }
+
+        php = dmgtaken(php, mdmg)
+        mhp = dmgdealt(mhp, pdmg)
+
+
+        if (crit === 'yes') {
+          pond.fields = []
+          pond.addField(`Battle`, `Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (-<:crit:870306942806020106> ${pdmg})`)
+        } else {
+          pond.fields = []
+          pond.addField(`Battle`, `Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (- ${pdmg})`)
+        }
+        menu.edit({ embeds: [pond] })
+
+        if (i.customId === 'killsc' && mhp <= 0) {
+          pond.fields = []
+          pond.setColor('BLUE')
+          pond.addField(`Result`, `Killed the Enemy with **❤️ ${php}** left.`)
+
+          menu.edit({ embeds: [pond], components: [row] })
+        } else if (i.customId === 'killsc' && php <= 0) {
+          pond.fields = []
+          pond.setColor('RED')
+          pond.addField(`Result`, `Died to the Enemy which had **❤️ ${mhp}** left.`)
+          menu.edit({ embeds: [pond] })
+          collector.stop()
+        }
+
+
 
       } else if (i.customId === 'cancel') {
         collector.stop()
@@ -126,8 +189,8 @@ module.exports = {
     })
 
     collector.on('end', async collected => {
-
-      menu.edit({ components: [] })
+      pond.setColor('RED')
+      menu.edit({ embeds: [pond], components: [] })
     });
   }
 };
@@ -145,7 +208,7 @@ function isSeaCreature(sea_creature_chance, isCreature) {
 }
 
 function getSeaCreatureStats(mob, mobs, fishinglvl) {
-  let seacreatures = Object.entries(mobs).filter(([name, props]) => props.level < fishinglvl)
+  let seacreatures = Object.entries(mobs).filter(([name, props]) => props.level <= fishinglvl)
   if (seacreatures === undefined) {
     mob = 'None'
     return mob;
@@ -153,4 +216,30 @@ function getSeaCreatureStats(mob, mobs, fishinglvl) {
   let mobchoosen = seacreatures[Math.floor(Math.random() * seacreatures.length)];
   mob = mobchoosen[1]
   return mob;
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(() => resolve(), ms))
+}
+
+//Damage Calculations
+function dmgtaken(php, mdmg) {
+  php -= mdmg
+  return php;
+}
+
+function dmgdealt(mhp, pdmg) {
+  mhp -= pdmg
+  return mhp;
+}
+
+function isCrit(critchance, critted) {
+  let hit = Math.floor(Math.random() * 100) + 1
+  if (hit < critchance) {
+    critted = 'yes'
+    return critted
+  } else {
+    critted = 'no'
+    return critted
+  }
 }

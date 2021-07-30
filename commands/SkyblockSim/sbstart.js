@@ -57,7 +57,7 @@ module.exports = {
               imgshown: true
             },
             equipment: {
-              combat: { weapon: { name: 'Fist' }, armor: { name: 'None'} }, fishing: { rod: 'Fishing Rod' }
+              combat: { weapon: { name: 'Fist' }, armor: { name: 'None' } }, fishing: { armor: { name: 'None', sea_creature_chance: 0, fishing_speed: 0 }, rod: { name: 'Fishing Rod', sea_creature_chance: 0, fishing_speed: 0 } }
             },
             misc: {
               voted: 0, location: 'Graveyard', tkills: 0
