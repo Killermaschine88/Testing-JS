@@ -2,6 +2,8 @@ const Discord = require('discord.js');
 const prefix = require("@replit/database");
 const prefixx = new prefix();
 const emoji = require('../../Various/Skyblock/emojis.json')
+const mobs = require('../../Various/Skyblock/mobstats.json')
+const getLevel = require('../../Various/Skyblock/skilllvl.js')
 
 module.exports = {
   name: "Sbfishing",
@@ -35,7 +37,9 @@ module.exports = {
     //Values needed
     let rod = player.data.equipment.fishing.rod
     let sea_creature_chance = player.data.stats.sea_creature_chance
+    let fishinglvl = getLevel(player.data.skills.fishing).level
     let isCreature = ''
+    let mob = ''
     let fish_caught = 0
     let sea_creatures_killed = 0
     let rod_casted = false
@@ -46,11 +50,11 @@ module.exports = {
       .setCustomId('cast')
       .setLabel('Cast Rod')
       .setStyle('PRIMARY')
-     
-     const blure = new Discord.MessageButton()
-     .setCustomId('lure')
-     .setLabel('Lure Rod')
-     .setStyle('PRIMARY')
+
+    const blure = new Discord.MessageButton()
+      .setCustomId('lure')
+      .setLabel('Lure Rod')
+      .setStyle('PRIMARY')
 
     //Buttons for Killing Sea Creatures
     const bkillsc = new Discord.MessageButton()
@@ -74,7 +78,7 @@ module.exports = {
     const row = new Discord.MessageActionRow()
       .addComponents(bcatch, bkillscoff, bcancel)
     const row1 = new Discord.MessageActionRow()
-    .addComponents(blure, bkillscoff, bcancel)
+      .addComponents(blure, bkillscoff, bcancel)
     const row2 = new Discord.MessageActionRow()
       .addComponents(bcatch, bkillsc, bcancel)
 
@@ -85,7 +89,7 @@ module.exports = {
       .setFooter('Skyblock Simulator')
       .setDescription(`${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n`)
 
-.addField(`Info`, `Fish caught: ${fish_caught}`, true)
+      .addField(`Info`, `Fish caught: ${fish_caught}`, true)
 
     const menu = await message.channel.send({ embeds: [pond], components: [row] })
 
@@ -99,21 +103,22 @@ module.exports = {
     collector.on('collect', async i => {
       if (i.customId === 'cast' && rod_casted === false) {
         rod_casted = true
-        
-        menu.edit({embeds: [pond], components: [row1]})
+
+        menu.edit({ embeds: [pond], components: [row1] })
 
       } else if (i.customId === 'lure' && rod_casted === true) {
         let creature = isSeaCreature(sea_creature_chance, isCreature)
-        if(creature === 'yes') {
-          message.channel.send('SC Found')
+        if (creature === 'yes') {
+          let foundmob = getSeaCreatureStats(mob, mobs, fishinglvl)
+          message.channel.send(`**Seacreature:** ${foundmob.name}\n**Stats:**\nHP: ${foundmob.hp}\nDamage: ${foundmob.dmg}\nXP: ${foundmob.xp}`)
         }
         rod_casted = false
         fish_caught = fish_caught += 1
         pond.fields = [];
         pond.addField(`Info`, `Fish caught: ${fish_caught}`)
-     
-       menu.edit({embeds: [pond], components: [row]})
-        } else if (i.customId === 'killsc') {
+
+        menu.edit({ embeds: [pond], components: [row] })
+      } else if (i.customId === 'killsc') {
 
       } else if (i.customId === 'cancel') {
         collector.stop()
@@ -121,7 +126,7 @@ module.exports = {
     })
 
     collector.on('end', async collected => {
-      
+
       menu.edit({ components: [] })
     });
   }
@@ -129,12 +134,23 @@ module.exports = {
 
 function isSeaCreature(sea_creature_chance, isCreature) {
   let rn = Math.floor(Math.random() * 100) + 1
-  if(rn < sea_creature_chance) {
+  if (rn < sea_creature_chance) {
     isCreature = 'yes'
     return isCreature
   } else {
     isCreature = 'no'
     return isCreature
   }
-  
+
+}
+
+function getSeaCreatureStats(mob, mobs, fishinglvl) {
+  let seacreatures = Object.entries(mobs).filter(([name, props]) => props.level < fishinglvl)
+  if (seacreatures === undefined) {
+    mob = 'None'
+    return mob;
+  }
+  let mobchoosen = seacreatures[Math.floor(Math.random() * seacreatures.length)];
+  mob = mobchoosen[1]
+  return mob;
 }

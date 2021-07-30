@@ -3,8 +3,6 @@ const prefix = require("@replit/database");
 const prefixx = new prefix();
 const getLevelByXp = require('../../Various/Skyblock/skilllvl.js')
 
-
-
 module.exports = {
   name: "dmgtest",
   description: "Test DMG System",
@@ -105,28 +103,6 @@ module.exports = {
         }
       }
     })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   }
 };
 
