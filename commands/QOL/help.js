@@ -36,7 +36,7 @@ module.exports = {
         const filter = (reaction, user) => ['🤖', '🔧', '🎲', '🔨', '❓', '🏝️', '😎', '👍', '⚠️'].includes(reaction.emoji.name) && user.id === message.author.id;
 
 
-        const collector = menu.createReactionCollector({filter, time: 30000 });
+        const collector = menu.createReactionCollector({filter, time: 60000 });
 
         collector.on('collect', collected => {
           const reaction = collected

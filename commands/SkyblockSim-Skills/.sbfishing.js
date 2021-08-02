@@ -12,7 +12,7 @@ module.exports = {
   perms: "None",
   folder: "SkyblockSim",
   aliases: ['fishing', 'fish'],
-  cooldown: 60,
+  cooldown: 20,
   async execute(client, message, args, mclient) {
 
     const collection = mclient.db('SkyblockSim').collection('Players');
@@ -32,23 +32,32 @@ module.exports = {
       return;
     }
 
+    if (player.data.misc.is_fishing === true) {
+      const alreadyfishing = new Discord.MessageEmbed()
+        .setTitle('You are already Fishing somewhere so i can\'t create another Pond for you')
+        .setColor('RED')
+        .setFooter('Skyblock Simulator')
+      message.channel.send({ embeds: [alreadyfishing] })
+      return;
+    }
+
 
 
     //Values needed
+    let fishinglvl = getLevel(player.data.skills.fishing).level
     let rod = player.data.equipment.fishing.rod.name
     let rod_speed = player.data.equipment.fishing.rod.fishing_speed
-    let sea_creature_chance = player.data.stats.sea_creature_chance + player.data.equipment.fishing.rod.sea_creature_chance + player.data.equipment.fishing.armor.sea_creature_chance
-    let fishinglvl = getLevel(player.data.skills.fishing).level
+    let sea_creature_chance = player.data.stats.sea_creature_chance + player.data.equipment.fishing.rod.sea_creature_chance + player.data.equipment.fishing.armor.sea_creature_chance + (fishinglvl / 2)
     let isCreature = ''
     let mob = ''
-    let fish_caught = 0
-    let sea_creatures_killed = 0
     let rod_casted = false
     let creature_caught = false
-    let foundmob = '#'
+    let foundmob = ''
+    let fishing_time = getFishingTime(rod_speed)
 
     //Fight Values
-    let php = player.data.stats.health
+    let health = player.data.stats.health
+    let php = health
     let damage = player.data.stats.damage
     let strength = player.data.stats.strength
     let combatlvl = getLevel(player.data.skills.combat).level
@@ -58,6 +67,9 @@ module.exports = {
     let pdmg = ''
     let mhp = ''
     let mdmg = ''
+
+    //Logging
+    console.log(fishing_time)
 
     //Buttons for Catching Fish
     const bcatch = new Discord.MessageButton()
@@ -73,6 +85,12 @@ module.exports = {
     const bcatchoff = new Discord.MessageButton()
       .setCustomId('a')
       .setLabel('Cast Rod')
+      .setStyle('PRIMARY')
+      .setDisabled(true)
+
+    const blureoff = new Discord.MessageButton()
+      .setCustomId('aaaa')
+      .setLabel('Lure Rod')
       .setStyle('PRIMARY')
       .setDisabled(true)
 
@@ -101,6 +119,8 @@ module.exports = {
       .addComponents(blure, bkillscoff, bcancel)
     const row2 = new Discord.MessageActionRow()
       .addComponents(bcatchoff, bkillsc, bcancel)
+    const row3 = new Discord.MessageActionRow()
+      .addComponents(blureoff, bkillscoff, bcancel)
 
 
     //Pond Embed
@@ -110,9 +130,12 @@ module.exports = {
       .setFooter('Skyblock Simulator')
       .setDescription(`${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n`)
 
-      .addField(`Info`, `Fish caught: ${fish_caught}`, true)
-
     const menu = await message.channel.send({ embeds: [pond], components: [row] })
+
+    await collection.updateOne(
+      { _id: message.author.id },
+      { $set: { "data.misc.is_fishing": true } },
+      { upsert: true })
 
     const filter = i => {
       i.deferUpdate();
@@ -124,6 +147,15 @@ module.exports = {
     collector.on('collect', async i => {
       if (i.customId === 'cast' && rod_casted === false) {
         rod_casted = true
+        pond.fields = []
+        pond.addField('\u200b', '<a:wait:847471618272002059> Waiting for something to bite the Bait.')
+
+        menu.edit({ embeds: [pond], components: [row3] })
+
+        await sleep(fishing_time)
+
+        pond.fields = []
+        pond.addField('\u200b', 'Something bit the Bait, lure it in.')
 
         menu.edit({ embeds: [pond], components: [row1] })
 
@@ -140,9 +172,13 @@ module.exports = {
           rod_casted = false
         } else {
           rod_casted = false
-          fish_caught = fish_caught += 1
           pond.fields = [];
-          pond.addField(`Info`, `Fish caught: ${fish_caught}`)
+          pond.addField(`Fish caught`, `earned 50 Fishing XP`)
+
+          await collection.updateOne(
+            { _id: message.author.id },
+            { $inc: { "data.skills.fishing": 50 } },
+            { upsert: true })
 
           menu.edit({ embeds: [pond], components: [row] })
         }
@@ -170,7 +206,12 @@ module.exports = {
         if (i.customId === 'killsc' && mhp <= 0) {
           pond.fields = []
           pond.setColor('BLUE')
-          pond.addField(`Result`, `Killed the Enemy with **❤️ ${php}** left.`)
+          pond.addField(`Result`, `Killed the Enemy with **❤️ ${php}** left and earned ${foundmob.xp} Fishing XP.`)
+          await collection.updateOne(
+            { _id: message.author.id },
+            { $inc: { "data.skills.fishing": foundmob.xp } },
+            { upsert: true })
+          php = health
 
           menu.edit({ embeds: [pond], components: [row] })
         } else if (i.customId === 'killsc' && php <= 0) {
@@ -190,6 +231,12 @@ module.exports = {
 
     collector.on('end', async collected => {
       pond.setColor('RED')
+      pond.fields = []
+      pond.addField('\u200b', 'Stopped Fishing.')
+      await collection.updateOne(
+        { _id: message.author.id },
+        { $set: { "data.misc.is_fishing": false } },
+        { upsert: true })
       menu.edit({ embeds: [pond], components: [] })
     });
   }
@@ -242,4 +289,16 @@ function isCrit(critchance, critted) {
     critted = 'no'
     return critted
   }
+}
+
+function getFishingTime(rod_speed) {
+  if (rod_speed === 0) return 8000
+  if (rod_speed === 10) return 7600
+  if (rod_speed === 20) return 7200
+  if (rod_speed === 30) return 6800
+  if (rod_speed === 40) return 5900
+  if (rod_speed === 50) return 5000
+  if (rod_speed === 60) return 4000
+  if (rod_speed === 75) return 3200
+  if (rod_speed === 100) return 2000
 }

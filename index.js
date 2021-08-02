@@ -154,6 +154,7 @@ client.on('messageCreate', async message => {
   }
 });
 
+
 //Event Handler
 const eventFiles = fs
   .readdirSync('./events')
@@ -168,6 +169,45 @@ for (const file of eventFiles) {
     e += 1;
   }
 }
+
+/*
+//Slash Command Handler
+client.on('interactionCreate', async interaction => {
+  if (!interaction.isCommand()) return;
+  
+if (!client.commands.has(interaction.commandName)) return;
+
+	try {
+		await client.commands.get(interaction.commandName).execute(interaction, mclient);
+		await interaction.defer()
+		await wait(5000)
+	} catch (error) {
+		console.error(error);
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+	}
+});
+
+//Registering Slash Commands
+client.on('messageCreate', async message => {
+  if (!client.application ?.owner) await client.application ?.fetch();
+
+  if (message.content.toLowerCase() === ',deploy' && message.author.id === client.application ?.owner.id) {
+    
+const commandFiles = fs.readdirSync('./test').filter(file => file.endsWith('.js'));
+
+    
+    
+	for (const file of commandFiles) {
+	const data = require(`./test/${file}`);
+	console.log(data)
+	//client.commands.set(command.name, command);
+
+
+    const command = await client.guilds.cache.get('869124249225429022')?.commands.create(data);
+    message.channel.send('Commands deployed.')
+	}
+  }
+});*/
 
 //Loophole to keep the Bot running
 keepAlive();
