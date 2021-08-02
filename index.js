@@ -84,7 +84,7 @@ client.on('messageCreate', async message => {
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 
-const commandFolders = fs.readdirSync('./commands');
+/*const commandFolders = fs.readdirSync('./commands');
 
 for (const folder of commandFolders) {
   const commandFiles = fs
@@ -147,7 +147,7 @@ client.on('messageCreate', async message => {
     await command.execute(client, message, args, mclient);
     /*const usedcmd = new Discord.MessageEmbed()
       .setDescription(`**${command.name}** has been used.\n\nGuildID: \`${message.guild.id}\`\nGuild Name: \`${message.guild.name}\`\nUserID: \`${message.author.id}\`\nUser: \`${message.author.tag}\``)
-    client.channels.fetch(config.usedcommand).then(channel => channel.send({ embeds: [usedcmd] }))*/
+    client.channels.fetch(config.usedcommand).then(channel => channel.send({ embeds: [usedcmd] }))
   } catch (error) {
     console.error(error);
     message.reply('There was an Error trying to execute that Command!');
@@ -169,45 +169,32 @@ for (const file of eventFiles) {
     e += 1;
   }
 }
+*/
 
-/*
+
 //Slash Command Handler
+const commandFiles = fs.readdirSync('./test').filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+	const command = require(`./test/${file}`);
+	client.commands.set(command.name, command);
+	console.log('Done loading Slash Commands')
+}
+
+
 client.on('interactionCreate', async interaction => {
-  if (!interaction.isCommand()) return;
-  
-if (!client.commands.has(interaction.commandName)) return;
+	if (!interaction.isCommand()) return;
+
+	if (!client.commands.has(interaction.commandName)) return;
 
 	try {
-		await client.commands.get(interaction.commandName).execute(interaction, mclient);
-		await interaction.defer()
-		await wait(5000)
+		await client.commands.get(interaction.commandName).execute(interaction);
 	} catch (error) {
 		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
 
-//Registering Slash Commands
-client.on('messageCreate', async message => {
-  if (!client.application ?.owner) await client.application ?.fetch();
-
-  if (message.content.toLowerCase() === ',deploy' && message.author.id === client.application ?.owner.id) {
-    
-const commandFiles = fs.readdirSync('./test').filter(file => file.endsWith('.js'));
-
-    
-    
-	for (const file of commandFiles) {
-	const data = require(`./test/${file}`);
-	console.log(data)
-	//client.commands.set(command.name, command);
-
-
-    const command = await client.guilds.cache.get('869124249225429022')?.commands.create(data);
-    message.channel.send('Commands deployed.')
-	}
-  }
-});*/
 
 //Loophole to keep the Bot running
 keepAlive();
