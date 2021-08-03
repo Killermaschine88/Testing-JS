@@ -12,16 +12,9 @@ module.exports = {
   folder: 'Skyblock',
   perms: 'None',
   aliases: ['d', 'cata'],
-  async execute(client, message, args) {
+  async execute(client, interaction) {
 
-    if (!args[0]) {
-      var ign = message.member.displayName;
-    } else {
-      if (message.mentions.members.first()) {
-        var ign = message.mentions.members.first().displayName;
-      }
-      else var ign = args[0];
-    } // Gets IGN
+    var ign = interaction.options.getString('ign');
 
     ign = ign.replace(/\W/g, ''); // removes weird characters
 
@@ -33,7 +26,7 @@ module.exports = {
             .setDescription(`No Minecraft account found for \`${ign}\``)
             .setColor('DC143C')
             .setTimestamp()
-          message.channel.send({ embeds: [nomc] })
+          interaction.editReply({ embeds: [nomc] })
         }
       }); // Test if IGN esists
 
@@ -48,7 +41,7 @@ module.exports = {
       .setDescription('Checking for Player Data . . .')
       .setColor('ORANGE')
 
-    const waitingembed = await message.channel.send({ embeds: [waitembed] })
+    const waitingembed = await interaction.editReply({ embeds: [waitembed] })
 
 
     const apiData = await getApiData(ign); // Gets all skyblock player data from Senither's Hypixel API Facade

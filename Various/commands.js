@@ -47,8 +47,8 @@ const data = [
     description: "Shows the Skin of a Player",
     options: [
       {
-        name: 'input',
-        description: 'Mineecraft Name',
+        name: 'ign',
+        description: 'Minecraft Name',
         type: 'STRING',
         required: true,
       },
@@ -60,7 +60,7 @@ const data = [
   },
   {
     name: "userinfo",
-    description: "Shows the Info about the User",
+    description: "Shows the Info about a User",
     options: [
       {
         name: 'user',
@@ -70,7 +70,7 @@ const data = [
       },
     ],
   },
-    {
+  {
     name: "slowmode",
     description: "Sets the Channel Slowmode",
     options: [
@@ -78,6 +78,107 @@ const data = [
         name: 'seconds',
         description: 'Slowmode in Seconds',
         type: 'NUMBER',
+        required: true,
+      },
+    ],
+  },
+
+  {
+    name: "bazaar",
+    description: "Gets Bazaar Data from an Item",
+    options: [
+      {
+        name: 'item',
+        description: 'Item Name',
+        type: 'STRING',
+        required: true,
+      },
+    ],
+  },
+  {
+    name: "dungeons",
+    description: "Gets Dungeons Data from a Player",
+    options: [
+      {
+        name: 'ign',
+        description: 'Minecraft Name',
+        type: 'STRING',
+        required: true,
+      },
+    ],
+  },
+  {
+    name: "hypixel",
+    description: "Gets Hypixel Data from a Player",
+    options: [
+      {
+        name: 'ign',
+        description: 'Minecraft Name',
+        type: 'STRING',
+        required: true,
+      },
+    ],
+  },
+  {
+    name: "sbplayers",
+    description: "Shows the Current Online Skyblock Players",
+  },
+  {
+    name: "scammer",
+    description: "Checks if a Player is a Scammer",
+    options: [
+      {
+        name: 'ign',
+        description: 'Minecraft Name',
+        type: 'STRING',
+        required: true,
+      },
+    ],
+  },
+  {
+    name: "skills",
+    description: "Gets Skill Data from a Player",
+    options: [
+      {
+        name: 'ign',
+        description: 'Minecraft Name',
+        type: 'STRING',
+        required: true,
+      },
+    ],
+  },
+  {
+    name: "slayer",
+    description: "Gets Slayer Data from a Player",
+    options: [
+      {
+        name: 'ign',
+        description: 'Minecraft Name',
+        type: 'STRING',
+        required: true,
+      },
+    ],
+  },
+  {
+    name: "stats",
+    description: "Gets Overall Data from a Player",
+    options: [
+      {
+        name: 'ign',
+        description: 'Minecraft Name',
+        type: 'STRING',
+        required: true,
+      },
+    ],
+  },
+  {
+    name: "weight",
+    description: "Gets Weight Data from a Player",
+    options: [
+      {
+        name: 'ign',
+        description: 'Minecraft Name',
+        type: 'STRING',
         required: true,
       },
     ],

@@ -7,7 +7,7 @@ module.exports = {
   aliases: ['head'],
   execute(client, interaction) {
 
-    const ign = interaction.options.getString('input');
+    const ign = interaction.options.getString('ign');
 
 
     interaction.editReply({

@@ -12,34 +12,20 @@ module.exports = {
   perms: "None",
   folder: "Skyblock",
   aliases: ['bz'],
-  async execute(client, message, args) {
+  async execute(client, interaction) {
 
     Object.keys(list).forEach(key => list[key].bazaar ? list2[key] = list[key] : "");
 
 
     var method = 'save';
 
-
-
-    if (args[0] === undefined) {
-      message.channel.send('Please enter an Item to check.\n**Example:** enchanted gold')
-      return;
-    }
-    else if (args[1] === undefined) {
-      var result = args[0].toUpperCase();
-    } else if (args[2] === undefined) {
-      var iteminput = args[0] + '_' + args[1]
-      var result = iteminput.toUpperCase();
-    } else if (args[3] === undefined) {
-      var iteminput2 = args[0] + '_' + args[1] + '_' + args[2]
-      var result = iteminput2.toUpperCase();
-    }
+    let result = interaction.options.getString('item');
 
     const waiting = new Discord.MessageEmbed()
       .setTitle('Checking Bazaar Data')
       .setFooter('If i dont respond within 10 Seconds then the Item wasnt found or an Error occured')
 
-    const wait = await message.channel.send({ embeds: [waiting] })
+    const wait = await interaction.editReply({ embeds: [waiting] })
 
     var apiData = await getApiData(result, method);
 
@@ -57,12 +43,12 @@ module.exports = {
 
       const fuse = new Fuse(Object.keys(list2), options);
 
-      const pattern = args.join(" ")
+      const pattern = result
 
       const itemlist = await fuse.search(pattern)
 
 
-      var result = itemlist[0].item;
+      result = itemlist[0].item;
     }
 
     var apiData = await getApiData(result, method)

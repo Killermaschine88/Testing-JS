@@ -11,16 +11,9 @@ module.exports = {
   perms: "None",
   folder: "Skyblock",
   aliases: [],
-  async execute(client, message, args) {
+  async execute(client, interaction) {
 
-    if (!args[0]) {
-      var mcname = message.member.displayName;
-    } else {
-      if (message.mentions.members.first()) {
-        var mcname = message.mentions.members.first().displayName;
-      }
-      else var mcname = args[0];
-    } // Gets IGN
+    var mcname = interaction.options.getString('ign');
 
     mcname = mcname.replace(/\W/g, ''); // removes weird characters
 
@@ -28,7 +21,7 @@ module.exports = {
       .setDescription('Checking for Player Data . . .')
       .setColor('ORANGE')
 
-    const waitingembed = await message.channel.send({ embeds: [waitembed] })
+    const waitingembed = await interaction.editReply({ embeds: [waitembed] })
 
     axios.get(`https://some-random-api.ml/mc?username=${mcname}`) //Minecraft UUID api
       .then((res) => {
@@ -67,7 +60,7 @@ module.exports = {
                   .then((respo) => {
                     let guild = respo.data.guild
                     if (!guild) {
-                      let embed = new Discord.MessageEmbed()
+                      var embed = new Discord.MessageEmbed()
                         .setAuthor(displayName, `https://cravatar.eu/helmavatar/${displayName}/600.png`, (`https://plancke.io/hypixel/player/stats/${displayName}`))
                         .addFields(
                           { name: "**Level**", value: `**Network Level**: ${Math.floor(level)}\n**Total Exp**: ${networkExp}\n**Total Karma**: ${karma}`, inline: true }, { name: "**Rank**", value: `${rankFixed}`, inline: true },
@@ -82,6 +75,7 @@ module.exports = {
                       var guildName = respo.data.guild.name
                       const unixGuildCreated = respo.data.guild.created
                       var guildCreated = new Date(unixGuildCreated).toDateString()
+
 
                       //Now we have all data so we can make a embed
                       var embed = new Discord.MessageEmbed()

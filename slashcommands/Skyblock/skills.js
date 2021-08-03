@@ -10,19 +10,12 @@ module.exports = {
   perms: "None",
   folder: "Skyblock",
   aliases: ['s'],
-  async execute(client, message, args) {
+  async execute(client, interaction) {
 
-    if (!args[0]) {
-      var ign = message.member.displayName;
-    } else {
-      if (message.mentions.members.first()) {
-        var ign = message.mentions.members.first().displayName;
-      }
-      else var ign = args[0];
-    } // Gets IGN
+    var ign = interaction.options.getString('ign');
 
     var method = 'save';
-    if (args[1]) method = args[1];
+
 
     ign = ign.replace(/\W/g, ''); // removes weird characters
 
@@ -30,7 +23,7 @@ module.exports = {
     fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`)
       .then(res => {
         if (res.status != 200) {
-          return message.channel.send({
+          return interaction.editReply({
             embeds: [
               new Discord.MessageEmbed()
                 .setDescription(`No Minecraft account found for \`${ign}\``)
@@ -45,7 +38,7 @@ module.exports = {
       .setDescription('Checking for Player Data . . .')
       .setColor('ORANGE')
 
-    const waitingembed = await message.channel.send({ embeds: [waitembed] })
+    const waitingembed = await interaction.editReply({ embeds: [waitembed] })
 
     // At this point we know its a valid IGN, but not if it has skyblock profiles
     const apiData = await getApiData(ign, method); // Gets all skyblock player data from Senither's Hypixel API Facade

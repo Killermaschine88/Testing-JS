@@ -208,7 +208,7 @@ client.on('interactionCreate', async interaction => {
     await client.slashcommands.get(interaction.commandName).execute(client, interaction, mclient);
   } catch (error) {
     console.error(error);
-    return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+    return interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true });
   }
 });
 

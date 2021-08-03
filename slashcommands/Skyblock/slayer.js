@@ -8,20 +8,12 @@ module.exports = {
   perms: "None",
   folder: "Skyblock",
   aliases: ['sl'],
-  async execute(client, message, args) {
+  async execute(client, interaction) {
 
 
-    if (!args[0]) {
-      var ign = message.member.displayName;
-    } else {
-      if (message.mentions.members.first()) {
-        var ign = message.mentions.members.first().displayName;
-      }
-      else var ign = args[0];
-    } // Gets IGN
+    var ign = interaction.options.getString('ign');
 
     var method = 'save';
-    if (args[1]) method = args[1];
 
     ign = ign.replace(/\W/g, ''); // removes weird characters
 
@@ -29,7 +21,7 @@ module.exports = {
       .setDescription('Checking for Player Data . . .')
       .setColor('ORANGE')
 
-    const waitingembed = await message.channel.send({ embeds: [waitembed] })
+    const waitingembed = await interaction.editReply({ embeds: [waitembed] })
 
     fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`)
       .then(res => {

@@ -11,21 +11,16 @@ module.exports = {
   perms: "None",
   folder: "Skyblock",
   aliases: ['sc'],
-  async execute(client, message, args, mclient) {
+  async execute(client, interaction, mclient) {
 
-    const ign = args[0];
-
-    if (ign === undefined) {
-      message.channel.send('Please enter a Username to check.')
-      return;
-    }
+    const ign = interaction.options.getString('ign');
 
     const waitembed = new Discord.MessageEmbed()
       .setDescription('Checking for Player Data . . .')
       .setFooter('If i don\'t respond within 10 Seconds then theres an Error at the Database\nTry again later pls.')
       .setColor('ORANGE')
 
-    const waitingembed = await message.channel.send({ embeds: [waitembed] })
+    const waitingembed = await interaction.editReply({ embeds: [waitembed] })
 
     axios.get(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(async res => {
       const uuid = res.data.id;
@@ -47,7 +42,6 @@ module.exports = {
         return;
       }
 
-      const ign = args[0];
       const collection = mclient.db('Sky-Bot').collection('Scammers');
       let found = await collection.findOne({ _id: uuid })
 
