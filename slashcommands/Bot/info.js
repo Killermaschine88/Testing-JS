@@ -14,7 +14,7 @@ module.exports = {
   perms: "None",
   folder: "Bot",
   aliases: [],
-  async execute(client, message, args) {
+  async execute(client, interaction) {
 
     //System Info
     let usage = await cpu.usage()
@@ -46,6 +46,6 @@ module.exports = {
       .setFooter(`${model}`)
 
 
-    message.channel.send({ embeds: [infoembed] })
+    interaction.editReply({ embeds: [infoembed] })
   }
 };

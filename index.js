@@ -9,6 +9,7 @@ const prefixx = new prefix();
 const token = process.env['token'];
 let c = 0;
 let e = 0;
+let sc = 0;
 const urii = process.env['uri']
 const { AutoPoster } = require('topgg-autoposter')
 const toptoken = process.env['toptoken']
@@ -59,7 +60,7 @@ client.login(token);
 // Send msg in Console when Bot is usable and set status
 client.on('ready', () => {
   console.log(chalk.greenBright(`Logged in as ${client.user.username}!`));
-  console.log(chalk.greenBright(`Loaded ${c} Commands and ${e} Events!`));
+  console.log(chalk.greenBright(`Loaded ${c} Commands, ${sc} SlashCommands and ${e} Events!`));
   client.user.setActivity(`${client.users.cache.size} Members and ${client.guilds.cache.size} Servers`, { type: 'WATCHING' });
   mclient.connect()
   console.log(chalk.greenBright(`Logged into MongoDB`));
@@ -80,11 +81,26 @@ client.on('messageCreate', async message => {
 });
 
 
-//Command Loader
+//Collections needed
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
+client.slashcommands = new Discord.Collection();
 
-/*const commandFolders = fs.readdirSync('./commands');
+//Slash Command Loader
+const slashcommandFolders = fs.readdirSync('./slashcommands');
+
+for (const folder of slashcommandFolders) {
+  const commandFiles = fs
+    .readdirSync(`./slashcommands/${folder}`)
+    .filter(file => file.endsWith('.js'));
+  for (const file of commandFiles) {
+    const command = require(`./slashcommands/${folder}/${file}`);
+    sc += 1;
+    client.slashcommands.set(command.name.toLowerCase(), command);
+  }
+}
+
+const commandFolders = fs.readdirSync('./commands');
 
 for (const folder of commandFolders) {
   const commandFiles = fs
@@ -112,7 +128,7 @@ client.on('messageCreate', async message => {
   const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
   if (!command) return;
-  if (message.guild.id != '869124249225429022') return message.channel.send('Im currently in Dev Only Mode.')
+  if (message.author.id != '570267487393021969') return message.channel.send('Im currently in Dev Only Mode.')
 
   if (config.blacklistedusers.includes(message.author.id)) return message.channel.send('You are blacklisted from using this Bot. If you believe this is false message **Baltraz#4874**')
 
@@ -145,9 +161,6 @@ client.on('messageCreate', async message => {
 
   try {
     await command.execute(client, message, args, mclient);
-    /*const usedcmd = new Discord.MessageEmbed()
-      .setDescription(`**${command.name}** has been used.\n\nGuildID: \`${message.guild.id}\`\nGuild Name: \`${message.guild.name}\`\nUserID: \`${message.author.id}\`\nUser: \`${message.author.tag}\``)
-    client.channels.fetch(config.usedcommand).then(channel => channel.send({ embeds: [usedcmd] }))
   } catch (error) {
     console.error(error);
     message.reply('There was an Error trying to execute that Command!');
@@ -169,30 +182,34 @@ for (const file of eventFiles) {
     e += 1;
   }
 }
-*/
 
 
-//Slash Command Handler
-const commandFiles = fs.readdirSync('./test').filter(file => file.endsWith('.js'));
+//Deploying Cmds
+client.on('messageCreate', async message => {
+  if (!client.application ?.owner) await client.application ?.fetch();
 
-for (const file of commandFiles) {
-	const command = require(`./test/${file}`);
-	client.commands.set(command.name, command);
-	console.log('Done loading Slash Commands')
-}
+  if (message.content.toLowerCase() === ',dp' && message.author.id === client.application ?.owner.id) {
+    const cmdfile = require('./Various/commands.js')
+
+    const command = await client.guilds.cache.get('869124249225429022') ?.commands.set(cmdfile.data)
+		message.channel.send('Commands deployed.')
+  }
+});
 
 
 client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
+  if (!interaction.isCommand()) return;
 
-	if (!client.commands.has(interaction.commandName)) return;
 
-	try {
-		await client.commands.get(interaction.commandName).execute(interaction);
-	} catch (error) {
-		console.error(error);
-		return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-	}
+  if (!client.slashcommands.has(interaction.commandName)) return;
+
+  try {
+    await interaction.defer()
+    await client.slashcommands.get(interaction.commandName).execute(client, interaction, mclient);
+  } catch (error) {
+    console.error(error);
+    return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+  }
 });
 
 

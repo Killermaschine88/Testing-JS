@@ -6,7 +6,7 @@ module.exports = {
   perms: "None",
   folder: "Bot",
   aliases: [],
-  execute: (client, message, args) => {
+  execute: (client, interaction) => {
     const vembed = new Discord.MessageEmbed()
       .setTitle('Sky Bot Voting')
       .setColor('GREEN')
@@ -19,6 +19,6 @@ module.exports = {
           .setStyle('LINK'),
       );
 
-    message.channel.send({ embeds: [vembed], components: [vote] })
+    interaction.editReply({ embeds: [vembed], components: [vote] })
   }
 };
