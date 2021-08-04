@@ -6,21 +6,19 @@ const mobs = require('../../Various/Skyblock/mobstats.json')
 const getLevel = require('../../Various/Skyblock/skilllvl.js')
 
 module.exports = {
-  name: "Sbfishing",
+  name: "fishing",
   description: "Earn Fishing XP",
   usage: "sbfishing",
   perms: "None",
   folder: "SkyblockSim",
   aliases: ['fishing', 'fish'],
   cooldown: 20,
-  async execute(client, message, args, mclient) {
+  async execute(client, interaction, mclient) {
 
     const collection = mclient.db('SkyblockSim').collection('Players');
-    let player = await collection.findOne({ _id: message.author.id })
+    let player = await collection.findOne({ _id: interaction.user.id })
 
-
-
-    var gprefix = await prefixx.get(message.guild.id, { raw: false });
+    var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
     if (gprefix === null) gprefix = '.';
 
     if (player === null) {
@@ -28,7 +26,7 @@ module.exports = {
         .setColor('RED')
         .setTitle('No Profile found')
         .setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``)
-      message.channel.send({ embeds: [noprofile] })
+      interaction.editReply({ embeds: [noprofile] })
       return;
     }
 
@@ -37,7 +35,7 @@ module.exports = {
         .setTitle('You are already Fishing somewhere so i can\'t create another Pond for you')
         .setColor('RED')
         .setFooter('Skyblock Simulator')
-      message.channel.send({ embeds: [alreadyfishing] })
+      interaction.editReply({ embeds: [alreadyfishing] })
       return;
     }
 
@@ -68,8 +66,6 @@ module.exports = {
     let mhp = ''
     let mdmg = ''
 
-    //Logging
-    console.log(fishing_time)
 
     //Buttons for Catching Fish
     const bcatch = new Discord.MessageButton()
@@ -130,19 +126,19 @@ module.exports = {
       .setFooter('Skyblock Simulator')
       .setDescription(`${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n`)
 
-    const menu = await message.channel.send({ embeds: [pond], components: [row] })
+    const menu = await interaction.editReply({ embeds: [pond], components: [row] })
 
     await collection.updateOne(
-      { _id: message.author.id },
+      { _id: interaction.user.id },
       { $set: { "data.misc.is_fishing": true } },
       { upsert: true })
 
     const filter = i => {
       i.deferUpdate();
-      return i.user.id === message.author.id;
+      return i.user.id === interaction.user.id;
     };
 
-    const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 1000000 })
+    const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 858000 })
 
     collector.on('collect', async i => {
       if (i.customId === 'cast' && rod_casted === false) {
@@ -171,13 +167,27 @@ module.exports = {
           menu.edit({ embeds: [pond], components: [row2] })
           rod_casted = false
         } else {
+          let fishxp = Math.floor(Math.random() * (60 - 25) + 25)
+          let fishes = ['Raw Fish', 'Raw Salmon', 'Pufferfish', 'Clownfish']
+          let fishname = fishes[Math.floor(Math.random() * fishes.length)];
+          let fishingcoins = 0
+          if (fishname === 'Raw Fish') {
+            fishingcoins = 23
+          } else if (fishname === 'Raw Salmon') {
+            fishingcoins = 9
+          } else if (fishname === 'Pufferfish') {
+            fishingcoins = 13
+          } else if (fishname === 'Clownfish') {
+            fishingcoins = 19
+          }
+
           rod_casted = false
           pond.fields = [];
-          pond.addField(`Fish caught`, `earned 50 Fishing XP`)
+          pond.addField(`Caught a ${fishname}`, `and earned **${fishxp} Fishing XP** and sold it for **<:coins:861974605203636253> ${fishingcoins} Coins**`)
 
           await collection.updateOne(
-            { _id: message.author.id },
-            { $inc: { "data.skills.fishing": 50 } },
+            { _id: interaction.user.id },
+            { $inc: { "data.skills.fishing": fishxp, "data.profile.coins": fishingcoins } },
             { upsert: true })
 
           menu.edit({ embeds: [pond], components: [row] })
@@ -208,7 +218,7 @@ module.exports = {
           pond.setColor('BLUE')
           pond.addField(`Result`, `Killed the Enemy with **❤️ ${php}** left and earned ${foundmob.xp} Fishing XP.`)
           await collection.updateOne(
-            { _id: message.author.id },
+            { _id: interaction.user.id },
             { $inc: { "data.skills.fishing": foundmob.xp } },
             { upsert: true })
           php = health
@@ -234,7 +244,7 @@ module.exports = {
       pond.fields = []
       pond.addField('\u200b', 'Stopped Fishing.')
       await collection.updateOne(
-        { _id: message.author.id },
+        { _id: interaction.user.id },
         { $set: { "data.misc.is_fishing": false } },
         { upsert: true })
       menu.edit({ embeds: [pond], components: [] })

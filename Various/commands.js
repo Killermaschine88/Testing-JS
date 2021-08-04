@@ -218,6 +218,11 @@ const data = [
         description: 'Allows you to warp to different Areas of the Game',
         type: 'SUB_COMMAND'
       },
+      {
+        name: 'fishing',
+        description: 'Opens a Pond and lets you fish',
+        type: 'SUB_COMMAND'
+      }
     ],
   },
 ]
