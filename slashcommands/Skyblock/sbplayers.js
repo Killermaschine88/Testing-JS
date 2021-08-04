@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = {
-  name: "Sbplayers",
+  name: "skyblockplayers",
   description: "Shows the Amount of players at each area",
   usage: "sbplayers",
   perms: "None",

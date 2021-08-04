@@ -3,19 +3,19 @@ const prefix = require("@replit/database");
 const prefixx = new prefix();
 
 module.exports = {
-  name: "Sbslayer",
+  name: "slayer",
   description: "Shows the Slayer Menu",
   usage: "sbslayer",
   perms: "None",
   folder: "SkyblockSim",
   aliases: ['sbsl'],
   cooldown: 10,
-  async execute(client, message, args, mclient) {
+  async execute(client, interaction, mclient) {
 
     const collection = mclient.db('SkyblockSim').collection('Players');
-    const player = await collection.findOne({ _id: message.author.id })
+    const player = await collection.findOne({ _id: interaction.user.id })
 
-    var gprefix = await prefixx.get(message.guild.id, { raw: false });
+    var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
     if (gprefix === null) gprefix = '.';
 
     if (player === null) {
@@ -24,7 +24,7 @@ module.exports = {
         .setTitle('No Profile found')
         .setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``)
 
-      message.channel.send({ embeds: [noprofile] })
+      interaction.editReply({ embeds: [noprofile] })
       return;
     }
 
@@ -61,7 +61,7 @@ module.exports = {
           .setLabel('Cancel')
           .setStyle('DANGER'),
       );
-    const menu = await message.channel.send({ embeds: [start], components: [row] })
+    const menu = await interaction.editReply({ embeds: [start], components: [row] })
 
     let coins = player.data.profile.coins
     let choosen = ''
@@ -72,7 +72,7 @@ module.exports = {
 
     const filter = i => {
       i.deferUpdate();
-      return i.user.id === message.author.id;
+      return i.user.id === interaction.user.id;
     };
 
     await menu.awaitMessageComponent({ filter, componentType: 'BUTTON', time: 30000 })
@@ -173,41 +173,41 @@ module.exports = {
     if (choosen === 'Revenant' && coins > slayercost) {
       color = '90EE90'
           await collection1.updateOne(
-            { _id: message.author.id },
+            { _id: interaction.user.id },
             { $inc: { coins: -slayercost } },
             { upsert: true })
           await collection2.updateOne(
-            { _id: message.author.id },
+            { _id: interaction.user.id },
             { $inc: { zombiexp: slayerxp, zombiekills: 1 } },
             { upsert: true })
         } else if (choosen === 'Tarantula' && coins > slayercost) {
           color = 'GREY'
           await collection1.updateOne(
-            { _id: message.author.id },
+            { _id: interaction.user.id },
             { $inc: { coins: -slayercost } },
             { upsert: true })
           await collection2.updateOne(
-            { _id: message.author.id },
+            { _id: interaction.user.id },
             { $inc: { spiderxp: slayerxp, spiderkills: 1 } },
             { upsert: true })
         } else if (choosen === 'Sven' && coins > slayercost) {
           color = 'WHITE'
           await collection1.updateOne(
-            { _id: message.author.id },
+            { _id: interaction.user.id },
             { $inc: { coins: -slayercost } },
             { upsert: true })
           await collection2.updateOne(
-            { _id: message.author.id },
+            { _id: interaction.user.id },
             { $inc: { wolfxp: slayerxp, wolfkills: 1 } },
             { upsert: true })
         } else if (choosen === 'Voidgloom' && coins > slayercost) {
           color = 'PURPLE'
           await collection1.updateOne(
-            { _id: message.author.id },
+            { _id: interaction.user.id },
             { $inc: { coins: -slayercost } },
             { upsert: true })
           await collection2.updateOne(
-            { _id: message.author.id },
+            { _id: interaction.user.id },
             { $inc: { endermanxp: slayerxp, endermankills: 1 } },
             { upsert: true })
         } 

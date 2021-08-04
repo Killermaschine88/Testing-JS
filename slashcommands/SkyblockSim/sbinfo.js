@@ -4,22 +4,19 @@ const prefixx = new prefix();
 const leveling = require('../../Various/Skyblock/leveling.js')
 
 module.exports = {
-  name: "Sbinfo",
+  name: "info",
   description: "Creates your Profile for Skyblock Simulator",
   usage: "sbstart",
   perms: "None",
   folder: "SkyblockSim",
   aliases: ['sbi', 'sbview'],
   cooldown: 10,
-  async execute(client, message, args, mclient) {
+  async execute(client, interaction, mclient) {
 
-
-    if (!args[0]) {
-      var id = message.member.id;
+    if (interaction.options.getUser('user') != null) {
+      var id = interaction.options.getUser('user')
     } else {
-      if (message.mentions.members.first()) {
-        var id = message.mentions.members.first().id;
-      } else var id = args[0];
+      var id = interaction.user.id
     }
 
     const collection = mclient.db('SkyblockSim').collection('Players');
@@ -28,8 +25,8 @@ module.exports = {
     if (player === null) {
       const nodata = new Discord.MessageEmbed()
         .setColor('RED')
-        .setDescription(`No Profile found for <@${id}>`)
-      message.channel.send({ embeds: [nodata] })
+        .setDescription(`No Profile found for ${id}`)
+      interaction.editReply({ embeds: [nodata] })
       return;
     }
 
@@ -105,14 +102,14 @@ module.exports = {
           .setStyle('PRIMARY'),
       );
 
-    const menu = await message.channel.send({ embeds: [foundinfo], components: [row] })
+    const menu = await interaction.editReply({ embeds: [foundinfo], components: [row] })
 
 
 
     const collector = menu.createMessageComponentCollector({ componentType: 'BUTTON', time: 60000 });
 
     collector.on('collect', async i => {
-      if (i.user.id === message.author.id) {
+      if (i.user.id === interaction.user.id) {
         if (i.customId === 'main') {
           await i.deferUpdate()
           const main = new Discord.MessageEmbed()

@@ -5,20 +5,20 @@ const list = require('../../Various/Skyblock/prices.json');
 const fetch = require('node-fetch')
 
 module.exports = {
-  name: "Sbsell",
+  name: "sell",
   description: "Sells Items for Skyblock Simulator",
   usage: "sbsell (Itemname) (Amount)",
   perms: "None",
   folder: "SkyblockSim",
   aliases: ['sell'],
   cooldown: 10,
-  async execute(client, message, args, mclient) {
+  async execute(client, interaction, mclient) {
 
     const collection = mclient.db('SkyblockSim').collection('Players');
-    let player = await collection.findOne({ _id: message.author.id })
+    let player = await collection.findOne({ _id: interaction.user.id })
 
 
-    var gprefix = await prefixx.get(message.guild.id, { raw: false });
+    var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
     if (gprefix === null) gprefix = '.';
 
 
@@ -26,7 +26,7 @@ module.exports = {
       const nodata = new Discord.MessageEmbed()
         .setColor('RED')
         .setDescription(`No Profile found for <@!${id}>`)
-      message.channel.send({ embeds: [nodata] })
+      interaction.editReply({ embeds: [nodata] })
       return;
     }
 
@@ -40,26 +40,17 @@ module.exports = {
       }
     }
 
-    //Embed to show Usage and Inventory
-    if (args[0] === undefined) {
-      const sellmenu = new Discord.MessageEmbed()
-        .setTitle('Skyblock Simulator Sell')
-        .setFooter('Skyblock Simulator')
-        .setColor('90EE90')
-        .setDescription(`**Usage:** ${gprefix}sbsell (Amount/All*) (Itemname)\nItem and Amount are needed to sell an Item\n*Sells all Items from said Item you own\n\n**Inventory:**\n${str}`)
-      message.channel.send({ embeds: [sellmenu] })
-      return;
-    }
 
     //Variables for Checks
-    let amount = args[0].toLowerCase()
+    let amount = interaction.options.getInteger('amount');
     let price = ''
 
 
-    let bzname = args.slice(1).join('_').toUpperCase()
+    let bzname = interaction.options.getString('item').split(" ")
+    bzname = bzname.join('_').toUpperCase()
 
 
-    const input = args.slice(1).join(' ').toLowerCase()
+    let input = interaction.options.getString('item')
     const words = input.split(" ");
 
     for (let i = 0; i < words.length; i++) {
@@ -71,31 +62,8 @@ module.exports = {
 
     const founditem = player.data.inventory.items.find(item => item.name === sellitem)
 
-
-
-    //Check if Input exists
-    if (args[0] === undefined || args[1] === undefined) {
-      const notset = new Discord.MessageEmbed()
-        .setFooter('Skyblock Simulator')
-        .setColor('RED')
-        .setDescription(`You didn\'t specify the **Amount of Items** to be Sold or the **Item** to be sold please do so.`)
-      message.channel.send({ embeds: [notset] })
-      return;
-    }
-
     if (founditem === undefined) {
-      message.channel.send('Invalid Item entered')
-      return;
-    }
-
-    //Take Amount of Item as Amount
-    if (amount === 'all') {
-      amount = founditem.amount
-    }
-
-    //Check if Amount is a Number
-    if (isNaN(amount)) {
-      message.channel.send(`Please enter a Number or All as Amount. You entered: **${amount}`)
+      interaction.editReply('Invalid Item entered')
       return;
     }
 
@@ -105,7 +73,7 @@ module.exports = {
         .setFooter('Skyblock Simulator')
         .setColor('RED')
         .setDescription(`You don\'t have enough Items to be sold.`)
-      message.channel.send({ embeds: [noitems] })
+      interaction.editReply({ embeds: [noitems] })
       return;
     }
 
@@ -115,7 +83,7 @@ module.exports = {
         .setFooter('Skyblock Simulator')
         .setColor('RED')
         .setDescription(`You entered a Number higher than the Amount of ${sellitem} than you own.\nEntered: **${amount}**\nOwned: **${founditem.amount}**`)
-      message.channel.send({ embeds: [littleitems] })
+      interaction.editReply({ embeds: [littleitems] })
       return;
     }
 
@@ -136,12 +104,12 @@ module.exports = {
       const updatePlayer = addItem(sellitem, amount, player)
 
       await collection.replaceOne(
-        { _id: message.author.id },
+        { _id: interaction.user.id },
         updatePlayer
       )
 
       await collection.updateOne(
-        { _id: message.author.id },
+        { _id: interaction.user.id },
         { $inc: { 'data.profile.coins': earnedcoins } },
         { upsert: true }
       )
@@ -150,7 +118,7 @@ module.exports = {
         .setFooter('Skyblock Simulator')
         .setColor('90EE90')
         .setDescription(`Successfully sold **${amount}x ${sellitem}** for **${earnedcoins} Coins**`)
-      message.channel.send({ embeds: [sold] })
+      interaction.editReply({ embeds: [sold] })
       return;
     }
   }

@@ -200,12 +200,15 @@ client.on('messageCreate', async message => {
 client.on('interactionCreate', async interaction => {
   if (!interaction.isCommand()) return;
 
+  let commandExecute = interaction.commandName
 
-  if (!client.slashcommands.has(interaction.commandName)) return;
+  if (interaction.options._subCommand != null) {
+    commandExecute = interaction.options._subCommand
+  }
 
   try {
     await interaction.defer()
-    await client.slashcommands.get(interaction.commandName).execute(client, interaction, mclient);
+    await client.slashcommands.get(commandExecute).execute(client, interaction, mclient);
   } catch (error) {
     console.error(error);
     return interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true });

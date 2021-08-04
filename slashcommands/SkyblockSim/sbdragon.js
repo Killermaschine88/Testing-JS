@@ -3,20 +3,20 @@ const prefix = require("@replit/database");
 const prefixx = new prefix();
 
 module.exports = {
-  name: "Sbdragon",
+  name: "dragon",
   description: "Slay Dragons",
   usage: "sbdragon",
   perms: "None",
   folder: "SkyblockSim",
   aliases: ['sbd'],
   cooldown: 30,
-  async execute(client, message, args, mclient) {
+  async execute(client, interaction, mclient) {
 
     const collection = mclient.db('SkyblockSim').collection('Players');
-    let player = await collection.findOne({ _id: message.author.id })
+    let player = await collection.findOne({ _id: interaction.user.id })
 
 
-    var gprefix = await prefixx.get(message.guild.id, { raw: false });
+    var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
     if (gprefix === null) gprefix = '.';
 
     if (player === null) {
@@ -25,7 +25,7 @@ module.exports = {
         .setTitle('No Profile found')
         .setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``)
 
-      message.channel.send({ embeds: [noprofile] })
+      interaction.editReply({ embeds: [noprofile] })
       return;
     }
 
@@ -34,7 +34,7 @@ module.exports = {
         .setTitle('Missing Requirements')
         .setColor('RED')
         .setDescription(`You don\'t fit the Requirements needed to enter **The End**.\n\nCombat XP needed: **15000**\nYour Combat XP: **${player.data.skills.combat}**\nMissing Combat XP: **${15000 - player.data.skills.combat}**`)
-      message.channel.send({ embeds: [noentry] })
+      interaction.editReply({ embeds: [noentry] })
       return;
     }
 
@@ -47,7 +47,7 @@ module.exports = {
         .setColor('RED')
         .setDescription(`You don\'t have enough Summoning Eyes to fight a Dragon.\nYou need atleast **2 Summoning Eyes** to fight a Dragon\nTo get **Summoning Eyes** use ${gprefix}sbwarp Area Dragon\'s Nest to farm them`)
 
-      message.channel.send({ embeds: [noeyes] })
+      interaction.editReply({ embeds: [noeyes] })
       return;
     }
 
@@ -57,7 +57,7 @@ module.exports = {
       .setColor('PURPLE')
       .setFooter('Skyblock Simulator')
 
-    const menu = await message.channel.send({ embeds: [start] })
+    const menu = await interaction.editReply({ embeds: [start] })
 
     await sleep(3000)
 
@@ -127,12 +127,12 @@ module.exports = {
     const updatePlayer = addItem(dropped, amount, player)
 
     await collection.replaceOne(
-      { _id: message.author.id },
+      { _id: interaction.user.id },
       updatePlayer
     )
 
     await collection.updateOne(
-      { _id: message.author.id },
+      { _id: interaction.user.id },
       { $inc: { 'data.profile.coins': earned } },
       { upsert: true })
 

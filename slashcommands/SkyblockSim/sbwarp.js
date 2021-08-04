@@ -3,20 +3,20 @@ const prefix = require("@replit/database");
 const prefixx = new prefix();
 
 module.exports = {
-  name: "Sbwarp",
+  name: "warp",
   description: "Warp to Areas / Worlds",
   usage: "sbwarp (World/Area) (World Name/ Area Name)\nNames are Case Sensitive",
   perms: "None",
   folder: "SkyblockSim",
   aliases: ['warp', 'w'],
   cooldown: 10,
-  async execute(client, message, args, mclient) {
+  async execute(client, interaction, mclient) {
 
     const collection = mclient.db('SkyblockSim').collection('Players');
-    let player = await collection.findOne({ _id: message.author.id })
+    let player = await collection.findOne({ _id: interaction.user.id })
 
 
-    var gprefix = await prefixx.get(message.guild.id, { raw: false });
+    var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
     if (gprefix === null) gprefix = '.';
 
     if (player === null) {
@@ -25,7 +25,7 @@ module.exports = {
         .setTitle('No Profile found')
         .setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``)
 
-      message.channel.send({ embeds: [noprofile] })
+      interaction.editReply({ embeds: [noprofile] })
       return;
     }
 
@@ -72,11 +72,11 @@ module.exports = {
           .setStyle('DANGER'),
       );
 
-    const menu = await message.channel.send({ embeds: [start], components: [row] })
+    const menu = await interaction.editReply({ embeds: [start], components: [row] })
 
     const filter = i => {
       i.deferUpdate();
-      return i.user.id === message.author.id;
+      return i.user.id === interaction.user.id;
     };
 
     //Decide what Skill the Area is
@@ -574,7 +574,7 @@ module.exports = {
         .then(async i => {
           if (i.customId === 'confirm') {
             await collection.updateOne(
-              { _id: message.author.id },
+              { _id: interaction.user.id },
               { $set: { "data.misc.location": location } },
               { upsert: true })
 

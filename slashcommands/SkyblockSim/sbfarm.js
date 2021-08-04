@@ -4,22 +4,22 @@ const prefixx = new prefix();
 const lt = require('../../loottables.js')
 
 module.exports = {
-  name: "Sbfarm",
+  name: "farm",
   description: "Earnes you Money",
   usage: "sbfarm",
   perms: "None",
   folder: "SkyblockSim",
   aliases: ['sbgrind', 'sbf', 'sbg'],
   cooldown: 5,
-  async execute(client, message, args, mclient) {
+  async execute(client, interaction, mclient) {
 
 
     //Getting Info from Database
     const collection = mclient.db('SkyblockSim').collection('Players');
-    let player = await collection.findOne({ _id: message.author.id })
+    let player = await collection.findOne({ _id: interaction.user.id })
 
     //Getting prefix
-    var gprefix = await prefixx.get(message.guild.id, { raw: false });
+    var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
     if (gprefix === null) gprefix = '.';
 
 
@@ -28,7 +28,7 @@ module.exports = {
         .setColor('RED')
         .setTitle('No Profile found')
         .setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``)
-      message.channel.send({ embeds: [noprofile] })
+      interaction.editReply({ embeds: [noprofile] })
       return;
     }
 
@@ -42,7 +42,7 @@ module.exports = {
       .setDescription(`<a:runningsteve:865198832316317706> Wandering around the **${location}** to find Mobs.`)
       .setFooter('Skyblock Simulator')
 
-    const menu = await message.channel.send({ embeds: [start] })
+    const menu = await interaction.editReply({ embeds: [start] })
 
     //Settings a small wait time for "find Mobs"
     //sleep(2000)
@@ -124,7 +124,7 @@ module.exports = {
 
     //Editing Database Values
     await collection.updateOne(
-      { _id: message.author.id },
+      { _id: interaction.user.id },
       { $inc: { "data.misc.tkills": mobkills } },
       { upsert: true })
 
@@ -135,7 +135,7 @@ module.exports = {
       const updatePlayer = addItems(mobdrop, amount, player)
 
       await collection.replaceOne(
-        { _id: message.author.id },
+        { _id: interaction.user.id },
         updatePlayer
       )
     }
