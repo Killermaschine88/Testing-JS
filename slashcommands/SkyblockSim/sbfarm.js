@@ -4,7 +4,7 @@ const prefixx = new prefix();
 const lt = require('../../loottables.js')
 
 module.exports = {
-  name: "farm",
+  name: "sbfarm",
   description: "Earnes you Money",
   usage: "sbfarm",
   perms: "None",

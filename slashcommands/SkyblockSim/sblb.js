@@ -3,7 +3,7 @@ const prefix = require("@replit/database");
 const prefixx = new prefix();
 
 module.exports = {
-  name: "leaderboard",
+  name: "sbleaderboard",
   description: "Shows Skyblock Simulator Leaderboard",
   usage: "sblb",
   perms: "None",

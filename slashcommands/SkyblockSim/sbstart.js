@@ -3,7 +3,7 @@ const prefix = require("@replit/database");
 const prefixx = new prefix();
 
 module.exports = {
-  name: "start",
+  name: "sbstart",
   description: "Creates your Profile for Skyblock Simulator",
   usage: "sbstart",
   perms: "None",

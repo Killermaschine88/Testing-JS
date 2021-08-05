@@ -3,7 +3,7 @@ const prefix = require("@replit/database");
 const prefixx = new prefix();
 
 module.exports = {
-  name: "settings",
+  name: "sbsettings",
   description: "Settings for SkyblockSim",
   usage: "sbsettings (Setting Name)",
   perms: "None",

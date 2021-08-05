@@ -3,7 +3,7 @@ const prefix = require("@replit/database");
 const prefixx = new prefix();
 
 module.exports = {
-  name: "slayer",
+  name: "sbslayer",
   description: "Shows the Slayer Menu",
   usage: "sbslayer",
   perms: "None",

@@ -116,11 +116,12 @@ for (const folder of commandFolders) {
 //Command Handler
 client.on('messageCreate', async message => {
 
-  if (message.channel.type === 'dm') return message.channel.send('I dont work in DMs.')
+
+  if (message.author.bot) return
+  if (message.channel.type === 'DM') return message.channel.send('I dont work in DMs.')
   let gprefix = await prefixx.get(message.guild.id, { raw: false });
   if (gprefix === null) gprefix = '.';
   if (!message.content.startsWith(gprefix) || message.author.bot) return;
-  if (message.author.bot) return
 
   const args = message.content.slice(gprefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
@@ -203,7 +204,7 @@ client.on('interactionCreate', async interaction => {
   let commandExecute = interaction.commandName
 
   if (interaction.options._subCommand != null) {
-    commandExecute = interaction.options._subCommand
+    commandExecute = interaction.commandName + interaction.options._subCommand
   }
 
   try {
@@ -211,7 +212,10 @@ client.on('interactionCreate', async interaction => {
     await client.slashcommands.get(commandExecute).execute(client, interaction, mclient);
   } catch (error) {
     console.error(error);
-    return interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true });
+    interaction.editReply({ content: 'There was an error while executing this command and the Bot Dev has been notified.', ephemeral: true });
+    client.users.fetch('570267487393021969').then(async user => {
+      await user.send(`An error has occured when **${interaction.user.tag}** used **${commandExecute}**`)
+    })
   }
 });
 

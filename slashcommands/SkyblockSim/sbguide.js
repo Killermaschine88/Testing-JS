@@ -3,7 +3,7 @@ const prefix = require("@replit/database");
 const prefixx = new prefix();
 
 module.exports = {
-  name: "guide",
+  name: "sbguide",
   description: "Shows a Guide for Skyblock Simulator",
   usage: "sbguide",
   perms: "None",

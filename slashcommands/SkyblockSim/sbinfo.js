@@ -4,7 +4,7 @@ const prefixx = new prefix();
 const leveling = require('../../Various/Skyblock/leveling.js')
 
 module.exports = {
-  name: "info",
+  name: "sbinfo",
   description: "Creates your Profile for Skyblock Simulator",
   usage: "sbstart",
   perms: "None",

@@ -3,7 +3,7 @@ const prefix = require("@replit/database");
 const prefixx = new prefix();
 
 module.exports = {
-  name: "dragon",
+  name: "sbdragon",
   description: "Slay Dragons",
   usage: "sbdragon",
   perms: "None",

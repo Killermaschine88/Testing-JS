@@ -5,7 +5,7 @@ const list = require('../../Various/Skyblock/prices.json');
 const fetch = require('node-fetch')
 
 module.exports = {
-  name: "sell",
+  name: "sbsell",
   description: "Sells Items for Skyblock Simulator",
   usage: "sbsell (Itemname) (Amount)",
   perms: "None",

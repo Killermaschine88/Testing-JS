@@ -3,7 +3,7 @@ const prefix = require("@replit/database");
 const prefixx = new prefix();
 
 module.exports = {
-  name: "warp",
+  name: "sbwarp",
   description: "Warp to Areas / Worlds",
   usage: "sbwarp (World/Area) (World Name/ Area Name)\nNames are Case Sensitive",
   perms: "None",

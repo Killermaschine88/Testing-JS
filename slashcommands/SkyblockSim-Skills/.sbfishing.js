@@ -6,7 +6,7 @@ const mobs = require('../../Various/Skyblock/mobstats.json')
 const getLevel = require('../../Various/Skyblock/skilllvl.js')
 
 module.exports = {
-  name: "fishing",
+  name: "sbfishing",
   description: "Earn Fishing XP",
   usage: "sbfishing",
   perms: "None",
