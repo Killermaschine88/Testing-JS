@@ -12,7 +12,7 @@ module.exports = {
   perms: "None",
   folder: "Skyblock",
   aliases: ['bz'],
-  async execute(client, interaction) {
+  async execute(interaction) {
 
     Object.keys(list).forEach(key => list[key].bazaar ? list2[key] = list[key] : "");
 

@@ -7,7 +7,7 @@ module.exports = {
   perms: "None",
   folder: "Bot",
   aliases: [],
-  execute: (client, interaction) => {
+  execute: (interaction) => {
 
     const embed = new Discord.MessageEmbed()
       .setTitle('Important Bot Links')

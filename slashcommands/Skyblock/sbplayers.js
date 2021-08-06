@@ -8,7 +8,7 @@ module.exports = {
   perms: "None",
   folder: "Skyblock",
   aliases: ['sbp'],
-    async execute(client, interaction) {
+    async execute(interaction) {
 
       const apiData = await getApiData();
 

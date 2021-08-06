@@ -52,8 +52,6 @@ poster.on('posted', (stats) => { // ran when succesfully posted
 })*/
 
 
-
-
 // Bot token login
 client.login(token);
 
@@ -177,48 +175,12 @@ const eventFiles = fs
 for (const file of eventFiles) {
   const event = require(`./events/${file}`);
   if (event.once) {
-    client.once(event.name, (...args) => event.execute(...args, client));
+    client.once(event.name, (...args) => event.execute(...args, mclient, client));
   } else {
-    client.on(event.name, (...args) => event.execute(...args, client));
+    client.on(event.name, (...args) => event.execute(...args, mclient, client));
     e += 1;
   }
 }
-
-
-//Deploying Cmds
-client.on('messageCreate', async message => {
-  if (!client.application ?.owner) await client.application ?.fetch();
-
-  if (message.content.toLowerCase() === ',dp' && message.author.id === client.application ?.owner.id) {
-    const cmdfile = require('./Various/commands.js')
-
-    const command = await client.guilds.cache.get('869124249225429022') ?.commands.set(cmdfile.data)
-		message.channel.send('Commands deployed.')
-  }
-});
-
-
-client.on('interactionCreate', async interaction => {
-  if (!interaction.isCommand()) return;
-
-  let commandExecute = interaction.commandName
-
-  if (interaction.options._subCommand != null) {
-    commandExecute = interaction.commandName + interaction.options._subCommand
-  }
-
-  try {
-    await interaction.defer()
-    await client.slashcommands.get(commandExecute).execute(client, interaction, mclient);
-  } catch (error) {
-    console.error(error);
-    interaction.editReply({ content: 'There was an error while executing this command and the Bot Dev has been notified.', ephemeral: true });
-    client.users.fetch('570267487393021969').then(async user => {
-      await user.send(`An error has occured when **${interaction.user.tag}** used **${commandExecute}**`)
-    })
-  }
-});
-
 
 //Loophole to keep the Bot running
 keepAlive();

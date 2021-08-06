@@ -10,7 +10,7 @@ module.exports = {
   folder: "SkyblockSim",
   aliases: ['sbd'],
   cooldown: 30,
-  async execute(client, interaction, mclient) {
+  async execute(interaction, mclient) {
 
     const collection = mclient.db('SkyblockSim').collection('Players');
     let player = await collection.findOne({ _id: interaction.user.id })

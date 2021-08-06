@@ -8,7 +8,7 @@ module.exports = {
   perms: "None",
   folder: "QOL",
   aliases: ['ui', 'me', 'whois'],
-  async execute(client, interaction) {
+  async execute(interaction) {
 
     let member = interaction.options.getMember('user');
 

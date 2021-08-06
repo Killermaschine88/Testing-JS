@@ -8,7 +8,7 @@ module.exports = {
   perms: "None",
   folder: "Bot",
   aliases: [],
-  async execute(client, interaction) {
+  async execute(interaction) {
 
     const embed = new Discord.MessageEmbed()
       .setDescription('Pinging . . .')
@@ -22,7 +22,7 @@ module.exports = {
       if (m.createdTimestamp - interaction.createdTimestamp < 150) { ping = '<:ping:847473419011620955>' } else if (m.createdTimestamp - interaction.createdTimestamp < 300) { ping = '<:ping2:859717516548636672>' } else { ping = '<:ping3:859717516284002314>' }
 
       let ping1 = ''
-      if (client.ws.ping < 150) { ping1 = '<:ping:847473419011620955>' } else if (client.ws.ping < 300) { ping1 = '<:ping2:859717516548636672>' } else { ping1 = '<:ping3:859717516284002314>' }
+      if (interaction.client.ws.ping < 150) { ping1 = '<:ping:847473419011620955>' } else if (interaction.client.ws.ping < 300) { ping1 = '<:ping2:859717516548636672>' } else { ping1 = '<:ping3:859717516284002314>' }
 
 
       interaction.editReply({
@@ -32,7 +32,7 @@ module.exports = {
             .setColor('GREEN')
             .addFields(
               { name: `${ping} BOT Latency`, value: `${m.createdTimestamp - interaction.createdTimestamp}ms.`, inline: false },
-              { name: `${ping1} API Latency`, value: `${Math.round(client.ws.ping)}ms.`, inline: false }
+              { name: `${ping1} API Latency`, value: `${Math.round(interaction.client.ws.ping)}ms.`, inline: false }
             )]
       });
     });

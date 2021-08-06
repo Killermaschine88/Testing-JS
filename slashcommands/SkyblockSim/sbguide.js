@@ -10,7 +10,7 @@ module.exports = {
   folder: "SkyblockSim",
   aliases: [],
   cooldown: 10,
-  async execute(client, interaction) {
+  async execute(interaction) {
 
     var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
     if (gprefix === null) gprefix = '.';

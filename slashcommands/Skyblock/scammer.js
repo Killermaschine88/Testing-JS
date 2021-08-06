@@ -11,7 +11,7 @@ module.exports = {
   perms: "None",
   folder: "Skyblock",
   aliases: ['sc'],
-  async execute(client, interaction, mclient) {
+  async execute(interaction, mclient) {
 
     const ign = interaction.options.getString('ign');
 

@@ -11,7 +11,7 @@ module.exports = {
   folder: "SkyblockSim",
   aliases: ['sbgrind', 'sbf', 'sbg'],
   cooldown: 5,
-  async execute(client, interaction, mclient) {
+  async execute(interaction, mclient) {
 
 
     //Getting Info from Database

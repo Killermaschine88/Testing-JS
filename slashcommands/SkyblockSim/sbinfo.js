@@ -11,7 +11,7 @@ module.exports = {
   folder: "SkyblockSim",
   aliases: ['sbi', 'sbview'],
   cooldown: 10,
-  async execute(client, interaction, mclient) {
+  async execute(interaction, mclient) {
 
     if (interaction.options.getUser('user') != null) {
       var id = interaction.options.getUser('user')

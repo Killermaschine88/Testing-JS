@@ -23,7 +23,7 @@ module.exports = {
           .setColor('7CFC00')
           .setTimestamp()
           .addFields(
-             {name: "Guild Owner", value: `${owner.user.tag} (${owner.user.id})]`},
+            { name: "Guild Owner", value: `${owner.user.tag} (${owner.user.id})]` },
             { name: "Member Count of the Server", value: `${guild.memberCount}` },
             { name: "Bot Count of the Server", value: `${guild.members.cache.filter(u => u.user.bot).size}` },
             { name: "Total Server Count Now", value: `${client.guilds.cache.size}` },

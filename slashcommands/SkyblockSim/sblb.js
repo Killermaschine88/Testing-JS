@@ -10,7 +10,7 @@ module.exports = {
   folder: "SkyblockSim",
   aliases: ['sbl'],
   cooldown: 10,
-  async execute(client, message, args, mclient) {
+  async execute(message, args, mclient) {
 
     const collection = mclient.db('SkyblockSim').collection('Main');
     const found1 = await collection.find({}).sort({ coins: -1 }).toArray()

@@ -7,7 +7,7 @@ module.exports = {
   perms: "None",
   folder: "QOL",
   aliases: ['si'],
-  execute: (client, interaction) => {
+  execute: (interaction) => {
 
 
     interaction.editReply({
