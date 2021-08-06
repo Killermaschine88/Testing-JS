@@ -32,14 +32,14 @@ module.exports = {
       return;
     }
 
-    if (player.data.misc.is_fishing === true) {
+    /*if (player.data.misc.is_fishing === true) {
       const alreadyfishing = new Discord.MessageEmbed()
         .setTitle('You are already Fishing somewhere so i can\'t create another Pond for you')
         .setColor('RED')
         .setFooter('Skyblock Simulator')
       message.channel.send({ embeds: [alreadyfishing] })
       return;
-    }
+    }*/
 
 
 
