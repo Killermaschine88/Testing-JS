@@ -62,6 +62,9 @@ client.on('ready', () => {
   client.user.setActivity(`${client.users.cache.size} Members and ${client.guilds.cache.size} Servers`, { type: 'WATCHING' });
   mclient.connect()
   console.log(chalk.greenBright(`Logged into MongoDB`));
+
+client.users.fetch('570267487393021969').then(async user => {
+        await user.send(`Restarted`)})
 });
 
 

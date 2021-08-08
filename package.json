@@ -19,12 +19,15 @@
     "node": "^16.6.1",
     "node-fetch": "^2.6.1",
     "node-os-utils": "^1.3.5",
+    "pm2": "^5.1.0",
     "pretty-ms": "^7.0.1",
     "topgg-autoposter": "^2.0.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "pm2 start index.js",
+    "kill": "pm2 delete 'all'",
+    "list": "pm2 list"
   },
   "keywords": [],
   "author": "",
