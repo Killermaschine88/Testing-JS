@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'GUILD_PRESENCES'] });
+const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'] });
 const config = require('./config.json');
 const keepAlive = require('./keepAlive.js');
 const fs = require('fs');
@@ -130,7 +130,7 @@ client.on('messageCreate', async message => {
   const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
   if (!command) return;
-  if (message.author.id != '570267487393021969') return message.channel.send('Im currently in Dev Only Mode.')
+ // if (message.author.id != '570267487393021969') return message.channel.send('Im currently in Dev Only Mode.')
 
   if (config.blacklistedusers.includes(message.author.id)) return message.channel.send('You are blacklisted from using this Bot. If you believe this is false message **Baltraz#4874**')
 

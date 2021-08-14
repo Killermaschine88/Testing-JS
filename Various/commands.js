@@ -222,7 +222,36 @@ const data = [
         name: 'fishing',
         description: 'Opens a Pond and lets you fish',
         type: 'SUB_COMMAND'
-      }
+      },
+      {
+        name: 'dungeons',
+        description: 'Allows you to create a Dungeon Run',
+        type: 'SUB_COMMAND'
+      },
+      {
+        name: 'class',
+        description: 'Lets you select a different Dungeon Class',
+        type: 'SUB_COMMAND',
+        options: [
+          {
+            name: 'choice',
+            description: 'Available Classes',
+            type: 'STRING',
+            choices: [
+              {
+                name: 'Assassin',
+                value: 'Assassin',
+              },
+              {
+                name: 'Berserker',
+                value: 'Berserker',
+              },
+              {
+                name: 'Tank',
+                value: 'Tank'
+              }],
+          }],
+      },
     ],
   },
 ]

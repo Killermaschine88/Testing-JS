@@ -51,7 +51,7 @@ module.exports = {
                 zombiexp: 0, spiderxp: 0, wolfxp: 0, endermanxp: 0, zombiekills: 0, spiderkills: 0, wolfkills: 0, endermankills: 0
               },
               dungeons: {
-                xp: 0, class: 'None', secrets: 0
+                xp: 0, secrets: 0, class: { selected: {name: 'None', xp: 0}, available: { assassin: {xp: 0}, berserker: {xp:0}, tank: {xp: 0}}}
               },
               settings: {
                 imgshown: true
