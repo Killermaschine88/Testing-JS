@@ -29,7 +29,7 @@ module.exports = {
 
     let starttime = interaction.createdTimestamp / 1000
     starttime = starttime.toFixed()
-    if (player === null) {
+    if (player !== null) {
       await collection.updateOne(
         { _id: interaction.user.id },
         {
@@ -57,10 +57,14 @@ module.exports = {
                 imgshown: true
               },
               equipment: {
-                combat: { weapon: { name: 'Fist' }, armor: { name: 'None' } }, fishing: { armor: { name: 'None', sea_creature_chance: 0 }, rod: { name: 'Fishing Rod', sea_creature_chance: 0, fishing_speed: 0 } }
+                combat: { sword: {
+                  name: 'None', damage: 0, strength: 0, crit_chance: 0, crit_damage: 0
+                }, armor: {
+                  name: 'None', health: 0, defense: 0, strength: 0, crit_chance: 0, crit_damage: 0 
+                }}, fishing: { armor: { name: 'None', sea_creature_chance: 0 }, rod: { name: 'Fishing Rod', sea_creature_chance: 0, fishing_speed: 0 } }
               },
               misc: {
-                voted: 0, location: 'Graveyard', is_fishing: false
+                voted: 0, location: 'Graveyard', is_fishing: false, in_dungeon: false
               }
             }
           }

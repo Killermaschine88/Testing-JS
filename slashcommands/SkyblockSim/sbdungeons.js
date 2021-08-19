@@ -1,4 +1,6 @@
-const Discord = require('discord.js');
+const { MessageButton, MessageActionRow, MessageEmbed } = require('discord.js');
+
+const playerStats = require('./Various/playerStats.js')
 
 module.exports = {
   name: "sbdungeons",
@@ -9,276 +11,812 @@ module.exports = {
   aliases: [],
   cooldown: 10,
   async execute(interaction, mclient) {
+         /**
+         * @param {String} movement Direction to move
+         * @param {Boolean} ignoreEvent Move inside the event or not
+         * @returns {Array<Number, Number>} New position coordinates
+         */
+        const movePlayer = ( movement, ignoreEvent ) => {
+            let [x, y] = location
+            
+            if ( movement === 'up' ) {
+                var a = x - 1
+                var b = y
+            } else if ( movement === 'left' ) {
+                var a = x
+                var b = y - 1
+            } else if ( movement === 'right' ) {
+                var a = x
+                var b = y + 1
+            } else if ( movement === 'down' ) {
+                var a = x + 1
+                var b = y
+            }
+            if ( map[a][b] == 0 || ( ( map[a][b] == 3 || map[a][b] == 4 ) && !ignoreEvent ) ) return location
 
-
-    const collection = mclient.db('SkyblockSim').collection('Players');
-    let player = await collection.findOne({ _id: interaction.user.id })
-
-
- if(player === null) {
-   interaction.editReply('No Profile')
-   return;
- }
- 
- if(player.data.dungeons.class.selected.name === 'None') {
-   const noClass = new Discord.MessageEmbed()
-   .setColor('GREY')
-   .setFooter('Skyblock Simulator')
-   .setDescription('**Available Classes**\nSelect a Class using /sb class <Class Name> before starting a Dungeon, the selected Class can be changed at any time while your not in a Dungeon\n\n**Assassin**\nGives 2 Strength and 1 Ferocity per Level\n\n**Berserker**\nGives 1 Strength and 1 Defense per Level\n\n**Tank**\nGives 1 Defense and 2 Health per Level')
-   interaction.editReply({embeds: [noClass]})
- }
- 
- //Variables needed for the Map
- let map = ''
- let oldLocation = [1, 1]
-  let movement = ''
-    
- let f1_map = [
-   [['0'], ['0'], ['0'], ['0'], ['0']],
-   [['0'], ['2'], ['1'], ['1'], ['0']],
-   [['0'], ['1'], ['1'], ['1'], ['0']],
-   [['0'], ['1'], ['1'], ['1'], ['0']],
-   [['0'], ['0'], ['0'], ['0'], ['0']]
-   ]
- 
- let f3_map = [
-   [['0'], ['0'], ['0'], ['0'], ['0'], ['0'], ['0'], ['0'], ['0'], ['0']],
-   [['0'], ['2'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['0']],
-   [['0'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['0']],
-   [['0'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['0']],
-   [['0'], ['0'], ['0'], ['0'], ['0'], ['0'], ['0'], ['0'], ['0'], ['0']]
-   ]
-
-
-//Floor Selection
-    
-const floor1 = new Discord.MessageButton()
-      .setCustomId('f1')
-      .setLabel('Floor 1')
-      .setStyle('PRIMARY')
-    const floor2 = new Discord.MessageButton()
-      .setCustomId('f2')
-      .setLabel('Floor 2')
-      .setStyle('PRIMARY')
-    
-const floor3 = new Discord.MessageButton()
-      .setCustomId('f3')
-      .setLabel('Floor 3')
-      .setStyle('PRIMARY')
-    
-    const floors = new Discord.MessageActionRow()
-    .addComponents(floor1, floor2 , floor3)
-
-
-
-    
-
-  let nums = ['1']
-    let num = nums[Math.floor(Math.random() * nums.length)];
-
-const floorselect = new Discord.MessageEmbed()
-    .setTitle('Dungeons Floor Selection')
-    .setFooter('Skyblock Simulator')
-    .setColor('GREY')
-    .setDescription('**Floor 1 (0)**\n**Floor 2(4)**')
-
-    const menu = await interaction.editReply({embeds: [floorselect], components: [floors]})
-
-    
-const filter = i => {
-      i.deferUpdate();
-      return i.user.id === interaction.user.id;
-    };
-
-  
-await menu.awaitMessageComponent({ filter, componentType: 'BUTTON', time: 60000 })
-      .then(i => {
-        if (i.customId === 'f1' && num === '1') {
-          map = f1_map
-              } else if (i.customId === 'f2' && num === '1') {
-          map = f2_map
-        } else if (i.customId === 'f3' && num === '1') {
-          map = f3_map
-        } else {
-          const cancelled = new Discord.MessageEmbed()
-            .setTitle('Menu Cancelled')
-            .setColor('RED')
-          menu.edit({ embeds: [cancelled], components: [] })
-          return;
+            map[x][y] = 1
+            
+            location = [a, b]
+            
+            map[a][b] = 2
+            return location
         }
-      }).catch(err => menu.edit({ components: [] }));
-    
-      
-
-    //Variables needed for movement
-    const empty = new Discord.MessageButton()
-      .setCustomId('empty')
-    .setEmoji('876209923875303424')
-      .setStyle('PRIMARY')
-      .setDisabled(true)
-    const emptyy = new Discord.MessageButton()
-      .setCustomId('emptyy')
-    .setEmoji('876209923875303424')
-      .setStyle('PRIMARY')
-      .setDisabled(true)
-    const emptyyy = new Discord.MessageButton()
-      .setCustomId('emptyyy')
-    .setEmoji('876209923875303424')
-      .setStyle('PRIMARY')
-      .setDisabled(true)
-    const emptyyyy = new Discord.MessageButton()
-      .setCustomId('emptyyyy')
-    .setEmoji('876209923875303424')
-      .setStyle('PRIMARY')
-      .setDisabled(true)
-    const emptyyyyy = new Discord.MessageButton()
-      .setCustomId('emptyyyyy')
-    .setEmoji('876209923875303424')
-      .setStyle('PRIMARY')
-      .setDisabled(true)
-
-    const up = new Discord.MessageButton()
-      .setCustomId('up')
-      .setLabel('⬆️')
-      .setStyle('PRIMARY')
-
-const down = new Discord.MessageButton()
-      .setCustomId('down')
-      .setLabel('⬇️')
-      .setStyle('PRIMARY')
-    
-const left = new Discord.MessageButton()
-      .setCustomId('left')
-      .setLabel('⬅️')
-      .setStyle('PRIMARY')
-    
-const right = new Discord.MessageButton()
-      .setCustomId('right')
-      .setLabel('➡️')
-      .setStyle('PRIMARY')
-    
-  const attack = new Discord.MessageButton()
-    .setCustomId('attack')
-    .setLabel('⚔️')
-    .setStyle('PRIMARY')
-    .setDisabled(true)
-  const interact = new Discord.MessageButton()
-    .setCustomId('interact')
-    .setLabel('a')
-    .setStyle('PRIMARY')
-    .setDisabled(true)
-
-    const row1 = new Discord.MessageActionRow()
-    .addComponents(attack, up, interact)
-    const row2 = new Discord.MessageActionRow()
-    .addComponents(left, down, right)
-    //const row3 = new Discord.MessageActionRow()
-    //.addComponents(emptyyyy, down, emptyyyyy)
-
-   // const testrow = new Discord.MessageActionRow()
-    //.addComponents(up, down, left, right)
-
-    
-      
-
-  const test = new Discord.MessageEmbed()
- test.setFooter('Skyblock Simulator')
-test.setColor('GREY')
-    
- menu.edit({embeds: [test], components: [row1, row2]})
-
-
-     const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 858000 })
-
-
-    collector.on('collect', async i => {
-    if(i.customId === 'up') {
-      movement = 'up'
-    } else if(i.customId === 'left') {
-      movement = 'left'
-    } else if (i.customId === 'right') {
-      movement = 'right'
-    } else if (i.customId === 'down') {
-      movement = 'down'
-    }
-    
-          oldLocation = await movePlayer(oldLocation, map, movement)
-
-          const player = '🟩'
-          const wall = '<:wall:876211886746636288>'
-      const air = '<:air:876209923875303424>'
-
-const mapArray = ( map ) => {
-    let string = ''
-    let index = 0
-    for ( const row of map ) {
-        for ( const item of row ) {
-            index++
-            if ( item == 0 ) string += wall
-            else if ( item == 1 ) string += air
-            else if ( item == 2 ) string += player
-            // reset the row
-            if ( index == 10 ) index = 0, string += '\n'
+        /**
+         * @returns {String} Map string for the embed
+         */
+        const mapArray = () => {
+            let string = ''
+            let index = 0
+            for ( const row of map ) {
+                for ( const item of row ) {
+                    index++
+                    if ( item == 0 ) string += wall
+                    else if ( item == 1 ) string += air
+                    else if ( item == 2 ) string += Player
+                    else if ( item == 3 ) string += puzzle
+                    else if ( item == 4 ) string += enemy
+                    // reset the row
+                    if ( index == map[0].length ) index = 0, string += '\n'
+                }
+            }
+            return string
         }
-    }
-    return string
-}
+        /**
+         * @returns {Array<Boolean, String>} Enemy is near or not - Direction
+         */
+        const nearEnemy = () => {
+            let [x, y] = location
 
-         test.setDescription(`${mapArray(map)}`)
-          menu.edit({embeds: [test]})
-      
-    })
+            // Check if enemy is on the right
+            if ( map[x][y+1] == 4 ) return [ true, 'right' ]
+            // Check if enemy is on the left
+            if ( map[x][y-1] == 4 ) return [ true, 'left' ]
+            // Check if enemy is below
+            if ( map[x+1][y] == 4 ) return [ true, 'down' ]
+             // Check if enemy is above
+            if ( map[x-1][y] == 4 ) return [ true, 'up' ]
+            return false
+        }
+        /**
+         * @returns {Array<Boolean, String>} Puzzle is near or not - Direction
+         */
+        const nearPuzzle = () => {
+            let [x, y] = location
+            
+            // Check if puzzle is on the right
+            if ( map[x][y+1] == 3 ) return [ true, 'right' ]
+            // Check if puzzle is on the left
+            if ( map[x][y-1] == 3 ) return [ true, 'left' ]
+            // Check if puzzle is below
+            if ( map[x+1][y] == 3 ) return [ true, 'down' ]
+             // Check if puzzle is above
+            if ( map[x-1][y] == 3 ) return [ true, 'up' ]
+            return false
+        }
+        //Damage Calculations
+        /**
+         * @param {Number} php Player Health
+         * @param {Number} mdmg Mob Damage
+         * @returns {Number} Player Health
+         */
+        const dmgtaken = ( php, mdmg ) => {
+            php -= mdmg
+            return php
+        }
+        /**
+         * @param {Number} mhp Mob Health
+         * @param {Number} pdmg Player Damage
+         * @returns {Number} Mob Health
+         */
+        const dmgdealt = ( mhp, pdmg ) => {
+            mhp -= pdmg
+            return mhp
+        }
+        const sleep = async ( ms ) => {
+            return new Promise((resolve) => {
+                setTimeout(resolve, ms)
+            })
+        }
+        const isCrit = ( critchance ) => {
+            return ( Math.random() * 100 < critchance ) ? true : false
+        }
+        const playerStats = (player, type) => {
+            //Base Variables
+            let stats = player.stats
+            let inv = ''
+          
+            //Base Stats
+            // let health = stats.health
+            // let defense = stats.defense
+            // let damage = stats.damage
+            // let strength = stats.strength
+            // let crit_chance = stats.crit_chance
+            // let crit_damage = stats.crit_damage
+            // let magic_find = stats.magic_find
+            // let sea_creature_chance = stats.sea.creature_chance
+            
+            //Combat Stats
+            if ( type = 'combat' ) {
+                // inv = player.inventory.combat
+                
+                // health += inv.armor.health
+            
+                // defense += inv.armor.defense
+            
+                // damage += inv.weapon.damage
+            
+                // strength += inv.weapon.strength + inv.armor.strength
+            
+                // crit_chance += inv.weapon.crit_chance + inv.armor.crit_chance
+            
+                // crit_damage += inv.weapon.crit_damage + inv.armor.crit_damage  
+            }
+          
+            return {
+                health: 100,
+                defense: 100,
+                damage: 100,
+                strength: 1,
+                crit_chance: 1,
+                crit_damage: 1,
+                magic_find: 100,
+                sea_creature_chance: 100
+            }
+        }
+        const updateTTT = (x, y, user) => {
+            const emoji = (user) ? '🟩' : '🟥'
+            let txt = '', index = 0
+            table[x][y] = emoji
 
+            for ( const row of table ) {
+                for ( const column of row ) {
+                    index++
+                    txt += ' **|** ' + column
+                    if ( index % 3 == 0 ) txt += ' **|**\n'
+                }
+            }
+            return txt
+        }
+        const wincheckTTT = () => {
+            const [ a, b, c ] = table[0]
+            const [ d, e, f ] = table[1]
+            const [ g, h, i ] = table[2]
+
+            if ( a != fog && b != fog  && c != fog && d != fog && e != fog && f != fog && g != fog && h != fog && i != fog ) {
+                if ( ( a == b && b == c && b != fog ) || ( a == d && d == g && d != fog ) || ( a == e && e == i && e != fog ) ) return [ true, a ]
+                if ( ( d == e && e == f && e != fog ) || ( b == e && e == h && e != fog ) || ( g == e && e == c && e != fog ) ) return [ true, e ]
+                if ( ( g == h && h == i && h != fog ) || ( c == f && f == i && f != fog ) ) return [ true, i ]
+                else return [ true, undefined ]
+            }
+            if ( ( a == b && b == c && b != fog ) || ( a == d && d == g && d != fog ) || ( a == e && e == i && e != fog ) ) return [ true, a ]
+            if ( ( d == e && e == f && e != fog ) || ( b == e && e == h && e != fog ) || ( g == e && e == c && e != fog ) ) return [ true, e ]
+            if ( ( g == h && h == i && h != fog ) || ( c == f && f == i && f != fog ) ) return [ true, i ]
+            else return [ false, undefined ]
+        }
+        const shuffle = (array) => {
+            let currentIndex = array.length,  randomIndex
+
+            while ( currentIndex != 0 ) {
+                randomIndex = Math.floor(Math.random() * currentIndex)
+                currentIndex--
+            
+                [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]]
+            }
+          
+            return array
+        }
+
+        const collection = mclient.db('SkyblockSim').collection('Players')
+        const player = await collection.findOne({ _id: interaction.user.id })
+
+        if ( player === null ) {
+            interaction.editReply('No Profile')
+            return
+        }
+
+        //Players Stats
+        let type = 'combat'
+        let pstats = playerStats(player, type) //Type decides what gear is needed for the Action
+
+        let combatlvl = 10
+        
+        if ( player.data.dungeons.class.selected.name === 'None' ) {
+            const noClass = new MessageEmbed()
+            .setFooter('Skyblock Simulator')
+            .setDescription(`**Available Classes**
+            Select a Class using /sb class <Class Name> before starting a Dungeon, the selected Class can be changed at any time while your not in a Dungeon
+            
+            **Assassin**
+            Gives 2 Strength and 1 Ferocity per Level
+            
+            **Berserker**
+            Gives 1 Strength and 1 Defense per Level
+            
+            **Tank**
+            Gives 1 Defense and 2 Health per Level`)
+            interaction.editReply({ embeds: [noClass] })
+        }
     
- collector.on('end', async collected => {
- 
-      menu.edit({ embeds: [test], components: [] })
-    });
+        //Variables needed for the Map
+        let map = ''
+        let location = [1, 1]
+            
+        let f1_map = [
+            [ 0, 0, 0 ,0, 0, 0, 0 ],
+            [ 0, 2, 1 ,1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 0 ],
+            [ 0, 0, 0 ,0, 0, 0, 0 ]
+        ]
+        let f2_map = [
+            [ 0, 0, 0 ,0, 0, 0, 0, 0 ],
+            [ 0, 2, 1 ,1, 1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 1, 0 ],
+            [ 0, 0, 0 ,0, 0, 0, 0, 0 ]
+        ]
+        // sample floor 2 map
+        f2_map = [
+            [ 0, 0, 0 ,0, 0, 0, 0, 0 ],
+            [ 0, 2, 1 ,1, 1, 0, 3, 0 ],
+            [ 0, 3, 1 ,1, 1, 0, 1, 0 ],
+            [ 0, 4, 1 ,1, 1, 1, 1, 0 ],
+            [ 0, 0, 1 ,1, 0, 0, 1, 0 ],
+            [ 0, 1, 1 ,4, 0, 4, 1, 0 ],
+            [ 0, 3, 1 ,1, 0, 1, 1, 0 ],
+            [ 0, 0, 0 ,0, 0, 0, 0, 0 ]
+        ]
+        let f3_map = [
+            [ 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0 ],
+            [ 0, 2, 1 ,1, 1, 1, 1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 1, 1, 1, 0 ],
+            [ 0, 1, 1 ,1, 1, 1, 1, 1, 1, 0 ],
+            [ 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0 ]
+        ]
 
- 
- 
+        //Floor Selection
+        const floors = new MessageActionRow()
+            .addComponents(
+                new MessageButton()
+                    .setCustomId('f1')
+                    .setLabel('Floor 1')
+                    .setStyle('PRIMARY'),
+                new MessageButton()
+                    .setCustomId('f2')
+                    .setLabel('Floor 2')
+                    .setStyle('PRIMARY'),
+                new MessageButton()
+                    .setCustomId('f3')
+                    .setLabel('Floor 3')
+                    .setStyle('PRIMARY')
+            )
 
-  }
-};
+        const floorSelect = new MessageEmbed()
+            .setTitle('Dungeons Floor Selection')
+            .setFooter('Skyblock Simulator')
+            .setColor('GREY')
+            .setDescription('**Floor 1 (0)**\n**Floor 2 (4)**\n**Floor 3 (8)**')
 
-/*
-0 = Wall
-1 = Room
-2 = Player
-3 = Puzzle
-4 = Mob
-5 = Secret
-*/
+        const menu = await interaction.editReply({ embeds: [floorSelect], components: [floors] })
 
-function movePlayer(oldLocation, map, movement) {
-  let [x, y] = oldLocation
-  
-  if(movement === 'up') {
-    var a = x-1
-    var b = y
-  } else if (movement === 'left') {
-    var a = x
-    var b = y-1
-    } else if (movement === 'right') {
-    var a = x
-    var b = y+1
-  } else if (movement === 'down') {
-    var a = x+1
-    var b = y
-  }
+        /*
+          //Checks if the Player already has an open Dungeon Run
+        if ( player.data.misc.in_dungeon ) {
+            const runopen = new MessageEmbed()
+                .setTitle('You already have started a Dungeon Run somewhere so i can\'t create another Dungeon for you, wait a few Minutes or finish your Run before trying again.')
+                .setColor('RED')
+                .setFooter('Skyblock Simulator')
+            return interaction.editReply({ embeds: [runopen] })
+        }*/
+            
+        //Sets the Player into the Dungeon so they cant opem another run.
+        await collection.updateOne(
+            { _id: interaction.user.id },
+            { $set: { "data.misc.in_dungeon": true } },
+            { upsert: true }
+        )
 
+        const filter = i => {
+            i.deferUpdate()
+            return i.user.id === interaction.user.id
+        }
 
-if(map[a][b] == '0') {
-  return oldLocation
-}
-  
-  map[x][y] = ['1']
+        await menu.awaitMessageComponent({ filter, componentType: 'BUTTON', time: 60000 })
+            .then(i => {
+                const { customId: id } = i
+                
+                if ( id == 'f1' ) map = f1_map
+                else if ( id == 'f2' ) map = f2_map
+                else if ( id === 'f3' ) map = f3_map
+                else {
+                    const cancelled = new MessageEmbed()
+                    .setTitle('Menu Cancelled')
+                    .setColor('RED')
+                    menu.edit({ embeds: [cancelled], components: [] })
+                    return
+                }
+            }).catch(err => menu.edit({ components: [] }))
+            
+        //Variables needed for movement
+        const up = new MessageButton()
+        .setCustomId('up')
+        .setLabel('⬆️')
+        .setStyle('PRIMARY')
 
-  
-  oldLocation = [a, b]
+        const down = new MessageButton()
+        .setCustomId('down')
+        .setLabel('⬇️')
+        .setStyle('PRIMARY')
+            
+        const left = new MessageButton()
+        .setCustomId('left')
+        .setLabel('⬅️')
+        .setStyle('PRIMARY')
+            
+        const right = new MessageButton()
+        .setCustomId('right')
+        .setLabel('➡️')
+        .setStyle('PRIMARY')
+            
+        const attack = new MessageButton()
+        .setCustomId('attack')
+        .setLabel('⚔️')
+        .setStyle('PRIMARY')
+        .setDisabled(true)
 
-  
-  
-  map[a][b] = ['2']
-  return oldLocation
+        const interact = new MessageButton()
+        .setCustomId('interact')
+        .setLabel('🖐️')
+        .setStyle('PRIMARY')
+        .setDisabled(true)
+
+        const row1 = new MessageActionRow()
+        .addComponents(attack, up, interact)
+        const row2 = new MessageActionRow()
+        .addComponents(left, down, right)
+
+        const test = new MessageEmbed()
+        test.setFooter('Skyblock Simulator')
+        test.setColor('GREY')
+
+        const Player = '🟩'
+        const wall = '⬜' // '<:wall:876211886746636288>'
+        const air = '<:air:876209923875303424>'
+        const puzzle = '🟪'
+        const enemy = '<:rev:852892164559732806>'
+
+        const puzzles = ['ttt', 'quiz']
+
+        let critchance = pstats.crit_chance
+        let php = pstats.health
+        let mhp = ( Math.random() < 0.5 ) ? 300 : 200 // Random mob hp at the moment
+        let mdmg = ( Math.random() < 0.5 ) ? 50 : 25 // Random mob hp at the moment
+
+        test.setDescription(`${mapArray(map)}`)
+
+        // If puzzle is near, interact button activates
+        row1.components[2].disabled = nearPuzzle()[0] ? false : true
+        // If enemy is near, fight button activates
+        row1.components[0].disabled = nearEnemy()[0] ? false : true
+            
+        menu.edit({ embeds: [test], components: [row1, row2] })
+
+        const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 1000 * 60 * 5 })
+
+        const row3 = new MessageActionRow()
+        .addComponents(
+            new MessageButton()
+                .setCustomId('1')
+                .setLabel('X')
+                .setStyle('SECONDARY'),
+            new MessageButton()
+                .setCustomId('2')
+                .setLabel('X')
+                .setStyle('SECONDARY'),
+            new MessageButton()
+                .setCustomId('3')
+                .setLabel('X')
+                .setStyle('SECONDARY'),
+        )
+        const row4 = new MessageActionRow()
+        .addComponents(
+            new MessageButton()
+                .setCustomId('4')
+                .setLabel('X')
+                .setStyle('SECONDARY'),
+            new MessageButton()
+                .setCustomId('5')
+                .setLabel('X')
+                .setStyle('SECONDARY'),
+            new MessageButton()
+                .setCustomId('6')
+                .setLabel('X')
+                .setStyle('SECONDARY'),
+        )
+        const row5 = new MessageActionRow()
+        .addComponents(
+            new MessageButton()
+                .setCustomId('7')
+                .setLabel('X')
+                .setStyle('SECONDARY'),
+            new MessageButton()
+                .setCustomId('8')
+                .setLabel('X')
+                .setStyle('SECONDARY'),
+            new MessageButton()
+                .setCustomId('9')
+                .setLabel('X')
+                .setStyle('SECONDARY'),
+        )
+        const row6 = new MessageActionRow()
+        .addComponents(
+            new MessageButton()
+                .setCustomId('A')
+                .setLabel('A')
+                .setStyle('SECONDARY'),
+            new MessageButton()
+                .setCustomId('B')
+                .setLabel('B')
+                .setStyle('SECONDARY'),
+            new MessageButton()
+                .setCustomId('C')
+                .setLabel('C')
+                .setStyle('SECONDARY'),
+        )
+
+        const fog = '🌫️'
+        let table = [
+            [ fog, fog, fog],
+            [ fog, fog, fog],
+            [ fog, fog, fog]
+        ]
+
+        const quizzes = [
+            {
+                question: `How many Skills are there in Hypixel Skyblock? (All Skills Included)`,
+                options: [
+                    [ '10', false ], [ '11', false ], [ '12', true ]
+                ]
+            },
+            {
+                question: `How much Catacombs XP do you need for Level 50?`,
+                options: [
+                    [ '569 Mil', true ], [ '560 Mil', false ], [ '575 Mil', false ]
+                ]
+            },
+            {
+                question: `How many Pets are there?`,
+                options: [
+                ['50', false], ['54', false], ['51', true]
+                ]
+            },
+            {
+                question: `Who is the Owner of Hypixel?`,
+                options: [
+                ['hypxel', false], ['hpixel', false], ['hypixel', true]
+                ]
+            },
+            {
+                question: `How many Talisman are there?`,
+                options: [
+                ['76', true], ['70', false], ['73', false]
+                ]
+            },
+            {
+                question: `Which non Boss and non Slayer Mini-Boss Mob has the highest HP?`,
+                options: [
+                ['Voidling Extremist', true], ['Voidling Fanatic', false], ['Voidling Fnatic', false]
+                ]
+            },
+            {
+                question: `How many Areas are there? (Excluding Sub Areas)`,
+                options: [
+                ['20', false], ['22', true], ['24', false]
+                ]
+            }
+        ]
+
+        let quiz, randomOptions
+
+        let inTTT = false, inQuiz = false
+
+        collector.on('collect', async i => {
+            const { customId: id } = i
+
+            if ( inTTT ) {
+                let x, y
+                if ( test.fields.length > 0 ) {
+                    test.fields = [] // remove the addition field like the "killed a mod with x hp left"
+                    menu.edit({ embeds: [test] })
+                }
+    
+                if ( id == 1 ) x = 0, y = 0
+                else if ( id == 2 ) x = 0, y = 1
+                else if ( id == 3 ) x = 0, y = 2
+                else if ( id == 4 ) x = 1, y = 0
+                else if ( id == 5 ) x = 1, y = 1
+                else if ( id == 6 ) x = 1, y = 2
+                else if ( id == 7 ) x = 2, y = 0
+                else if ( id == 8 ) x = 2, y = 1
+                else if ( id == 9 ) x = 2, y = 2
+    
+                test.description = updateTTT(x, y, true)
+
+                if ( x == 0 ) {
+                    if ( y == 0 ) row3.components[0].disabled = true
+                    else if ( y == 1 ) row3.components[1].disabled = true
+                    else if ( y == 2 ) row3.components[2].disabled = true
+                } else if ( x == 1 ) {
+                    if ( y == 0 ) row4.components[0].disabled = true
+                    else if ( y == 1 ) row4.components[1].disabled = true
+                    else if ( y == 2 ) row4.components[2].disabled = true
+                } else if ( x == 2 ) {
+                    if ( y == 0 ) row5.components[0].disabled = true
+                    else if ( y == 1 ) row5.components[1].disabled = true
+                    else if ( y == 2 ) row5.components[2].disabled = true
+                }
+    
+                let rowPick = [0,1,2][Math.floor(Math.random()*3)]
+                let columnPick = [0,1,2][Math.floor(Math.random()*3)]
+    
+                while ( table[rowPick][columnPick] != fog ) {
+                    rowPick = [0,1,2][Math.floor(Math.random()*3)]
+                    columnPick = [0,1,2][Math.floor(Math.random()*3)]
+                }
+    
+                if ( rowPick == 0 ) {
+                    if ( columnPick == 0 ) row3.components[0].disabled = true
+                    else if ( columnPick == 1 ) row3.components[1].disabled = true
+                    else if ( columnPick == 2 ) row3.components[2].disabled = true
+                } else if ( rowPick == 1 ) {
+                    if ( columnPick == 0 ) row4.components[0].disabled = true
+                    else if ( columnPick == 1 ) row4.components[1].disabled = true
+                    else if ( columnPick == 2 ) row4.components[2].disabled = true
+                } else if ( rowPick == 2 ) {
+                    if ( columnPick == 0 ) row5.components[0].disabled = true
+                    else if ( columnPick == 1 ) row5.components[1].disabled = true
+                    else if ( columnPick == 2 ) row5.components[2].disabled = true
+                }
+    
+                let [W, E] = wincheckTTT()
+    
+                if ( W ) {
+                    const txt = ( E == '🟩' ) ? `You Won!!` : ( ( E ) ? `You Lost ...` : `You Tied`)
+                    if ( E == '🟩' || !E ) {
+                        inTTT = false
+                        test.description += `\n${txt}`
+                        await menu.edit({ embeds: [test], components: [row1, row2] })
+                        await sleep(1000)
+                        test.description = mapArray()
+
+                        table = [
+                            [ fog, fog, fog],
+                            [ fog, fog, fog],
+                            [ fog, fog, fog]
+                        ] // reset table for new tictactoe
+                        row1.components[2].disabled = true 
+                        row3.components[0].disabled = false
+                        row3.components[1].disabled = false
+                        row3.components[2].disabled = false
+                        row4.components[0].disabled = false
+                        row4.components[1].disabled = false
+                        row4.components[2].disabled = false
+                        row5.components[0].disabled = false
+                        row5.components[1].disabled = false
+                        row5.components[2].disabled = false // reset components for new tictactoe
+                        return await menu.edit({ embeds: [test], components: [row1, row2] })
+                    } else {
+                        test.description += `\n${txt}`
+                        return collector.stop()
+                    }
+                }
+    
+                test.description = updateTTT(rowPick, columnPick, false)
+    
+                let [w, e] = wincheckTTT()
+    
+                if ( w ) {
+                    const txt = ( e == '🟩' ) ? `You Won!!` : ( ( e ) ? `You Lost ...` : `You Tied`)
+                    if ( e == '🟩' || !e ) {
+                        inTTT = false
+                        test.description += `\n${txt}`
+                        await menu.edit({ embeds: [test], components: [row1, row2] })
+                        await sleep(1000)
+                        test.description = mapArray()
+                        
+                        table = [
+                            [ fog, fog, fog],
+                            [ fog, fog, fog],
+                            [ fog, fog, fog]
+                        ] // reset table for new tictactoe
+                        row1.components[2].disabled = true 
+                        row3.components[0].disabled = false
+                        row3.components[1].disabled = false
+                        row3.components[2].disabled = false
+                        row4.components[0].disabled = false
+                        row4.components[1].disabled = false
+                        row4.components[2].disabled = false
+                        row5.components[0].disabled = false
+                        row5.components[1].disabled = false
+                        row5.components[2].disabled = false // reset components for new tictactoe
+                        return await menu.edit({ embeds: [test], components: [row1, row2] })
+                    } else {
+                        test.description += `\n${txt}`
+                        return collector.stop()
+                    }
+                }
+                await menu.edit({ embeds: [test], components: [row3, row4, row5] })
+            } else if ( inQuiz ) {
+                if ( test.fields.length > 0 ) {
+                    test.fields = []  // remove the addition field like the "killed a mod with x hp left"
+                    menu.edit({ embeds: [test] })
+                }
+
+                let rightChoise = '', i = 0
+                
+                for ( const option of randomOptions ) {
+                    i++ 
+                    if ( option[1] ) rightChoise = i
+                }
+
+                if ( rightChoise == 1 ) rightChoise = 'A'
+                else if ( rightChoise == 2 ) rightChoise = 'B'
+                else if ( rightChoise == 3 ) rightChoise = 'C'
+
+                if ( id == rightChoise ) {
+                    inQuiz = false
+                    test.description += `\nCorrect!`
+                    await menu.edit({ embeds: [test], components: [row1, row2] })
+                    await sleep(1000)
+                    test.description = mapArray()
+
+                    return await menu.edit({ embeds: [test], components: [row1, row2] })
+                } else {
+                    test.description += `\nFalse!`
+                  test.setColor('RED')
+                    return collector.stop()
+                }
+            } else if ( id == 'up' || id == 'left' || id == 'right' || id == 'down' ) {
+                location = movePlayer(id, false)
+                test.description = mapArray()
+
+            } else if ( id == 'attack' ) {
+                const direction = nearEnemy()[1]
+                let fightEnded = false
+
+                // START FIGHT 
+                let pdmg = Math.floor(( 5 + pstats.damage ) * ( 1 + ( pstats.strength / 100 ) ) * ( 1 + ( combatlvl * 0.04 ) ))
+                
+                const crit = isCrit(critchance) //Change Variable for Crit Chance and change way how crit returns
+                if ( crit ) pdmg = Math.floor(pdmg * ( 1 + pstats.crit_damage / 100 ))
+
+                php = dmgtaken(php, mdmg) //php = player health, pdmg = playerdmg
+                mhp = dmgdealt(mhp, pdmg) //mhp = mob health, mdmg = mod damage
+
+                if ( php < 0 ) php = 0 // Avoid negative health
+                if ( mhp < 0 ) mhp = 0 // Avoid negative health
+
+                test.fields = []
+                test.addField(`Battle`, `Player Health: ❤️ ${php} (- ${mdmg})
+                Mob Health: ❤️ ${mhp} (-${crit ? '<:crit:870306942806020106>' : ''} ${pdmg})`)
+
+                // when still in fight locks movement so he can't get out the fight
+                row1.components[1].disabled = true // up arrow
+                row2.components[0].disabled = true // left arrow
+                row2.components[1].disabled = true // down arrow
+                row2.components[2].disabled = true // right arrow
+
+                menu.edit({ embeds: [test], components: [row1, row2] })
+
+                if ( mhp <= 0 ) {
+                    fightEnded = true
+                    test.fields = []
+                    test.setColor('ORANGE')
+                    test.addField(`\u200B`, `Killed the Enemy with **❤️ ${php}** left and earned Combat XP`) //Add combat xp var
+                    // await collection.updateOne( //Add Combat XP from enemy Kill (do once mobs decided)
+                    //     { _id: interaction.user.id },
+                    //     { $inc: { "data.skills.fishing": foundmob.xp } },
+                    //     { upsert: true })
+
+                    php = pstats.health //reset player health
+                    mhp = ( Math.random() < 0.5 ) ? 300 : 200 // reset mob hp for new mob
+                    mdmg = ( Math.random() < 0.5 ) ? 50 : 25 // reset mob dmg for new mob
+
+                    // Unlocks arrows after mob is killed
+                    row1.components[0].disabled = true 
+                    row1.components[1].disabled = false // up arrow
+                    row2.components[0].disabled = false // left arrow
+                    row2.components[1].disabled = false // down arrow
+                    row2.components[2].disabled = false // right arrow
+                    menu.edit({ embeds: [test], components: [row1, row2] })
+
+                    await sleep(1000) // waiting a second so you can actually read the message
+                } else if ( php <= 0 ) {
+                    test.fields = []
+                    test.setColor('RED')
+                    test.addField(`\u200B`, `Died to the Enemy which had **❤️ ${mhp}** left.`)
+                    return collector.stop()
+                }
+                // FINISH FIGHT
+                
+                if ( fightEnded ) {
+                    location = movePlayer(direction, true) // replace the mob emoji only after mob is killed
+                }
+                test.description = mapArray()
+                menu.edit({ embeds: [test], components: [row1, row2] }) // Components need to get adjusted might be wrong
+                
+            } else if ( id == 'interact' ) {
+                const direction = nearPuzzle()[1]
+
+                // START PUZZLE
+                let puzzle = puzzles[Math.floor(Math.random() * puzzles.length)] // get random puzzle
+                if ( puzzle == 'ttt' ) {
+                    inTTT = true
+                    const randomPick = [[0,1,2][Math.floor(Math.random()*3)], [0,1,2][Math.floor(Math.random()*3)]]
+                    const [ rowPick, columnPick ] = randomPick
+
+                    test.setDescription(updateTTT(rowPick, columnPick, false))
+        
+                    if ( rowPick == 0 ) {
+                        if ( columnPick == 0 ) row3.components[0].disabled = true
+                        else if ( columnPick == 1 ) row3.components[1].disabled = true
+                        else if ( columnPick == 2 ) row3.components[2].disabled = true
+                    } else if ( rowPick == 1 ) {
+                        if ( columnPick == 0 ) row4.components[0].disabled = true
+                        else if ( columnPick == 1 ) row4.components[1].disabled = true
+                        else if ( columnPick == 2 ) row4.components[2].disabled = true
+                    } else if ( rowPick == 2 ) {
+                        if ( columnPick == 0 ) row5.components[0].disabled = true
+                        else if ( columnPick == 1 ) row5.components[1].disabled = true
+                        else if ( columnPick == 2 ) row5.components[2].disabled = true
+                    }
+        
+                    await menu.edit({ embeds: [test], components: [row3, row4, row5] })
+                } else if ( puzzle == 'quiz' ) {
+                    inQuiz = true
+
+                    quiz = quizzes[Math.floor(Math.random() * quizzes.length)] // Gets random quiz
+                    console.log(quiz)
+                    randomOptions = shuffle(quiz.options) // Shuffle the asnwers
+
+                    let answers = '', index = 0
+
+                    for ( const option of randomOptions ) { // Create the randomized asnwers messsage
+                        const [ choise, correct ] = option // Example: [ choise = 10, correct = false ]
+                        index++
+                        if ( index == 1 ) answers += `A) ${choise}\n`
+                        else if ( index == 2 ) answers += `B) ${choise}\n`
+                        else if ( index == 3 ) answers += `C) ${choise}`
+                    }
+
+                    test.addField(quiz.question, answers, false)
+                    await menu.edit({ embeds: [test], components: [row6] })
+                }
+
+                location = movePlayer(direction, true) // replace the mob emoji only after mob is killed
+                if ( !inTTT && !inQuiz ) test.description = mapArray()
+            }
+
+            // If puzzle is near, interact button activates
+            row1.components[2].disabled = nearPuzzle()[0] ? false : true
+            // If enemy is near, fight button activates
+            row1.components[0].disabled = nearEnemy()[0] ? false : true
+
+            if ( !inTTT && !inQuiz ) return menu.edit({ embeds: [test], components: [row1, row2] })
+        })
+        collector.on('end', async collected => {
+            menu.edit({ embeds: [test], components: [] })
+        })
+    }
 }

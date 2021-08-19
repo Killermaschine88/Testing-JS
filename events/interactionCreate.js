@@ -1,3 +1,5 @@
+const Discord = require('discord.js')
+  
 module.exports = {
   name: 'interactionCreate',
   async execute(interaction, mclient) {
@@ -15,10 +17,13 @@ module.exports = {
     } catch (error) {
       console.error(error);
       interaction.editReply({ content: 'There was an error while executing this command and the Bot Dev has been notified.', ephemeral: true });
-      /*interaction
+      const errembed = new Discord.MessageEmbed()
+      .setTitle(`Error occured when ${interaction.user.tag} used ${commandExecute}`)
+      .setDescription(`${error.stack}`)
+      interaction
     .client.users.fetch('570267487393021969').then(async user => {
-        await user.send(`An error has occured when **${interaction.user.tag}** used **${commandExecute}**`)
-      })*/
+        await user.send({ embeds: [errembed]})
+      })
     }
   }
 };
