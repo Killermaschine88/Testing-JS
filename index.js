@@ -76,7 +76,7 @@ client.on('messageCreate', async message => {
   if (gprefix === null) gprefix = '.';
   const bottag = message.mentions.users.first();
   if (bottag === client.user) {
-    (message.channel.send(`My Prefix is \`${gprefix}\``))
+    (message.channel.send(`My Prefixx is \`${gprefix}\``))
     return;
   }
 });
