@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const prefix = require("@replit/database");
 const prefixx = new prefix();
 const leveling = require('../../Various/Skyblock/leveling.js')
+const playerStats = require('./Various/playerStats.js')
 
 module.exports = {
   name: "sbinfo",
@@ -63,23 +64,21 @@ module.exports = {
       }
     }
 
+    //Player Stats
+    let type = 'combat'
+    const ps = playerStats(player, type)
+
     //Various Stats
-    let playerhealth = player.data.stats.health
-    let playerdefense = player.data.stats.defense
-    let playerdamage = player.data.stats.damage
-    let playerstrength = player.data.stats.strength
-    let playercritchance = player.data.stats.crit_chance
-    let playercritdamage = player.data.stats.crit_damage
-    let playermagicfind = player.data.stats.magic_find
-    let playerseacreaturechance = player.data.stats.sea_creature_chance + player.data.equipment.fishing.armor.sea_creature_chance + player.data.equipment.fishing.rod.sea_creature_chance
     let playerfishingspeed = player.data.equipment.fishing.rod.fishing_speed
+
+
 
     const foundinfo = new Discord.MessageEmbed()
       .setFooter('Skyblock Simulator')
       .setColor('90EE90')
-      .setDescription(`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins} <:coins:861974605203636253>**\nWeapon: **${player.data.equipment.combat.weapon.name}**\nArmor: **${player.data.equipment.combat.armor.name}**`)
+      .setDescription(`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins} <:coins:861974605203636253>**\nGems: **${player.data.profile.gems} <:gems:879264850348486696>**\nWeapon: **${player.data.equipment.combat.sword.name}**\nArmor: **${player.data.equipment.combat.armor.name}**`)
       .addField(`Skills [${sa}]`, `<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp}**\n<:foraging:852069714447695872> Foraging [${foraging.level}]: **${foraging.xp}**\n<:enchanting:852069714511659058> Enchanting [${enchanting.level}]: **${enchanting.xp}**\n<:farming:852069714451759114> Farming [${farming.level}]: **${farming.xp}**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp}**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp}**\n<:alchemy:852069714480988180> Alchemy [${alchemy.level}]: **${alchemy.xp}**\n<:taming:852069714493833227> Taming [${taming.level}]: **${taming.xp}**`, true)
-      .addField('Stats', `Health: **${playerhealth}**\nDefense: **${playerdefense}**\nDamage: **${playerdamage}**\nStrength: **${playerstrength}**\nCrit Chance: **${playercritchance} %**\nCrit Damage: **${playercritdamage}**\nMagic Find: **${playermagicfind}**\nSea Creature Chance: **${playerseacreaturechance}**\nFishing Speed: **${playerfishingspeed} %**`, true)
+      .addField('Stats', `Health: **${ps.health}**\nDefense: **${ps.defense}**\nDamage: **${ps.damage}**\nStrength: **${ps.strength}**\nCrit Chance: **${ps.crit_chance} %**\nCrit Damage: **${ps.crit_damage}**\nMagic Find: **${ps.magic_find}**\nSea Creature Chance: **${ps.sea_creature_chance}**\nFishing Speed: **${playerfishingspeed} %**`, true)
       .addField('Location', `${player.data.misc.location}`, true)
 
     const row = new Discord.MessageActionRow()
@@ -115,10 +114,11 @@ module.exports = {
           const main = new Discord.MessageEmbed()
             .setFooter('Skyblock Simulator')
             .setColor('90EE90')
-            .setDescription(`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins} <:coins:861974605203636253>**\nTotal Kills: **${player.data.misc.tkills} <:berserker:852079613052059658>**\nWeapon: **${player.data.equipment.combat.weapon.name}**\nArmor: **${player.data.equipment.combat.armor.name}**`)
+            .setDescription(`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins} <:coins:861974605203636253>**\nGems: **${player.data.profile.gems} <:gems:879264850348486696>**\nWeapon: **${player.data.equipment.combat.sword.name}**\nArmor: **${player.data.equipment.combat.armor.name}**`)
             .addField(`Skills [${sa}]`, `<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp}**\n<:foraging:852069714447695872> Foraging [${foraging.level}]: **${foraging.xp}**\n<:enchanting:852069714511659058> Enchanting [${enchanting.level}]: **${enchanting.xp}**\n<:farming:852069714451759114> Farming [${farming.level}]: **${farming.xp}**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp}**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp}**\n<:alchemy:852069714480988180> Alchemy [${alchemy.level}]: **${alchemy.xp}**\n<:taming:852069714493833227> Taming [${taming.level}]: **${taming.xp}**`, true)
-            .addField('Stats', `Health: **${player.data.stats.health}**\nDefense: **${player.data.stats.defense}**\nDamage: **${player.data.stats.damage}**\nStrength: **${player.data.stats.strength}**\nCrit Chance: **${player.data.stats.crit_chance}**\nCrit Damage: **${player.data.stats.crit_damage}**\nMagic Find: **${player.data.stats.magic_find}**\nSea Creature Chance: **${player.data.stats.sea_creature_chance}**`, true)
+            .addField('Stats', `Health: **${ps.health}**\nDefense: **${ps.defense}**\nDamage: **${ps.damage}**\nStrength: **${ps.strength}**\nCrit Chance: **${ps.crit_chance} %**\nCrit Damage: **${ps.crit_damage}**\nMagic Find: **${ps.magic_find}**\nSea Creature Chance: **${ps.sea_creature_chance}**\nFishing Speed: **${playerfishingspeed} %**`, true)
             .addField('Location', `${player.data.misc.location}`, true)
+
           menu.edit({ embeds: [main] })
         } else if (i.customId === 'inv') {
           await i.deferUpdate()
@@ -143,7 +143,7 @@ module.exports = {
           const dungeons = new Discord.MessageEmbed()
             .setFooter('Skyblock Simulator')
             .setColor('90EE90')
-            .setDescription(`**Dungeons Info for <@${id}>**\n<:catacombs:854399510951624775> Dungeons XP [1]: **${player.data.dungeons.xp}**\n<:mage:852079612699607072> Selected Class: **${player.data.dungeons.class}**\n<:secrets:867327541584068649> Secrets found: **${player.data.dungeons.secrets}**`)
+            .setDescription(`**Dungeons Info for <@${id}>**\n<:catacombs:854399510951624775> Dungeons XP [0]: **${player.data.dungeons.xp}**\n<:mage:852079612699607072> Selected Class: \n* Name: **${player.data.dungeons.class.selected.name}**\n* XP: **${player.data.dungeons.class.selected.xp}**\n<:secrets:867327541584068649> Secrets found: **${player.data.dungeons.secrets}**`)
           menu.edit({ embeds: [dungeons] })
         }
       }

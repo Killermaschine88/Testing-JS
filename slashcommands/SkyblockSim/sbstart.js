@@ -36,7 +36,7 @@ module.exports = {
           $set: {
             data: {
               profile: {
-                coins: 0, cute_name: profilename, started: starttime
+                coins: 0, gems: 0, cute_name: profilename, started: starttime
               },
               stats: {
                 health: 100, defense: 0, damage: 5, strength: 0, crit_chance: 20, crit_damage: 50, magic_find: 0, sea_creature_chance: 20
@@ -51,20 +51,22 @@ module.exports = {
                 zombiexp: 0, spiderxp: 0, wolfxp: 0, endermanxp: 0, zombiekills: 0, spiderkills: 0, wolfkills: 0, endermankills: 0
               },
               dungeons: {
-                xp: 0, secrets: 0, class: { selected: {name: 'None', xp: 0}, available: { assassin: {xp: 0}, berserker: {xp:0}, tank: {xp: 0}}}
+                xp: 0, class: { selected: { name: 'None', xp: 0 }, available: { assassin: { xp: 0 }, berserker: { xp: 0 }, tank: { xp: 0 } } }
               },
               settings: {
                 imgshown: true
               },
               equipment: {
-                combat: { sword: {
-                  name: 'None', damage: 0, strength: 0, crit_chance: 0, crit_damage: 0
-                }, armor: {
-                  name: 'None', health: 0, defense: 0, strength: 0, crit_chance: 0, crit_damage: 0 
-                }}, fishing: { armor: { name: 'None', sea_creature_chance: 0 }, rod: { name: 'Fishing Rod', sea_creature_chance: 0, fishing_speed: 0 } }
+                combat: {
+                  sword: {
+                    name: 'None', damage: 0, strength: 0, crit_chance: 0, crit_damage: 0
+                  }, armor: {
+                    name: 'None', health: 0, defense: 0, strength: 0, crit_chance: 0, crit_damage: 0
+                  }
+                }, fishing: { armor: { name: 'None', sea_creature_chance: 0 }, rod: { name: 'Fishing Rod', sea_creature_chance: 0, fishing_speed: 0 } }
               },
               misc: {
-                voted: 0, location: 'Graveyard', is_fishing: false, in_dungeon: false
+                location: 'Graveyard', is_fishing: false, in_dungeon: false
               }
             }
           }

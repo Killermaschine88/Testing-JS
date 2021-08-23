@@ -24,13 +24,13 @@ function playerStats(player, type) {
 
   defense += inv.armor.defense
 
-  damage += inv.weapon.damage
+  damage += inv.sword.damage
 
-  strength += inv.weapon.strength + inv.armor.strength
+  strength += inv.sword.strength + inv.armor.strength
 
-  crit_chance += inv.weapon.crit_chance + inv.armor.crit_chance
+  crit_chance += inv.sword.crit_chance + inv.armor.crit_chance
 
-  crit_damage += inv.weapon.crit_damage + inv.armor.crit_damage  
+  crit_damage += inv.sword.crit_damage + inv.armor.crit_damage  
   }
 
   return {

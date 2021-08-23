@@ -33,7 +33,7 @@ app.post("/dblwebhook", webhook.listener( async vote => {
 
   await collection.updateOne(
         { _id: vote.user },
-        { $inc: { voted: 100} },
+        { $inc: { "data.profile.gems": 2} },
         { upsert: true })
   //Sending voted message
   client.channels.fetch('850847486826643516')
@@ -63,8 +63,9 @@ client.on('ready', () => {
   mclient.connect()
   console.log(chalk.greenBright(`Logged into MongoDB`));
 
-client.users.fetch('570267487393021969').then(async user => {
-        await user.send(`Restarted`)})
+  client.users.fetch('570267487393021969').then(async user => {
+    await user.send(`Restarted`)
+  })
 });
 
 
