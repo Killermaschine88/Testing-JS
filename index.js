@@ -26,20 +26,29 @@ const app = express()
 
 const webhook = new Topgg.Webhook("69420")
 
-app.post("/dblwebhook", webhook.listener( async vote => {
+app.post("/dblwebhook", webhook.listener(async vote => {
 
-    const collection = mclient.db('Sky-Bot').collection('SkyblockSimm');
-    let found = await collection.findOne({ _id: vote.user })
+  const collection = mclient.db('Sky-Bot').collection('SkyblockSimm');
+  let found = await collection.findOne({ _id: vote.user })
 
   await collection.updateOne(
-        { _id: vote.user },
-        { $inc: { "data.profile.gems": 2} },
-        { upsert: true })
+    { _id: vote.user },
+    { $inc: { "data.profile.gems": 2 } },
+    { upsert: true })
   //Sending voted message
+
+  const tyembed = new Discord.MessageEmbed()
+    .setTitle('Thanks for Voting')
+    .setDescription(`As a reward i added you 2 Gems <:gems:879264850348486696> to your Profile, those can be used to buy special Items😉`)
+
+    client.users.fetch(vote.user).then(async user => {
+      user.send({ embeds: [tyembed] }).catch(() => console.log('Not dmed'))
+    }).catch(console.error)
+
+
   client.channels.fetch('850847486826643516')
     .then(channel => channel.send(`<@${vote.user}> has voted for me.\nID: ${vote.user}`))
     .catch(console.error)
-    console.log('Someone voted.')
 }))
 
 app.listen(80)
@@ -49,7 +58,9 @@ const poster = AutoPoster(toptoken, client) // your discord.js or eris client
 
 poster.on('posted', (stats) => { // ran when succesfully posted
   console.log(`Posted stats to Top.gg | ${stats.serverCount} servers`)
-})*/
+})
+*/
+
 
 
 // Bot token login
@@ -128,8 +139,6 @@ client.on('messageCreate', async message => {
   const args = message.content.slice(gprefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
 
-  const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-
   if (!command) return;
   if (message.guild.id != '869124249225429022') return message.channel.send('Im currently in Dev Only Mode.')
 
@@ -187,7 +196,7 @@ for (const file of eventFiles) {
 }
 
 //Loophole to keep the Bot running
-keepAlive();
+//keepAlive();
 
 /* how to export commands 
 //add cooldown: 0, to set a specific cooldown else it is 3 seconds
