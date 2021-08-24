@@ -1,6 +1,6 @@
 const leveling = require('./leveling.js')
 
-function getLevelByXp(xp, extra = {}) {
+function getCataLevelByXp(xp, extra = {}) {
   let xp_table;
   switch (extra.type) {
     case "runecrafting":
@@ -106,4 +106,4 @@ function getLevelWithProgress(experience, maxLevel, experienceGroup) {
   return Math.min(level, maxLevel);
 }
 
-module.exports = getLevelByXp
+module.exports = getCataLevelByXp

@@ -1,6 +1,4 @@
 const Discord = require('discord.js');
-const prefix = require("@replit/database");
-const prefixx = new prefix();
 const lt = require('../../loottables.js')
 
 module.exports = {
@@ -18,16 +16,12 @@ module.exports = {
     const collection = mclient.db('SkyblockSim').collection('Players');
     let player = await collection.findOne({ _id: interaction.user.id })
 
-    //Getting prefix
-    var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
-    if (gprefix === null) gprefix = '.';
-
 
     if (player === null) {
       const noprofile = new Discord.MessageEmbed()
         .setColor('RED')
         .setTitle('No Profile found')
-        .setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``)
+        .setDescription(`Create a Profile using \`/sb start\``)
       interaction.editReply({ embeds: [noprofile] })
       return;
     }
@@ -35,6 +29,19 @@ module.exports = {
     //Shorts for some Values
     let location = player.data.misc.location
     let mf = player.data.skills.magic_find
+    let areas = ['Graveyard', 'Ruins', 'Highlevel', 'Lower Spiders Hill', 'Upper Spiders Hill', 'Spider Cave', 'Molten Castle', 'Molten Bridge', 'Lava Field', 'End Gate', 'Dragon\'s Nest', 'Void Supelture']
+
+    //Check if Player is at valid Combat Area
+    if (!areas.includes(location)) {
+      const badarea = new Discord.MessageEmbed()
+        .setTitle('Invalid Combat Area')
+        .setDescription(`Your currently at the **${location}** which isn\'t a Combat area.`)
+        .setColor('RED')
+        .setFooter('Skyblock Simulator')
+
+      interaction.editReply({ embeds: [badarea] })
+      return
+    }
 
 
     const start = new Discord.MessageEmbed()
@@ -45,7 +52,7 @@ module.exports = {
     const menu = await interaction.editReply({ embeds: [start] })
 
     //Settings a small wait time for "find Mobs"
-    //sleep(2000)
+    sleep(2000)
 
     //Failing to Find Mobs
     let findmobs = Math.floor(Math.random() * (15 - 1) + 1)
@@ -152,7 +159,7 @@ module.exports = {
     endembed.setColor('90EE90')
 
     let imgShown = player.data.settings.imgshown ? 'disable' : 'enable'
-    endembed.setFooter(`Skyblock Simulator\nIf you wish to ${imgShown} a picture of the area being shown, use ${gprefix}sbsettings img`)
+    endembed.setFooter(`Skyblock Simulator\nIf you wish to ${imgShown} a picture of the area being shown, use /sb settings img`)
 
     if (mobkills === 1) {
       endembed.setDescription(`<:berserker:852079613052059658> Killing **${mobkills} ${mobname}** at the **${location}** dropped you **${amount}x ${mobdrop}**`)

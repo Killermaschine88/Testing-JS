@@ -19,5 +19,12 @@ module.exports = {
  
   endnest: require('./Various/LootTables/endnest.js'),
   
-  endvoid: require('./Various/LootTables/endvoid.js')
+  endvoid: require('./Various/LootTables/endvoid.js'),
+
+  //Dungeons
+  wood: require('./Various/LootTables/wood.js'),
+  gold: require('./Various/LootTables/gold.js'),
+  diamond: require('./Various/LootTables/diamond.js'),
+  emerald: require('./Various/LootTables/emerald.js'),
+  obsidian: require('./Various/LootTables/obsidian.js'),
 }

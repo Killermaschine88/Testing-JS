@@ -145,7 +145,7 @@ const data = [
       },
       {
         name: 'farm',
-        description: 'Lets you Farm Mobs to Earn Combat XP and Coins',
+        description: 'Lets you farm Mobs for Combat XP and Items',
         type: 'SUB_COMMAND',
       },
       {
@@ -227,6 +227,11 @@ const data = [
         name: 'dungeons',
         description: 'Allows you to create a Dungeon Run',
         type: 'SUB_COMMAND'
+      },
+      {
+        name: 'shop',
+        description: 'Allows you to buy Upgrades',
+        type: 'SUB_COMMAND',
       },
       {
         name: 'class',

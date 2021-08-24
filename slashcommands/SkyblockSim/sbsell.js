@@ -1,6 +1,4 @@
 const Discord = require('discord.js');
-const prefix = require("@replit/database");
-const prefixx = new prefix();
 const list = require('../../Various/Skyblock/prices.json');
 const fetch = require('node-fetch')
 
@@ -18,15 +16,12 @@ module.exports = {
     let player = await collection.findOne({ _id: interaction.user.id })
 
 
-    var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
-    if (gprefix === null) gprefix = '.';
-
-
     if (player === null) {
-      const nodata = new Discord.MessageEmbed()
+      const noprofile = new Discord.MessageEmbed()
         .setColor('RED')
-        .setDescription(`No Profile found for <@!${id}>`)
-      interaction.editReply({ embeds: [nodata] })
+        .setTitle('No Profile found')
+        .setDescription(`Create a Profile using \`/sb start\``)
+      interaction.editReply({ embeds: [noprofile] })
       return;
     }
 
@@ -61,6 +56,8 @@ module.exports = {
 
 
     const founditem = player.data.inventory.items.find(item => item.name === sellitem)
+    const itemindex = player.data.inventory.items.findIndex(item => item.name === sellitem)
+
 
     if (founditem === undefined) {
       interaction.editReply('Invalid Item entered')
@@ -114,6 +111,17 @@ module.exports = {
         { upsert: true }
       )
 
+      //Remove Item if 0
+      if (founditem.amount == 0) {
+        let removeItem = updateItem(player, itemindex)
+
+        await collection.replaceOne(
+          { _id: interaction.user.id },
+          removeItem
+        )
+      }
+
+
       const sold = new Discord.MessageEmbed()
         .setFooter('Skyblock Simulator')
         .setColor('90EE90')
@@ -158,4 +166,10 @@ function getPrice(sellitem) {
 async function getPrice1(bzname) {
   const response = await fetch(`https://api.slothpixel.me/api/skyblock/bazaar/${bzname}`);
   return await response.json();
+}
+
+function updateItem(player, itemindex) {
+  player.data.inventory.items.splice(itemindex, 1)
+  return player;
+
 }

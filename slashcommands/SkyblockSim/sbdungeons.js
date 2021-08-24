@@ -182,7 +182,8 @@ module.exports = {
     //Checks if the Player already has an open Dungeon Run
     if (player.data.misc.in_dungeon) {
       const runopen = new MessageEmbed()
-        .setTitle('You already have started a Dungeon Run somewhere so i can\'t create another Dungeon for you, wait a few Minutes or finish your Run before trying again.')
+        .setTitle('Another Dungeon is already open somewhere.')
+        .setDescription('The Dungeon automatically closes after 1 Minute of no input')
         .setColor('RED')
         .setFooter('Skyblock Simulator')
       return interaction.editReply({ embeds: [runopen] })
@@ -380,7 +381,7 @@ module.exports = {
     const puzzle = '🟪'
     const enemy = '<:rev:852892164559732806>'
 
-    const puzzles = ['ttt', 'quiz']
+    const puzzles = ['ttt', 'ttt']
 
     let critchance = pstats.crit_chance
     let php = pstats.health
@@ -396,7 +397,7 @@ module.exports = {
 
     menu.edit({ embeds: [test], components: [row1, row2] })
 
-    const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 1000 * 60 * 5 })
+    const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 1000 * 60 * 14, idle: 1000 * 60 * 1 })
 
     const row3 = new MessageActionRow()
       .addComponents(
@@ -702,7 +703,9 @@ module.exports = {
         row2.components[1].disabled = true // down arrow
         row2.components[2].disabled = true // right arrow
 
+
         menu.edit({ embeds: [test], components: [row1, row2] })
+
 
         if (mhp <= 0) {
           fightEnded = true

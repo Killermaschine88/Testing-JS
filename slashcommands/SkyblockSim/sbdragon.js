@@ -1,6 +1,4 @@
 const Discord = require('discord.js');
-const prefix = require("@replit/database");
-const prefixx = new prefix();
 
 module.exports = {
   name: "sbdragon",
@@ -15,15 +13,11 @@ module.exports = {
     const collection = mclient.db('SkyblockSim').collection('Players');
     let player = await collection.findOne({ _id: interaction.user.id })
 
-
-    var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
-    if (gprefix === null) gprefix = '.';
-
     if (player === null) {
       const noprofile = new Discord.MessageEmbed()
         .setColor('RED')
         .setTitle('No Profile found')
-        .setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``)
+        .setDescription(`Create a Profile using \`/sb start\``)
 
       interaction.editReply({ embeds: [noprofile] })
       return;
@@ -45,7 +39,7 @@ module.exports = {
       const noeyes = new Discord.MessageEmbed()
         .setTitle('Not enough Summoning Eyes')
         .setColor('RED')
-        .setDescription(`You don\'t have enough Summoning Eyes to fight a Dragon.\nYou need atleast **2 Summoning Eyes** to fight a Dragon\nTo get **Summoning Eyes** use ${gprefix}sbwarp Area Dragon\'s Nest to farm them`)
+        .setDescription(`You don\'t have enough Summoning Eyes to fight a Dragon.\nYou need atleast **2 Summoning Eyes** to fight a Dragon\nTo get **Summoning Eyes** use /sb warp Area Dragon\'s Nest to farm them`)
 
       interaction.editReply({ embeds: [noeyes] })
       return;

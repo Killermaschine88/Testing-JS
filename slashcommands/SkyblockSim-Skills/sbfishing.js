@@ -93,12 +93,12 @@ module.exports = {
     //Buttons for Killing Sea Creatures
     const bkillsc = new Discord.MessageButton()
       .setCustomId('killsc')
-      .setLabel('Kill Sea Creature')
+      .setLabel('Attack Sea Creature')
       .setStyle('PRIMARY')
 
     const bkillscoff = new Discord.MessageButton()
       .setCustomId('aa')
-      .setLabel('Kill Sea Creature')
+      .setLabel('Attack Sea Creature')
       .setStyle('PRIMARY')
       .setDisabled(true)
 
@@ -124,11 +124,11 @@ module.exports = {
       .setTitle('Fishing Pond')
       .setColor('BLUE')
       .setFooter('Skyblock Simulator')
-      .setDescription(`${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n`)
+      .setDescription(`Rod: **${rod}**\nSea Creature Chance: **${sea_creature_chance}**\nFishing Speed: **${rod_speed}**%\n\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n`)
 
     const menu = await interaction.editReply({ embeds: [pond], components: [row] })
 
-    
+
 
     await collection.updateOne(
       { _id: interaction.user.id },
@@ -169,30 +169,47 @@ module.exports = {
           menu.edit({ embeds: [pond], components: [row2] })
           rod_casted = false
         } else {
-          let fishxp = Math.floor(Math.random() * (60 - 25) + 25)
-          let fishes = ['Raw Fish', 'Raw Salmon', 'Pufferfish', 'Clownfish']
-          let fishname = fishes[Math.floor(Math.random() * fishes.length)];
-          let fishingcoins = 0
-          if (fishname === 'Raw Fish') {
-            fishingcoins = 23
-          } else if (fishname === 'Raw Salmon') {
-            fishingcoins = 9
-          } else if (fishname === 'Pufferfish') {
-            fishingcoins = 13
-          } else if (fishname === 'Clownfish') {
-            fishingcoins = 19
+          let raredrop = isRareDrop(fishinglvl)
+          if (raredrop == 'no') {
+            let coinamounts = [2500, 5000, 7500, 10000, 15000, 20000]
+            let coindrop = coinamounts[Math.floor(Math.random() * coinamounts.length)];
+
+            await collection.updateOne(
+              { _id: interaction.user.id },
+              { $inc: { "data.profile.coins": coindrop, } },
+              { upsert: true })
+
+            rod_casted = false
+            pond.fields = [];
+            pond.addField(`RARE CATCH!!!`, `earned **<:coins:861974605203636253> ${coindrop} Coins**`)
+
+            menu.edit({ embeds: [pond], components: [row] })
+          } else {
+            let fishxp = Math.floor(Math.random() * (60 - 25) + 25)
+            let fishes = ['Raw Fish', 'Raw Salmon', 'Pufferfish', 'Clownfish']
+            let fishname = fishes[Math.floor(Math.random() * fishes.length)];
+            let fishingcoins = 0
+            if (fishname === 'Raw Fish') {
+              fishingcoins = 23
+            } else if (fishname === 'Raw Salmon') {
+              fishingcoins = 9
+            } else if (fishname === 'Pufferfish') {
+              fishingcoins = 13
+            } else if (fishname === 'Clownfish') {
+              fishingcoins = 19
+            }
+
+            rod_casted = false
+            pond.fields = [];
+            pond.addField(`Caught a ${fishname}`, `earned **${fishxp} Fishing XP** and sold it for **<:coins:861974605203636253> ${fishingcoins} Coins**`)
+
+            await collection.updateOne(
+              { _id: interaction.user.id },
+              { $inc: { "data.skills.fishing": fishxp, "data.profile.coins": fishingcoins } },
+              { upsert: true })
+
+            menu.edit({ embeds: [pond], components: [row] })
           }
-
-          rod_casted = false
-          pond.fields = [];
-          pond.addField(`Caught a ${fishname}`, `and earned **${fishxp} Fishing XP** and sold it for **<:coins:861974605203636253> ${fishingcoins} Coins**`)
-
-          await collection.updateOne(
-            { _id: interaction.user.id },
-            { $inc: { "data.skills.fishing": fishxp, "data.profile.coins": fishingcoins } },
-            { upsert: true })
-
-          menu.edit({ embeds: [pond], components: [row] })
         }
       } else if (i.customId === 'killsc') {
         let crit = isCrit(critchance, critted)
@@ -216,14 +233,23 @@ module.exports = {
         menu.edit({ embeds: [pond] })
 
         if (i.customId === 'killsc' && mhp <= 0) {
+          let amount = Math.floor(Math.random() * (3 - 1) + 1)
+          let mobdrop = 'Lilypad'
           pond.fields = []
           pond.setColor('BLUE')
-          pond.addField(`Result`, `Killed the Enemy with **❤️ ${php}** left and earned ${foundmob.xp} Fishing XP.`)
+          pond.addField(`Result`, `Killed the Enemy, earned ${foundmob.xp} Fishing XP and ${amount} Lilypads.`)
           await collection.updateOne(
             { _id: interaction.user.id },
             { $inc: { "data.skills.fishing": foundmob.xp } },
             { upsert: true })
           php = health
+
+          const updatePlayer = await addItems(mobdrop, amount, player)
+
+          await collection.replaceOne(
+            { _id: interaction.user.id },
+            updatePlayer
+          )
 
           menu.edit({ embeds: [pond], components: [row] })
         } else if (i.customId === 'killsc' && php <= 0) {
@@ -233,8 +259,6 @@ module.exports = {
           menu.edit({ embeds: [pond] })
           collector.stop()
         }
-
-
 
       } else if (i.customId === 'cancel') {
         collector.stop()
@@ -263,7 +287,6 @@ function isSeaCreature(sea_creature_chance, isCreature) {
     isCreature = 'no'
     return isCreature
   }
-
 }
 
 function getSeaCreatureStats(mob, mobs, fishinglvl) {
@@ -311,6 +334,41 @@ function getFishingTime(rod_speed) {
   if (rod_speed === 40) return 5900
   if (rod_speed === 50) return 5000
   if (rod_speed === 60) return 4000
-  if (rod_speed === 75) return 3200
+  if (rod_speed === 70) return 3500
+  if (rod_speed === 75) return 3000
   if (rod_speed === 100) return 2000
+}
+
+function addItems(mobdrop, amount, player) {
+  if (!player.data.inventory.items) player.data.inventory.items = []
+
+  if (player.data.inventory.items.length === 0) {
+    player.data.inventory.items.push({
+      name: mobdrop,
+      amount: amount
+    })
+    return player
+  }
+
+  for (const item of player.data.inventory.items) {
+    if (item.name === mobdrop) {
+      item.amount += amount
+      return player
+    }
+  }
+
+  player.data.inventory.items.push({
+    name: mobdrop,
+    amount: amount
+  })
+  return player
+}
+
+function isRareDrop(fishinglvl) {
+  let rn1 = Math.random() * (100 - 1) + 1
+  if (rn1 <= fishinglvl * 0.1) {
+    return 'yes'
+  } else {
+    return 'no'
+  }
 }

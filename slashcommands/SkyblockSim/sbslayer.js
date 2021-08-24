@@ -1,6 +1,4 @@
 const Discord = require('discord.js');
-const prefix = require("@replit/database");
-const prefixx = new prefix();
 
 module.exports = {
   name: "sbslayer",
@@ -15,15 +13,12 @@ module.exports = {
     const collection = mclient.db('SkyblockSim').collection('Players');
     const player = await collection.findOne({ _id: interaction.user.id })
 
-    var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
-    if (gprefix === null) gprefix = '.';
 
     if (player === null) {
       const noprofile = new Discord.MessageEmbed()
         .setColor('RED')
         .setTitle('No Profile found')
-        .setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``)
-
+        .setDescription(`Create a Profile using \`/sb start\``)
       interaction.editReply({ embeds: [noprofile] })
       return;
     }
@@ -147,7 +142,7 @@ module.exports = {
         menu.edit({ components: [] })
       }).catch(err => menu.edit({ components: [] }));
 
-    if(tier === 'T1') {
+    if (tier === 'T1') {
       slayercost = 2500
       slayerxp = 5
     } else if (tier === 'T2') {
@@ -160,72 +155,72 @@ module.exports = {
       slayercost = 50000
       slayerxp = 500
     }
-    
-    if(!slayerxp) {
-          const cancelled = new Discord.MessageEmbed()
-            .setTitle('Menu cancelled')
-            .setColor('RED')
-          menu.edit({ components: [], embeds: [cancelled] })
-          return
+
+    if (!slayerxp) {
+      const cancelled = new Discord.MessageEmbed()
+        .setTitle('Menu cancelled')
+        .setColor('RED')
+      menu.edit({ components: [], embeds: [cancelled] })
+      return
     }
-    
+
 
     if (choosen === 'Revenant' && coins > slayercost) {
       color = '90EE90'
-          await collection1.updateOne(
-            { _id: interaction.user.id },
-            { $inc: { coins: -slayercost } },
-            { upsert: true })
-          await collection2.updateOne(
-            { _id: interaction.user.id },
-            { $inc: { zombiexp: slayerxp, zombiekills: 1 } },
-            { upsert: true })
-        } else if (choosen === 'Tarantula' && coins > slayercost) {
-          color = 'GREY'
-          await collection1.updateOne(
-            { _id: interaction.user.id },
-            { $inc: { coins: -slayercost } },
-            { upsert: true })
-          await collection2.updateOne(
-            { _id: interaction.user.id },
-            { $inc: { spiderxp: slayerxp, spiderkills: 1 } },
-            { upsert: true })
-        } else if (choosen === 'Sven' && coins > slayercost) {
-          color = 'WHITE'
-          await collection1.updateOne(
-            { _id: interaction.user.id },
-            { $inc: { coins: -slayercost } },
-            { upsert: true })
-          await collection2.updateOne(
-            { _id: interaction.user.id },
-            { $inc: { wolfxp: slayerxp, wolfkills: 1 } },
-            { upsert: true })
-        } else if (choosen === 'Voidgloom' && coins > slayercost) {
-          color = 'PURPLE'
-          await collection1.updateOne(
-            { _id: interaction.user.id },
-            { $inc: { coins: -slayercost } },
-            { upsert: true })
-          await collection2.updateOne(
-            { _id: interaction.user.id },
-            { $inc: { endermanxp: slayerxp, endermankills: 1 } },
-            { upsert: true })
-        } 
-        if(!color || !tier) {
-          const poor = new Discord.MessageEmbed()
-          .setTitle('Insuffucicient Coins')
-          .setColor('RED')
-          .setFooter('Skyblock Simulator')
-          .setDescription(`You can\'t afford to kill a **${tier} ${choosen}** Slayer!`)
-         menu.edit({embeds: [poor], components: []})
-         return;
-        }
-     
-        const killed = new Discord.MessageEmbed()
-        .setColor(`${color}`)
-        .setTitle('Killed Slayer Boss')
-        .setDescription(`Successfully killed the **${tier} ${choosen} Slayer** Boss and earned **${slayerxp} ${choosen} Slayer XP**.`)
-        menu.edit({embeds: [killed], components: []})
+      await collection1.updateOne(
+        { _id: interaction.user.id },
+        { $inc: { coins: -slayercost } },
+        { upsert: true })
+      await collection2.updateOne(
+        { _id: interaction.user.id },
+        { $inc: { zombiexp: slayerxp, zombiekills: 1 } },
+        { upsert: true })
+    } else if (choosen === 'Tarantula' && coins > slayercost) {
+      color = 'GREY'
+      await collection1.updateOne(
+        { _id: interaction.user.id },
+        { $inc: { coins: -slayercost } },
+        { upsert: true })
+      await collection2.updateOne(
+        { _id: interaction.user.id },
+        { $inc: { spiderxp: slayerxp, spiderkills: 1 } },
+        { upsert: true })
+    } else if (choosen === 'Sven' && coins > slayercost) {
+      color = 'WHITE'
+      await collection1.updateOne(
+        { _id: interaction.user.id },
+        { $inc: { coins: -slayercost } },
+        { upsert: true })
+      await collection2.updateOne(
+        { _id: interaction.user.id },
+        { $inc: { wolfxp: slayerxp, wolfkills: 1 } },
+        { upsert: true })
+    } else if (choosen === 'Voidgloom' && coins > slayercost) {
+      color = 'PURPLE'
+      await collection1.updateOne(
+        { _id: interaction.user.id },
+        { $inc: { coins: -slayercost } },
+        { upsert: true })
+      await collection2.updateOne(
+        { _id: interaction.user.id },
+        { $inc: { endermanxp: slayerxp, endermankills: 1 } },
+        { upsert: true })
+    }
+    if (!color || !tier) {
+      const poor = new Discord.MessageEmbed()
+        .setTitle('Insuffucicient Coins')
+        .setColor('RED')
+        .setFooter('Skyblock Simulator')
+        .setDescription(`You can\'t afford to kill a **${tier} ${choosen}** Slayer!`)
+      menu.edit({ embeds: [poor], components: [] })
+      return;
+    }
+
+    const killed = new Discord.MessageEmbed()
+      .setColor(`${color}`)
+      .setTitle('Killed Slayer Boss')
+      .setDescription(`Successfully killed the **${tier} ${choosen} Slayer** Boss and earned **${slayerxp} ${choosen} Slayer XP**.`)
+    menu.edit({ embeds: [killed], components: [] })
   }
 };
 

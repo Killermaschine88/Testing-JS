@@ -1,6 +1,4 @@
 const Discord = require('discord.js');
-const prefix = require("@replit/database");
-const prefixx = new prefix();
 
 module.exports = {
   name: "sbsettings",
@@ -12,19 +10,14 @@ module.exports = {
   cooldown: 10,
   async execute(interaction, mclient) {
 
-    //Getting prefix
-    var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
-    if (gprefix === null) gprefix = '.';
-
     const collection = mclient.db('SkyblockSim').collection('Players');
     let player = await collection.findOne({ _id: interaction.user.id })
 
-    if (player.data.settings === null) {
+    if (player === null) {
       const noprofile = new Discord.MessageEmbed()
         .setColor('RED')
         .setTitle('No Profile found')
-        .setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``)
-
+        .setDescription(`Create a Profile using \`/sb start\``)
       interaction.editReply({ embeds: [noprofile] })
       return;
     }
