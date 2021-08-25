@@ -62,7 +62,9 @@ module.exports = {
                 }, fishing: { armor: { name: 'None', sea_creature_chance: 0 }, rod: { name: 'Fishing Rod', sea_creature_chance: 0, fishing_speed: 0 } }
               },
               misc: {
-                location: 'Graveyard', is_fishing: false, in_dungeon: false
+                location: 'Graveyard', is_fishing: false, in_dungeon: false, daily: {
+                  last_claimed: 0, streak: 0
+                }
               }
             }
           }

@@ -257,6 +257,11 @@ const data = [
               }],
           }],
       },
+      {
+        name: 'daily',
+        description: 'Allows you to claim your Daily Reward',
+        type: 'SUB_COMMAND',
+      },
     ],
   },
 ]

@@ -74,9 +74,9 @@ client.on('ready', () => {
   mclient.connect()
   console.log(chalk.greenBright(`Logged into MongoDB`));
 
-  client.users.fetch('570267487393021969').then(async user => {
+  /*client.users.fetch('570267487393021969').then(async user => {
     await user.send(`Restarted`)
-  })
+  })*/
 });
 
 
@@ -139,6 +139,8 @@ client.on('messageCreate', async message => {
   const args = message.content.slice(gprefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
 
+  const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
   if (!command) return;
   if (message.guild.id != '869124249225429022') return message.channel.send('Im currently in Dev Only Mode.')
 
@@ -196,7 +198,7 @@ for (const file of eventFiles) {
 }
 
 //Loophole to keep the Bot running
-//keepAlive();
+keepAlive();
 
 /* how to export commands 
 //add cooldown: 0, to set a specific cooldown else it is 3 seconds
