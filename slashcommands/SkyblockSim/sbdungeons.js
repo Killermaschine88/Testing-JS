@@ -1,7 +1,7 @@
 const { MessageButton, MessageActionRow, MessageEmbed } = require('discord.js');
-
 const playerStats = require('./Various/playerStats.js')
 const classLevel = require('../../Various/Skyblock/dungeonlevel.js')
+const skillLevel = require('../../Various/Skyblock/skilllvl.js')
 
 module.exports = {
   name: "sbdungeons",
@@ -193,25 +193,7 @@ module.exports = {
     let type = 'combat'
     let pstats = playerStats(player, type) //Type decides what gear is needed for the Action
 
-    let combatlvl = 10
-
-    if (player.data.dungeons.class.selected.name === 'None') {
-      const noClass = new MessageEmbed()
-        .setFooter('Skyblock Simulator')
-        .setDescription(`**Available Classes**
-            Select a Class using /sb class <Class Name> before starting a Dungeon, the selected Class can be changed at any time while your not in a Dungeon
-            
-            **Assassin**
-            Gives 2 Strength per Level
-            
-            **Berserker**
-            Gives 1 Strength and 1 Defense per Level
-            
-            **Tank**
-            Gives 1 Defense and 2 Health per Level`)
-      interaction.editReply({ embeds: [noClass] })
-    }
-
+    let combatlvl = skillLevel(player.data.skills.combat).level
 
     let classlevel = classLevel(player.data.dungeons.class.selected.xp).level
 
@@ -230,6 +212,7 @@ module.exports = {
     //Variables needed for the Map
     let map = ''
     let location = [1, 1]
+    let score = 100
 
     let f1_map = [
       [0, 0, 0, 0, 0, 0, 0],
@@ -381,14 +364,14 @@ module.exports = {
     const puzzle = '🟪'
     const enemy = '<:rev:852892164559732806>'
 
-    const puzzles = ['ttt', 'ttt']
+    const puzzles = ['ttt', 'quiz']
 
     let critchance = pstats.crit_chance
     let php = pstats.health
     let mhp = (Math.random() < 0.5) ? 300 : 200 // Random mob hp at the moment
     let mdmg = (Math.random() < 0.5) ? 50 : 25 // Random mob hp at the moment
 
-    test.setDescription(`${mapArray(map)}`)
+    test.setDescription(`🎯 Score: **${score}**\n\n${mapArray(map)}`)
 
     // If puzzle is near, interact button activates
     row1.components[2].disabled = nearPuzzle()[0] ? false : true
@@ -581,9 +564,10 @@ module.exports = {
           if (E == '🟩' || !E) {
             inTTT = false
             test.description += `\n${txt}`
+            score += 30
             await menu.edit({ embeds: [test], components: [row1, row2] })
             await sleep(1000)
-            test.description = mapArray()
+            test.description = `🎯 Score: **${score}** (+30)` + '\n\n' + mapArray()
 
             table = [
               [fog, fog, fog],
@@ -619,7 +603,7 @@ module.exports = {
             test.description += `\n${txt}`
             await menu.edit({ embeds: [test], components: [row1, row2] })
             await sleep(1000)
-            test.description = mapArray()
+            test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray()
 
             table = [
               [fog, fog, fog],
@@ -665,7 +649,8 @@ module.exports = {
           inQuiz = false
           await menu.edit({ embeds: [test], components: [row1, row2] })
           await sleep(1000)
-          test.description = mapArray()
+          score += 30
+          test.description = `🎯 Score: **${score}** (+30)` + '\n\n' + mapArray()
 
           return await menu.edit({ embeds: [test], components: [row1, row2] })
         } else {
@@ -675,7 +660,8 @@ module.exports = {
         }
       } else if (id == 'up' || id == 'left' || id == 'right' || id == 'down') {
         location = movePlayer(id, false)
-        test.description = mapArray()
+        test.fields = []
+        test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray()
 
       } else if (id == 'attack') {
         const direction = nearEnemy()[1]
@@ -709,6 +695,7 @@ module.exports = {
 
         if (mhp <= 0) {
           fightEnded = true
+          score += 20
           test.fields = []
           test.addField(`\u200B`, `Killed the Enemy with **❤️ ${php}** left and earned Combat XP`) //Add combat xp var
           await collection.updateOne( //Add Combat XP from enemy Kill (do once mobs decided)
@@ -741,7 +728,7 @@ module.exports = {
         if (fightEnded) {
           location = movePlayer(direction, true) // replace the mob emoji only after mob is killed
         }
-        test.description = mapArray()
+        test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray()
         menu.edit({ embeds: [test], components: [row1, row2] }) // Components need to get adjusted might be wrong
 
       } else if (id == 'interact') {
@@ -793,7 +780,7 @@ module.exports = {
         }
 
         location = movePlayer(direction, true) // replace the mob emoji only after mob is killed
-        if (!inTTT && !inQuiz) test.description = mapArray()
+        if (!inTTT && !inQuiz) test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray()
       } else if (id == 'cancel') {
         runCancelled = true
         collector.stop()

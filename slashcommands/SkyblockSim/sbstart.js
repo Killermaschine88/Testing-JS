@@ -25,7 +25,7 @@ module.exports = {
 
     let starttime = interaction.createdTimestamp / 1000
     starttime = starttime.toFixed()
-    if (player !== null) {
+   // if (player !== null) {
       await collection.updateOne(
         { _id: interaction.user.id },
         {
@@ -80,8 +80,8 @@ module.exports = {
         .setFooter('Skyblock Simulator\nValues in () aren\'t needed')
 
       menu.edit({ embeds: [created] })
-
-    } else {
+return;
+  //  } else {
       const profilealready = new Discord.MessageEmbed()
         .setFooter('Values in () aren\'t needed')
         .setColor('ORANGE')
@@ -89,7 +89,7 @@ module.exports = {
         .setDescription(`Use \`/sb info (@User)\` to see your Stats and \`/sb farm\` to earn Money`)
         .setFooter('Skyblock Simulator')
       menu.edit({ embeds: [profilealready] })
-    }
+   // }
   }
 };
 

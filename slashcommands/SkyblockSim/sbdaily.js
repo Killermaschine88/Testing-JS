@@ -17,6 +17,8 @@ module.exports = {
     let last_claim = player.data.misc.daily.last_claimed
     let next_claim = last_claim + ((60 * 60) * 24)
     let failed_claim = last_claim + ((60 * 60) * 48)
+    let gems = 0
+    let streak = player.data.misc.daily.streak + 1
 
 
     if (player === null) {
@@ -29,10 +31,13 @@ module.exports = {
     }
 
     if (next_claim <= time_now) {
+      if (streak % 7 == 0) {
+        gems = streak / 7
+      }
       if (failed_claim <= time_now && last_claim != 0) {
         await collection.updateOne(
           { _id: interaction.user.id },
-          { $inc: { 'data.profile.coins': 25000 } },
+          { $inc: { 'data.profile.coins': 25000, 'data.profile.gems': gems } },
           { upsert: true })
 
         await collection.updateOne(
@@ -41,17 +46,21 @@ module.exports = {
           { upsert: true })
 
         const failedstreak = new Discord.MessageEmbed()
-          .setTitle('Claimed Daily Reward')
-          .setDescription(`I have added <:coins:861974605203636253> **25k Coins** to your Profile but unfortunately your Streak has reset.\nYou will be able to claim it again in **24 Hours**`)
-          .setFooter(`Streak: 1`)
-          .setColor('GREEN')
+        failedstreak.setTitle('Claimed Daily Reward')
+        if (gems == 0) {
+          failedstreak.setDescription(`I have added <:coins:861974605203636253> **25k Coins** to your Profile but unfortunately your Streak has reset.\nYou will be able to claim it again in **24 Hours**`)
+        } else {
+          failedstreak.setDescription(`I have added <:coins:861974605203636253> **25k Coins** and <:gems:879264850348486696> **${gems} Gems** to your Profile but unfortunately your Streak has reset.\nYou will be able to claim it again in **24 Hours**`)
+        }
+        failedstreak.setFooter(`Daily Streak: 1`)
+        failedstreak.setColor('GREEN')
 
         interaction.editReply({ embeds: [failedstreak] })
         return;
       } else {
         await collection.updateOne(
           { _id: interaction.user.id },
-          { $inc: { 'data.profile.coins': 25000, 'data.misc.daily.streak': 1 } },
+          { $inc: { 'data.profile.coins': 25000, 'data.misc.daily.streak': 1, 'data.profile.gems': gems } },
           { upsert: true })
 
         await collection.updateOne(
@@ -60,10 +69,14 @@ module.exports = {
           { upsert: true })
 
         const claimed = new Discord.MessageEmbed()
-          .setTitle('Claimed Daily Reward')
-          .setDescription(`I have added <:coins:861974605203636253> **25k Coins** to your Profile.\nYou will be able to claim it again in **24 Hours**`)
-          .setFooter(`Streak: ${player.data.misc.daily.streak + 1}`)
-          .setColor('GREEN')
+        claimed.setTitle('Claimed Daily Reward')
+        if (gems == 0) {
+          claimed.setDescription(`I have added <:coins:861974605203636253> **25k Coins** to your Profile.\nYou will be able to claim it again in **24 Hours**`)
+        } else {
+          claimed.setDescription(`I have added <:coins:861974605203636253> **25k Coins** and <:gems:879264850348486696> **${gems} Gems** to your Profile.\nYou will be able to claim it again in **24 Hours**`)
+        }
+        claimed.setFooter(`Daily Streak: ${player.data.misc.daily.streak + 1}`)
+        claimed.setColor('GREEN')
 
         interaction.editReply({ embeds: [claimed] })
         return;

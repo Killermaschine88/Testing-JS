@@ -149,11 +149,6 @@ const data = [
         type: 'SUB_COMMAND',
       },
       {
-        name: 'guide',
-        description: 'Shows a Guide on how to play the Skyblock Simulator',
-        type: 'SUB_COMMAND'
-      },
-      {
         name: 'info',
         description: 'Shows information about yourself or a mentioned User',
         type: 'SUB_COMMAND',

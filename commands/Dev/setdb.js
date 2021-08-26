@@ -19,6 +19,10 @@ module.exports = {
       id = message.author.id
     }
 
+    if(args[3] != undefined) {
+      value = args[2] + ' ' + args[3]
+    }
+
     if (!isNaN(value)) value = Number(value)
 
     if(value == 'true') value = true
