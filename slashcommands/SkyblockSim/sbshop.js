@@ -35,12 +35,22 @@ module.exports = {
     let amount = ''
     let gemsneeded = 0
     let sellitem = 'Lilypad'
-    let lilyamount = player.data.inventory.items.find(item => item.name == 'Lilypad').amount
+    let lilyamount = 0
+
+    if (player.data.inventory.items.find(item => item.name == 'Lilypad') != undefined) {
+      lilyamount = player.data.inventory.items.find(item => item.name == 'Lilypad').amount
+    }
 
     //Buttons
     const rod_button = new Discord.MessageButton()
       .setCustomId('rod')
       .setLabel('Fishing Rod')
+      .setStyle('PRIMARY')
+      .setDisabled(true)
+
+    const cookie_button = new Discord.MessageButton()
+      .setCustomId('cookie')
+      .setLabel('Booster Cookie')
       .setStyle('PRIMARY')
       .setDisabled(true)
 
@@ -51,12 +61,8 @@ module.exports = {
 
     const row = new Discord.MessageActionRow()
 
-    if (rod.name != 'Rod of the Sea') {
-      row.addComponents(rod_button)
-    }
-    row.addComponents(cancel_button)
 
-
+    //Rod Upgrades
     if (rod.name == 'Fishing Rod' && coins >= 5000 && lilyamount >= 10) {
       rod_button.setDisabled(false)
       rodname = 'Prismarine Rod'
@@ -123,11 +129,29 @@ module.exports = {
       amount = 100
     }
 
+    //Booster Cookie
+    if (player.data.profile.gems >= 4) {
+      cookie_button.setDisabled(false)
+    }
+
+    //Adding Buttons to row
+    if (rod.name != 'Rod of the Sea') {
+      row.addComponents(rod_button)
+    }
+    if (player.data.misc.booster_cookie.active == false) {
+      row.addComponents(cookie_button)
+    }
+    row.addComponents(cancel_button)
+
+
+
     let shopembed = new Discord.MessageEmbed()
       .setTitle('Skyblock Simulator Shop')
+      .setDescription('Upgrades or Items you can buy will Show up here. (If nothing shows up then you cant buy anything)')
       .setFooter('Skyblock Simulator')
       .setColor('GREY')
 
+    //Rod Fields
     if (rod.name == 'Fishing Rod') {
       shopembed.addField('Prismarine Rod', '**Cost:**\n5k Coins + 10 Lilypads\n\n**Stats:**\n5 Sea Creature Chance\n10% Fishing Speed')
     } else if (rod.name == 'Prismarine Rod') {
@@ -144,6 +168,11 @@ module.exports = {
       shopembed.addField('Rod of Legends', '**Cost:**\n1M Coins + 150 Lilypads\n\n**Stats:**\n40 Sea Creature Chance\n70% Fishing Speed')
     } else if (rod.name == 'Rod of Legends') {
       shopembed.addField('Rod of the Sea', '**Cost:**\n50 Gems + 100 Lilypads\n\n**Stats:**\n50 Sea Creature Chance\n75% Fishing Speed')
+    }
+
+    //Cookie Field
+    if (player.data.misc.booster_cookie.active == false) {
+      shopembed.addField('Booster Cookie', 'Cost: **4 Gems**')
     }
 
     const filter = i => {
@@ -199,6 +228,25 @@ module.exports = {
           }
 
 
+        } else if (id == 'cookie') {
+
+          let expirationtime = Math.floor(Date.now() / 1000) + 172800
+
+          await collection.updateOne(
+            { _id: interaction.user.id },
+            { $inc: { 'data.profile.gems': -4 } },
+            { upsert: true })
+
+          await collection.updateOne(
+            { _id: interaction.user.id },
+            { $set: { 'data.misc.booster_cookie.active': true, 'data.misc.booster_cookie.expires': expirationtime } },
+            { upsert: true })
+
+          const purchased = new Discord.MessageEmbed()
+            .setDescription('Purchased Booster Cookie')
+            .setColor('GREEN')
+
+          interaction.editReply({ embeds: [purchased] })
         } else {
           const cancelled = new Discord.MessageEmbed()
             .setTitle('Menu Cancelled')

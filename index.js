@@ -38,8 +38,8 @@ app.post("/dblwebhook", webhook.listener(async vote => {
   //Sending voted message
 
   const tyembed = new Discord.MessageEmbed()
-    .setTitle('Thanks for Voting')
-    .setDescription(`As a reward i added you 2 Gems <:gems:879264850348486696> to your Profile, those can be used to buy special Items😉`)
+    .setTitle('🥰 Thanks for Voting 🥰')
+    .setDescription(`As a reward i added you 2 Gems <:gems:879264850348486696> to your Profile, those can be used to buy special Items 😉`)
 
     client.users.fetch(vote.user).then(async user => {
       user.send({ embeds: [tyembed] }).catch(() => console.log('Not dmed'))
@@ -54,7 +54,7 @@ app.post("/dblwebhook", webhook.listener(async vote => {
 app.listen(80)
 
 //Topgg stats posting
-const poster = AutoPoster(toptoken, client) // your discord.js or eris client
+const poster = AutoPoster(toptoken, client)
 
 poster.on('posted', (stats) => { // ran when succesfully posted
   console.log(`Posted stats to Top.gg | ${stats.serverCount} servers`)
@@ -74,9 +74,9 @@ client.on('ready', () => {
   mclient.connect()
   console.log(chalk.greenBright(`Logged into MongoDB`));
 
-  /*client.users.fetch('570267487393021969').then(async user => {
+  client.users.fetch('570267487393021969').then(async user => {
     await user.send(`Restarted`)
-  })*/
+  })
 });
 
 

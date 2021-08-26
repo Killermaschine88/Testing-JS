@@ -167,43 +167,43 @@ module.exports = {
 
     if (choosen === 'Revenant' && coins > slayercost) {
       color = '90EE90'
-      await collection1.updateOne(
+      await collection.updateOne(
         { _id: interaction.user.id },
-        { $inc: { coins: -slayercost } },
+        { $inc: { 'data.profile.coins': -slayercost } },
         { upsert: true })
-      await collection2.updateOne(
+      await collection.updateOne(
         { _id: interaction.user.id },
-        { $inc: { zombiexp: slayerxp, zombiekills: 1 } },
+        { $inc: { 'data.slayer.zombiexp': slayerxp, 'data.slayer.zombiekills': 1 } },
         { upsert: true })
     } else if (choosen === 'Tarantula' && coins > slayercost) {
       color = 'GREY'
-      await collection1.updateOne(
+      await collection.updateOne(
         { _id: interaction.user.id },
-        { $inc: { coins: -slayercost } },
+        { $inc: { 'data.profile.coins': -slayercost } },
         { upsert: true })
-      await collection2.updateOne(
+      await collection.updateOne(
         { _id: interaction.user.id },
-        { $inc: { spiderxp: slayerxp, spiderkills: 1 } },
+        { $inc: { 'data.slayer.spiderxp': slayerxp, 'data.slayer.spiderkills': 1 } },
         { upsert: true })
     } else if (choosen === 'Sven' && coins > slayercost) {
       color = 'WHITE'
-      await collection1.updateOne(
+      await collection.updateOne(
         { _id: interaction.user.id },
-        { $inc: { coins: -slayercost } },
+        { $inc: { 'data.profile.coins': -slayercost } },
         { upsert: true })
-      await collection2.updateOne(
+      await collection.updateOne(
         { _id: interaction.user.id },
-        { $inc: { wolfxp: slayerxp, wolfkills: 1 } },
+        { $inc: { 'data.slayer.wolfxp': slayerxp, 'data.slayer.wolfkills': 1 } },
         { upsert: true })
     } else if (choosen === 'Voidgloom' && coins > slayercost) {
       color = 'PURPLE'
-      await collection1.updateOne(
+      await collection.updateOne(
         { _id: interaction.user.id },
-        { $inc: { coins: -slayercost } },
+        { $inc: { 'data.profile.coins': -slayercost } },
         { upsert: true })
-      await collection2.updateOne(
+      await collection.updateOne(
         { _id: interaction.user.id },
-        { $inc: { endermanxp: slayerxp, endermankills: 1 } },
+        { $inc: { 'data.slayer.endermanxp': slayerxp, 'data.slayer.endermankills': 1 } },
         { upsert: true })
     }
     if (!color || !tier) {

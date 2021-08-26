@@ -170,7 +170,7 @@ module.exports = {
           rod_casted = false
         } else {
           let raredrop = isRareDrop(fishinglvl)
-          if (raredrop == 'no') {
+          if (raredrop == 'yes') {
             let coinamounts = [2500, 5000, 7500, 10000, 15000, 20000]
             let coindrop = coinamounts[Math.floor(Math.random() * coinamounts.length)];
 

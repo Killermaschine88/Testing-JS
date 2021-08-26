@@ -586,9 +586,29 @@ module.exports = {
             row5.components[2].disabled = false // reset components for new tictactoe
             return await menu.edit({ embeds: [test], components: [row1, row2] })
           } else {
-            test.description += `\n${txt}`
-            runFailed = true
-            return collector.stop()
+            //test.description += `\n${txt}`
+            //runFailed = true
+            //return collector.stop()
+            runFailed = false
+            inTTT = false
+            score -= 30
+            test.description = `🎯 Score: **${score}** (-30)` + '\n\n' + mapArray()
+            table = [
+              [fog, fog, fog],
+              [fog, fog, fog],
+              [fog, fog, fog]
+            ] // reset table for new tictactoe
+            row1.components[2].disabled = true
+            row3.components[0].disabled = false
+            row3.components[1].disabled = false
+            row3.components[2].disabled = false
+            row4.components[0].disabled = false
+            row4.components[1].disabled = false
+            row4.components[2].disabled = false
+            row5.components[0].disabled = false
+            row5.components[1].disabled = false
+            row5.components[2].disabled = false // reset components for new tictactoe
+            return await menu.edit({ embeds: [test], components: [row1, row2] })
           }
         }
 
@@ -622,9 +642,29 @@ module.exports = {
             row5.components[2].disabled = false // reset components for new tictactoe
             return await menu.edit({ embeds: [test], components: [row1, row2] })
           } else {
-            test.description += `\n${txt}`
-            runFailed = true
-            return collector.stop()
+            //test.description += `\n${txt}`
+            //runFailed = true
+            //return 
+            runFailed = false
+            inTTT = false
+            score -= 30
+            test.description = `🎯 Score: **${score}** (-30)` + '\n\n' + mapArray()
+            table = [
+              [fog, fog, fog],
+              [fog, fog, fog],
+              [fog, fog, fog]
+            ] // reset table for new tictactoe
+            row1.components[2].disabled = true
+            row3.components[0].disabled = false
+            row3.components[1].disabled = false
+            row3.components[2].disabled = false
+            row4.components[0].disabled = false
+            row4.components[1].disabled = false
+            row4.components[2].disabled = false
+            row5.components[0].disabled = false
+            row5.components[1].disabled = false
+            row5.components[2].disabled = false // reset components for new tictactoe
+            return await menu.edit({ embeds: [test], components: [row1, row2] })
           }
         }
         await menu.edit({ embeds: [test], components: [row3, row4, row5] })
@@ -654,9 +694,14 @@ module.exports = {
 
           return await menu.edit({ embeds: [test], components: [row1, row2] })
         } else {
-          test.setColor('RED')
-          runFailed = true
-          return collector.stop()
+          //test.setColor('RED')
+          //runFailed = true
+          //return collector.stop()
+          runFailed = false
+          inQuiz = false
+          score -= 30
+          test.description = `🎯 Score: **${score}** (-30)` + '\n\n' + mapArray()
+          await menu.edit({ embeds: [test], components: [row1, row2] })
         }
       } else if (id == 'up' || id == 'left' || id == 'right' || id == 'down') {
         location = movePlayer(id, false)
@@ -727,8 +772,8 @@ module.exports = {
 
         if (fightEnded) {
           location = movePlayer(direction, true) // replace the mob emoji only after mob is killed
+          test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray()
         }
-        test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray()
         menu.edit({ embeds: [test], components: [row1, row2] }) // Components need to get adjusted might be wrong
 
       } else if (id == 'interact') {
@@ -807,6 +852,7 @@ module.exports = {
         { $set: { "data.misc.in_dungeon": false } },
         { upsert: true }
       )
+      return;
     })
   }
 }

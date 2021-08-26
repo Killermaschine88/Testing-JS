@@ -13,7 +13,7 @@ module.exports = {
   async execute(interaction, mclient) {
 
     if (interaction.options.getUser('user') != null) {
-      var id = interaction.options.getUser('user')
+      var id = interaction.options.getUser('user').id
     } else {
       var id = interaction.user.id
     }
@@ -78,6 +78,10 @@ module.exports = {
       .addField(`Skills [${sa}]`, `<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp}**\n<:foraging:852069714447695872> Foraging [${foraging.level}]: **${foraging.xp}**\n<:enchanting:852069714511659058> Enchanting [${enchanting.level}]: **${enchanting.xp}**\n<:farming:852069714451759114> Farming [${farming.level}]: **${farming.xp}**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp}**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp}**\n<:alchemy:852069714480988180> Alchemy [${alchemy.level}]: **${alchemy.xp}**\n<:taming:852069714493833227> Taming [${taming.level}]: **${taming.xp}**`, true)
       .addField('Stats', `Health: **${ps.health}**\nDefense: **${ps.defense}**\nDamage: **${ps.damage}**\nStrength: **${ps.strength}**\nCrit Chance: **${ps.crit_chance} %**\nCrit Damage: **${ps.crit_damage}**\nMagic Find: **${ps.magic_find}**\nSea Creature Chance: **${ps.sea_creature_chance}**\nFishing Speed: **${playerfishingspeed} %**`, true)
       .addField('Location', `${player.data.misc.location}`, true)
+
+    if (player.data.misc.booster_cookie.active == true) {
+      foundinfo.addField(`Booster Cookie`, `Expiration Date: <t:${player.data.misc.booster_cookie.expires}>`)
+    }
 
     const row = new Discord.MessageActionRow()
       .addComponents(

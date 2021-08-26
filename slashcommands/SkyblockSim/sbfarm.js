@@ -129,13 +129,6 @@ module.exports = {
       img = 'https://cdn.discordapp.com/attachments/841757730887827497/865215776332185630/unknown.png'
     }
 
-    //Editing Database Values
-    await collection.updateOne(
-      { _id: interaction.user.id },
-      { $inc: { "data.misc.tkills": mobkills } },
-      { upsert: true })
-
-
 
     //Add Normal Drops
     if (mobdrop != undefined) {
