@@ -1,12 +1,11 @@
-const discord = require('discord.js')
+const Discord = require('discord.js')
 const chalk = require('chalk');
 
 module.exports = {
   name: 'guildDelete',
   execute(guild, client) {
     discordLog(client,
-      new discord.MessageEmbed()
-        .setAuthor(client.user.username, client.user.avatarURL())
+      new Discord.MessageEmbed()
         .setDescription(`Left a Guild: \`${guild.name}\``)
         .setColor('RED')
         .setTimestamp()

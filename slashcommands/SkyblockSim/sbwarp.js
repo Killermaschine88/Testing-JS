@@ -49,7 +49,7 @@ module.exports = {
           .setCustomId('mining')
           .setLabel('Mining')
           .setStyle('PRIMARY'),
-        new Discord.MessageButton()
+        /*new Discord.MessageButton()
           .setEmoji('852069714451759114')
           .setCustomId('farming')
           .setLabel('Farming')
@@ -58,7 +58,7 @@ module.exports = {
           .setEmoji('852069714447695872')
           .setCustomId('foraging')
           .setLabel('Foraging')
-          .setStyle('PRIMARY'),
+          .setStyle('PRIMARY'),*/
         new Discord.MessageButton()
           .setCustomId('cancel')
           .setLabel('Cancel')

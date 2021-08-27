@@ -142,9 +142,9 @@ client.on('messageCreate', async message => {
   const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
   if (!command) return;
-  if (message.guild.id != '869124249225429022') return message.channel.send('Im currently in Dev Only Mode.')
+  //if (message.guild.id != '869124249225429022') return message.channel.send('Im currently in Dev Only Mode.')
 
-  if (config.blacklistedusers.includes(message.author.id)) return message.channel.send('You are blacklisted from using this Bot. If you believe this is false message **Baltraz#4874**')
+  if (config.blacklistedusers.includes(message.author.id)) return message.channel.send('You are blacklisted from using this Bot. If you believe this is false. Then message **Baltraz#4874**')
 
   const { cooldowns } = client;
 
@@ -172,6 +172,25 @@ client.on('messageCreate', async message => {
 
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+
+//ONce i add to main bot
+  try {
+    await client.guilds.cache.get(message.guild.id) ?.commands.fetch([])
+  } catch (error) {
+    const noscope = new Discord.MessageEmbed()
+      .setTitle('Slash Command Changes')
+      .setColor('RED')
+      .setFooter('Greetings Sky Bot Dev')
+      .setDescription('Please notify the Server owner or an Admin to re-add the Bot using the attached Button there is **NO NEED TO KICK THE BOT** you can just re-add it and it will work.\n\nThis is to ensure you will be able to use all the Slash Commands as the Devs are needed to make Slash Commands by Discord.\n\nOnce the Bot is reauthorized your all set and this Message also wont appear again.')
+    const row = new Discord.MessageActionRow()
+      .addComponents(
+        new Discord.MessageButton()
+          .setLabel('Bot Invite')
+          .setURL('https://discord.com/api/oauth2/authorize?client_id=839835292785704980&permissions=139653925953&scope=applications.commands%20bot')
+          .setStyle('LINK'),
+      );
+    message.channel.send({ embeds: [noscope], components: [row] })
+  }
 
   try {
     await command.execute(client, message, args, mclient);

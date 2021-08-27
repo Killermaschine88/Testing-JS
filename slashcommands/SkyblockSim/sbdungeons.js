@@ -191,7 +191,8 @@ module.exports = {
 
     //Players Stats
     let type = 'combat'
-    let pstats = playerStats(player, type) //Type decides what gear is needed for the Action
+    let cookie = player.data.misc.booster_cookie.active
+    let pstats = playerStats(player, type, cookie) //Type decides what gear is needed for the Action
 
     let combatlvl = skillLevel(player.data.skills.combat).level
 
@@ -586,9 +587,6 @@ module.exports = {
             row5.components[2].disabled = false // reset components for new tictactoe
             return await menu.edit({ embeds: [test], components: [row1, row2] })
           } else {
-            //test.description += `\n${txt}`
-            //runFailed = true
-            //return collector.stop()
             runFailed = false
             inTTT = false
             score -= 30
@@ -694,9 +692,6 @@ module.exports = {
 
           return await menu.edit({ embeds: [test], components: [row1, row2] })
         } else {
-          //test.setColor('RED')
-          //runFailed = true
-          //return collector.stop()
           runFailed = false
           inQuiz = false
           score -= 30
@@ -839,20 +834,23 @@ module.exports = {
       if (!inTTT && !inQuiz) return menu.edit({ embeds: [test], components: [row1, row2] })
     })
     collector.on('end', async collected => {
-      test.fields = []
-      if (runFailed) {
-        test.addField('Dungeon Run Over', '**Reason**\n* Failed Puzzle\n* Died to Mob')
-      } else if (runCancelled) {
-        test.addField('Dungeon Run Over', '**Reason**\n* Timed out\n* Cancelled')
-      }
-      test.setColor('RED')
-      await menu.edit({ embeds: [test], components: [] })
       await collection.updateOne(
         { _id: interaction.user.id },
         { $set: { "data.misc.in_dungeon": false } },
         { upsert: true }
       )
-      return;
+      try {
+        test.fields = []
+        if (runFailed) {
+          test.addField('Dungeon Run Over', '**Reason**\n* Failed Puzzle\n* Died to Mob')
+        } else if (runCancelled) {
+          test.addField('Dungeon Run Over', '**Reason**\n* Timed out\n* Cancelled')
+        }
+        test.setColor('RED')
+        await menu.edit({ embeds: [test], components: [] })
+        return;
+      } catch (e) {
+      }
     })
   }
 }

@@ -19,7 +19,7 @@ module.exports = {
         .setColor("RED")
         .setDescription("ERROR: No valid eval args were provided")
       if (!result) return message.channel.send({embeds: [noResultArg]})
-      let evaled = eval(result);
+      let evaled = await eval(result);
 
 
       let resultSuccess = new Discord.MessageEmbed()

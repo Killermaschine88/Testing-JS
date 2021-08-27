@@ -64,7 +64,8 @@ module.exports = {
 
     //Player Stats
     let type = 'all'
-    const ps = playerStats(player, type)
+    let cookie = player.data.misc.booster_cookie.active
+    const ps = playerStats(player, type, cookie)
 
     //Various Stats
     let playerfishingspeed = player.data.equipment.fishing.rod.fishing_speed
@@ -151,8 +152,11 @@ module.exports = {
       }
     })
 
-    collector.on('end', collected => {
-      menu.edit({ components: [] })
+    collector.on('end', async collected => {
+      try {
+        await menu.edit({ components: [] })
+      } catch (e) {
+      }
     });
   }
 };

@@ -1,4 +1,4 @@
-const discord = require('discord.js')
+const Discord = require('discord.js')
 const chalk = require('chalk');
 const config = require('../config.json');
 
@@ -17,7 +17,7 @@ module.exports = {
         return;
       }
       discordLog(client,
-        new discord.MessageEmbed()
+        new Discord.MessageEmbed()
           .setAuthor(client.user.username, client.user.avatarURL())
           .setDescription(`Joined a Guild: \`${guild.name}\`\n${guild.id}`)
           .setColor('7CFC00')

@@ -246,7 +246,7 @@ module.exports = {
             .setDescription('Purchased Booster Cookie')
             .setColor('GREEN')
 
-          interaction.editReply({ embeds: [purchased] })
+          interaction.editReply({ embeds: [purchased], components: [] })
         } else {
           const cancelled = new Discord.MessageEmbed()
             .setTitle('Menu Cancelled')
