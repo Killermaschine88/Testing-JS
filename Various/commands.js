@@ -132,6 +132,18 @@ const data = [
       },
     ],
   },
+  {
+    name: 'networth',
+    description: 'Calculates the Player Networth',
+    options: [
+      {
+        name: 'name',
+        description: 'Player IGN',
+        type: 'STRING',
+        required: true,
+      },
+    ],
+  },
   //Skyblock Simulator Commands
   {
     name: 'sb',

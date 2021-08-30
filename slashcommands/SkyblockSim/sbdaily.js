@@ -48,9 +48,9 @@ module.exports = {
         const failedstreak = new Discord.MessageEmbed()
         failedstreak.setTitle('Claimed Daily Reward')
         if (gems == 0) {
-          failedstreak.setDescription(`I have added <:coins:861974605203636253> **25k Coins** to your Profile but unfortunately your Streak has reset.\nYou will be able to claim it again in **24 Hours**`)
+          failedstreak.setDescription(`I have added <:coins:861974605203636253> **25k Coins** to your Profile but unfortunately, your Streak has reset.\nYou will be able to claim it again in **24 Hours**`)
         } else {
-          failedstreak.setDescription(`I have added <:coins:861974605203636253> **25k Coins** and <:gems:879264850348486696> **${gems} Gems** to your Profile but unfortunately your Streak has reset.\nYou will be able to claim it again in **24 Hours**`)
+          failedstreak.setDescription(`I have added <:coins:861974605203636253> **25k Coins** and <:gems:879264850348486696> **${gems} Gems** to your Profile but unfortunately, your Streak has reset.\nYou will be able to claim it again in **24 Hours**`)
         }
         failedstreak.setFooter(`Daily Streak: 1`)
         failedstreak.setColor('GREEN')

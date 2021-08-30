@@ -24,7 +24,7 @@ module.exports = {
     if (player === null) {
       const nodata = new Discord.MessageEmbed()
         .setColor('RED')
-        .setDescription(`No Profile found for ${id}`)
+        .setDescription(`No Profile found for <@!${id}>`)
       interaction.editReply({ embeds: [nodata] })
       return;
     }

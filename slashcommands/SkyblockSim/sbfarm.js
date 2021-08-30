@@ -35,7 +35,7 @@ module.exports = {
     if (!areas.includes(location)) {
       const badarea = new Discord.MessageEmbed()
         .setTitle('Invalid Combat Area')
-        .setDescription(`Your currently at the **${location}** which isn\'t a Combat area.`)
+        .setDescription(`You are currently at the **${location}** which isn\'t a Combat area.`)
         .setColor('RED')
         .setFooter('Skyblock Simulator')
 

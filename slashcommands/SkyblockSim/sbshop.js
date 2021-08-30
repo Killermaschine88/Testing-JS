@@ -147,7 +147,7 @@ module.exports = {
 
     let shopembed = new Discord.MessageEmbed()
       .setTitle('Skyblock Simulator Shop')
-      .setDescription('Upgrades or Items you can buy will Show up here. (If nothing shows up then you cant buy anything)')
+      .setDescription('Upgrades or Items you can buy will Show up here. (If nothing shows up then you can\'t buy anything)')
       .setFooter('Skyblock Simulator')
       .setColor('GREY')
 
@@ -172,7 +172,7 @@ module.exports = {
 
     //Cookie Field
     if (player.data.misc.booster_cookie.active == false) {
-      shopembed.addField('Booster Cookie', 'Cost: **4 Gems**')
+      shopembed.addField('Booster Cookie', 'Cost: **4 Gems**\n\n**Stats:**\n10 Magic Find\n10% Overall Stat incerase')
     }
 
     const filter = i => {

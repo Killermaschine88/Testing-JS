@@ -39,7 +39,7 @@ module.exports = {
       const noeyes = new Discord.MessageEmbed()
         .setTitle('Not enough Summoning Eyes')
         .setColor('RED')
-        .setDescription(`You don\'t have enough Summoning Eyes to fight a Dragon.\nYou need atleast **2 Summoning Eyes** to fight a Dragon\nTo get **Summoning Eyes** use /sb warp Area Dragon\'s Nest to farm them`)
+        .setDescription(`You don\'t have enough Summoning Eyes to fight a Dragon.\nYou need at least **2 Summoning Eyes** to fight a Dragon\nTo get **Summoning Eyes** use /sb warp Area Dragon\'s Nest to farm them`)
 
       interaction.editReply({ embeds: [noeyes] })
       return;
