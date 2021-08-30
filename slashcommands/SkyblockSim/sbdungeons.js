@@ -33,14 +33,15 @@ module.exports = {
         var a = x + 1
         var b = y
       }
-      if (map[a][b] == 0 || ((map[a][b] == 3 || map[a][b] == 4) && !ignoreEvent)) return location
+      if (map[a][b] == 0 || ((map[a][b] == 3 || map[a][b] == 4) && !ignoreEvent)) return [location, false]
 
       map[x][y] = 1
 
       location = [a, b]
 
+      const puzzle = map[a][b] == 5 ? true : false
       map[a][b] = 2
-      return location
+      return [location, puzzle]
     }
     /**
      * @returns {String} Map string for the embed
@@ -52,7 +53,7 @@ module.exports = {
         for (const item of row) {
           index++
           if (item == 0) string += wall
-          else if (item == 1) string += air
+          else if (item == 1 || item == 5) string += air
           else if (item == 2) string += Player
           else if (item == 3) string += puzzle
           else if (item == 4) string += enemy
@@ -237,7 +238,7 @@ module.exports = {
     // sample floor 2 map
     f2_map = [
       [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 2, 1, 1, 1, 0, 3, 0],
+      [0, 2, 5, 1, 1, 0, 3, 0],
       [0, 3, 1, 1, 1, 0, 1, 0],
       [0, 4, 1, 1, 1, 1, 1, 0],
       [0, 0, 1, 1, 0, 0, 1, 0],
@@ -699,7 +700,9 @@ module.exports = {
           await menu.edit({ embeds: [test], components: [row1, row2] })
         }
       } else if (id == 'up' || id == 'left' || id == 'right' || id == 'down') {
-        location = movePlayer(id, false)
+        const locationAndPuzzleCheck = movePlayer(id, false)
+        location = locationAndPuzzleCheck[0]
+        var puzzleOrNot = locationAndPuzzleCheck[1]
         test.fields = []
         test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray()
 
@@ -766,7 +769,7 @@ module.exports = {
         // FINISH FIGHT
 
         if (fightEnded) {
-          location = movePlayer(direction, true) // replace the mob emoji only after mob is killed
+          location = movePlayer(direction, true)[0] // replace the mob emoji only after mob is killed
           test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray()
         }
         menu.edit({ embeds: [test], components: [row1, row2] }) // Components need to get adjusted might be wrong
@@ -803,11 +806,11 @@ module.exports = {
 
           quiz = quizzes[Math.floor(Math.random() * quizzes.length)] // Gets random quiz
           console.log(quiz)
-          randomOptions = shuffle(quiz.options) // Shuffle the asnwers
+          randomOptions = shuffle(quiz.options) // Shuffle the answer
 
           let answers = '', index = 0
 
-          for (const option of randomOptions) { // Create the randomized asnwers messsage
+          for (const option of randomOptions) { // Create the randomized answer messsage
             const [choise, correct] = option // Example: [ choise = 10, correct = false ]
             index++
             if (index == 1) answers += `A) ${choise}\n`
@@ -819,7 +822,7 @@ module.exports = {
           await menu.edit({ embeds: [test], components: [row6] })
         }
 
-        location = movePlayer(direction, true) // replace the mob emoji only after mob is killed
+        location = movePlayer(direction, true)[0] // replace the mob emoji only after mob is killed
         if (!inTTT && !inQuiz) test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray()
       } else if (id == 'cancel') {
         runCancelled = true
@@ -830,6 +833,11 @@ module.exports = {
       row1.components[2].disabled = nearPuzzle()[0] ? false : true
       // If enemy is near, fight button activates
       row1.components[0].disabled = nearEnemy()[0] ? false : true
+
+      //check for secret
+      if (puzzleOrNot) {
+        test.addField('Secret Found', 'A')
+      }
 
       if (!inTTT && !inQuiz) return menu.edit({ embeds: [test], components: [row1, row2] })
     })

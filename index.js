@@ -173,7 +173,7 @@ client.on('messageCreate', async message => {
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
-//ONce i add to main bot
+  //ONce i add to main bot
   try {
     await client.guilds.cache.get(message.guild.id) ?.commands.fetch([])
   } catch (error) {

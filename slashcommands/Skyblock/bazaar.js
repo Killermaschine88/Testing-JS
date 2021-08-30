@@ -23,7 +23,7 @@ module.exports = {
 
     const waiting = new Discord.MessageEmbed()
       .setTitle('Checking Bazaar Data')
-      .setFooter('If I don't respond within 10 Seconds then the Item wasn't found or an Error occurred')
+      .setFooter('If I don\'t respond within 10 Seconds then the Item wasn\'t found or an Error occurred')
 
     const wait = await interaction.editReply({ embeds: [waiting] })
 
