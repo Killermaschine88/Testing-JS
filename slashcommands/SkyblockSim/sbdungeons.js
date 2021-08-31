@@ -12,11 +12,7 @@ module.exports = {
   aliases: [],
   cooldown: 10,
   async execute(interaction, mclient) {
-    /**
-    * @param {String} movement Direction to move
-    * @param {Boolean} ignoreEvent Move inside the event or not
-    * @returns {Array<Number, Number>} New position coordinates
-    */
+
     const movePlayer = (movement, ignoreEvent) => {
       let [x, y] = location
 
@@ -43,9 +39,6 @@ module.exports = {
       map[a][b] = 2
       return [location, puzzle]
     }
-    /**
-     * @returns {String} Map string for the embed
-     */
     const mapArray = () => {
       let string = ''
       let index = 0
@@ -64,53 +57,67 @@ module.exports = {
       }
       return string
     }
-    /**
-     * @returns {Array<Boolean, String>} Enemy is near or not - Direction
-     */
     const nearEnemy = () => {
       let [x, y] = location
 
+      let oldX = map[x]
+      let upX = map[x - 1]
+      let downX = map[x + 1]
+
+      if (!oldX || !upX || !downX) return false
+
       // Check if enemy is on the right
-      if (map[x][y + 1] == 4) return [true, 'right']
+      if (oldX[y + 1] == 4) return [true, 'right']
       // Check if enemy is on the left
-      if (map[x][y - 1] == 4) return [true, 'left']
+      if (oldX[y - 1] == 4) return [true, 'left']
       // Check if enemy is below
-      if (map[x + 1][y] == 4) return [true, 'down']
+      if (downX[y] == 4) return [true, 'down']
       // Check if enemy is above
-      if (map[x - 1][y] == 4) return [true, 'up']
+      if (upX[y] == 4) return [true, 'up']
       return false
     }
-    /**
-     * @returns {Array<Boolean, String>} Puzzle is near or not - Direction
-     */
     const nearPuzzle = () => {
       let [x, y] = location
 
+      let oldX = map[x]
+      let upX = map[x - 1]
+      let downX = map[x + 1]
+
+      if (!oldX || !upX || !downX) return false
+
       // Check if puzzle is on the right
-      if (map[x][y + 1] == 3) return [true, 'right']
+      if (oldX[y + 1] == 3) return [true, 'right']
       // Check if puzzle is on the left
-      if (map[x][y - 1] == 3) return [true, 'left']
+      if (oldX[y - 1] == 3) return [true, 'left']
       // Check if puzzle is below
-      if (map[x + 1][y] == 3) return [true, 'down']
+      if (downX[y] == 3) return [true, 'down']
       // Check if puzzle is above
-      if (map[x - 1][y] == 3) return [true, 'up']
+      if (upX[y] == 3) return [true, 'up']
       return false
     }
-    //Damage Calculations
-    /**
-     * @param {Number} php Player Health
-     * @param {Number} mdmg Mob Damage
-     * @returns {Number} Player Health
-     */
+    const nearDoor = () => {
+      let [x, y] = location
+
+      let oldX = map[x]
+      let upX = map[x - 1]
+      let downX = map[x + 1]
+
+      if (!oldX || !upX || !downX) return false
+
+      // Check if door is on the right
+      if (oldX[y + 1] == 6) return [true, 'right']
+      // Check if door is on the left
+      if (oldX[y - 1] == 6) return [true, 'left']
+      // Check if door is below
+      if (downX[y] == 6) return [true, 'down']
+      // Check if door is above
+      if (upX[y] == 6) return [true, 'up']
+      return false
+    }
     const dmgtaken = (php, mdmg) => {
       php -= mdmg
       return php
     }
-    /**
-     * @param {Number} mhp Mob Health
-     * @param {Number} pdmg Player Damage
-     * @returns {Number} Mob Health
-     */
     const dmgdealt = (mhp, pdmg) => {
       mhp -= pdmg
       return mhp
@@ -123,7 +130,6 @@ module.exports = {
     const isCrit = (critchance) => {
       return (Math.random() * 100 < critchance) ? true : false
     }
-
     const updateTTT = (x, y, user) => {
       const emoji = (user) ? '🟩' : '🟥'
       let txt = '', index = 0
@@ -171,14 +177,12 @@ module.exports = {
     const collection = mclient.db('SkyblockSim').collection('Players')
     const player = await collection.findOne({ _id: interaction.user.id })
 
-
-    if (player === null) {
-      const noprofile = new Discord.MessageEmbed()
+    if (!player) {
+      const noprofile = new MessageEmbed()
         .setColor('RED')
         .setTitle('No Profile found')
         .setDescription(`Create a Profile using \`/sb start\``)
-      interaction.editReply({ embeds: [noprofile] })
-      return;
+      return interaction.editReply({ embeds: [noprofile] })
     }
 
     //Checks if the Player already has an open Dungeon Run
@@ -209,8 +213,6 @@ module.exports = {
       pstats.health += 2 * classlevel
       pstats.defense += 1 * classlevel
     }
-
-
 
     //Variables needed for the Map
     let map = ''
@@ -285,13 +287,12 @@ module.exports = {
 
     const menu = await interaction.editReply({ embeds: [floorSelect], components: [floors] })
 
-
-    //Sets the Player into the Dungeon so they cant opem another run.
-    await collection.updateOne(
-      { _id: interaction.user.id },
-      { $set: { "data.misc.in_dungeon": true } },
-      { upsert: true }
-    )
+    //Sets the Player into the Dungeon so they cant open another run.
+    // await collection.updateOne(
+    //     { _id: interaction.user.id },
+    //     { $set: { "data.misc.in_dungeon": true } },
+    //     { upsert: true }
+    // )
 
     const filter = i => {
       i.deferUpdate()
@@ -365,7 +366,7 @@ module.exports = {
     const wall = '<:wall:876211886746636288>'
     const air = '<:air:876209923875303424>'
     const puzzle = '🟪'
-    const enemy = '<:rev:852892164559732806>'
+    const enemy = '<:zombie:876573165751509023>'
     const door = '<:wooddoor:882163369174503435>'
 
     const puzzles = ['ttt', 'quiz']
@@ -377,14 +378,14 @@ module.exports = {
 
     test.setDescription(`🎯 Score: **${score}**\n\n${mapArray(map)}`)
 
-    // If puzzle is near, interact button activates
-    row1.components[2].disabled = nearPuzzle()[0] ? false : true
+    // If puzzle or door is near, interact button activates
+    row1.components[2].disabled = nearPuzzle()[0] || nearDoor()[0] ? false : true
     // If enemy is near, fight button activates
     row1.components[0].disabled = nearEnemy()[0] ? false : true
 
     menu.edit({ embeds: [test], components: [row1, row2] })
 
-    const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 1000 * 60 * 14, idle: 1000 * 60 * 1 })
+    const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 1000 * 60 * 5 })
 
     const row3 = new MessageActionRow()
       .addComponents(
@@ -462,7 +463,7 @@ module.exports = {
         ]
       },
       {
-        question: `How much Catacombs XP do you need for Level 50?`,
+        question: `How many Catacombs XP do you need for Level 50`,
         options: [
           ['569 Mil', true], ['560 Mil', false], ['575 Mil', false]
         ]
@@ -567,7 +568,6 @@ module.exports = {
           const txt = (E == '🟩') ? `You Won!!` : ((E) ? `You Lost ...` : `You Tied`)
           if (E == '🟩' || !E) {
             inTTT = false
-            test.description += `\n${txt}`
             score += 30
             await menu.edit({ embeds: [test], components: [row1, row2] })
             await sleep(1000)
@@ -643,9 +643,6 @@ module.exports = {
             row5.components[2].disabled = false // reset components for new tictactoe
             return await menu.edit({ embeds: [test], components: [row1, row2] })
           } else {
-            //test.description += `\n${txt}`
-            //runFailed = true
-            //return 
             runFailed = false
             inTTT = false
             score -= 30
@@ -711,6 +708,9 @@ module.exports = {
       } else if (id == 'attack') {
         const direction = nearEnemy()[1]
         let fightEnded = false
+        let bossFight = false
+
+
 
         // START FIGHT 
         let pdmg = Math.floor((5 + pstats.damage) * (1 + (pstats.strength / 100)) * (1 + (combatlvl * 0.04)))
@@ -734,14 +734,13 @@ module.exports = {
         row2.components[1].disabled = true // down arrow
         row2.components[2].disabled = true // right arrow
 
-
         menu.edit({ embeds: [test], components: [row1, row2] })
-
 
         if (mhp <= 0) {
           fightEnded = true
           score += 20
           test.fields = []
+          test.setColor('ORANGE')
           test.addField(`\u200B`, `Killed the Enemy with **❤️ ${php}** left and earned Combat XP`) //Add combat xp var
           await collection.updateOne( //Add Combat XP from enemy Kill (do once mobs decided)
             { _id: interaction.user.id },
@@ -765,7 +764,6 @@ module.exports = {
           test.fields = []
           test.setColor('RED')
           test.addField(`\u200B`, `Died to the Enemy which had **❤️ ${mhp}** left.`)
-          runFailed = true
           return collector.stop()
         }
         // FINISH FIGHT
@@ -774,69 +772,83 @@ module.exports = {
           location = movePlayer(direction, true)[0] // replace the mob emoji only after mob is killed
           test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray()
         }
+        test.description = mapArray()
         menu.edit({ embeds: [test], components: [row1, row2] }) // Components need to get adjusted might be wrong
 
       } else if (id == 'interact') {
-        const direction = nearPuzzle()[1]
+        if (nearDoor()[0]) {
+          // Lock arrows
+          row1.components[0].disabled = false
+          row1.components[1].disabled = true // up arrow
+          row2.components[0].disabled = true // left arrow
+          row2.components[1].disabled = true // down arrow
+          row2.components[2].disabled = true // right arrow
+          menu.edit({ embeds: [test], components: [row1, row2] })
+          const direction = nearDoor()[1]
+          //
+          location = movePlayer(direction, true)[0] // replace the mob emoji only after mob is killed
+        } else {
+          const direction = nearPuzzle()[1]
 
-        // START PUZZLE
-        let puzzle = puzzles[Math.floor(Math.random() * puzzles.length)] // get random puzzle
-        if (puzzle == 'ttt') {
-          inTTT = true
-          const randomPick = [[0, 1, 2][Math.floor(Math.random() * 3)], [0, 1, 2][Math.floor(Math.random() * 3)]]
-          const [rowPick, columnPick] = randomPick
+          // START PUZZLE
+          let puzzle = puzzles[Math.floor(Math.random() * puzzles.length)] // get random puzzle
+          if (puzzle == 'ttt') {
+            inTTT = true
+            const randomPick = [[0, 1, 2][Math.floor(Math.random() * 3)], [0, 1, 2][Math.floor(Math.random() * 3)]]
+            const [rowPick, columnPick] = randomPick
 
-          test.setDescription(updateTTT(rowPick, columnPick, false))
+            test.setDescription(updateTTT(rowPick, columnPick, false))
 
-          if (rowPick == 0) {
-            if (columnPick == 0) row3.components[0].disabled = true
-            else if (columnPick == 1) row3.components[1].disabled = true
-            else if (columnPick == 2) row3.components[2].disabled = true
-          } else if (rowPick == 1) {
-            if (columnPick == 0) row4.components[0].disabled = true
-            else if (columnPick == 1) row4.components[1].disabled = true
-            else if (columnPick == 2) row4.components[2].disabled = true
-          } else if (rowPick == 2) {
-            if (columnPick == 0) row5.components[0].disabled = true
-            else if (columnPick == 1) row5.components[1].disabled = true
-            else if (columnPick == 2) row5.components[2].disabled = true
+            if (rowPick == 0) {
+              if (columnPick == 0) row3.components[0].disabled = true
+              else if (columnPick == 1) row3.components[1].disabled = true
+              else if (columnPick == 2) row3.components[2].disabled = true
+            } else if (rowPick == 1) {
+              if (columnPick == 0) row4.components[0].disabled = true
+              else if (columnPick == 1) row4.components[1].disabled = true
+              else if (columnPick == 2) row4.components[2].disabled = true
+            } else if (rowPick == 2) {
+              if (columnPick == 0) row5.components[0].disabled = true
+              else if (columnPick == 1) row5.components[1].disabled = true
+              else if (columnPick == 2) row5.components[2].disabled = true
+            }
+
+            await menu.edit({ embeds: [test], components: [row3, row4, row5] })
+          } else if (puzzle == 'quiz') {
+            inQuiz = true
+
+            quiz = quizzes[Math.floor(Math.random() * quizzes.length)] // Gets random quiz
+            console.log(quiz)
+            randomOptions = shuffle(quiz.options) // Shuffle the asnwers
+
+            let answers = '', index = 0
+
+            for (const option of randomOptions) { // Create the randomized asnwers messsage
+              const [choise, correct] = option // Example: [ choise = 10, correct = false ]
+              index++
+              if (index == 1) answers += `A) ${choise}\n`
+              else if (index == 2) answers += `B) ${choise}\n`
+              else if (index == 3) answers += `C) ${choise}`
+            }
+
+            test.addField(quiz.question, answers, false)
+            await menu.edit({ embeds: [test], components: [row6] })
           }
 
-          await menu.edit({ embeds: [test], components: [row3, row4, row5] })
-        } else if (puzzle == 'quiz') {
-          inQuiz = true
-
-          quiz = quizzes[Math.floor(Math.random() * quizzes.length)] // Gets random quiz
-          console.log(quiz)
-          randomOptions = shuffle(quiz.options) // Shuffle the answer
-
-          let answers = '', index = 0
-
-          for (const option of randomOptions) { // Create the randomized answer messsage
-            const [choise, correct] = option // Example: [ choise = 10, correct = false ]
-            index++
-            if (index == 1) answers += `A) ${choise}\n`
-            else if (index == 2) answers += `B) ${choise}\n`
-            else if (index == 3) answers += `C) ${choise}`
-          }
-
-          test.addField(quiz.question, answers, false)
-          await menu.edit({ embeds: [test], components: [row6] })
+          location = movePlayer(direction, true)[0] // replace the mob emoji only after mob is killed
+          if (!inTTT && !inQuiz) test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray()
         }
-
-        location = movePlayer(direction, true)[0] // replace the mob emoji only after mob is killed
-        if (!inTTT && !inQuiz) test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray()
       } else if (id == 'cancel') {
         runCancelled = true
-        collector.stop()
+        return collector.stop()
       }
 
-      // If puzzle is near, interact button activates
-      row1.components[2].disabled = nearPuzzle()[0] ? false : true
+      // If puzzle or door is near, interact button activates
+      row1.components[2].disabled = nearPuzzle()[0] || nearDoor()[0] ? false : true
       // If enemy is near, fight button activates
       row1.components[0].disabled = nearEnemy()[0] ? false : true
 
-      //check for secret
+      // check if on a secret
       if (puzzleOrNot) {
         test.addField('Secret Found', '\u200B')
         score += 20
@@ -851,18 +863,14 @@ module.exports = {
         { $set: { "data.misc.in_dungeon": false } },
         { upsert: true }
       )
-      try {
-        test.fields = []
-        if (runFailed) {
-          test.addField('Dungeon Run Over', '**Reason**\n* Failed Puzzle\n* Died to Mob')
-        } else if (runCancelled) {
-          test.addField('Dungeon Run Over', '**Reason**\n* Timed out\n* Cancelled')
-        }
-        test.setColor('RED')
-        await menu.edit({ embeds: [test], components: [] })
-        return;
-      } catch (e) {
+      test.fields = []
+      if (runFailed) {
+        test.addField('Dungeon Run Over', '**Reason**\n* Failed Puzzle\n* Died to Mob')
+      } else if (runCancelled) {
+        test.addField('Dungeon Run Over', '**Reason**\n* Timed out\n* Cancelled')
       }
+      test.setColor('RED')
+      await menu.edit({ embeds: [test], components: [] })
     })
   }
 }
