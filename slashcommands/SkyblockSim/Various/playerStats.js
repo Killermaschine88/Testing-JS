@@ -53,7 +53,7 @@ function playerStats(player, type, cookie) {
   }
 
   //Add Booster Cookie Stats
-  if(cookie == true) {
+  if (cookie == true) {
     health = Math.floor(health * 1.1)
     defense = Math.floor(defense * 1.1)
     damage = Math.floor(damage * 1.1)

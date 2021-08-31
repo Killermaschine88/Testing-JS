@@ -26,6 +26,8 @@ module.exports = {
       errtext = 'User not found within the Skyblock Playerbase'
     } else if (net.status == 500) {
       errtext = 'Internal Error'
+    } else if (net.status == 429) {
+      errtext = 'Something went wrong, please wait a minute then try again'
     } else {
       errtext = 'Error'
     }

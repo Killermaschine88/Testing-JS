@@ -57,6 +57,7 @@ module.exports = {
           else if (item == 2) string += Player
           else if (item == 3) string += puzzle
           else if (item == 4) string += enemy
+          else if (item == 6) string += door
           // reset the row
           if (index == map[0].length) index = 0, string += '\n'
         }
@@ -237,7 +238,7 @@ module.exports = {
     ]
     // sample floor 2 map
     f2_map = [
-      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 6, 6, 0, 0, 0],
       [0, 2, 5, 1, 1, 0, 3, 0],
       [0, 3, 1, 1, 1, 0, 1, 0],
       [0, 4, 1, 1, 1, 1, 1, 0],
@@ -365,6 +366,7 @@ module.exports = {
     const air = '<:air:876209923875303424>'
     const puzzle = '🟪'
     const enemy = '<:rev:852892164559732806>'
+    const door = '<:wooddoor:882163369174503435>'
 
     const puzzles = ['ttt', 'quiz']
 
@@ -836,7 +838,9 @@ module.exports = {
 
       //check for secret
       if (puzzleOrNot) {
-        test.addField('Secret Found', 'A')
+        test.addField('Secret Found', '\u200B')
+        score += 20
+        test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray()
       }
 
       if (!inTTT && !inQuiz) return menu.edit({ embeds: [test], components: [row1, row2] })
