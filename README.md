@@ -1,2 +1,2 @@
 # Testing-JS
-This is my Code for my Verified Discord Bot
+This is my Code for my Verified Discord Bot!
