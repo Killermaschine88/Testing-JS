@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const cataLevel = require('../../Various/Skyblock/dungeonlevel.js')
+const cataLevel = require('./Various/dungeonlevel.js')
 
 module.exports = {
   name: "sbclass",

@@ -1,11 +1,11 @@
 const express = require('express');
-const server = express();
+const app = express();
 const chalk = require('chalk');
 
-server.all('/', (req, res) => {
+app.all('/', (req, res) => {
   res.send(`<meta property="og:description"
-  content="A Skyblock/Moderation/Fun Discord Bot." />
-<meta property="og:title" content="Sky Bot" />
+  content="Don\'t ask me what i can do." />
+<meta property="og:title" content="Baltraz" />
   <style>
 body {
   background: rgb(255, 255, 255);
@@ -58,7 +58,7 @@ h4 {
 })
 
 function keepAlive() {
-  server.listen(3000, () => { console.log(chalk.greenBright("Server is Ready!!" + Date.now())) });
+  app.listen(3000, () => { console.log(chalk.greenBright("Server is Ready!!" + Date.now())) });
 }
 
 module.exports = keepAlive;

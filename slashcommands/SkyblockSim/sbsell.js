@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const list = require('../../Various/Skyblock/prices.json');
+const list = require('./Various/prices.json');
 const fetch = require('node-fetch')
 
 module.exports = {
@@ -125,7 +125,7 @@ module.exports = {
       const sold = new Discord.MessageEmbed()
         .setFooter('Skyblock Simulator')
         .setColor('90EE90')
-        .setDescription(`Successfully sold **${amount}x ${sellitem}** for **${earnedcoins} Coins**`)
+        .setDescription(`Successfully sold **${amount}x ${sellitem}** for **${earnedcoins.toLocaleString()} Coins**`)
       interaction.editReply({ embeds: [sold] })
       return;
     }

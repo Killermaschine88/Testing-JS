@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const leveling = require('../../Various/Skyblock/leveling.js')
+const leveling = require('./Various/leveling.js')
 const playerStats = require('./Various/playerStats.js')
 
 module.exports = {

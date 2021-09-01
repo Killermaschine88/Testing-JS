@@ -1,7 +1,8 @@
 const { MessageButton, MessageActionRow, MessageEmbed } = require('discord.js');
 const playerStats = require('./Various/playerStats.js')
-const classLevel = require('../../Various/Skyblock/dungeonlevel.js')
-const skillLevel = require('../../Various/Skyblock/skilllvl.js')
+const classLevel = require('./Various/dungeonlevel.js')
+const skillLevel = require('./Various/skilllvl.js')
+const lt = require('../../loottables.js')
 
 module.exports = {
   name: "sbdungeons",
@@ -203,6 +204,7 @@ module.exports = {
     let combatlvl = skillLevel(player.data.skills.combat).level
 
     let classlevel = classLevel(player.data.dungeons.class.selected.xp).level
+    let catalevel = classLevel(player.data.dungeons.xp).level
 
     if (player.data.dungeons.class.selected.name == 'Assassin') {
       pstats.strength += 2 * classlevel
@@ -218,6 +220,14 @@ module.exports = {
     let map = ''
     let location = [1, 1]
     let score = 100
+    let floor = ''
+
+    //Vars needed for Chests
+    let wood_loot = ''
+    let gold_loot = ''
+    let diamond_loot = ''
+    let emerald_loot = ''
+    let obsidian_loot = ''
 
     let f1_map = [
       [0, 0, 0, 0, 0, 0, 0],
@@ -283,7 +293,7 @@ module.exports = {
       .setTitle('Dungeons Floor Selection')
       .setFooter('Skyblock Simulator')
       .setColor('GREY')
-      .setDescription('**<:bonzo:852111493859115019> Floor 1 (0)**\n**<:scarff:852111493909446686> Floor 2 (4)**\n**<:professor:852111493952176148> Floor 3 (8)**')
+      .setDescription('**<:bonzo:852111493859115019> Floor 1 (Combat 10)**\n**<:scarff:852111493909446686> Floor 2 (Cata 4)**\n**<:professor:852111493952176148> Floor 3 (Cata 8)**')
 
     const menu = await interaction.editReply({ embeds: [floorSelect], components: [floors] })
 
@@ -303,17 +313,33 @@ module.exports = {
       .then(i => {
         const { customId: id } = i
 
-        if (id == 'f1') map = f1_map
-        else if (id == 'f2') map = f2_map
-        else if (id === 'f3') map = f3_map
+        if (id == 'f1') map = f1_map, floor = 1
+        else if (id == 'f2') map = f2_map, floor = 2
+        else if (id === 'f3') map = f3_map, floor = 3
         else {
           const cancelled = new MessageEmbed()
             .setTitle('Menu Cancelled')
             .setColor('RED')
           menu.edit({ embeds: [cancelled], components: [] })
-          return
+          return;
         }
       }).catch(err => menu.edit({ components: [] }))
+
+    const invalidreqs = new MessageEmbed()
+      .setTitle('Requirements not met.')
+      .setDescription(`**Needed Requirements**\nFloor 1 -> Combat 10\nFloor 2 -> Catacombs 4\nFloor 3 -> Catacombs 8\n\n**Your Stats**\nCombat: ${combatlvl}\nCatacombs: ${catalevel}\n`)
+      .setColor('RED')
+
+    if (floor == 1 && combatlvl <= 15) {
+      menu.edit({ embeds: [invalidreqs], components: [] })
+      return;
+    } else if (floor == 2 && catalevel <= 4) {
+      menu.edit({ embeds: [invalidreqs], components: [] })
+      return;
+    } else if (floor == 3 && catalevel <= 8) {
+      menu.edit({ embeds: [invalidreqs], components: [] })
+      return;
+    }
 
     //Variables needed for movement
     const up = new MessageButton()
@@ -352,11 +378,41 @@ module.exports = {
       .setCustomId('cancel')
       .setLabel('️C️a️n️c️e️l️')
       .setStyle('DANGER')
+    //Buttons for Loot
+    const wood_button = new MessageButton()
+      .setCustomId('wood')
+      .setEmoji('882624301503754350')
+      .setLabel('Chest')
+      .setStyle('PRIMARY')
+    const gold_button = new MessageButton()
+      .setCustomId('gold')
+      .setEmoji('869126927011708929')
+      .setLabel('Chest')
+      .setStyle('PRIMARY')
+    const diamond_button = new MessageButton()
+      .setCustomId('diamond')
+      .setEmoji('869126926646788097')
+      .setLabel('Chest')
+      .setStyle('PRIMARY')
+    const emerald_button = new MessageButton()
+      .setCustomId('emerald')
+      .setEmoji('869126927380779008')
+      .setLabel('Chest')
+      .setStyle('PRIMARY')
+    const obsidian_button = new MessageButton()
+      .setCustomId('obsidian')
+      .setEmoji('869490639769853992')
+      .setLabel('Chest')
+      .setStyle('PRIMARY')
 
     const row1 = new MessageActionRow()
       .addComponents(attack, up, interact, cancel)
     const row2 = new MessageActionRow()
       .addComponents(left, down, right)
+    const bossrow = new MessageActionRow()
+      .addComponents(attack, interact, cancel)
+    const lootrow = new MessageActionRow()
+      .addComponents(wood_button, gold_button)
 
     const test = new MessageEmbed()
     test.setFooter('Skyblock Simulator')
@@ -502,7 +558,7 @@ module.exports = {
 
     let quiz, randomOptions
 
-    let inTTT = false, inQuiz = false, runFailed = false, runCancelled = false
+    let inTTT = false, inQuiz = false, runFailed = false, runCancelled = false, bossFight = false, atLoot = false
 
     collector.on('collect', async i => {
       const { customId: id } = i
@@ -708,85 +764,150 @@ module.exports = {
       } else if (id == 'attack') {
         const direction = nearEnemy()[1]
         let fightEnded = false
-        let bossFight = false
+
+        if (bossFight) {
+          let pdmg = Math.floor((5 + pstats.damage) * (1 + (pstats.strength / 100)) * (1 + (combatlvl * 0.04)))
+
+          const crit = isCrit(critchance) //Change Variable for Crit Chance and change way how crit returns
+          if (crit) pdmg = Math.floor(pdmg * (1 + pstats.crit_damage / 100))
+
+          php = dmgtaken(php, mdmg) //php = player health, pdmg = playerdmg
+          mhp = dmgdealt(mhp, pdmg) //mhp = mob health, mdmg = mod damage
+
+          if (php < 0) php = 0 // Avoid negative health
+          if (mhp < 0) mhp = 0 // Avoid negative health
+
+          test.fields = []
+          test.addField(`Battle`, `Player Health: ❤️ ${php} (- ${mdmg})
+                Boss Health: ❤️ ${mhp} (-${crit ? '<:crit:870306942806020106>' : ''} ${pdmg})`)
+
+          menu.edit({ embeds: [test], components: [bossrow] })
+
+          if (mhp <= 0) {
+            fightEnded = true
+            test.fields = []
+            test.setColor('ORANGE')
+            test.addField(`\u200B`, `Killed the Boss with **❤️ ${php}** left and earned Combat XP`) //Add combat xp var
+            await collection.updateOne( //Add Combat XP from enemy Kill (do once mobs decided)
+              { _id: interaction.user.id },
+              { $inc: { "data.skills.combat": 500 } },
+              { upsert: true })
+
+            menu.edit({ embeds: [test], components: [bossrow] })
+
+            await sleep(1000) // waiting a second so you can actually read the message
+
+          } else if (php <= 0) {
+            test.fields = []
+            test.setColor('RED')
+            test.addField(`\u200B`, `Died to the Boss which had **❤️ ${mhp}** left.`)
+            runFailed = true
+            return collector.stop()
+          }
+          if (fightEnded) {
+            fightEnded = false
+            wood_loot = lt.wood.roll(pstats.magic_find)
+            gold_loot = lt.gold.roll(pstats.magic_find)
+            test.fields = []
+            test.description = '\n'
+            test.description += `Wood Chest: **${wood_loot}\n**`
+            test.description += `Gold Chest: **${gold_loot}\n**`
+            if (floor == 2 && score >= 160) {
+              diamond_loot = lt.diamond.roll(pstats.magic_find)
+              test.description += `Diamond Chest: **${diamond_loot}\n**`
+              lootrow.addComponents(diamond_button)
+            } else if (floor == 3 >= 200) {
+              diamond_loot = lt.diamond.roll(pstats.magic_find)
+              emerald_loot = lt.emerald_loot(pstats.magic_find)
+              test.description += `Diamond Chest: **${diamond_loot}\n**`
+              test.description += `Emerlad Chest: **${emerald_loot}\n**`
+              lootrow.addComponents(diamond_button, emerald_button)
+            }
+            test.setColor('FFD700')
+            atLoot = true
+            menu.edit({ embeds: [test], components: [lootrow] }) //add row for chests
+          }
+        } else {
 
 
 
-        // START FIGHT 
-        let pdmg = Math.floor((5 + pstats.damage) * (1 + (pstats.strength / 100)) * (1 + (combatlvl * 0.04)))
+          // START FIGHT 
+          let pdmg = Math.floor((5 + pstats.damage) * (1 + (pstats.strength / 100)) * (1 + (combatlvl * 0.04)))
 
-        const crit = isCrit(critchance) //Change Variable for Crit Chance and change way how crit returns
-        if (crit) pdmg = Math.floor(pdmg * (1 + pstats.crit_damage / 100))
+          const crit = isCrit(critchance) //Change Variable for Crit Chance and change way how crit returns
+          if (crit) pdmg = Math.floor(pdmg * (1 + pstats.crit_damage / 100))
 
-        php = dmgtaken(php, mdmg) //php = player health, pdmg = playerdmg
-        mhp = dmgdealt(mhp, pdmg) //mhp = mob health, mdmg = mod damage
+          php = dmgtaken(php, mdmg) //php = player health, pdmg = playerdmg
+          mhp = dmgdealt(mhp, pdmg) //mhp = mob health, mdmg = mod damage
 
-        if (php < 0) php = 0 // Avoid negative health
-        if (mhp < 0) mhp = 0 // Avoid negative health
+          if (php < 0) php = 0 // Avoid negative health
+          if (mhp < 0) mhp = 0 // Avoid negative health
 
-        test.fields = []
-        test.addField(`Battle`, `Player Health: ❤️ ${php} (- ${mdmg})
+          test.fields = []
+          test.addField(`Battle`, `Player Health: ❤️ ${php} (- ${mdmg})
                 Mob Health: ❤️ ${mhp} (-${crit ? '<:crit:870306942806020106>' : ''} ${pdmg})`)
 
-        // when still in fight locks movement so he can't get out the fight
-        row1.components[1].disabled = true // up arrow
-        row2.components[0].disabled = true // left arrow
-        row2.components[1].disabled = true // down arrow
-        row2.components[2].disabled = true // right arrow
-
-        menu.edit({ embeds: [test], components: [row1, row2] })
-
-        if (mhp <= 0) {
-          fightEnded = true
-          score += 20
-          test.fields = []
-          test.setColor('ORANGE')
-          test.addField(`\u200B`, `Killed the Enemy with **❤️ ${php}** left and earned Combat XP`) //Add combat xp var
-          await collection.updateOne( //Add Combat XP from enemy Kill (do once mobs decided)
-            { _id: interaction.user.id },
-            { $inc: { "data.skills.combat": 50 } },
-            { upsert: true })
-
-          php = pstats.health //reset player health
-          mhp = (Math.random() < 0.5) ? 300 : 200 // reset mob hp for new mob
-          mdmg = (Math.random() < 0.5) ? 50 : 25 // reset mob dmg for new mob
-
-          // Unlocks arrows after mob is killed
-          row1.components[0].disabled = true
-          row1.components[1].disabled = false // up arrow
-          row2.components[0].disabled = false // left arrow
-          row2.components[1].disabled = false // down arrow
-          row2.components[2].disabled = false // right arrow
-          menu.edit({ embeds: [test], components: [row1, row2] })
-
-          await sleep(1000) // waiting a second so you can actually read the message
-        } else if (php <= 0) {
-          test.fields = []
-          test.setColor('RED')
-          test.addField(`\u200B`, `Died to the Enemy which had **❤️ ${mhp}** left.`)
-          return collector.stop()
-        }
-        // FINISH FIGHT
-
-        if (fightEnded) {
-          location = movePlayer(direction, true)[0] // replace the mob emoji only after mob is killed
-          test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray()
-        }
-        test.description = mapArray()
-        menu.edit({ embeds: [test], components: [row1, row2] }) // Components need to get adjusted might be wrong
-
-      } else if (id == 'interact') {
-        if (nearDoor()[0]) {
-          // Lock arrows
-          row1.components[0].disabled = false
+          // when still in fight locks movement so he can't get out the fight
           row1.components[1].disabled = true // up arrow
           row2.components[0].disabled = true // left arrow
           row2.components[1].disabled = true // down arrow
           row2.components[2].disabled = true // right arrow
+
           menu.edit({ embeds: [test], components: [row1, row2] })
+
+          if (mhp <= 0) {
+            fightEnded = true
+            score += 20
+            test.fields = []
+            test.setColor('ORANGE')
+            test.addField(`\u200B`, `Killed the Enemy with **❤️ ${php}** left and earned Combat XP`) //Add combat xp var
+            await collection.updateOne( //Add Combat XP from enemy Kill (do once mobs decided)
+              { _id: interaction.user.id },
+              { $inc: { "data.skills.combat": 50 } },
+              { upsert: true })
+
+            php = pstats.health //reset player health
+            mhp = (Math.random() < 0.5) ? 300 : 200 // reset mob hp for new mob
+            mdmg = (Math.random() < 0.5) ? 50 : 25 // reset mob dmg for new mob
+
+            // Unlocks arrows after mob is killed
+            row1.components[0].disabled = true
+            row1.components[1].disabled = false // up arrow
+            row2.components[0].disabled = false // left arrow
+            row2.components[1].disabled = false // down arrow
+            row2.components[2].disabled = false // right arrow
+            menu.edit({ embeds: [test], components: [row1, row2] })
+
+            await sleep(1000) // waiting a second so you can actually read the message
+          } else if (php <= 0) {
+            test.fields = []
+            test.setColor('RED')
+            test.addField(`\u200B`, `Died to the Enemy which had **❤️ ${mhp}** left.`)
+            runFailed = true
+            return collector.stop()
+          }
+          // FINISH FIGHT
+
+          if (fightEnded) {
+            location = movePlayer(direction, true)[0] // replace the mob emoji only after mob is killed
+            test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray()
+          }
+          test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray()
+          menu.edit({ embeds: [test], components: [row1, row2] }) // Components need to get adjusted might be wrong
+        }
+      } else if (id == 'interact') {
+        if (nearDoor()[0]) {
+          // Lock arrows
+          bossFight = true
+          bossrow.components[0].disabled = false
+          if (floor == 1) mhp = 500, mdmg = 100
+          else if (floor == 2) mhp = 1000, mdmg = 200
+          else if (floor == 3) mhp = 2500, mdmg = 350
+          test.fields = []
+          test.addField(`Battle`, `Player Health: ❤️ ${php}
+                Mob Health: ❤️ ${mhp}`)
+          await menu.edit({ embeds: [test], components: [bossrow] })
           const direction = nearDoor()[1]
-          //
-          location = movePlayer(direction, true)[0] // replace the mob emoji only after mob is killed
         } else {
           const direction = nearPuzzle()[1]
 
@@ -848,29 +969,110 @@ module.exports = {
       // If enemy is near, fight button activates
       row1.components[0].disabled = nearEnemy()[0] ? false : true
 
+      //Adding the USER the loot
+      if (atLoot) {
+        let loot = ''
+        let choosen = false
+        if (id == 'wood') {
+          loot = wood_loot
+          choosen = true
+        } else if (id == 'gold') {
+          loot = gold_loot
+          choosen = true
+        } else if (id == 'diamond') {
+          loot = diamond_button
+          choosen = true
+        } else if (id == 'emerald') {
+          loot = emerald_loot
+          choosen = true
+        } else if (id == 'obsidian') {
+
+        }
+        if (!isNaN(loot) && choosen == true) {
+          loot = Number(loot)
+          await collection.updateOne(
+            { _id: interaction.user.id },
+            { $inc: { 'data.profile.coins': loot } },
+            { upsert: true })
+
+          const lootembed = new MessageEmbed()
+            .setTitle(`Floor ${floor} Finished`)
+            .setDescription(`<:coins:861974605203636253> **${loot}** Coins added to your Profile.`)
+            .setColor('GREEN')
+            .setFooter('Skyblock Simulator')
+          menu.edit({ embeds: [lootembed], components: [] })
+        } else if (loot == 'Recombobulator 3000' && choosen == true) {
+          let sellitem = loot
+          let amount = 1
+          const updatePlayer = addItem(sellitem, amount, player)
+
+          await collection.replaceOne(
+            { _id: interaction.user.id },
+            updatePlayer
+          )
+
+          const lootembed = new MessageEmbed()
+            .setTitle(`Floor ${floor} Finished`)
+            .setDescription(`<:recomb:881094744183275540> **${loot}** added to your Profile.`)
+            .setColor('GREEN')
+            .setFooter('Skyblock Simulator')
+          menu.edit({ embeds: [lootembed], components: [] })
+        } else {
+          
+        }
+      }
+
       // check if on a secret
       if (puzzleOrNot) {
         test.addField('Secret Found', '\u200B')
         score += 20
         test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray()
       }
-
-      if (!inTTT && !inQuiz) return menu.edit({ embeds: [test], components: [row1, row2] })
+      if (!inTTT && !inQuiz && !bossFight) return test.setColor('GREY'), menu.edit({ embeds: [test], components: [row1, row2] })
     })
     collector.on('end', async collected => {
-      await collection.updateOne(
-        { _id: interaction.user.id },
-        { $set: { "data.misc.in_dungeon": false } },
-        { upsert: true }
-      )
-      test.fields = []
-      if (runFailed) {
-        test.addField('Dungeon Run Over', '**Reason**\n* Failed Puzzle\n* Died to Mob')
-      } else if (runCancelled) {
-        test.addField('Dungeon Run Over', '**Reason**\n* Timed out\n* Cancelled')
+      try {
+        await collection.updateOne(
+          { _id: interaction.user.id },
+          { $set: { "data.misc.in_dungeon": false } },
+          { upsert: true }
+        )
+        test.fields = []
+        if (runFailed) {
+          test.addField('Dungeon Run Over', '**Reason**\n* Failed Puzzle\n* Died to Mob')
+        } else if (runCancelled) {
+          test.addField('Dungeon Run Over', '**Reason**\n* Timed out\n* Cancelled')
+        }
+        test.setColor('RED')
+        await menu.edit({ embeds: [test], components: [] })
+      } catch (e) {
+
       }
-      test.setColor('RED')
-      await menu.edit({ embeds: [test], components: [] })
     })
   }
+}
+
+function addItem(sellitem, amount, player) {
+  if (!player.data.inventory.items) player.data.inventory.items = []
+
+  if (player.data.inventory.items.length === 0) {
+    player.data.inventory.items.push({
+      name: sellitem,
+      amount: amount
+    })
+    return player
+  }
+
+  for (const item of player.data.inventory.items) {
+    if (item.name === sellitem) {
+      item.amount -= amount
+      return player
+    }
+  }
+
+  player.data.inventory.items.push({
+    name: sellitem,
+    amount: amount
+  })
+  return player
 }

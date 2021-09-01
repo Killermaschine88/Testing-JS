@@ -24,6 +24,12 @@ module.exports = {
     }
 
     try {
+      const collection = mclient.db('Sky-Bot').collection('commanduses');
+      collection.updateOne(
+        { _id: interaction.commandName },
+        { $inc: { uses: 1 } },
+        { upsert: true })
+
       await interaction.deferReply()
       await interaction.client.slashcommands.get(commandExecute).execute(interaction, mclient);
     } catch (error) {

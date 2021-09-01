@@ -28,7 +28,7 @@ const webhook = new Topgg.Webhook("69420")
 
 app.post("/dblwebhook", webhook.listener(async vote => {
 
-  const collection = mclient.db('Sky-Bot').collection('SkyblockSimm');
+  const collection = mclient.db('SkyblockSim').collection('Players');
   let found = await collection.findOne({ _id: vote.user })
 
   await collection.updateOne(
