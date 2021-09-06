@@ -3,7 +3,7 @@ const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD
 const config = require('./config.json');
 const keepAlive = require('./keepAlive.js');
 const fs = require('fs');
-const chalk = require('chalk');
+const color = require('colorette');
 const prefix = require("@replit/database");
 const prefixx = new prefix();
 const token = process.env['token'];
@@ -68,29 +68,38 @@ client.login(token);
 
 // Send msg in Console when Bot is usable and set status
 client.on('ready', () => {
+  let color1 = 
+  mclient.connect()
+  console.log(
+    String.raw`
+${color.blue('  ________  __   ___  ___  ___      _______     ______  ___________')}  
+${color.blue(' /\"       )|/\"| /  \")|\"  \\/"  |    |   _  \"\\   /    " \\(\"     _   \") ')}
+${color.blue('(:   \\___/ (: |/   /  \\   \\  /     (. |_)  :) // ____  \\)__/  \\\\__/  ')}
+${color.blue(' \\___  \\   |    __/    \\\\  \\/      |:     \\/ /  /    ) :)  \\\\_ /     ')}
+${color.blue('  __/  \\\\  (// _  \\    /   /       (|  _  \\\\(: (____/ //   |.  |     ')}
+${color.blue(' /\" \\   :) |: | \\  \\  /   /        |: |_)  :)\\        /    \\:  |     ')}
+${color.blue('(_______/  (__|  \\__)|___/         (_______/  \\"_____/      \\__|     ')}
+                                                                     
+
+${color.blue('[INFO] ├─ Loaded')} ${color.green(client._eventsCount)} ${color.blue(' Event Listeners')}  ${color.blue('[')}${color.green('+')}${color.blue('] Web Server')}
+${color.blue('[INFO] ├─ Loaded')} ${color.green(sc)} ${color.blue('Slash Commands')}   ${color.blue('[')}${color.green('+')}${color.blue('] Database')}
+${color.blue('[INFO] └─ Loaded')} ${color.green(c)} ${color.blue('Commands')}                                                                        
+		`.trim()
+  );
+  /*
   console.log(chalk.greenBright(`Logged in as ${client.user.username}!`));
-  console.log(chalk.greenBright(`Loaded ${c} Commands, ${sc} SlashCommands and ${e} Events!`));
+  console.log(chalk.greenBright(`Loaded ${c} Commands, ${sc} SlashCommands and ${e} Events!`));*/
   client.user.setActivity(`${client.users.cache.size} Members and ${client.guilds.cache.size} Servers`, { type: 'WATCHING' });
   mclient.connect()
-  console.log(chalk.greenBright(`Logged into MongoDB`));
+  //console.log(chalk.greenBright(`Logged into MongoDB`));
+
+
+
+
 
   client.users.fetch('570267487393021969').then(async user => {
     await user.send(`Restarted`)
   })
-});
-
-
-//Replies with the Prefix when Bot is mentioned
-client.on('messageCreate', async message => {
-
-  if (message.author.bot) return;
-  var gprefix = await prefixx.get(message.guild.id, { raw: false });
-  if (gprefix === null) gprefix = '.';
-  const bottag = message.mentions.users.first();
-  if (bottag === client.user) {
-    (message.channel.send(`My Prefixx is \`${gprefix}\``))
-    return;
-  }
 });
 
 
@@ -132,8 +141,11 @@ client.on('messageCreate', async message => {
 
   if (message.author.bot) return
   if (message.channel.type === 'DM') return message.channel.send('I dont work in DMs.')
+
   let gprefix = await prefixx.get(message.guild.id, { raw: false });
   if (gprefix === null) gprefix = '.';
+
+
   if (!message.content.startsWith(gprefix) || message.author.bot) return;
 
   const args = message.content.slice(gprefix.length).trim().split(/ +/);
@@ -173,29 +185,60 @@ client.on('messageCreate', async message => {
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
-  //ONce i add to main bot
-  try {
-    await client.guilds.cache.get(message.guild.id) ?.commands.fetch([])
-  } catch (error) {
-    const noscope = new Discord.MessageEmbed()
-      .setTitle('Slash Command Changes')
-      .setColor('RED')
-      .setFooter('Greetings Sky Bot Dev')
-      .setDescription('Please notify the Server owner or an Admin to re-add the Bot using the attached Button there is **NO NEED TO KICK THE BOT** you can just re-add it and it will work.\n\nThis is to ensure you will be able to use all the Slash Commands as the Devs are needed to make Slash Commands by Discord.\n\nOnce the Bot is reauthorized your all set and this Message also wont appear again.')
-    const row = new Discord.MessageActionRow()
-      .addComponents(
-        new Discord.MessageButton()
-          .setLabel('Bot Invite')
-          .setURL('https://discord.com/api/oauth2/authorize?client_id=839835292785704980&permissions=139653925953&scope=applications.commands%20bot')
-          .setStyle('LINK'),
-      );
-    message.channel.send({ embeds: [noscope], components: [row] })
+  //Once i add to main bot
+  const servercoll = mclient.db('Sky-Bot').collection('Servers');
+  let found = await servercoll.findOne({ _id: message.guild.id })
+
+  if (message.author.id != '570267487393021969') {
+    if (found == null || found.scopeadded == false) {
+      try {
+        await client.guilds.cache.get(message.guild.id) ?.commands.fetch([])
+      await servercoll.updateOne(
+          { _id: message.guild.id },
+          { $set: { scopeadded: true } },
+          { upsert: true })
+      } catch (error) {
+        const noscope = new Discord.MessageEmbed()
+          .setTitle('Slash Command Changes')
+          .setColor('RED')
+          .setFooter('Greetings Sky Bot Dev')
+          .setDescription('Please notify the Server owner or an Admin to re-add the Bot using the attached Button there is **NO NEED TO KICK THE BOT** you can just re-add it and it will work using SlashCommands.\n\nThis is to ensure you will be able to use all the Slash Commands as the Devs are required to make Slash Commands by Discord.\n\nOnce the Bot is reauthorized your all set and this Message also wont appear again.')
+        const row = new Discord.MessageActionRow()
+          .addComponents(
+            new Discord.MessageButton()
+              .setLabel('Bot Invite')
+              .setURL('https://discord.com/api/oauth2/authorize?client_id=839835292785704980&permissions=139653925953&scope=applications.commands%20bot')
+              .setStyle('LINK'),
+          );
+        message.channel.send({ embeds: [noscope], components: [row] })
+        await servercoll.updateOne(
+          { _id: message.guild.id },
+          { $set: { scopeadded: false } },
+          { upsert: true })
+      }
+    } else {
+      const addedscope = new Discord.MessageEmbed()
+        .setTitle('Unsupported Message Commands')
+        .setColor('ORANGE')
+        .setFooter('Greetings Sky Bot Dev')
+        .setDescription('Message Commands have been remove from Sky Bot due to a change in Discords System Bot Developers are required to use Slash Commands\n\nFor a list of all existing Slash Commands use \`/commandlist\`.\n\nClick the attached Button for an Article explaining those changes.')
+      const row = new Discord.MessageActionRow()
+        .addComponents(
+          new Discord.MessageButton()
+            .setLabel('Discord Article')
+            .setURL('https://support-dev.discord.com/hc/en-us/articles/4404772028055-Message-Content-Access-Deprecation-for-Verified-Bots')
+            .setStyle('LINK'),
+        );
+      message.channel.send({ embeds: [addedscope], components: [row] })
+    }
+    return;
   }
+  if (command.folder != 'Dev') return;
 
   try {
     await command.execute(client, message, args, mclient);
   } catch (error) {
-    console.error(error);
+    console.error(chalk.red(error));
     message.reply('There was an Error trying to execute that Command!');
   }
 });

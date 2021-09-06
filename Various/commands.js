@@ -4,6 +4,10 @@ const data = [
     description: 'Shows Info about the Bot'
   },
   {
+    name: 'commandlist',
+    description: 'Shows a list of Valid Slash Commands'
+  },
+  {
     name: 'invite',
     description: 'Shows the Bots Invite and Support Server',
   },

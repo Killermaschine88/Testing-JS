@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const chalk = require('chalk');
 
 app.all('/', (req, res) => {
   res.send(`<meta property="og:description"
@@ -58,7 +57,7 @@ h4 {
 })
 
 function keepAlive() {
-  app.listen(3000, () => { console.log(chalk.greenBright("Server is Ready!!" + Date.now())) });
+  app.listen(3000)//, () => { console.log(chalk.greenBright("Server is Ready!!" + Date.now())) });
 }
 
 module.exports = keepAlive;

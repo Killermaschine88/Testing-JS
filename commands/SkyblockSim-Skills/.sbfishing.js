@@ -1,24 +1,26 @@
 const Discord = require('discord.js');
 const prefix = require("@replit/database");
 const prefixx = new prefix();
-const emoji = require('../SkyblockSim/Various/emojis.json')
-const mobs = require('../SkyblockSim/Various/mobstats.json')
-const getLevel = require('../SkyblockSim/Various/skilllvl.js')
+const emoji = ''
+const mobs = ''
+const getLevel = ''
 
 module.exports = {
-  name: "sbfishing",
+  name: "Sbfishing",
   description: "Earn Fishing XP",
   usage: "sbfishing",
   perms: "None",
   folder: "SkyblockSim",
   aliases: ['fishing', 'fish'],
   cooldown: 20,
-  async execute(interaction, mclient) {
+  async execute(client, message, args, mclient) {
 
     const collection = mclient.db('SkyblockSim').collection('Players');
-    let player = await collection.findOne({ _id: interaction.user.id })
+    let player = await collection.findOne({ _id: message.author.id })
 
-    var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
+
+
+    var gprefix = await prefixx.get(message.guild.id, { raw: false });
     if (gprefix === null) gprefix = '.';
 
     if (player === null) {
@@ -26,18 +28,18 @@ module.exports = {
         .setColor('RED')
         .setTitle('No Profile found')
         .setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``)
-      interaction.editReply({ embeds: [noprofile] })
+      message.channel.send({ embeds: [noprofile] })
       return;
     }
 
-    if (player.data.misc.is_fishing === true) {
+    /*if (player.data.misc.is_fishing === true) {
       const alreadyfishing = new Discord.MessageEmbed()
         .setTitle('You are already Fishing somewhere so i can\'t create another Pond for you')
         .setColor('RED')
         .setFooter('Skyblock Simulator')
-      interaction.editReply({ embeds: [alreadyfishing] })
+      message.channel.send({ embeds: [alreadyfishing] })
       return;
-    }
+    }*/
 
 
 
@@ -45,7 +47,7 @@ module.exports = {
     let fishinglvl = getLevel(player.data.skills.fishing).level
     let rod = player.data.equipment.fishing.rod.name
     let rod_speed = player.data.equipment.fishing.rod.fishing_speed
-    let sea_creature_chance = player.data.stats.sea_creature_chance + player.data.equipment.fishing.rod.sea_creature_chance + (fishinglvl / 2)
+    let sea_creature_chance = player.data.stats.sea_creature_chance + player.data.equipment.fishing.rod.sea_creature_chance + player.data.equipment.fishing.armor.sea_creature_chance + (fishinglvl / 2)
     let isCreature = ''
     let mob = ''
     let rod_casted = false
@@ -66,6 +68,8 @@ module.exports = {
     let mhp = ''
     let mdmg = ''
 
+    //Logging
+    console.log(fishing_time)
 
     //Buttons for Catching Fish
     const bcatch = new Discord.MessageButton()
@@ -93,12 +97,12 @@ module.exports = {
     //Buttons for Killing Sea Creatures
     const bkillsc = new Discord.MessageButton()
       .setCustomId('killsc')
-      .setLabel('Attack Sea Creature')
+      .setLabel('Kill Sea Creature')
       .setStyle('PRIMARY')
 
     const bkillscoff = new Discord.MessageButton()
       .setCustomId('aa')
-      .setLabel('Attack Sea Creature')
+      .setLabel('Kill Sea Creature')
       .setStyle('PRIMARY')
       .setDisabled(true)
 
@@ -124,23 +128,21 @@ module.exports = {
       .setTitle('Fishing Pond')
       .setColor('BLUE')
       .setFooter('Skyblock Simulator')
-      .setDescription(`Rod: **${rod}**\nSea Creature Chance: **${sea_creature_chance}**\nFishing Speed: **${rod_speed}**%\n\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n`)
+      .setDescription(`${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n`)
 
-    const menu = await interaction.editReply({ embeds: [pond], components: [row] })
-
-
+    const menu = await message.channel.send({ embeds: [pond], components: [row] })
 
     await collection.updateOne(
-      { _id: interaction.user.id },
+      { _id: message.author.id },
       { $set: { "data.misc.is_fishing": true } },
       { upsert: true })
 
     const filter = i => {
       i.deferUpdate();
-      return i.user.id === interaction.user.id;
+      return i.user.id === message.author.id;
     };
 
-    const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 858000 })
+    const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 1000000 })
 
     collector.on('collect', async i => {
       if (i.customId === 'cast' && rod_casted === false) {
@@ -169,47 +171,16 @@ module.exports = {
           menu.edit({ embeds: [pond], components: [row2] })
           rod_casted = false
         } else {
-          let raredrop = isRareDrop(fishinglvl)
-          if (raredrop == 'yes') {
-            let coinamounts = [2500, 5000, 7500, 10000, 15000, 20000]
-            let coindrop = coinamounts[Math.floor(Math.random() * coinamounts.length)];
+          rod_casted = false
+          pond.fields = [];
+          pond.addField(`Fish caught`, `earned 50 Fishing XP`)
 
-            await collection.updateOne(
-              { _id: interaction.user.id },
-              { $inc: { "data.profile.coins": coindrop, } },
-              { upsert: true })
+          await collection.updateOne(
+            { _id: message.author.id },
+            { $inc: { "data.skills.fishing": 50 } },
+            { upsert: true })
 
-            rod_casted = false
-            pond.fields = [];
-            pond.addField(`RARE CATCH!!!`, `earned **<:coins:861974605203636253> ${coindrop} Coins**`)
-
-            menu.edit({ embeds: [pond], components: [row] })
-          } else {
-            let fishxp = Math.floor(Math.random() * (60 - 25) + 25)
-            let fishes = ['Raw Fish', 'Raw Salmon', 'Pufferfish', 'Clownfish']
-            let fishname = fishes[Math.floor(Math.random() * fishes.length)];
-            let fishingcoins = 0
-            if (fishname === 'Raw Fish') {
-              fishingcoins = 23
-            } else if (fishname === 'Raw Salmon') {
-              fishingcoins = 9
-            } else if (fishname === 'Pufferfish') {
-              fishingcoins = 13
-            } else if (fishname === 'Clownfish') {
-              fishingcoins = 19
-            }
-
-            rod_casted = false
-            pond.fields = [];
-            pond.addField(`Caught a ${fishname}`, `earned **${fishxp} Fishing XP** and sold it for **<:coins:861974605203636253> ${fishingcoins} Coins**`)
-
-            await collection.updateOne(
-              { _id: interaction.user.id },
-              { $inc: { "data.skills.fishing": fishxp, "data.profile.coins": fishingcoins } },
-              { upsert: true })
-
-            menu.edit({ embeds: [pond], components: [row] })
-          }
+          menu.edit({ embeds: [pond], components: [row] })
         }
       } else if (i.customId === 'killsc') {
         let crit = isCrit(critchance, critted)
@@ -233,28 +204,14 @@ module.exports = {
         menu.edit({ embeds: [pond] })
 
         if (i.customId === 'killsc' && mhp <= 0) {
-          let amount = Math.floor(Math.random() * (3 - 1) + 1)
-          let mobdrop = 'Lilypad'
           pond.fields = []
           pond.setColor('BLUE')
-          pond.addField(`Result`, `Killed the Enemy, earned ${foundmob.xp} Fishing XP and ${amount} Lilypads.`)
-
-
-          php = health
-
-          player = await collection.findOne({ _id: interaction.user.id })
-
-          const updatePlayer = await addItems(mobdrop, amount, player)
-
-          await collection.replaceOne(
-            { _id: interaction.user.id },
-            updatePlayer
-          )
-
+          pond.addField(`Result`, `Killed the Enemy with **❤️ ${php}** left and earned ${foundmob.xp} Fishing XP.`)
           await collection.updateOne(
-            { _id: interaction.user.id },
+            { _id: message.author.id },
             { $inc: { "data.skills.fishing": foundmob.xp } },
-          )
+            { upsert: true })
+          php = health
 
           menu.edit({ embeds: [pond], components: [row] })
         } else if (i.customId === 'killsc' && php <= 0) {
@@ -264,6 +221,8 @@ module.exports = {
           menu.edit({ embeds: [pond] })
           collector.stop()
         }
+
+
 
       } else if (i.customId === 'cancel') {
         collector.stop()
@@ -275,7 +234,7 @@ module.exports = {
       pond.fields = []
       pond.addField('\u200b', 'Stopped Fishing.')
       await collection.updateOne(
-        { _id: interaction.user.id },
+        { _id: message.author.id },
         { $set: { "data.misc.is_fishing": false } },
         { upsert: true })
       menu.edit({ embeds: [pond], components: [] })
@@ -292,6 +251,7 @@ function isSeaCreature(sea_creature_chance, isCreature) {
     isCreature = 'no'
     return isCreature
   }
+
 }
 
 function getSeaCreatureStats(mob, mobs, fishinglvl) {
@@ -339,41 +299,6 @@ function getFishingTime(rod_speed) {
   if (rod_speed === 40) return 5900
   if (rod_speed === 50) return 5000
   if (rod_speed === 60) return 4000
-  if (rod_speed === 70) return 3500
-  if (rod_speed === 75) return 3000
+  if (rod_speed === 75) return 3200
   if (rod_speed === 100) return 2000
-}
-
-function addItems(mobdrop, amount, player) {
-  if (!player.data.inventory.items) player.data.inventory.items = []
-
-  if (player.data.inventory.items.length === 0) {
-    player.data.inventory.items.push({
-      name: mobdrop,
-      amount: amount
-    })
-    return player
-  }
-
-  for (const item of player.data.inventory.items) {
-    if (item.name === mobdrop) {
-      item.amount += amount
-      return player
-    }
-  }
-
-  player.data.inventory.items.push({
-    name: mobdrop,
-    amount: amount
-  })
-  return player
-}
-
-function isRareDrop(fishinglvl) {
-  let rn1 = Math.random() * (100 - 1) + 1
-  if (rn1 <= fishinglvl * 0.1) {
-    return 'yes'
-  } else {
-    return 'no'
-  }
 }

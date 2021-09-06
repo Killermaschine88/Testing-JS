@@ -1,7 +1,10 @@
+const level = require('./skilllvl.js')
+
 function playerStats(player, type, cookie) {
 
   //Base Variables
   let stats = player.data.stats
+  let fishinglvl = level(player.data.skills.fishing).level
   let inv = ''
   let inv2 = ''
 
@@ -49,7 +52,7 @@ function playerStats(player, type, cookie) {
 
     crit_damage += inv.sword.crit_damage + inv.armor.crit_damage
 
-    sea_creature_chance += inv2.armor.sea_creature_chance + inv2.rod.sea_creature_chance
+    sea_creature_chance += inv2.rod.sea_creature_chance + (fishinglvl / 2)
   }
 
   //Add Booster Cookie Stats

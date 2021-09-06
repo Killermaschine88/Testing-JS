@@ -10,7 +10,6 @@ module.exports = {
   aliases: ['gc'],
   async execute(client, message, args) {
     if (message.author.id !== config.ownerID) return message.channel.send("Can't use this!")
-    message.delete();
     if (!args[0]) return message.channel.send("Please provide a valid Slash Command!")
 
     const code = client.slashcommands.get(args[0].toLowerCase()).execute.toString()

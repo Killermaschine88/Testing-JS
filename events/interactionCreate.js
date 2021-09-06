@@ -14,6 +14,7 @@ module.exports = {
     if (interaction.commandName == 'sb') {
       const collection = mclient.db('SkyblockSim').collection('Players');
       let player = await collection.findOne({ _id: interaction.user.id })
+      if(player != null) {
       let time_now = Math.floor(Date.now() / 1000)
       if (player.data.misc.booster_cookie.expires <= time_now && player.data.misc.booster_cookie.active == true) {
         await collection.updateOne(
@@ -21,6 +22,7 @@ module.exports = {
           { $set: { 'data.misc.booster_cookie.active': false, 'data.misc.booster_cookie.expires': time_now } },
           { upsert: true })
       }
+    }
     }
 
     try {
