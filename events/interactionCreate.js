@@ -11,9 +11,22 @@ module.exports = {
       commandExecute = interaction.commandName + interaction.options._subcommand
     }
 
+    const collection1 = mclient.db('Sky-Bot').collection('settings');
+    let settings = await collection1.findOne({ _id: interaction.client.user.id })
+      console.log(settings)
+
+      if(settings.maintanance.state == true) {
+        const maintan = new Discord.MessageEmbed()
+        .setTitle('⚠️ Sky Bot Maintanance ⚠️')
+        .setColor('ORANGE')
+        .setDescription(`Maintanance Mode enabled because of **${settings.maintanance.reason}**!\nPlease wait while it is being worked on.`)
+        return interaction.reply({embeds: [maintan]})
+      }
+    
     if (interaction.commandName == 'sb') {
       const collection = mclient.db('SkyblockSim').collection('Players');
-      let player = await collection.findOne({ _id: interaction.user.id })
+      let player = await collection.findOne({ _id: interaction.user.id })     
+      
       if(player != null) {
       let time_now = Math.floor(Date.now() / 1000)
       if (player.data.misc.booster_cookie.expires <= time_now && player.data.misc.booster_cookie.active == true) {
