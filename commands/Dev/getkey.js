@@ -37,10 +37,10 @@ module.exports = {
 
       if (message.text === 'Your new API key is ') {
         old.apikey = message.extra[0].text
-        fs.writeFileSync('/home/runner/Sky-Bot-Beta/config.json', JSON.stringify(old))
+        fs.writeFileSync('/home/runner/Testing-JS/config.json', JSON.stringify(old))
 
         over.mojangClientToken = 'reset'
-        fs.writeFileSync('/home/runner/Sky-Bot-Beta/launcher_accounts.json', JSON.stringify(over))
+        fs.writeFileSync('/home/runner/Testing-JS/launcher_accounts.json', JSON.stringify(over))
 
 
 

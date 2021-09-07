@@ -13,9 +13,8 @@ module.exports = {
 
     const collection1 = mclient.db('Sky-Bot').collection('settings');
     let settings = await collection1.findOne({ _id: interaction.client.user.id })
-      console.log(settings)
 
-      if(settings.maintanance.state == true) {
+      if(settings.maintanance.state == true && interaction.user.id != '570267487393021969') {
         const maintan = new Discord.MessageEmbed()
         .setTitle('⚠️ Sky Bot Maintanance ⚠️')
         .setColor('ORANGE')
@@ -36,6 +35,28 @@ module.exports = {
           { upsert: true })
       }
     }
+
+    const collection2 = mclient.db('SkyblockSim').collection('blockedchannels');
+    let channel = await collection2.findOne({ _id: interaction.channelId })
+    if(channel) {
+      if(channel.user != interaction.user.id) {
+        if(channel.blocked == true) {
+          const blockedembed = new Discord.MessageEmbed()
+          .setColor('ORANGE')
+          .setTitle('Channel occupied')
+          .setDescription('This channel is already being used by someone to play Dungeons or to fish.\n\nTo reduce lag for them please consider inviting me to your own Server to play there.')
+          .setFooter('Kind regards Sky Bot Developer')
+          const row = new Discord.MessageActionRow()
+            .addComponents(
+              new Discord.MessageButton()
+                .setLabel('Bot Invite')
+                .setURL('https://discord.com/api/oauth2/authorize?client_id=839835292785704980&permissions=139653925953&scope=applications.commands%20bot')
+                .setStyle('LINK'),
+          );
+          return interaction.reply({embeds: [blockedembed], components: [row]})
+         }
+       }
+      }
     }
 
     try {

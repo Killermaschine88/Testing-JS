@@ -4,6 +4,7 @@ const prefixx = new prefix();
 const emoji = require('../SkyblockSim/Various/emojis.json')
 const mobs = require('../SkyblockSim/Various/mobstats.json')
 const getLevel = require('../SkyblockSim/Various/skilllvl.js')
+const playerStats = require('../SkyblockSim/Various/playerStats.js')
 
 module.exports = {
   name: "sbfishing",
@@ -17,6 +18,8 @@ module.exports = {
 
     const collection = mclient.db('SkyblockSim').collection('Players');
     let player = await collection.findOne({ _id: interaction.user.id })
+
+    const collection1 = mclient.db('SkyblockSim').collection('blockedchannels');
 
     var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
     if (gprefix === null) gprefix = '.';
@@ -42,10 +45,12 @@ module.exports = {
 
 
     //Values needed
+    let type = 'all'
+    let pstats = playerStats(player, type)
     let fishinglvl = getLevel(player.data.skills.fishing).level
     let rod = player.data.equipment.fishing.rod.name
     let rod_speed = player.data.equipment.fishing.rod.fishing_speed
-    let sea_creature_chance = player.data.stats.sea_creature_chance + player.data.equipment.fishing.rod.sea_creature_chance + (fishinglvl / 2)
+    let sea_creature_chance = pstats.sea_creature_chance
     let isCreature = ''
     let mob = ''
     let rod_casted = false
@@ -54,13 +59,13 @@ module.exports = {
     let fishing_time = getFishingTime(rod_speed)
 
     //Fight Values
-    let health = player.data.stats.health
+    let health = pstats.health
     let php = health
-    let damage = player.data.stats.damage
-    let strength = player.data.stats.strength
+    let damage = pstats.damage
+    let strength = pstats.strength
     let combatlvl = getLevel(player.data.skills.combat).level
-    let critchance = player.data.stats.crit_chance
-    let critdmg = player.data.stats.crit_damage
+    let critchance = pstats.crit_chance
+    let critdmg = pstats.crit_damage
     let critted = ''
     let pdmg = ''
     let mhp = ''
@@ -135,6 +140,11 @@ module.exports = {
       { $set: { "data.misc.is_fishing": true } },
       { upsert: true })
 
+    await collection1.updateOne(
+      { _id: interaction.channelId },
+      { $set: { blocked: true, user: interaction.user.id } },
+      { upsert: true })
+
     const filter = i => {
       i.deferUpdate();
       return i.user.id === interaction.user.id;
@@ -185,18 +195,18 @@ module.exports = {
 
             menu.edit({ embeds: [pond], components: [row] })
           } else {
-            let fishxp = Math.floor(Math.random() * (60 - 25) + 25)
+            let fishxp = Math.floor(Math.random() * (200 - 50) + 50)
             let fishes = ['Raw Fish', 'Raw Salmon', 'Pufferfish', 'Clownfish']
             let fishname = fishes[Math.floor(Math.random() * fishes.length)];
             let fishingcoins = 0
             if (fishname === 'Raw Fish') {
-              fishingcoins = 23
+              fishingcoins = 30
             } else if (fishname === 'Raw Salmon') {
-              fishingcoins = 9
+              fishingcoins = 15
             } else if (fishname === 'Pufferfish') {
-              fishingcoins = 13
+              fishingcoins = 20
             } else if (fishname === 'Clownfish') {
-              fishingcoins = 19
+              fishingcoins = 25
             }
 
             rod_casted = false
@@ -278,6 +288,10 @@ module.exports = {
         { _id: interaction.user.id },
         { $set: { "data.misc.is_fishing": false } },
         { upsert: true })
+      await collection1.updateOne(
+      { _id: interaction.channelId },
+      { $set: { blocked: false } },
+      { upsert: true })
       menu.edit({ embeds: [pond], components: [] })
     });
   }

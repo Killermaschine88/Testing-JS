@@ -1,12 +1,20 @@
 const level = require('./skilllvl.js')
 
-function playerStats(player, type, cookie) {
+function playerStats(player, type) {
 
   //Base Variables
   let stats = player.data.stats
-  let fishinglvl = level(player.data.skills.fishing).level
+  let cookie = player.data.misc.booster_cookie.active
   let inv = ''
   let inv2 = ''
+
+  //Skill Levels
+  let farminglvl = level(player.data.skills.farming).level
+  let fishinglvl = level(player.data.skills.fishing).level
+  let mininglvl = level(player.data.skills.mining).level
+  let combatlvl = level(player.data.skills.combat).level
+  let foraginglvl = level(player.data.skills.foraging).level
+  let dunglvl = level(player.data.dungeons.xp).level
 
   //Base Stats
   let health = stats.health
@@ -24,15 +32,15 @@ function playerStats(player, type, cookie) {
     inv = player.data.equipment.combat
 
 
-    health += inv.armor.health
+    health += inv.armor.health + (farminglvl * 2) + (fishinglvl * 2) + (dunglvl * 3)
 
-    defense += inv.armor.defense
+    defense += inv.armor.defense + (mining * 2)
 
     damage += inv.sword.damage
 
-    strength += inv.sword.strength + inv.armor.strength
+    strength += inv.sword.strength + inv.armor.strength + (foraginglvl * 2)
 
-    crit_chance += inv.sword.crit_chance + inv.armor.crit_chance
+    crit_chance += inv.sword.crit_chance + inv.armor.crit_chance + (combatlvl / 2)
 
     crit_damage += inv.sword.crit_damage + inv.armor.crit_damage
   } else if (type == 'all') {
@@ -40,15 +48,15 @@ function playerStats(player, type, cookie) {
     inv2 = player.data.equipment.fishing
 
 
-    health += inv.armor.health
+    health += inv.armor.health + (farminglvl * 2) + (fishinglvl * 2) + (dunglvl * 3)
 
-    defense += inv.armor.defense
+    defense += inv.armor.defense + (mininglvl * 2)
 
     damage += inv.sword.damage
 
-    strength += inv.sword.strength + inv.armor.strength
+    strength += inv.sword.strength + inv.armor.strength + (foraginglvl * 2)
 
-    crit_chance += inv.sword.crit_chance + inv.armor.crit_chance
+    crit_chance += inv.sword.crit_chance + inv.armor.crit_chance + (combatlvl / 2)
 
     crit_damage += inv.sword.crit_damage + inv.armor.crit_damage
 

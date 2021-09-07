@@ -178,6 +178,8 @@ module.exports = {
     const collection = mclient.db('SkyblockSim').collection('Players')
     const player = await collection.findOne({ _id: interaction.user.id })
 
+    const collection1 = mclient.db('SkyblockSim').collection('blockedchannels')
+
     if (!player) {
       const noprofile = new MessageEmbed()
         .setColor('RED')
@@ -298,11 +300,15 @@ module.exports = {
     const menu = await interaction.editReply({ embeds: [floorSelect], components: [floors] })
 
     //Sets the Player into the Dungeon so they cant open another run.
-    // await collection.updateOne(
-    //     { _id: interaction.user.id },
-    //     { $set: { "data.misc.in_dungeon": true } },
-    //     { upsert: true }
-    // )
+     await collection.updateOne(
+         { _id: interaction.user.id },
+         { $set: { "data.misc.in_dungeon": true } },
+         { upsert: true }
+     )
+    await collection1.updateOne(
+      { _id: interaction.channelId },
+      { $set: { blocked: true, user: interaction.user.id } },
+      { upsert: true })
 
     const filter = i => {
       i.deferUpdate()
@@ -1037,6 +1043,10 @@ module.exports = {
           { $set: { "data.misc.in_dungeon": false } },
           { upsert: true }
         )
+        await collection1.updateOne(
+      { _id: interaction.channelId },
+      { $set: { blocked: false } },
+      { upsert: true })
         test.fields = []
         if (runFailed) {
           test.addField('Dungeon Run Over', '**Reason**\n* Failed Puzzle\n* Died to Mob')
