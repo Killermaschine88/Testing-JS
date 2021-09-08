@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const leveling = require('./Various/leveling.js')
 const playerStats = require('./Various/playerStats.js')
+const catalvl = require('./Various/dungeonlevel.js')
 
 module.exports = {
   name: "sbinfo",
@@ -38,6 +39,8 @@ module.exports = {
     let fishing = player.data.skills.fishing
     let alchemy = player.data.skills.alchemy
     let taming = player.data.skills.taming
+    let cata = player.data.dungeons.xp
+    let classxp = player.data.dungeons.class.selected.xp
 
     mining = getLevelByXp(mining)
     foraging = getLevelByXp(foraging)
@@ -47,6 +50,10 @@ module.exports = {
     fishing = getLevelByXp(fishing)
     alchemy = getLevelByXp(alchemy)
     taming = getLevelByXp(taming)
+    cata = catalvl(cata).level
+    classxp = catalvl(classxp).level
+
+
 
     let salevel = mining.level + foraging.level + enchanting.level + farming.level + combat.level + fishing.level + alchemy.level + taming.level
     salevel = salevel / 7
@@ -61,6 +68,82 @@ module.exports = {
         str += item.name + ': ' + item.amount + '\n'
       }
     }
+
+    let armorstr = ''
+    let armornum = 0
+    let swordstr = ''
+    let swordnum = 0
+    for (item of player.data.inventory.armor) {
+          armorstr += `[${armornum}] `
+        if(item.recombobulated == true) {
+          armorstr += '<:recomb:881094744183275540>'
+        }
+
+          armorstr += `${item.name} `
+
+        if(item.health != 0) {
+          armorstr += `${item.health} HP, `
+        }
+        if(item.defense != 0) {
+          armorstr += `${item.defense} DEF, `
+        }
+        if(item.damage != 0) {
+          armorstr += `${item.damage} DMG, `
+        }
+        if(item.strength != 0) {
+          armorstr += `${item.strength} STR, `
+        }
+        if(item.crit_chance != 0) {
+          armorstr += `${item.crit_chance} CC, `
+        }
+        if(item.crit_damage != 0) {
+          armorstr += `${item.crit_damage} CD, `
+        }
+        if(item.magic_find != 0) {
+          armorstr += `${item.magic_find} MF, `
+        }
+        if(item.sea_creature_chance != 0) {
+          armorstr += `${item.sea_creature_chance} SCC, `
+        }
+        armorstr += '\n'
+        armornum += 1
+      }
+
+      for (item of player.data.inventory.sword) {
+          swordstr += `[${swordnum}] `
+        if(item.recombobulated == true) {
+          swordstr += '<:recomb:881094744183275540>'
+        }
+
+          swordstr += `${item.name} `
+
+        if(item.health != 0) {
+          swordstr += `${item.health} HP, `
+        }
+        if(item.defense != 0) {
+          swordstr += `${item.defense} DEF, `
+        }
+        if(item.damage != 0) {
+          swordstr += `${item.damage} DMG, `
+        }
+        if(item.strength != 0) {
+          swordstr += `${item.strength} STR, `
+        }
+        if(item.crit_chance != 0) {
+          swordstr += `${item.crit_chance} CC, `
+        }
+        if(item.crit_damage != 0) {
+          swordstr += `${item.crit_damage} CD, `
+        }
+        if(item.magic_find != 0) {
+          swordstr += `${item.magic_find} MF, `
+        }
+        if(item.sea_creature_chance != 0) {
+          swordstr += `${item.sea_creature_chance} SCC, `
+        }
+        swordstr += '\n'
+        swordnum += 1
+      }
 
     //Player Stats
     let type = 'all'
@@ -103,8 +186,20 @@ module.exports = {
           .setLabel('Dungeons')
           .setStyle('PRIMARY'),
       );
+    
+    const row2 = new Discord.MessageActionRow()
+      .addComponents(
+        new Discord.MessageButton()
+          .setCustomId('armorlist')
+          .setLabel('Armor')
+          .setStyle('PRIMARY'),
+        new Discord.MessageButton()
+          .setCustomId('swordlist')
+          .setLabel('Sword')
+          .setStyle('PRIMARY'),
+      );
 
-    const menu = await interaction.editReply({ embeds: [foundinfo], components: [row] })
+    const menu = await interaction.editReply({ embeds: [foundinfo], components: [row, row2] })
 
 
 
@@ -147,7 +242,21 @@ module.exports = {
           const dungeons = new Discord.MessageEmbed()
             .setFooter('Skyblock Simulator')
             .setColor('90EE90')
-            .setDescription(`**Dungeons Info for <@${id}>**\n<:catacombs:854399510951624775> Dungeons XP [0]: **${player.data.dungeons.xp}**\n<:mage:852079612699607072> Selected Class: \n* Name: **${player.data.dungeons.class.selected.name}**\n* XP: **${player.data.dungeons.class.selected.xp}**`)
+            .setDescription(`**Dungeons Info for <@${id}>**\n<:catacombs:854399510951624775> Dungeons XP [${cata}]: **${player.data.dungeons.xp}**\n<:mage:852079612699607072> Selected Class [${classxp}]: \n* Name: **${player.data.dungeons.class.selected.name}**\n* XP: **${player.data.dungeons.class.selected.xp}**`)
+          menu.edit({ embeds: [dungeons] })
+        } else if (i.customId === 'armorlist') {
+          await i.deferUpdate()
+          const dungeons = new Discord.MessageEmbed()
+            .setFooter('Skyblock Simulator')
+            .setColor('90EE90')
+            .setDescription(`${armorstr}\n\nYou can change your Armor using \`/sb wardrobe armor number\`\nExample: \`/sb wardrobe armor 0\``)
+          menu.edit({ embeds: [dungeons] })
+        } else if (i.customId === 'swordlist') {
+          await i.deferUpdate()
+          const dungeons = new Discord.MessageEmbed()
+            .setFooter('Skyblock Simulator')
+            .setColor('90EE90')
+            .setDescription(`${swordstr}\n\nYou can change your Sword using \`/sb wardrobe sword number\`\nExample: \`/sb wardrobe sword 0\``)
           menu.edit({ embeds: [dungeons] })
         }
       }

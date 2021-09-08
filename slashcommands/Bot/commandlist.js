@@ -18,15 +18,10 @@ module.exports = {
       .setDescription('')
 
     while (i < commands.length) {
-      let cmds = ['field', 'desc']
-      let choosen = cmds[Math.floor(Math.random() * cmds.length)];
-      if (choosen == 'desc') {
-        embed.description += `**${commands[i].name}:** ${commands[i].description}\n`
-      } else if (choosen == 'field') {
         embed.addField(`${commands[i].name}`, `${commands[i].description}`, true)
-      }
       i += 1
     }
+    i = 0
     interaction.editReply({ embeds: [embed] })
   }
 };

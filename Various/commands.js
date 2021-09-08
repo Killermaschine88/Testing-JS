@@ -264,6 +264,33 @@ const data = [
           }],
       },
       {
+        name: 'wardrobe',
+        description: 'Lets you select different Equipment',
+        type: 'SUB_COMMAND',
+        options: [
+          {
+            name: 'choice',
+            description: 'Available Types',
+            type: 'STRING',
+            required: true,
+            choices: [
+              {
+                name: 'sword',
+                value: 'sword',
+              },
+              {
+                name: 'armor',
+                value: 'armor'
+              }],
+          },
+          {
+            name: 'index',
+            description: 'Item Index',
+            type: 'INTEGER',
+            required: true,
+          }],
+      },
+      {
         name: 'daily',
         description: 'Allows you to claim your Daily Reward',
         type: 'SUB_COMMAND',

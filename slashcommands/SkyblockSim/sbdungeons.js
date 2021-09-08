@@ -176,7 +176,7 @@ module.exports = {
     }
 
     const collection = mclient.db('SkyblockSim').collection('Players')
-    const player = await collection.findOne({ _id: interaction.user.id })
+    let player = await collection.findOne({ _id: interaction.user.id })
 
     const collection1 = mclient.db('SkyblockSim').collection('blockedchannels')
 
@@ -1009,6 +1009,8 @@ module.exports = {
         } else if (loot == 'Recombobulator 3000' && choosen == true) {
           let sellitem = loot
           let amount = 1
+          player = await collection.findOne({ _id: interaction.user.id })
+
           const updatePlayer = addItem(sellitem, amount, player)
 
           await collection.replaceOne(
@@ -1023,7 +1025,7 @@ module.exports = {
             .setFooter('Skyblock Simulator')
           menu.edit({ embeds: [lootembed], components: [] })
         } else {
-          
+          //add armor / sword here
         }
       }
 

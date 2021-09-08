@@ -43,7 +43,55 @@ module.exports = {
             inventory: {
               items: [
 
-              ]
+              ],
+              armor: [
+                {
+                  "name": "None",
+                  "recombobulated": false,
+                  "health": 0,
+                  "defense": 0,
+                  "damage": 0,
+                  "strength": 0,
+                  "crit_chance": 0,
+                  "crit_damage": 0,
+                  "magic_find": 0,
+                  "sea_creature_chance": 0,
+                },
+                {
+                  "name": "None2",
+                  "recombobulated": true,
+                  "health": 0,
+                  "defense": 60,
+                  "damage": 70,
+                  "strength": 0,
+                  "crit_chance": 80,
+                  "crit_damage": 0,
+                  "magic_find": 0,
+                  "sea_creature_chance": 0,
+                },
+                {
+                  "name": "None3",
+                  "recombobulated": false,
+                  "health": 3,
+                  "defense": 0,
+                  "damage": 03,
+                  "strength": 03,
+                  "crit_chance": 20,
+                  "crit_damage": 10,
+                  "magic_find": 60,
+                  "sea_creature_chance": 60,
+                },
+              ],
+              sword: [
+                {
+                  "name": "Fist",
+                  "recombobulated": false,
+                  "damage": 0,
+                  "strength": 0,
+                  "crit_chance": 0,
+                  "crit_damage": 0,
+                },
+              ],
             },
             slayer: {
               zombiexp: 0, spiderxp: 0, wolfxp: 0, endermanxp: 0, zombiekills: 0, spiderkills: 0, wolfkills: 0, endermankills: 0
@@ -57,9 +105,9 @@ module.exports = {
             equipment: {
               combat: {
                 sword: {
-                  name: 'None', damage: 0, strength: 0, crit_chance: 0, crit_damage: 0
+                  name: 'Fist', damage: 0, strength: 0, crit_chance: 0, crit_damage: 0, recombobulated: false
                 }, armor: {
-                  name: 'None', health: 0, defense: 0, strength: 0, crit_chance: 0, crit_damage: 0
+                  name: 'None', health: 0, defense: 0, strength: 0, crit_chance: 0, crit_damage: 0, magic_find: 0, sea_creature_chance: 0, recombobulated: false
                 }
               }, fishing: { rod: { name: 'Fishing Rod', sea_creature_chance: 0, fishing_speed: 0 } }
             },
