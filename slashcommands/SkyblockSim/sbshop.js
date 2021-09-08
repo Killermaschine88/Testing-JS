@@ -60,6 +60,7 @@ module.exports = {
       .setStyle('DANGER')
 
     const row = new Discord.MessageActionRow()
+    const row2 = new Discord.MessageActionRow
 
 
     //Rod Upgrades
@@ -135,14 +136,19 @@ module.exports = {
     }
 
     //Adding Buttons to row
-    if (rod.name != 'Rod of the Sea') {
+    if (rod.name != 'Rod of the Sea' && row.components.length < 4) {
       row.addComponents(rod_button)
+    } else {
+      row2.addComponents(rod_button)
     }
-    if (player.data.misc.booster_cookie.active == false) {
+    if (player.data.misc.booster_cookie.active == false && row.components.length < 4) {
       row.addComponents(cookie_button)
+    } else {
+      row2.addComponents(cookie_button)
     }
-    row.addComponents(cancel_button)
 
+    
+    row.addComponents(cancel_button)
 
 
     let shopembed = new Discord.MessageEmbed()
@@ -153,26 +159,26 @@ module.exports = {
 
     //Rod Fields
     if (rod.name == 'Fishing Rod') {
-      shopembed.addField('Prismarine Rod', '**Cost:**\n5k Coins + 10 Lilypads\n\n**Stats:**\n5 Sea Creature Chance\n10% Fishing Speed')
+      shopembed.addField('Prismarine Rod', '**Cost:** 5k Coins + 10 Lilypads\n\n**Stats:**\n5 Sea Creature Chance\n10% Fishing Speed', true)
     } else if (rod.name == 'Prismarine Rod') {
-      shopembed.addField('Sponge Rod', '**Cost:**\n25k Coins + 20 Lilypads\n\n**Stats:**\n10 Sea Creature Chance\n20% Fishing Speed')
+      shopembed.addField('Sponge Rod', '**Cost:** 25k Coins + 20 Lilypads\n\n**Stats:**\n10 Sea Creature Chance\n20% Fishing Speed', true)
     } else if (rod.name == 'Sponge Rod') {
-      shopembed.addField('Speedster Rod', '**Cost:**\n50k Coins + 30 Lilypads\n\n**Stats:**\n15 Sea Creature Chance\n30% Fishing Speed')
+      shopembed.addField('Speedster Rod', '**Cost:** 50k Coins + 30 Lilypads\n\n**Stats:**\n15 Sea Creature Chance\n30% Fishing Speed', true)
     } else if (rod.name == 'Speedster Rod') {
-      shopembed.addField('Farmer\'s Rod', '**Cost:**\n100k Coins + 50 Lilypads\n\n**Stats:**\n20 Sea Creature Chance\n40% Fishing Speed')
+      shopembed.addField('Farmer\'s Rod', '**Cost:** 100k Coins + 50 Lilypads\n\n**Stats:**\n20 Sea Creature Chance\n40% Fishing Speed', true)
     } else if (rod.name == 'Farmer\'s Rod') {
-      shopembed.addField('Challenging Rod', '**Cost:**\n250k Coins + 75 Lilypads\n\n**Stats:**\n25 Sea Creature Chance\n50% Fishing Speed')
+      shopembed.addField('Challenging Rod', '**Cost:** 250k Coins + 75 Lilypads\n\n**Stats:**\n25 Sea Creature Chance\n50% Fishing Speed', true)
     } else if (rod.name == 'Challenging Rod') {
-      shopembed.addField('Rod of Champions', '**Cost:**\n500k Coins + 100 Lilypads\n\n**Stats:**\n30 Sea Creature Chance\n60% Fishing Speed')
+      shopembed.addField('Rod of Champions', '**Cost:** 500k Coins + 100 Lilypads\n\n**Stats:**\n30 Sea Creature Chance\n60% Fishing Speed', true)
     } else if (rod.name == 'Rod of Champions') {
-      shopembed.addField('Rod of Legends', '**Cost:**\n1M Coins + 150 Lilypads\n\n**Stats:**\n40 Sea Creature Chance\n70% Fishing Speed')
+      shopembed.addField('Rod of Legends', '**Cost:** 1M Coins + 150 Lilypads\n\n**Stats:**\n40 Sea Creature Chance\n70% Fishing Speed', true)
     } else if (rod.name == 'Rod of Legends') {
-      shopembed.addField('Rod of the Sea', '**Cost:**\n50 Gems + 100 Lilypads\n\n**Stats:**\n50 Sea Creature Chance\n75% Fishing Speed')
+      shopembed.addField('Rod of the Sea', '**Cost:** 50 Gems + 100 Lilypads\n\n**Stats:**\n50 Sea Creature Chance\n75% Fishing Speed', true)
     }
 
     //Cookie Field
     if (player.data.misc.booster_cookie.active == false) {
-      shopembed.addField('Booster Cookie', 'Cost: **4 Gems**\n\n**Stats:**\n10 Magic Find\n10% Overall Stat incerase')
+      shopembed.addField('Booster Cookie', '**Cost:** 4 Gems\n\n**Stats:**\n10 Magic Find\n10% Overall Stat incerase', true)
     }
 
     const filter = i => {
@@ -180,7 +186,12 @@ module.exports = {
       return i.user.id === interaction.user.id
     }
 
-    const menu = await interaction.editReply({ embeds: [shopembed], components: [row] })
+    let list = [row]
+    if(row2.components.length > 0) {
+      list = [row, row2]
+    }
+
+    const menu = await interaction.editReply({ embeds: [shopembed], components: list })
 
     await menu.awaitMessageComponent({ filter, componentType: 'BUTTON', time: 60000 })
       .then(async i => {
@@ -254,7 +265,7 @@ module.exports = {
           interaction.editReply({ embeds: [cancelled], components: [] })
           return
         }
-      }).catch(err => menu.edit({ components: [] }))
+      }).catch(err => console.log('A'))
 
 
 

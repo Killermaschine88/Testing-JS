@@ -200,8 +200,7 @@ module.exports = {
 
     //Players Stats
     let type = 'combat'
-    let cookie = player.data.misc.booster_cookie.active
-    let pstats = playerStats(player, type, cookie) //Type decides what gear is needed for the Action
+    let pstats = playerStats(player, type) //Type decides what gear is needed for the Action
 
     let combatlvl = skillLevel(player.data.skills.combat).level
 

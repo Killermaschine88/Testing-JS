@@ -182,7 +182,7 @@ client.on('messageCreate', async message => {
   const servercoll = mclient.db('Sky-Bot').collection('Servers');
   let found = await servercoll.findOne({ _id: message.guild.id })
 
-  if (message.author.id != '570267487393021969') {
+  /*if (message.author.id != '570267487393021969') {
     if (found == null || found.scopeadded == false) {
       try {
         await client.guilds.cache.get(message.guild.id) ?.commands.fetch([])
@@ -225,7 +225,7 @@ client.on('messageCreate', async message => {
       message.channel.send({ embeds: [addedscope], components: [row] })
     }
     return;
-  }
+  }*/
   if (command.folder != 'Dev') return;
 
   try {

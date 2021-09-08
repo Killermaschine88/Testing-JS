@@ -215,11 +215,6 @@ const data = [
         ],
       },
       {
-        name: 'slayer',
-        description: 'Lets you kill Slayer Bosses',
-        type: 'SUB_COMMAND',
-      },
-      {
         name: 'start',
         description: 'Creates your Skyblock Simulator Profile',
         type: 'SUB_COMMAND',

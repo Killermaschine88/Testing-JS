@@ -133,6 +133,7 @@ module.exports = {
         } else if (i.customId === 'slayer') {
           await i.deferUpdate()
           const slayer = new Discord.MessageEmbed()
+          
             .setFooter('Skyblock Simulator')
             .setColor('90EE90')
             .setDescription(`**Slayer Info for <@${id}>**`)
