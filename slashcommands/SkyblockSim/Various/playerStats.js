@@ -52,7 +52,7 @@ function playerStats(player, type) {
 
     defense += inv.armor.defense + (mininglvl * 2)
 
-    damage += inv.sword.damage
+    damage += inv.sword.damage + inv.armor.damage
 
     strength += inv.sword.strength + inv.armor.strength + (foraginglvl * 2)
 
@@ -60,7 +60,7 @@ function playerStats(player, type) {
 
     crit_damage += inv.sword.crit_damage + inv.armor.crit_damage
 
-    sea_creature_chance += inv2.rod.sea_creature_chance + (fishinglvl / 2)
+    sea_creature_chance += inv2.rod.sea_creature_chance + (fishinglvl / 2) + inv.armor.sea_creature_chance
   }
 
   //Add Booster Cookie Stats

@@ -19,6 +19,7 @@ module.exports = {
 
     let sword = player.data.inventory.sword
     let armor = player.data.inventory.armor
+    let item = ''
 
     if (player === null) {
       const noprofile = new Discord.MessageEmbed()
@@ -38,7 +39,6 @@ module.exports = {
 
       return interaction.editReply({embeds: [errembed]})
     } 
-    console.log('A')
     if (type == 'armor' && armor.length <= index) {
       const errembed = new Discord.MessageEmbed()
       .setTitle('Invalid Item Index')
@@ -48,6 +48,35 @@ module.exports = {
 
       return interaction.editReply({embeds: [errembed]})
     }
-    console.log('B')
+
+    if(type == 'sword') {
+      item = sword[index]
+        await collection.updateOne(
+          { _id: interaction.user.id },
+          { $set: { "data.equipment.combat.sword.name": item.name, "data.equipment.combat.sword.damage": item.damage, "data.equipment.combat.sword.strength": item.strength, "data.equipment.combat.sword.crit_chance": item.crit_chance, "data.equipment.combat.sword.crit_damage": item.crit_damage }, "data.equipment.combat.sword.recombobulated": item.recombobulated },
+          { upsert: true })
+      
+      const sucembed = new Discord.MessageEmbed()
+      .setTitle('Armor Changed')
+      .setDescription(`Successfully changed Sword to ${item.name}`)
+      .setColor('GREEN')
+      .setFooter('Skyblock Simulator')
+
+      return interaction.editReply({embeds: [sucembed]})
+    } else if (type == 'armor') {
+      item = armor[index]
+        await collection.updateOne(
+          { _id: interaction.user.id },
+          { $set: { "data.equipment.combat.armor.name": item.name, "data.equipment.combat.armor.health": item.health, "data.equipment.combat.armor.defense": item.defense, "data.equipment.combat.armor.strength": item.strength, "data.equipment.combat.armor.crit_chance": item.crit_chance, "data.equipment.combat.armor.crit_damage": item.crit_damage, "data.equipment.combat.armor.magic_find": item.magic_find, "data.equipment.combat.armor.sea_creature_chance": item.sea_creature_chance, "data.equipment.combat.armor.recombobulated": item.recombobulated } },
+          { upsert: true })
+        
+      const sucembed = new Discord.MessageEmbed()
+      .setTitle('Armor Changed')
+      .setDescription(`Successfully changed Armor to ${item.name}`)
+      .setColor('GREEN')
+      .setFooter('Skyblock Simulator')
+
+      return interaction.editReply({embeds: [sucembed]})
+    }
   }
 };
