@@ -1,0 +1,32 @@
+const Discord = require('discord.js')
+const config = require('../config.json');
+const color = require('colorette')
+
+module.exports = {
+  name: 'ready',
+  execute(client) {
+  console.log(
+    String.raw`
+${color.blue('  ________  __   ___  ___  ___      _______     ______  ___________')}  
+${color.blue(' /\"       )|/\"| /  \")|\"  \\/"  |    |   _  \"\\   /    " \\(\"     _   \") ')}
+${color.blue('(:   \\___/ (: |/   /  \\   \\  /     (. |_)  :) // ____  \\)__/  \\\\__/  ')}
+${color.blue(' \\___  \\   |    __/    \\\\  \\/      |:     \\/ /  /    ) :)  \\\\_ /     ')}
+${color.blue('  __/  \\\\  (// _  \\    /   /       (|  _  \\\\(: (____/ //   |.  |     ')}
+${color.blue(' /\" \\   :) |: | \\  \\  /   /        |: |_)  :)\\        /    \\:  |     ')}
+${color.blue('(_______/  (__|  \\__)|___/         (_______/  \\"_____/      \\__|     ')}
+                                                                     
+
+${color.blue('[INFO] ├─ Loaded')} ${color.green(client._eventsCount)} ${color.blue(' Event Listeners')}  ${color.blue('[')}${color.green('+')}${color.blue('] Web Server')}
+${color.blue('[INFO] ├─ Loaded')} ${color.green(sc)} ${color.blue('Slash Commands')}   ${color.blue('[')}${color.green('+')}${color.blue('] Database')}
+${color.blue('[INFO] └─ Loaded')} ${color.green(c)} ${color.blue('Commands')}         ${color.blue('[')}${color.green('+')}${color.blue('] Stress')}                                                                        
+		`.trim()
+  );
+  
+  client.user.setActivity(`${client.guilds.cache.size} Servers`, { type: 'WATCHING' });
+
+//Msging Owner on Restart
+  client.users.fetch('570267487393021969').then(async user => {
+    await user.send(`Restarted`)
+  })
+  }
+};

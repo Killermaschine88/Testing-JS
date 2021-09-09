@@ -42,7 +42,7 @@ module.exports = {
             },
             inventory: {
               items: [
-
+                //Empty cause dropped Items go here
               ],
               armor: [
                 {
@@ -50,36 +50,11 @@ module.exports = {
                   "recombobulated": false,
                   "health": 0,
                   "defense": 0,
-                  "damage": 0,
                   "strength": 0,
                   "crit_chance": 0,
                   "crit_damage": 0,
                   "magic_find": 0,
                   "sea_creature_chance": 0,
-                },
-                {
-                  "name": "None2",
-                  "recombobulated": true,
-                  "health": 0,
-                  "defense": 60,
-                  "damage": 70,
-                  "strength": 0,
-                  "crit_chance": 80,
-                  "crit_damage": 0,
-                  "magic_find": 0,
-                  "sea_creature_chance": 0,
-                },
-                {
-                  "name": "None3",
-                  "recombobulated": false,
-                  "health": 3,
-                  "defense": 0,
-                  "damage": 03,
-                  "strength": 03,
-                  "crit_chance": 20,
-                  "crit_damage": 10,
-                  "magic_find": 60,
-                  "sea_creature_chance": 60,
                 },
               ],
               sword: [

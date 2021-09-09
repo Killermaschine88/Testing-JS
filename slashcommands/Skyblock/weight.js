@@ -41,6 +41,7 @@ module.exports = {
 
     // At this point we know its a valid IGN, but not if it has skyblock profiles
     const apiData = await getApiData(ign, method); // Gets all skyblock player data from Senither's Hypixel API Facade
+    console.log(apidData)
 
     if (apiData.status != 200) {
       const apierrorembed = new Discord.MessageEmbed()

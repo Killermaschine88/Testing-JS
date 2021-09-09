@@ -269,8 +269,8 @@ const data = [
         type: 'SUB_COMMAND',
         options: [
           {
-            name: 'choice',
-            description: 'Available Types',
+            name: 'type',
+            description: 'Available  Equipment Types',
             type: 'STRING',
             required: true,
             choices: [
@@ -284,8 +284,8 @@ const data = [
               }],
           },
           {
-            name: 'index',
-            description: 'Item Index',
+            name: 'number',
+            description: 'Item Number',
             type: 'INTEGER',
             required: true,
           }],

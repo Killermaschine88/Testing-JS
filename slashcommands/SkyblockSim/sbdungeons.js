@@ -3,6 +3,7 @@ const playerStats = require('./Various/playerStats.js')
 const classLevel = require('./Various/dungeonlevel.js')
 const skillLevel = require('./Various/skilllvl.js')
 const lt = require('../../loottables.js')
+const dungloot = require('../SkyblockSim/Various/dungeonloot.json')
 
 module.exports = {
   name: "sbdungeons",
@@ -298,17 +299,6 @@ module.exports = {
 
     const menu = await interaction.editReply({ embeds: [floorSelect], components: [floors] })
 
-    //Sets the Player into the Dungeon so they cant open another run.
-     await collection.updateOne(
-         { _id: interaction.user.id },
-         { $set: { "data.misc.in_dungeon": true } },
-         { upsert: true }
-     )
-    await collection1.updateOne(
-      { _id: interaction.channelId },
-      { $set: { blocked: true, user: interaction.user.id } },
-      { upsert: true })
-
     const filter = i => {
       i.deferUpdate()
       return i.user.id === interaction.user.id
@@ -345,6 +335,17 @@ module.exports = {
       menu.edit({ embeds: [invalidreqs], components: [] })
       return;
     }
+
+      //Sets the Player into the Dungeon so they cant open another run.
+     await collection.updateOne(
+         { _id: interaction.user.id },
+         { $set: { "data.misc.in_dungeon": true } },
+         { upsert: true }
+     )
+    await collection1.updateOne(
+      { _id: interaction.channelId },
+      { $set: { blocked: true, user: interaction.user.id } },
+      { upsert: true })
 
     //Variables needed for movement
     const up = new MessageButton()
@@ -563,7 +564,7 @@ module.exports = {
 
     let quiz, randomOptions
 
-    let inTTT = false, inQuiz = false, runFailed = false, runCancelled = false, bossFight = false, atLoot = false
+    let inTTT = false, inQuiz = false, runFailed = false, runCancelled = false, bossFight = false, atLoot = false, runFinished = false
 
     collector.on('collect', async i => {
       const { customId: id } = i
@@ -1006,6 +1007,8 @@ module.exports = {
             .setColor('GREEN')
             .setFooter('Skyblock Simulator')
           menu.edit({ embeds: [lootembed], components: [] })
+          runFinished = true
+          collector.stop()
         } else if (loot == 'Recombobulator 3000' && choosen == true) {
           let sellitem = loot
           let amount = 1
@@ -1024,8 +1027,78 @@ module.exports = {
             .setColor('GREEN')
             .setFooter('Skyblock Simulator')
           menu.edit({ embeds: [lootembed], components: [] })
+          runFinished = true
+          collector.stop()
         } else {
-          //add armor / sword here
+          if(loot.includes('Armor') && choosen == true) {
+            //handle armor here
+            let item = dungloot[loot]
+            let item2 = player.data.inventory.armor.find(armors => armors.name == loot)
+
+            if(item2 && item2.name == loot) {
+              await collection.updateOne(
+            { _id: interaction.user.id },
+            { $inc: { 'data.profile.coins': item.coins } },
+            { upsert: true })
+            const lootembed = new MessageEmbed()
+            .setTitle(`Floor ${floor} Finished`)
+            .setDescription(`You already own <:tank:852079613051666472> **${loot}** so i added you <:coins:861974605203636253> **${num(item.coins)}** Coins to your Profile.`)
+            .setColor('GREEN')
+            .setFooter('Skyblock Simulator')
+          menu.edit({ embeds: [lootembed], components: [] })
+              runFinished = true
+              collector.stop()
+            } else {
+
+            await collection.updateOne(
+          { _id: interaction.user.id },
+          { $push: { "data.inventory.armor": { "name": loot, "health": item.health, "defense": item.defense, "strength": item.strength, "crit_chance": item.crit_chance, "crit_damage": item.crit_damage, "magic_find": item.magic_find, "sea_creature_chance": item.sea_creature_chance, "recombobulated": item.recombobulated }}},
+          {upsert: true })
+
+          const lootembed = new MessageEmbed()
+            .setTitle(`Floor ${floor} Finished`)
+            .setDescription(`<:tank:852079613051666472> **${loot}** added to your Profile.`)
+            .setColor('GREEN')
+            .setFooter('Skyblock Simulator')
+          menu.edit({ embeds: [lootembed], components: [] })
+          runFinished = true
+          collector.stop()
+            }
+          } else if(loot.includes('Sword') && choosen == true) {
+            //handle sword here
+            let item = dungloot[loot]
+            let item2 = player.data.inventory.sword.find(swords => swords.name == loot)
+
+            if(item2 && item2.name == loot) {
+              await collection.updateOne(
+            { _id: interaction.user.id },
+            { $inc: { 'data.profile.coins': item.coins } },
+            { upsert: true })
+            const lootembed = new MessageEmbed()
+            .setTitle(`Floor ${floor} Finished`)
+            .setDescription(`You already own <:berserker:852079613052059658> **${loot}** so i added you <:coins:861974605203636253> **${num(item.coins)}** Coins to your Profile.`)
+            .setColor('GREEN')
+            .setFooter('Skyblock Simulator')
+          menu.edit({ embeds: [lootembed], components: [] })
+              runFinished = true
+              collector.stop()
+            } else {
+
+            await collection.updateOne(
+          { _id: interaction.user.id },
+          { $push: { "data.inventory.armor": { "name": loot, "damage": item.damage, "strength": item.strength, "crit_chance": item.crit_chance, "crit_damage": item.crit_damage, "recombobulated": item.recombobulated }}},
+          {upsert: true })
+
+          const lootembed = new MessageEmbed()
+            .setTitle(`Floor ${floor} Finished`)
+            .setDescription(`<:berserker:852079613052059658> **${loot}** added to your Profile.`)
+            .setColor('GREEN')
+            .setFooter('Skyblock Simulator')
+          menu.edit({ embeds: [lootembed], components: [] })
+          runFinished = true
+          collector.stop()
+            }
+          }
         }
       }
 
@@ -1042,8 +1115,8 @@ module.exports = {
         await collection.updateOne(
           { _id: interaction.user.id },
           { $set: { "data.misc.in_dungeon": false } },
-          { upsert: true }
-        )
+          { upsert: true })
+
         await collection1.updateOne(
       { _id: interaction.channelId },
       { $set: { blocked: false } },
@@ -1053,6 +1126,8 @@ module.exports = {
           test.addField('Dungeon Run Over', '**Reason**\n* Failed Puzzle\n* Died to Mob')
         } else if (runCancelled) {
           test.addField('Dungeon Run Over', '**Reason**\n* Timed out\n* Cancelled')
+        } else if (runFinished) {
+          return;
         }
         test.setColor('RED')
         await menu.edit({ embeds: [test], components: [] })
@@ -1086,4 +1161,11 @@ function addItem(sellitem, amount, player) {
     amount: amount
   })
   return player
+}
+
+num = (num) => {
+  if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace(/.0$/, '') + 'B'
+  if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/.0$/, '') + 'M'
+  if (num >= 1000) return (num / 1000).toFixed(1).replace(/.0$/, '') + 'K'
+  return num
 }

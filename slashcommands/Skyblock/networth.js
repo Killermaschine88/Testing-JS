@@ -20,6 +20,7 @@ module.exports = {
 
     let net = await fetch(`http://db.superbonecraft.dk:8000/pages/${ign}`)
     nw = await net.json()
+    //console.log(net)
 
     let errtext = ''
     if (net.status == 404) {
@@ -29,7 +30,7 @@ module.exports = {
     } else if (net.status == 429) {
       errtext = 'Something went wrong, please wait a minute then try again'
     } else {
-      errtext = 'Error'
+      errtext = 'Status: ' + net.status + '\nStatus Text: ' + net.statusText
     }
 
     if (net.status != 200) {

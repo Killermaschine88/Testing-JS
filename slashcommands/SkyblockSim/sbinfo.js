@@ -3,6 +3,7 @@ const leveling = require('./Various/leveling.js')
 const playerStats = require('./Various/playerStats.js')
 const catalvl = require('./Various/dungeonlevel.js')
 
+
 module.exports = {
   name: "sbinfo",
   description: "Creates your Profile for Skyblock Simulator",
@@ -52,8 +53,7 @@ module.exports = {
     taming = getLevelByXp(taming)
     cata = catalvl(cata).level
     classxp = catalvl(classxp).level
-
-
+    
 
     let salevel = mining.level + foraging.level + enchanting.level + farming.level + combat.level + fishing.level + alchemy.level + taming.level
     salevel = salevel / 7
@@ -87,9 +87,6 @@ module.exports = {
         if(item.defense != 0) {
           armorstr += `${item.defense} DEF, `
         }
-        if(item.damage != 0) {
-          armorstr += `${item.damage} DMG, `
-        }
         if(item.strength != 0) {
           armorstr += `${item.strength} STR, `
         }
@@ -117,12 +114,6 @@ module.exports = {
 
           swordstr += `${item.name} `
 
-        if(item.health != 0) {
-          swordstr += `${item.health} HP, `
-        }
-        if(item.defense != 0) {
-          swordstr += `${item.defense} DEF, `
-        }
         if(item.damage != 0) {
           swordstr += `${item.damage} DMG, `
         }
@@ -134,12 +125,6 @@ module.exports = {
         }
         if(item.crit_damage != 0) {
           swordstr += `${item.crit_damage} CD, `
-        }
-        if(item.magic_find != 0) {
-          swordstr += `${item.magic_find} MF, `
-        }
-        if(item.sea_creature_chance != 0) {
-          swordstr += `${item.sea_creature_chance} SCC, `
         }
         swordstr += '\n'
         swordnum += 1
@@ -171,18 +156,22 @@ module.exports = {
       .addComponents(
         new Discord.MessageButton()
           .setCustomId('main')
+          .setEmoji('852069714493833227')
           .setLabel('Main')
           .setStyle('PRIMARY'),
         new Discord.MessageButton()
           .setCustomId('inv')
+          .setEmoji('881176353444085820')
           .setLabel('Inventory')
           .setStyle('PRIMARY'),
         new Discord.MessageButton()
           .setCustomId('slayer')
+          .setEmoji('852892164559732806')
           .setLabel('Slayer')
           .setStyle('PRIMARY'),
         new Discord.MessageButton()
           .setCustomId('dungeons')
+          .setEmoji('854399510951624775')
           .setLabel('Dungeons')
           .setStyle('PRIMARY'),
       );
@@ -191,10 +180,12 @@ module.exports = {
       .addComponents(
         new Discord.MessageButton()
           .setCustomId('armorlist')
+          .setEmoji('852079613051666472')
           .setLabel('Armor')
           .setStyle('PRIMARY'),
         new Discord.MessageButton()
           .setCustomId('swordlist')
+          .setEmoji('852079613052059658')
           .setLabel('Sword')
           .setStyle('PRIMARY'),
       );
@@ -249,14 +240,14 @@ module.exports = {
           const dungeons = new Discord.MessageEmbed()
             .setFooter('Skyblock Simulator')
             .setColor('90EE90')
-            .setDescription(`${armorstr}\n\nYou can change your Armor using \`/sb wardrobe armor number\`\nExample: \`/sb wardrobe armor 0\``)
+            .setDescription(`${armorstr}\nYou can change your Armor using \`/sb wardrobe armor number\`\nExample: \`/sb wardrobe armor 0\``)
           menu.edit({ embeds: [dungeons] })
         } else if (i.customId === 'swordlist') {
           await i.deferUpdate()
           const dungeons = new Discord.MessageEmbed()
             .setFooter('Skyblock Simulator')
             .setColor('90EE90')
-            .setDescription(`${swordstr}\n\nYou can change your Sword using \`/sb wardrobe sword number\`\nExample: \`/sb wardrobe sword 0\``)
+            .setDescription(`${swordstr}\nYou can change your Sword using \`/sb wardrobe sword number\`\nExample: \`/sb wardrobe sword 0\``)
           menu.edit({ embeds: [dungeons] })
         }
       }

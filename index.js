@@ -7,22 +7,23 @@ const color = require('colorette');
 const prefix = require("@replit/database");
 const prefixx = new prefix();
 const token = process.env['token'];
-let c = 0;
+global.c = 0;
 let e = 0;
-let sc = 0;
+global.sc = 0;
 const urii = process.env['uri']
 const { AutoPoster } = require('topgg-autoposter')
 const toptoken = process.env['toptoken']
 
 const MongoClient = require('mongodb').MongoClient;
 const mclient = new MongoClient(urii, { useNewUrlParser: true, useUnifiedTopology: true });
+mclient.connect()
 
 
 /*//Topgg votes detections
 const Topgg = require("@top-gg/sdk")
 const express = require("express")
 
-const app = express()
+const app = express();
 
 const webhook = new Topgg.Webhook("69420")
 
@@ -65,36 +66,6 @@ poster.on('posted', (stats) => { // ran when succesfully posted
 
 // Bot token login
 client.login(token);
-
-// Send msg in Console when Bot is usable and set status
-client.on('ready', () => {
-  let color1 = 
-  mclient.connect()
-  console.log(
-    String.raw`
-${color.blue('  ________  __   ___  ___  ___      _______     ______  ___________')}  
-${color.blue(' /\"       )|/\"| /  \")|\"  \\/"  |    |   _  \"\\   /    " \\(\"     _   \") ')}
-${color.blue('(:   \\___/ (: |/   /  \\   \\  /     (. |_)  :) // ____  \\)__/  \\\\__/  ')}
-${color.blue(' \\___  \\   |    __/    \\\\  \\/      |:     \\/ /  /    ) :)  \\\\_ /     ')}
-${color.blue('  __/  \\\\  (// _  \\    /   /       (|  _  \\\\(: (____/ //   |.  |     ')}
-${color.blue(' /\" \\   :) |: | \\  \\  /   /        |: |_)  :)\\        /    \\:  |     ')}
-${color.blue('(_______/  (__|  \\__)|___/         (_______/  \\"_____/      \\__|     ')}
-                                                                     
-
-${color.blue('[INFO] ├─ Loaded')} ${color.green(client._eventsCount)} ${color.blue(' Event Listeners')}  ${color.blue('[')}${color.green('+')}${color.blue('] Web Server')}
-${color.blue('[INFO] ├─ Loaded')} ${color.green(sc)} ${color.blue('Slash Commands')}   ${color.blue('[')}${color.green('+')}${color.blue('] Database')}
-${color.blue('[INFO] └─ Loaded')} ${color.green(c)} ${color.blue('Commands')}         ${color.blue('[')}${color.green('+')}${color.blue('] Stress')}                                                                        
-		`.trim()
-  );
-  
-  client.user.setActivity(`${client.guilds.cache.size} Servers`, { type: 'WATCHING' });
-
-//Msging Owner on Restart
-  client.users.fetch('570267487393021969').then(async user => {
-    await user.send(`Restarted`)
-  })
-});
-
 
 //Collections needed
 client.commands = new Discord.Collection();
@@ -147,7 +118,6 @@ client.on('messageCreate', async message => {
   const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
   if (!command) return;
-  //if (message.guild.id != '869124249225429022') return message.channel.send('Im currently in Dev Only Mode.')
 
   if (config.blacklistedusers.includes(message.author.id)) return message.channel.send('You are blacklisted from using this Bot. If you believe this is false. Then message **Baltraz#4874**')
 

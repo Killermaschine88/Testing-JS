@@ -1,0 +1,57 @@
+{
+  "Rotten Armor": {
+    "recombobulated": false,
+    "health": 90,
+    "defense": 25,
+    "strength": 15,
+    "crit_chance": 10,
+    "crit_damage": 15,
+    "magic_find": 0,
+    "sea_creature_chance": 0,
+    "coins": 100000
+  },
+  "Skeleton Master Armor": {
+    "recombobulated": false,
+    "health": 150,
+    "defense": 25,
+    "strength": 30,
+    "crit_chance": 20,
+    "crit_damage": 50,
+    "magic_find": 0,
+    "sea_creature_chance": 0,
+    "coins": 200000
+  },
+  "Skeletor Armor": {
+    "recombobulated": false,
+    "health": 100,
+    "defense": 50,
+    "strength": 75,
+    "crit_chance": 25,
+    "crit_damage": 125,
+    "magic_find": 0,
+    "sea_creature_chance": 0,
+    "coins": 400000
+  },
+  "Adaptive Armor": {
+    "recombobulated": false,
+    "health": 200,
+    "defense": 75,
+    "strength": 60,
+    "crit_chance": 15,
+    "crit_damage": 75,
+    "magic_find": 0,
+    "sea_creature_chance": 0,
+    "coins": 1000000
+  },
+  "Shadow Assassin Armor": {
+    "recombobulated": false,
+    "health": 300,
+    "defense": 175,
+    "strength": 125,
+    "crit_chance": 40,
+    "crit_damage": 150,
+    "magic_find": 0,
+    "sea_creature_chance": 0,
+    "coins": 10000000
+  }
+}

@@ -1,6 +1,6 @@
 const level = require('./skilllvl.js')
 
-function playerStats(player, type) {
+function playerStats(player) {
 
   //Base Variables
   let stats = player.data.stats
@@ -28,13 +28,13 @@ function playerStats(player, type) {
 
 
   //Combat Stats
-  if (type == 'combat') {
+  /*if (type == 'combat') {
     inv = player.data.equipment.combat
 
 
     health += inv.armor.health + (farminglvl * 2) + (fishinglvl * 2) + (dunglvl * 3)
 
-    defense += inv.armor.defense + (mining * 2)
+    defense += inv.armor.defense + (mininglvl * 2)
 
     damage += inv.sword.damage
 
@@ -43,7 +43,7 @@ function playerStats(player, type) {
     crit_chance += inv.sword.crit_chance + inv.armor.crit_chance + (combatlvl / 2)
 
     crit_damage += inv.sword.crit_damage + inv.armor.crit_damage
-  } else if (type == 'all') {
+  } else if (type == 'all') {*/
     inv = player.data.equipment.combat
     inv2 = player.data.equipment.fishing
 
@@ -52,7 +52,7 @@ function playerStats(player, type) {
 
     defense += inv.armor.defense + (mininglvl * 2)
 
-    damage += inv.sword.damage + inv.armor.damage
+    damage += inv.sword.damage
 
     strength += inv.sword.strength + inv.armor.strength + (foraginglvl * 2)
 
@@ -61,7 +61,7 @@ function playerStats(player, type) {
     crit_damage += inv.sword.crit_damage + inv.armor.crit_damage
 
     sea_creature_chance += inv2.rod.sea_creature_chance + (fishinglvl / 2) + inv.armor.sea_creature_chance
-  }
+  //}
 
   //Add Booster Cookie Stats
   if (cookie == true) {
