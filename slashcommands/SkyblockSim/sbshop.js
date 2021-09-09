@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const dungloot = require('../SkyblockSim/Various/dungeonloot.json');
 
 module.exports = {
   name: "sbshop",
@@ -37,6 +38,13 @@ module.exports = {
     let sellitem = 'Lilypad'
     let lilyamount = 0
 
+    let swordinv = player.data.inventory.sword
+    let armorinv = player.data.inventory.armor
+    let swordcost = ''
+
+    let choosen = ''
+
+
     if (player.data.inventory.items.find(item => item.name == 'Lilypad') != undefined) {
       lilyamount = player.data.inventory.items.find(item => item.name == 'Lilypad').amount
     }
@@ -53,6 +61,18 @@ module.exports = {
       .setLabel('Booster Cookie')
       .setStyle('PRIMARY')
       .setDisabled(true)
+    
+    const sword_button = new Discord.MessageButton()
+      .setCustomId('sword')
+      .setLabel('Sword')
+      .setStyle('PRIMARY')
+      .setDisabled(true)
+    
+    const armor_button = new Discord.MessageButton()
+      .setCustomId('armor')
+      .setLabel('Armor')
+      .setStyle('PRIMARY')
+      .setDisabled(true)
 
     const cancel_button = new Discord.MessageButton()
       .setCustomId('cancel')
@@ -60,7 +80,7 @@ module.exports = {
       .setStyle('DANGER')
 
     const row = new Discord.MessageActionRow()
-    const row2 = new Discord.MessageActionRow
+    const row2 = new Discord.MessageActionRow()
 
 
     //Rod Upgrades
@@ -130,6 +150,29 @@ module.exports = {
       amount = 100
     }
 
+    //Sword Upgrades
+    if(swordinv.find(item => item.name == 'Tactician\'s Sword') && coins > 100) {
+      sword_button.setDisabled(false)
+      choosen = 'Leaping Sword'
+      swordcost = 100
+    } else if(swordinv.find(item => item.name == 'Zombie Sword') && coins > 100) {
+      sword_button.setDisabled(false)
+      choosen = 'Tactician\'s Sword'
+      swordcost = 100
+    } else if(swordinv.find(item => item.name == 'Golem Sword') && coins > 100) {
+      sword_button.setDisabled(false)
+      choosen = 'Zombie Sword'
+      swordcost = 100
+    } else if(swordinv.find(item => item.name == 'Undead Sword') && coins > 100) {
+      sword_button.setDisabled(false)
+      choosen = 'Golem Sword'
+      swordcost = 100
+    } else if(swordinv.find(item => item.name == 'Fist') && coins > 100) {
+      sword_button.setDisabled(false)
+      choosen = 'Undead Sword'
+      swordcost = 100
+    }
+
     //Booster Cookie
     if (player.data.profile.gems >= 4) {
       cookie_button.setDisabled(false)
@@ -141,13 +184,27 @@ module.exports = {
     } else {
       row2.addComponents(rod_button)
     }
+
     if (player.data.misc.booster_cookie.active == false && row.components.length < 4) {
       row.addComponents(cookie_button)
     } else {
       row2.addComponents(cookie_button)
     }
 
-    
+    if(!swordinv.find(item => item.name == 'Leaping Sword') && row.components.length < 4) {
+      row.addComponents(sword_button)
+    } else if{
+      row2.addComponents(sword_button)
+    }
+
+    if(!armorinv.find(item => item.name == 'Superior Dragon Armor') && row.components.length < 4) {
+      row.addComponents(armor_button)
+    } else {
+      row2.addComponents(armor_button)
+    }
+
+
+        
     row.addComponents(cancel_button)
 
 
@@ -180,6 +237,14 @@ module.exports = {
     if (player.data.misc.booster_cookie.active == false) {
       shopembed.addField('Booster Cookie', '**Cost:** 4 Gems\n\n**Stats:**\n10 Magic Find\n10% Overall Stat incerase', true)
     }
+    
+    //Sword Fields
+    
+
+
+
+
+
 
     const filter = i => {
       i.deferUpdate()
@@ -258,6 +323,23 @@ module.exports = {
             .setColor('GREEN')
 
           interaction.editReply({ embeds: [purchased], components: [] })
+        } else if (id == 'sword') {
+          let item = dungloot[choosen]
+          await collection.updateOne(
+          { _id: interaction.user.id },
+          { $push: { "data.inventory.sword": { "name": choosen, "damage": item.damage, "strength": item.strength, "crit_chance": item.crit_chance, "crit_damage": item.crit_damage, "recombobulated": item.recombobulated }}},
+          {upsert: true })
+          await collection.updateOne(
+            { _id: interaction.user.id },
+            { $inc: { 'data.profile.coins': -swordcost } },
+            { upsert: true })
+            const lootembed = new Discord.MessageEmbed()
+            .setDescription(`Purchased ${choosen}`)
+            .setColor('GREEN')
+            .setFooter('Skyblock Simulator')
+          return interaction.editReply({ embeds: [lootembed], components: [] })
+        } else if (id == 'armor') {
+
         } else {
           const cancelled = new Discord.MessageEmbed()
             .setTitle('Menu Cancelled')
@@ -265,7 +347,7 @@ module.exports = {
           interaction.editReply({ embeds: [cancelled], components: [] })
           return
         }
-      }).catch(err => console.log('A'))
+      }).catch(err => console.log(err))
 
 
 

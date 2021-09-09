@@ -59,7 +59,7 @@ module.exports = {
       
       const sucembed = new Discord.MessageEmbed()
       .setTitle('Sword Changed')
-      .setDescription(`Successfully changed Sword to ${item.name}`)
+      .setDescription(`Successfully changed Sword to **${item.name}**`)
       .setColor('GREEN')
       .setFooter('Skyblock Simulator')
 
@@ -73,7 +73,7 @@ module.exports = {
         
       const sucembed = new Discord.MessageEmbed()
       .setTitle('Armor Changed')
-      .setDescription(`Successfully changed Armor to ${item.name}`)
+      .setDescription(`Successfully changed Armor to **${item.name}**`)
       .setColor('GREEN')
       .setFooter('Skyblock Simulator')
 

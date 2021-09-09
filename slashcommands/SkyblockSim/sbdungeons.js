@@ -1064,7 +1064,7 @@ module.exports = {
           runFinished = true
           collector.stop()
             }
-          } else if(loot.includes('Sword') && choosen == true) {
+          } else if((loot.includes('Sword') || loot.includes('Death') || loot.includes('Blade') || loot.includes('Dagger')) && choosen == true) {
             //handle sword here
             let item = dungloot[loot]
             let item2 = player.data.inventory.sword.find(swords => swords.name == loot)
@@ -1086,7 +1086,7 @@ module.exports = {
 
             await collection.updateOne(
           { _id: interaction.user.id },
-          { $push: { "data.inventory.armor": { "name": loot, "damage": item.damage, "strength": item.strength, "crit_chance": item.crit_chance, "crit_damage": item.crit_damage, "recombobulated": item.recombobulated }}},
+          { $push: { "data.inventory.sword": { "name": loot, "damage": item.damage, "strength": item.strength, "crit_chance": item.crit_chance, "crit_damage": item.crit_damage, "recombobulated": item.recombobulated }}},
           {upsert: true })
 
           const lootembed = new MessageEmbed()
