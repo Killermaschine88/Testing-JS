@@ -1151,7 +1151,7 @@ function addItem(sellitem, amount, player) {
 
   for (const item of player.data.inventory.items) {
     if (item.name === sellitem) {
-      item.amount -= amount
+      item.amount += amount
       return player
     }
   }

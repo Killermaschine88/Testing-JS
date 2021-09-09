@@ -144,6 +144,12 @@ module.exports = {
 
     //Deciding Mob Name that gets killed
     let mobname = mob[Math.floor(Math.random() * mob.length)];
+    let combatxp = Math.floor(Math.random() * (100 - 50) + 50)
+
+    await collection.updateOne(
+          { _id: interaction.user.id },
+          { $inc: { 'data.skills.combat': combatxp } },
+          { upsert: true })
 
     const endembed = new Discord.MessageEmbed()
     if (player.data.settings.imgshown === true) {
