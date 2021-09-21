@@ -816,11 +816,11 @@ module.exports = {
             gold_loot = lt.gold.roll(pstats.magic_find)
             test.fields = []
             test.description = '\n'
-            test.description += `Wood Chest: **${wood_loot}\n**`
-            test.description += `Gold Chest: **${gold_loot}\n**`
+            test.description += `<:oak_wood:882624301503754350> Wood Chest: **${wood_loot}\n**`
+            test.description += `<:gold:869126927011708929> Gold Chest: **${gold_loot}\n**`
             if (floor == 2 && score >= 160) {
               diamond_loot = lt.diamond.roll(pstats.magic_find)
-              test.description += `Diamond Chest: **${diamond_loot}\n**`
+              test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot}\n**`
               lootrow.addComponents(diamond_button)
             } else if (floor == 3 >= 200) {
               diamond_loot = lt.diamond.roll(pstats.magic_find)
@@ -986,7 +986,7 @@ module.exports = {
           loot = gold_loot
           choosen = true
         } else if (id == 'diamond') {
-          loot = diamond_button
+          loot = diamond_loot
           choosen = true
         } else if (id == 'emerald') {
           loot = emerald_loot
@@ -1030,7 +1030,7 @@ module.exports = {
           runFinished = true
           collector.stop()
         } else {
-          if(loot.includes('Armor') && choosen == true) {
+                  if(loot.includes('Armor') && choosen == true) {
             //handle armor here
             let item = dungloot[loot]
             let item2 = player.data.inventory.armor.find(armors => armors.name == loot)
