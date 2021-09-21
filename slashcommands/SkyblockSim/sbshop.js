@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const dungloot = require('../SkyblockSim/Various/dungeonloot.json');
+const dungloot = require('../../Constants/Simulator/Json/dungeonloot.json');
 
 module.exports = {
   name: "sbshop",
@@ -193,7 +193,7 @@ module.exports = {
 
     if(!swordinv.find(item => item.name == 'Leaping Sword') && row.components.length < 4) {
       row.addComponents(sword_button)
-    } else if{
+    } else {
       row2.addComponents(sword_button)
     }
 

@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const lt = require('../../loottables.js')
+const lt = require('../../Constants/Simulator/LootTables/loottables.js')
 
 module.exports = {
   name: "sbfarm",

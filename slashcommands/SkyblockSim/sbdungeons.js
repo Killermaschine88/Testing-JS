@@ -1,9 +1,9 @@
 const { MessageButton, MessageActionRow, MessageEmbed } = require('discord.js');
-const playerStats = require('./Various/playerStats.js')
-const classLevel = require('./Various/dungeonlevel.js')
-const skillLevel = require('./Various/skilllvl.js')
-const lt = require('../../loottables.js')
-const dungloot = require('../SkyblockSim/Various/dungeonloot.json')
+const playerStats = require('../../Constants/Simulator/Functions/playerStats.js')
+const classLevel = require('../../Constants/Simulator/Functions/dungeonlevel.js')
+const skillLevel = require('../../Constants/Simulator/Functions/skilllvl.js')
+const lt = require('../../Constants/Simulator/LootTables/loottables.js')
+const dungloot = require('../../Constants/Simulator/Json/dungeonloot.json')
 
 module.exports = {
   name: "sbdungeons",

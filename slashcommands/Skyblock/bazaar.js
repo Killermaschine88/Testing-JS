@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
-const list = require('../../items.json');
+const list = require('../../Constants/Skyblock/items.json');
 const Fuse = require('fuse.js')
 const fs = require('fs')
 const list2 = require('./list2.json')

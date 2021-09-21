@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const list = require('./Various/prices.json');
+const list = require('../../Constants/Simulator/Json/prices.json');
 const fetch = require('node-fetch')
 
 module.exports = {

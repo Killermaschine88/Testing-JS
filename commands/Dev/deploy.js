@@ -12,7 +12,7 @@ module.exports = {
     if (!client.application ?.owner) await client.application ?.fetch();
 
     if (message.author.id === client.application ?.owner.id) {
-      const cmdfile = require('../../Various/commands.js')
+      const cmdfile = require('../../Constants/Bot/commands.js')
 
       const command = await client.guilds.cache.get('869124249225429022') ?.commands.set(cmdfile.data)
       //client.commands.set([])

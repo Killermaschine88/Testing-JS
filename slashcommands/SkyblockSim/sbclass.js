@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const cataLevel = require('./Various/dungeonlevel.js')
+const cataLevel = require('../../Constants/Simulator/Functions/dungeonlevel.js')
 
 module.exports = {
   name: "sbclass",

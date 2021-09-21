@@ -1,10 +1,10 @@
 const Discord = require('discord.js');
 const prefix = require("@replit/database");
 const prefixx = new prefix();
-const emoji = require('../SkyblockSim/Various/emojis.json')
-const mobs = require('../SkyblockSim/Various/mobstats.json')
-const getLevel = require('../SkyblockSim/Various/skilllvl.js')
-const playerStats = require('../SkyblockSim/Various/playerStats.js')
+const emoji = require('../../Constants/Simulator/Json/emojis.json')
+const mobs = require('../../Constants/Simulator/Json/mobstats.json')
+const getLevel = require('../../Constants/Simulator/Functions/skilllvl.js')
+const playerStats = require('../../Constants/Simulator/Functions/playerStats.js')
 
 module.exports = {
   name: "sbfishing",

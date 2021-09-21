@@ -1,4 +1,4 @@
-const LootTable = require('../../LootTable.js')
+const LootTable = require('../Functions/LootTable.js')
 
 const emerald = new LootTable()
 
