@@ -57,7 +57,7 @@ h4 {
 })
 
 function keepAlive() {
-  app.listen(3000)//, () => { console.log(chalk.greenBright("Server is Ready!!" + Date.now())) });
+  app.listen(3000)
 }
 
 module.exports = keepAlive;

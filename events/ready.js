@@ -16,9 +16,9 @@ ${color.blue(' /\" \\   :) |: | \\  \\  /   /        |: |_)  :)\\        /    \\
 ${color.blue('(_______/  (__|  \\__)|___/         (_______/  \\"_____/      \\__|     ')}
                                                                      
 
-${color.blue('[INFO] ├─ Loaded')} ${color.green(client._eventsCount)} ${color.blue(' Event Listeners')}  ${color.blue('[')}${color.green('+')}${color.blue('] Web Server')}
-${color.blue('[INFO] ├─ Loaded')} ${color.green(sc)} ${color.blue('Slash Commands')}   ${color.blue('[')}${color.green('+')}${color.blue('] Database')}
-${color.blue('[INFO] └─ Loaded')} ${color.green(c)} ${color.blue('Commands')}         ${color.blue('[')}${color.green('+')}${color.blue('] Stress')}                                                                        
+${color.blue('[INFO]')}${color.blue(' ├─ Loaded')} ${color.green(client._eventsCount)} ${color.blue(' Event Listeners')}  ${color.blue('[')}${color.green('+')}${color.blue('] Web Server')}
+${color.blue('[INFO]')}${color.blue(' ├─ Loaded')} ${color.green(sc)} ${color.blue('Slash Commands')}   ${color.blue('[')}${color.green('+')}${color.blue('] Database')}
+${color.blue('[INFO]')}${color.blue(' └─ Loaded')} ${color.green(c)} ${color.blue('Commands')}         ${color.blue('[')}${color.green('+')}${color.blue('] Stress')}                                                                        
 		`.trim()
   );
   
