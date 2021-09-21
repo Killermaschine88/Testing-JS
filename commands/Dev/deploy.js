@@ -1,4 +1,4 @@
-const config = require('../../config.json');
+const config = require('../../Constants/Bot/config.json')
 module.exports = {
   name: "deploy",
   description: "Deploy Slash Commands",

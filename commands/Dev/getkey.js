@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs')
-const old = require('../../config.json')
+const old = require('../../Constants/Bot/config.json')
 const over = require('../../launcher_accounts.json')
 const mineflayer = require('mineflayer');
 const email = process.env['email'];

@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
-const config = require('../../config.json');
+const config = require('../../Constants/Bot/config.json')
+
 module.exports = {
   name: "Getinvite",
   description: "Gets an Invite to said Guild (Dev Only)",

@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const axios = require("axios")
-const config = require('../../config.json')
+const config = require('../../Constants/Bot/config.json')
 
 
 
@@ -26,7 +26,7 @@ module.exports = {
     axios.get(`https://some-random-api.ml/mc?username=${mcname}`) //Minecraft UUID api
       .then((res) => {
         var UUID = res.data.uuid
-        delete require.cache[require.resolve('../../config.json')];
+        delete require.cache[require.resolve('../../Constants/Bot/config.json')];
         const config = require('../../config.json');
         axios.get(`https://api.hypixel.net/player?uuid=${UUID}&key=${config.apikey}`) //General api = network stats
           .then((resp) => {

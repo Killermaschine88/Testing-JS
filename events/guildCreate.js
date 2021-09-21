@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const config = require('../config.json');
+const config = require('../Constants/Bot/config.json')
 
 module.exports = {
   name: 'guildCreate',
@@ -36,8 +36,8 @@ module.exports = {
 
 
 function discordLog(client, embed) {
-  delete require.cache[require.resolve('../config.json')];
-  const config = require('../config.json');
+  delete require.cache[require.resolve('../Constants/Bot/config.json')];
+  const config = require('../Constants/Bot/config.json')
 
   client.channels.fetch(config.joinlog)
     .then(channel => channel.send({ embeds: [embed] }))
