@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'] });
 const config = require('./Constants/Bot/config.json');
-const keepAlive = require('./keepAlive.js');
+const keepAlive = require('./Constants/Bot/keepAlive.js');
 const fs = require('fs');
 const color = require('colorette');
 const prefix = require("@replit/database");
@@ -196,7 +196,7 @@ client.on('messageCreate', async message => {
     }
     return;
   }
-  if (command.folder != 'Dev') return;
+  //if (command.folder != 'Dev') return;
 
   try {
     await command.execute(client, message, args, mclient);
@@ -236,7 +236,7 @@ module.exports = {
   folder: "folder",
   aliases: [],
     execute: (client, message, args) => {
-      putmycodehere
+      //putmycodehere
     }
 };
 */
