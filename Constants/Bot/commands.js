@@ -295,6 +295,11 @@ const data = [
         description: 'Allows you to claim your Daily Reward',
         type: 'SUB_COMMAND',
       },
+      {
+        name: 'wiki',
+        description: 'Displays the Wiki and Help Page for the Simulator',
+        type: 'SUB_COMMAND',
+      },
     ],
   },
 ]

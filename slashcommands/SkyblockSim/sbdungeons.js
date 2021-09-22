@@ -31,7 +31,7 @@ module.exports = {
         var a = x + 1
         var b = y
       }
-      if (map[a][b] == 0 || ((map[a][b] == 3 || map[a][b] == 4) && !ignoreEvent)) return [location, false]
+      if (map[a][b] == 0 || ((map[a][b] == 3 || map[a][b] == 4 || map[a][b] == 6) && !ignoreEvent)) return [location, false]
 
       map[x][y] = 1
 
