@@ -13,24 +13,26 @@ module.exports = {
 
     let ign = interaction.options.getString('name');
 
+    delete require.cache[require.resolve('../../Constants/Bot/config.json')];
+  const config = require('../../Constants/Bot/config.json');
+
     const waiting = new Discord.MessageEmbed()
       .setTitle('Checking Player Data')
 
     const wait = await interaction.editReply({ embeds: [waiting] })
 
-    let net = await fetch(`http://db.superbonecraft.dk:8000/pages/${ign}`)
-    nw = await net.json()
-    //console.log(net)
+    let net = await fetch(`http://db.superbonecraft.dk:8000/pages/${ign}?api_key=${config.apikey}`)
+    nw = await net.json()    
 
-    let errtext = ''
+    let errtext = ''    
     if (net.status == 404) {
-      errtext = 'User not found within the Skyblock Playerbase'
+      errtext = 'Status: 404\nReason: User not found within the Skyblock Playerbase'
     } else if (net.status == 500) {
-      errtext = 'Internal Error'
+      errtext = 'Status: 500\nReason: Internal Error'
     } else if (net.status == 429) {
-      errtext = 'Something went wrong, please wait a minute then try again'
+      errtext = 'Status: 429\nReason: Something went wrong, please wait a minute then try again'
     } else {
-      errtext = 'Status: ' + net.status + '\nStatus Text: ' + net.statusText
+      errtext = 'Status: ' + net.status + '\nReason: ' + net.statusText
     }
 
     if (net.status != 200) {

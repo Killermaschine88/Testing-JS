@@ -165,7 +165,7 @@ client.on('messageCreate', async message => {
           .setTitle('Slash Command Changes')
           .setColor('RED')
           .setFooter('Greetings Sky Bot Dev')
-          .setDescription('Please notify the Server owner or an Admin to re-add the Bot using the attached Button there is **NO NEED TO KICK THE BOT** you can just re-add it and it will work using SlashCommands.\n\nThis is to ensure you will be able to use all the Slash Commands as the Devs are required to make Slash Commands by Discord.\n\nOnce the Bot is reauthorized your all set and this Message also wont appear again.')
+          .setDescription('Please notify the Server owner or an Admin to re-authorize the Bot using the attached Button there is **NO NEED TO KICK THE BOT** you can just re-authorize it and it will work using SlashCommands.\n\nThis is to ensure you will be able to use all the Slash Commands as the Devs are required to make Slash Commands by Discord.\n\nOnce the Bot is reauthorized your all set and this Message also wont appear again.')
         const row = new Discord.MessageActionRow()
           .addComponents(
             new Discord.MessageButton()
@@ -184,7 +184,7 @@ client.on('messageCreate', async message => {
         .setTitle('Unsupported Message Commands')
         .setColor('ORANGE')
         .setFooter('Greetings Sky Bot Dev')
-        .setDescription('Message Commands have been remove from Sky Bot due to a change in Discords System Bot Developers are required to use Slash Commands\n\nFor a list of all existing Slash Commands use \`/commandlist\`.\n\nClick the attached Button for an Article explaining those changes.')
+        .setDescription('Message Commands have been remove from Sky Bot due to a change in Discords System which means, Bot Developers are required to use Slash Commands.\n\nClick the attached Button for an Article explaining those changes.')
       const row = new Discord.MessageActionRow()
         .addComponents(
           new Discord.MessageButton()
