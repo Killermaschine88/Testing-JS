@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const axios = require('axios')
+//const axios = require('axios')
 const fetch = require('node-fetch')
 
 module.exports = {
@@ -16,16 +16,44 @@ module.exports = {
     delete require.cache[require.resolve('../../Constants/Bot/config.json')];
   const config = require('../../Constants/Bot/config.json');
 
-    const waiting = new Discord.MessageEmbed()
+    // npm install axios
+const axios = require(`axios`).default
+// npm install axios
+    try{
+let uuid = await axios.get(`https://api.mojang.com/users/profiles/minecraft/${ign}`)
+
+    
+let hypixelapi = await axios.default.get(`https://api.hypixel.net/skyblock/profiles?key=${config.apikey}&uuid=${uuid.data.id}`);
+  //  console.log(hypixelapi.data)
+    
+    
+var data = await axios.default.post(`http://hypixelskyblock.superbonecraft.dk:8000/pages/${uuid.data.id}`, hypixelapi.data);
+    } catch (e) {
+      const embed = new Discord.MessageEmbed()
+      .setTitle('ERROR')
+      .setColor('RED') 
+      .setDescription('Invalid Minecraft Username or User doesnt have any Skyblock Profiles.')
+      return interaction.editReply({embeds: [embed]})
+    }
+
+    nw = data.data
+  
+
+
+
+
+    
+
+   /* const waiting = new Discord.MessageEmbed()
       .setTitle('Checking Player Data')
 
-    const wait = await interaction.editReply({ embeds: [waiting] })
+    const wait = await interaction.editReply({ embeds: [waiting] })*/
 
-    let net = await fetch(`http://db.superbonecraft.dk:8000/pages/${ign}?api_key=${config.apikey}`)
-    nw = await net.json()    
+   // let net = await fetch(`http://db.superbonecraft.dk:8000/pages/${ign}?api_key=${config.apikey}`)
+   // nw = await net.json()    
 
     let errtext = ''    
-    if (net.status == 404) {
+   /* if (net.status == 404) {
       errtext = 'Status: 404\nReason: User not found within the Skyblock Playerbase'
     } else if (net.status == 500) {
       errtext = 'Status: 500\nReason: Internal Error'
@@ -42,7 +70,7 @@ module.exports = {
         .setColor('RED')
       wait.edit({ embeds: [errorembed] })
       return
-    }
+    }*/
 
     ign = await getTrueIgn(ign)
 
@@ -261,7 +289,7 @@ module.exports = {
 
 
 
-    wait.edit({ embeds: [endembed] })
+    interaction.editReply({ embeds: [endembed] })
   }
 };
 

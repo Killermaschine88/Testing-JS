@@ -181,30 +181,28 @@ module.exports = {
     //Adding Buttons to row
     if (rod.name != 'Rod of the Sea' && row.components.length < 4) {
       row.addComponents(rod_button)
-    } else {
+    } else if (rod.name != 'Rod of the Sea' && row2.components.length < 4){
       row2.addComponents(rod_button)
     }
 
     if (player.data.misc.booster_cookie.active == false && row.components.length < 4) {
       row.addComponents(cookie_button)
-    } else {
+    } else if (player.data.misc.booster_cookie.active == false && row2.components.length < 4) {
       row2.addComponents(cookie_button)
     }
 
     if(!swordinv.find(item => item.name == 'Leaping Sword') && row.components.length < 4) {
       row.addComponents(sword_button)
-    } else {
+    } else if(!swordinv.find(item => item.name == 'Leaping Sword') && row2.components.length < 4){
       row2.addComponents(sword_button)
     }
 
     if(!armorinv.find(item => item.name == 'Superior Dragon Armor') && row.components.length < 4) {
       row.addComponents(armor_button)
-    } else {
+    } else if(!armorinv.find(item => item.name == 'Superior Dragon Armor') && row2.components.length < 4){
       row2.addComponents(armor_button)
     }
 
-
-        
     row.addComponents(cancel_button)
 
 
@@ -216,29 +214,40 @@ module.exports = {
 
     //Rod Fields
     if (rod.name == 'Fishing Rod') {
-      shopembed.addField('Prismarine Rod', '**Cost:** 5k Coins + 10 Lilypads\n\n**Stats:**\n5 Sea Creature Chance\n10% Fishing Speed', true)
+      shopembed.addField('Prismarine Rod', '**Cost:** 5k Coins + 10 Lilypads\n\n**Stats:**\n5 α, 10% 🎣', true)
     } else if (rod.name == 'Prismarine Rod') {
-      shopembed.addField('Sponge Rod', '**Cost:** 25k Coins + 20 Lilypads\n\n**Stats:**\n10 Sea Creature Chance\n20% Fishing Speed', true)
+      shopembed.addField('Sponge Rod', '**Cost:** 25k Coins + 20 Lilypads\n\n**Stats:**\n10 α, 20% 🎣', true)
     } else if (rod.name == 'Sponge Rod') {
-      shopembed.addField('Speedster Rod', '**Cost:** 50k Coins + 30 Lilypads\n\n**Stats:**\n15 Sea Creature Chance\n30% Fishing Speed', true)
+      shopembed.addField('Speedster Rod', '**Cost:** 50k Coins + 30 Lilypads\n\n**Stats:**\n15 α, 30% 🎣', true)
     } else if (rod.name == 'Speedster Rod') {
-      shopembed.addField('Farmer\'s Rod', '**Cost:** 100k Coins + 50 Lilypads\n\n**Stats:**\n20 Sea Creature Chance\n40% Fishing Speed', true)
+      shopembed.addField('Farmer\'s Rod', '**Cost:** 100k Coins + 50 Lilypads\n\n**Stats:**\n20 α, 40% 🎣', true)
     } else if (rod.name == 'Farmer\'s Rod') {
-      shopembed.addField('Challenging Rod', '**Cost:** 250k Coins + 75 Lilypads\n\n**Stats:**\n25 Sea Creature Chance\n50% Fishing Speed', true)
+      shopembed.addField('Challenging Rod', '**Cost:** 250k Coins + 75 Lilypads\n\n**Stats:**\n25 α, 50% 🎣', true)
     } else if (rod.name == 'Challenging Rod') {
-      shopembed.addField('Rod of Champions', '**Cost:** 500k Coins + 100 Lilypads\n\n**Stats:**\n30 Sea Creature Chance\n60% Fishing Speed', true)
+      shopembed.addField('Rod of Champions', '**Cost:** 500k Coins + 100 Lilypads\n\n**Stats:**\n30 α\n60% Fishing Speed', true)
     } else if (rod.name == 'Rod of Champions') {
-      shopembed.addField('Rod of Legends', '**Cost:** 1M Coins + 150 Lilypads\n\n**Stats:**\n40 Sea Creature Chance\n70% Fishing Speed', true)
+      shopembed.addField('Rod of Legends', '**Cost:** 1M Coins + 150 Lilypads\n\n**Stats:**\n40 α, 70% 🎣', true)
     } else if (rod.name == 'Rod of Legends') {
-      shopembed.addField('Rod of the Sea', '**Cost:** 50 Gems + 100 Lilypads\n\n**Stats:**\n50 Sea Creature Chance\n75% Fishing Speed', true)
+      shopembed.addField('Rod of the Sea', '**Cost:** 50 Gems + 100 Lilypads\n\n**Stats:**\n50 α, 75% 🎣', true)
     }
 
     //Cookie Field
     if (player.data.misc.booster_cookie.active == false) {
-      shopembed.addField('Booster Cookie', '**Cost:** 4 Gems\n\n**Stats:**\n10 Magic Find\n10% Overall Stat incerase', true)
+      shopembed.addField('Booster Cookie', '**Cost:** 4 Gems\n\n**Stats:**\n10 ✯, 10% Overall Stat incerase', true)
     }
     
     //Sword Fields
+    if(swordinv.find(item => item.name == 'Frozen Blaze Armor')) {
+      //sup
+    } else if (swordinv.find(item => item.name == 'Tarantula Armor')) {
+      //Frozen
+    } else if (swordinv.find(item => item.name == 'Monster Hunter Armor')) {
+      //Tarantula
+    } else if (swordinv.find(item => item.name == 'Golem Armor')) {
+      //mosnter Hunter
+    } else if (swordinv.find(item => item.name == 'Leaflet')) {
+      //Golem
+    }
     
 
 

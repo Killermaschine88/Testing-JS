@@ -41,7 +41,6 @@ module.exports = {
 
     // At this point we know its a valid IGN, but not if it has skyblock profiles
     const apiData = await getApiData(ign, method); // Gets all skyblock player data from Senither's Hypixel API Facade
-    console.log(apidData)
 
     if (apiData.status != 200) {
       const apierrorembed = new Discord.MessageEmbed()
@@ -203,8 +202,8 @@ async function getUUID(ign) {
 }
 
 async function getApiData(ign, method) {
-  delete require.cache[require.resolve('../../config.json')];
-  const config = require('../../config.json');
+  delete require.cache[require.resolve('../../Constants/Bot/config.json')];
+  const config = require('../../Constants/Bot/config.json');
 
   const UUID = await getUUID(ign);
   const response = await fetch(`https://baltrazz.repl.co/v1/profiles/${UUID}/${method}?key=${config.apikey}`);
