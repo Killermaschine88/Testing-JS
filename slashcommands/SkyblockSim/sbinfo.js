@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
-const leveling = require('../../Constants/Simulator/Functions/leveling.js')
-const playerStats = require('../../Constants/Simulator/Functions/playerStats.js')
-const catalvl = require('../../Constants/Simulator/Functions/dungeonlevel.js')
+const leveling = require('../../constants/Simulator/Functions/leveling.js')
+const playerStats = require('../../constants/Simulator/Functions/playerStats.js')
+const catalvl = require('../../constants/Simulator/Functions/dungeonlevel.js')
 
 
 module.exports = {

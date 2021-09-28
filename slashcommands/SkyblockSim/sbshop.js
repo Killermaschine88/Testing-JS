@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const dungloot = require('../../Constants/Simulator/Json/dungeonloot.json');
+const dungloot = require('../../constants/Simulator/Json/dungeonloot.json');
 
 module.exports = {
   name: "sbshop",

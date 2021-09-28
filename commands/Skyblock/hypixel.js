@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const axios = require("axios")
-const config = require('../../Constants/Bot/config.json')
+const config = require('../../constants/Bot/config.json')
 
 
 

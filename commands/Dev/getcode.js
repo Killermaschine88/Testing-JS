@@ -1,4 +1,4 @@
-const config = require('../../Constants/Bot/config.json')
+const config = require('../../constants/Bot/config.json')
 const sourcebin = require('sourcebin')
 
 module.exports = {

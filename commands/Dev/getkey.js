@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs')
-const old = require('../../Constants/Bot/config.json')
+const old = require('../../constants/Bot/config.json')
 const over = require('../../launcher_accounts.json')
 const mineflayer = require('mineflayer');
 const email = process.env['email'];
@@ -37,7 +37,7 @@ module.exports = {
 
       if (message.text === 'Your new API key is ') {
         old.apikey = message.extra[0].text
-        fs.writeFileSync('/home/runner/Testing-JS/config.json', JSON.stringify(old))
+        fs.writeFileSync('/home/runner/Testing-JS/constants/Bot/config.json', JSON.stringify(old))
 
         over.mojangClientToken = 'reset'
         fs.writeFileSync('/home/runner/Testing-JS/launcher_accounts.json', JSON.stringify(over))

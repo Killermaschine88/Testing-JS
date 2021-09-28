@@ -310,8 +310,8 @@ async function getUUID(ign) {
 }
 
 async function getApiData(ign) {
-  delete require.cache[require.resolve('../../config.json')];
-  const config = require('../../config.json');
+  delete require.cache[require.resolve('../../constants/Bot/config.json')];
+  const config = require('../../constants/Bot/config.json');
 
   const UUID = await getUUID(ign);
   const response = await fetch(`https://baltrazz.repl.co/v1/profiles/${UUID}/dungeons?key=${config.apikey}`);

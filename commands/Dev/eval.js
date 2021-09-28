@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const config = require('../../Constants/Bot/config.json')
+const config = require('../../constants/Bot/config.json')
 const pms = require('pretty-ms');
 const prefix = require("@replit/database");
 const prefixx = new prefix();

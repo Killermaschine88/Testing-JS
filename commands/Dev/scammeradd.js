@@ -1,6 +1,6 @@
 const urii = process.env['uri']
 const Discord = require('discord.js');
-const config = require('../../Constants/Bot/config.json')
+const config = require('../../constants/Bot/config.json')
 const axios = require('axios')
 
 

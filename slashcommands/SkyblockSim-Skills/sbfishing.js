@@ -1,10 +1,10 @@
 const Discord = require('discord.js');
 const prefix = require("@replit/database");
 const prefixx = new prefix();
-const emoji = require('../../Constants/Simulator/Json/emojis.json')
-const mobs = require('../../Constants/Simulator/Json/mobstats.json')
-const getLevel = require('../../Constants/Simulator/Functions/skilllvl.js')
-const playerStats = require('../../Constants/Simulator/Functions/playerStats.js')
+const emoji = require('../../constants/Simulator/Json/emojis.json')
+const mobs = require('../../constants/Simulator/Json/mobstats.json')
+const getLevel = require('../../constants/Simulator/Functions/skilllvl.js')
+const playerStats = require('../../constants/Simulator/Functions/playerStats.js')
 
 module.exports = {
   name: "sbfishing",

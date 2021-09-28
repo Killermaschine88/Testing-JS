@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'] });
-const config = require('./Constants/Bot/config.json');
-const keepAlive = require('./Constants/Bot/keepAlive.js');
+const config = require('./constants/Bot/config.json');
+const keepAlive = require('./constants/Bot/keepAlive.js');
 const fs = require('fs');
 const color = require('colorette');
 const prefix = require("@replit/database");
