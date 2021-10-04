@@ -19,7 +19,7 @@ const mclient = new MongoClient(urii, { useNewUrlParser: true, useUnifiedTopolog
 mclient.connect()
 
 
-/*//Topgg votes detections
+/*//Topgg votes detectionsa
 const Topgg = require("@top-gg/sdk")
 const express = require("express")
 
