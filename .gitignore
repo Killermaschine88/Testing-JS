@@ -9,4 +9,4 @@ node_modules/
 
 # Replit
 .replit
-nix.replit
+replit.nix
