@@ -38,15 +38,17 @@ module.exports = {
       return;
     }
 
+    let ps = await playerStats(player)
+
     let embed = new Discord.MessageEmbed()
     .setTitle('Mine')
-    .setDescription(``)
+    .setDescription(`Pickaxe: **${player.data.equipment.mining.pickaxe.name}**\nMining Speed: **${ps.mining_speed}**\n\nadd mine here`)
     .setFooter('Skyblock Simulator')
     .setColor('GREY')
 
     const cancel = new Discord.MessageButton()
       .setCustomId('cancel')
-      .setLabel('Stop Fishing')
+      .setLabel('Stop Mining')
       .setStyle('DANGER')
 
     const mine = new Discord.MessageButton()
@@ -73,6 +75,10 @@ module.exports = {
 
     const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 858000 })
 
+    await collection1.updateOne(
+      { _id: interaction.channelId },
+      { $set: { blocked: true, user: interaction.user.id } },
+      { upsert: true })
     //Collector
     collector.on('collect', async i => {
       if(i.customId == 'mine') {

@@ -35,7 +35,7 @@ module.exports = {
               coins: 0, gems: 0, cute_name: profilename, started: starttime
             },
             stats: {
-              health: 100, defense: 0, damage: 5, strength: 0, crit_chance: 20, crit_damage: 50, magic_find: 0, sea_creature_chance: 20
+              health: 100, defense: 0, damage: 5, strength: 0, crit_chance: 20, crit_damage: 50, magic_find: 0, sea_creature_chance: 20, mining_speed: 0
             },
             skills: {
               mining: 0, foraging: 0, enchanting: 0, farming: 0, combat: 0, fishing: 0

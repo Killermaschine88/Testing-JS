@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const config = require('../constants/Bot/config.json')
 const color = require('colorette')
+const start = require('../constants/Bot/start.js')
 
 module.exports = {
   name: 'ready',
@@ -28,5 +29,9 @@ ${color.blue('[INFO]')}${color.blue(' └─ Loaded')} ${color.green(c)} ${color
   client.users.fetch('570267487393021969').then(async user => {
     await user.send(`Restarted`)
   })
+
+  //Startup Stuff from function
+  start()
+
   }
 };

@@ -7,6 +7,7 @@ function playerStats(player) {
   let cookie = player.data.misc.booster_cookie.active
   let inv = ''
   let inv2 = ''
+  let inv3 = ''
 
   //Skill Levels
   let farminglvl = level(player.data.skills.farming).level
@@ -25,27 +26,12 @@ function playerStats(player) {
   let crit_damage = stats.crit_damage
   let magic_find = stats.magic_find
   let sea_creature_chance = stats.sea_creature_chance
+  let mining_speed = stats.mining_speed
 
 
-  //Combat Stats
-  /*if (type == 'combat') {
-    inv = player.data.equipment.combat
-
-
-    health += inv.armor.health + (farminglvl * 2) + (fishinglvl * 2) + (dunglvl * 3)
-
-    defense += inv.armor.defense + (mininglvl * 2)
-
-    damage += inv.sword.damage
-
-    strength += inv.sword.strength + inv.armor.strength + (foraginglvl * 2)
-
-    crit_chance += inv.sword.crit_chance + inv.armor.crit_chance + (combatlvl / 2)
-
-    crit_damage += inv.sword.crit_damage + inv.armor.crit_damage
-  } else if (type == 'all') {*/
     inv = player.data.equipment.combat
     inv2 = player.data.equipment.fishing
+    inv3 = player.data.equipment.mining
 
 
     health += inv.armor.health + (farminglvl * 2) + (fishinglvl * 2) + (dunglvl * 3)
@@ -61,7 +47,8 @@ function playerStats(player) {
     crit_damage += inv.sword.crit_damage + inv.armor.crit_damage
 
     sea_creature_chance += inv2.rod.sea_creature_chance + (fishinglvl / 2) + inv.armor.sea_creature_chance
-  //}
+
+    mining_speed += mininglvl + inv3.pickaxe.mining_speed
 
   //Add Booster Cookie Stats
   if (cookie == true) {
@@ -74,6 +61,7 @@ function playerStats(player) {
     magic_find += 10
     magic_find = Math.floor(magic_find * 1.1)
     sea_creature_chance = Math.floor(sea_creature_chance * 1.1)
+    mining_speed = Math.floor(mining_speed * 1.1)
   }
 
   health = Math.floor(health * (1 + defense / 100))
@@ -86,7 +74,8 @@ function playerStats(player) {
     crit_chance,
     crit_damage,
     magic_find,
-    sea_creature_chance
+    sea_creature_chance,
+    mining_speed
   }
 }
 
