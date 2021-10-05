@@ -300,6 +300,11 @@ const data = [
         description: 'Displays the Wiki and Help Page for the Simulator',
         type: 'SUB_COMMAND',
       },
+      {
+        name: 'mining',
+        description: 'Opens a Mine for you to gather Ores',
+        type: 'SUB_COMMAND',
+      },
     ],
   },
 ]

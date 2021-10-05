@@ -52,7 +52,7 @@ app.post("/dblwebhook", webhook.listener(async vote => {
     .catch(console.error)
 }))
 
-app.listen(80)
+app.listen(3000) //if it doesnt work take port 80
 
 //Topgg stats posting
 const poster = AutoPoster(toptoken, client)

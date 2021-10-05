@@ -1,6 +1,4 @@
 const Discord = require('discord.js');
-const prefix = require("@replit/database");
-const prefixx = new prefix();
 const emoji = require('../../constants/Simulator/Json/emojis.json')
 const mobs = require('../../constants/Simulator/Json/mobstats.json')
 const getLevel = require('../../constants/Simulator/Functions/skilllvl.js')
@@ -21,14 +19,11 @@ module.exports = {
 
     const collection1 = mclient.db('SkyblockSim').collection('blockedchannels');
 
-    var gprefix = await prefixx.get(interaction.guild.id, { raw: false });
-    if (gprefix === null) gprefix = '.';
-
     if (player === null) {
       const noprofile = new Discord.MessageEmbed()
         .setColor('RED')
         .setTitle('No Profile found')
-        .setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``)
+        .setDescription(`Create a Profile using \`/sb start\``)
       interaction.editReply({ embeds: [noprofile] })
       return;
     }

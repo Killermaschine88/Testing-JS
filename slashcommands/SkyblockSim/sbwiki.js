@@ -55,7 +55,7 @@ module.exports = {
         .setTitle('Symbol Information')
         .setColor('90EE90')
         .setFooter('Skyblock Simulator')
-        .setDescription('❤ Health\n❈ Defense\n⚔️ Damage\n❁ Strength\n☣ Crit Chance\n☠ Crit Damage\n✯ Magic Find\nα Sea Creature Chance\n🎣 Fishing Speed')
+        .setDescription('❤ Health\n❈ Defense\n⚔️ Damage\n❁ Strength\n☣ Crit Chance\n☠ Crit Damage\n✯ Magic Find\nα Sea Creature Chance\n🎣 Fishing Speed\n⸕ Mining Speed')
 
         menu.edit({embeds: [symbolembed]})
       }
