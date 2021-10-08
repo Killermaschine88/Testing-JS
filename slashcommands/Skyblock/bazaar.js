@@ -82,10 +82,10 @@ module.exports = {
           .addFields(
             { name: `Insta Sell Price`, value: `${toFixed(apiData.quick_status.sellPrice)}`, inline: true },
             { name: `Amount of Sell Offers`, value: `${toFixed(apiData.quick_status.sellOrders)}`, inline: true },
-            { name: `Amount of Items in Sell Offers`, value: `${apiData.quick_status.sellVolume}`, inline: true },
+            { name: `Amount of Items in Sell Offers`, value: `${apiData.quick_status.sellVolume.toLocaleString()}`, inline: true },
             { name: `Insta Buy Price`, value: `${toFixed(apiData.quick_status.buyPrice)}`, inline: true },
             { name: `Amount of Buy Offers`, value: `${toFixed(apiData.quick_status.buyOrders)}`, inline: true },
-            { name: `Amount of Items in Buy Offers`, value: `${apiData.quick_status.buyVolume}`, inline: true },
+            { name: `Amount of Items in Buy Offers`, value: `${apiData.quick_status.buyVolume.toLocaleString()}`, inline: true },
             { name: `Related Items`, value: `${related}`, inline: false },
 
           )
@@ -95,8 +95,8 @@ module.exports = {
 };
 
 async function getApiData(result) {
-  delete require.cache[require.resolve('../../config.json')];
-  const config = require('../../config.json');
+  delete require.cache[require.resolve('../../constants/Bot/config.json')];
+  const config = require('../../constants/Bot/config.json');
 
   const response = await fetch(`https://api.slothpixel.me/api/skyblock/bazaar/${result}?key=${config.apikey}`);
   return await response.json();

@@ -38,6 +38,16 @@ module.exports = {
       return;
     }
 
+    var validlocations = ['Coal Mine']
+    if(!validlocations.includes(player.data.misc.location)) {
+      const invalidarea = new Discord.MessageEmbed()
+      .setTitle('Not at a Mining Area')
+      .setDescription('You are not at a valid Mining Area, please choose one from /sb warp')
+      .setColor('RED')
+
+      return interaction.editReply({embeds: [invalidarea]})
+    }
+
     let ps = await playerStats(player)
 
     let embed = new Discord.MessageEmbed()
@@ -79,10 +89,13 @@ module.exports = {
       { _id: interaction.channelId },
       { $set: { blocked: true, user: interaction.user.id } },
       { upsert: true })
+
+
     //Collector
     collector.on('collect', async i => {
       if(i.customId == 'mine') {
         //handle user mining here
+        
       } else if (i.customId == 'cancel') {
         collector.stop()
       }
@@ -134,4 +147,12 @@ function addItems(oreadrop, amount, player) {
     amount: amount
   })
   return player
+}
+
+function getOrea(player, ps) {
+  let location = player.data.misc.location
+  let oreas = ''
+  if(location == 'Coal Mine') {
+    oreas = ['Cobblestone', 'Coal']
+  }
 }

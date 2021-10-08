@@ -202,8 +202,8 @@ async function getUUID(ign) {
 }
 
 async function getApiData(ign, method) {
-  delete require.cache[require.resolve('../../Constants/Bot/config.json')];
-  const config = require('../../Constants/Bot/config.json');
+  delete require.cache[require.resolve('../../constants/Bot/config.json')];
+  const config = require('../../constants/Bot/config.json');
 
   const UUID = await getUUID(ign);
   const response = await fetch(`https://baltrazz.repl.co/v1/profiles/${UUID}/${method}?key=${config.apikey}`);

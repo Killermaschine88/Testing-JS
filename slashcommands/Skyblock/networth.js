@@ -13,8 +13,8 @@ module.exports = {
 
     let ign = interaction.options.getString('name');
 
-    delete require.cache[require.resolve('../../Constants/Bot/config.json')];
-  const config = require('../../Constants/Bot/config.json');
+    delete require.cache[require.resolve('../../constants/Bot/config.json')];
+  const config = require('../../constants/Bot/config.json');
 
     // npm install axios
 const axios = require(`axios`).default
