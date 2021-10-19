@@ -64,6 +64,15 @@ module.exports = {
       return;
     }
 
+    if(Math.sign(amount) <= 0) {
+      const embed = new Discord.MessageEmbed()
+      .setTitle('Invalid Amount')
+      .setColor('RED')
+      .setFooter('Skyblock Simulator')
+      .setDescription("Can't sell negative Items")
+      return interaction.editReply({embeds: [embed]})
+    }
+
     //Check if more than 1 of said item exists
     if (founditem === undefined || founditem.amount === 0) {
       const noitems = new Discord.MessageEmbed()
@@ -105,11 +114,11 @@ module.exports = {
         updatePlayer
       )
 
-      await collection.updateOne(
+     /* await collection.updateOne(
         { _id: interaction.user.id },
         { $inc: { 'data.profile.coins': earnedcoins } },
         { upsert: true }
-      )
+      )*/
 
       //Remove Item if 0
       if (founditem.amount == 0) {
@@ -120,6 +129,12 @@ module.exports = {
           removeItem
         )
       }
+
+      await collection.updateOne(
+        { _id: interaction.user.id },
+        { $inc: { 'data.profile.coins': earnedcoins } },
+        { upsert: true }
+      )
 
 
       const sold = new Discord.MessageEmbed()
@@ -158,7 +173,8 @@ function addItem(sellitem, amount, player) {
 }
 
 function getPrice(sellitem) {
-  const itemprice = list.filter(item => item.name === sellitem)
+  const itemprice = list.filter(item => item.name == sellitem)
+  //console.log(itemprice)
   price = itemprice[0].price
   return price
 }

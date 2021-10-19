@@ -276,6 +276,7 @@ module.exports = {
     })
 
     collector.on('end', async collected => {
+      
       pond.setColor('RED')
       pond.fields = []
       pond.addField('\u200b', 'Stopped Fishing.')
@@ -287,7 +288,11 @@ module.exports = {
       { _id: interaction.channelId },
       { $set: { blocked: false } },
       { upsert: true })
-      menu.edit({ embeds: [pond], components: [] })
+        try {
+      await menu.edit({ embeds: [pond], components: [] })
+      } catch (e) {
+        
+      }
     });
   }
 };

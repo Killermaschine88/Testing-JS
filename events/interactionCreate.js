@@ -5,6 +5,26 @@ module.exports = {
   async execute(interaction, mclient) {
     if (!interaction.isCommand()) return;
 
+    if(interaction.channel.type != 'GUILD_TEXT') {
+      const embed = new Discord.MessageEmbed()
+      .setTitle('Unsupported Channel')
+      .setColor('ORANGE')
+      .setDescription('I only work in Text Channels please invite me to a Server using the attached Button and use me there.')
+      .setFooter('Sky Bot Dev')
+
+const row = new Discord.MessageActionRow()
+            .addComponents(
+              new Discord.MessageButton()
+                .setLabel('Bot Invite')
+                .setURL('https://discord.com/api/oauth2/authorize?client_id=839835292785704980&permissions=139653925953&scope=applications.commands%20bot')
+                .setStyle('LINK'),
+          );
+      
+      interaction.reply({embeds: [embed], components: [row], ephemeral: true})
+      return
+    }
+       
+  
     let commandExecute = interaction.commandName
 
     if (interaction.options._subcommand != null) {

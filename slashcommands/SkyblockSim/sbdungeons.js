@@ -59,6 +59,7 @@ module.exports = {
       }
       return string
     }
+    
     const nearEnemy = () => {
       let [x, y] = location
 
@@ -231,7 +232,7 @@ module.exports = {
     let emerald_loot = ''
     let obsidian_loot = ''
 
-    let f1_map = [
+    /*let f1_map = [
       [0, 0, 0, 0, 0, 0, 0],
       [0, 2, 1, 1, 1, 1, 0],
       [0, 1, 1, 1, 1, 1, 0],
@@ -239,7 +240,18 @@ module.exports = {
       [0, 1, 1, 1, 1, 1, 0],
       [0, 1, 1, 1, 1, 1, 0],
       [0, 0, 0, 0, 0, 0, 0]
+    ]*/
+    let f1_map = [
+      [0, 0, 0, 6, 6, 0, 0, 0],
+      [0, 2, 5, 1, 1, 0, 3, 0],
+      [0, 3, 1, 1, 1, 0, 1, 0],
+      [0, 4, 1, 1, 1, 1, 1, 0],
+      [0, 0, 1, 1, 0, 0, 1, 0],
+      [0, 1, 1, 4, 0, 4, 1, 0],
+      [0, 3, 1, 1, 0, 1, 1, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0]
     ]
+    
     let f2_map = [
       [0, 0, 0, 0, 0, 0, 0, 0],
       [0, 2, 1, 1, 1, 1, 1, 0],
@@ -324,8 +336,9 @@ module.exports = {
       .setTitle('Requirements not met.')
       .setDescription(`**Needed Requirements**\nFloor 1 -> Combat 10\nFloor 2 -> Catacombs 4\nFloor 3 -> Catacombs 8\n\n**Your Stats**\nCombat: ${combatlvl}\nCatacombs: ${catalevel}\n`)
       .setColor('RED')
-
-    if (floor == 1 && combatlvl <= 15) {
+//add lvl checknagain
+    /*
+    if (floor == 1 && combatlvl <= 10) {
       menu.edit({ embeds: [invalidreqs], components: [] })
       return;
     } else if (floor == 2 && catalevel <= 4) {
@@ -334,7 +347,7 @@ module.exports = {
     } else if (floor == 3 && catalevel <= 8) {
       menu.edit({ embeds: [invalidreqs], components: [] })
       return;
-    }
+    }*/
 
       //Sets the Player into the Dungeon so they cant open another run.
      await collection.updateOne(

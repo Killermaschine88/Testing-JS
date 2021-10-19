@@ -30,5 +30,9 @@
   {
     "name": "Lilypad",
     "price": 115
+  },
+  {
+    "name": "Gemstone",
+    "price": 20
   }
 ]
