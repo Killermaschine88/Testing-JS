@@ -29,6 +29,7 @@ module.exports = {
     let type = interaction.options.getString('choice')
     let itemId = interaction.options.getInteger('number')
     let reforge = interaction.options.getString('reforge')
+    reforge = reforge.toLowerCase()
 
     let sword = player.data.inventory.sword
     let armor = player.data.inventory.armor
@@ -54,10 +55,57 @@ module.exports = {
       return interaction.editReply({embeds: [errembed]})
     }
 
-    //check if valid reforge
-    let validreforges = ['Onyx', 'Diamonite', 'Rock Gemstone', 'Dragon Claw', 'Wither Blood', 'Warped Stone', 'Hardened Wood', 'Lucky Dice']
+    if (type == 'sword') {
+      let validreforges = ['dragon claw', 'wither blood', 'warped stone']
+      
+      if(!validreforges.includes(reforge)) {
+      const errembed = new Discord.MessageEmbed()
+      .setTitle('Invalid Reforge')
+      .setDescription('You entered an invalid Reforge Name see the Reforge tab at \`/sb wiki\`.')
+      .setColor('RED')
+      .setFooter('Skyblock Simulator')
 
+      return interaction.editReply({ embeds: [errembed]})
+    }
 
+    } else if (type == 'armor') {
+      let validreforges = ['deep sea orb', 'dragon horn', 'precurso gear', 'sadan\'s brooch']
+
+      if(!validreforges.includes(reforge)) {
+      const errembed = new Discord.MessageEmbed()
+      .setTitle('Invalid Reforge')
+      .setDescription('You entered an invalid Reforge Name see the Reforge tab at \`/sb wiki\`.')
+      .setColor('RED')
+      .setFooter('Skyblock Simulator')
+
+      return interaction.editReply({ embeds: [errembed]})
+    }
+
+    } else if (type == 'pickaxe') {
+      let validreforges = ['onyx', 'diamonite', 'rock gemstone']
+
+      if(!validreforges.includes(reforge)) {
+      const errembed = new Discord.MessageEmbed()
+      .setTitle('Invalid Reforge')
+      .setDescription('You entered an invalid Reforge Name see the Reforge tab at \`/sb wiki\`.')
+      .setColor('RED')
+      .setFooter('Skyblock Simulator')
+
+      return interaction.editReply({ embeds: [errembed]})
+    }
+    } else if (type == 'rod') {
+      let validreforges = ['hardened wood', 'lucky dice']
+
+      if(!validreforges.includes(reforge)) {
+      const errembed = new Discord.MessageEmbed()
+      .setTitle('Invalid Reforge')
+      .setDescription('You entered an invalid Reforge Name see the Reforge tab at \`/sb wiki\`.')
+      .setColor('RED')
+      .setFooter('Skyblock Simulator')
+
+      return interaction.editReply({ embeds: [errembed]})
+    }
+    }
 
 
 
