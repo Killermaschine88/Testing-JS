@@ -75,6 +75,10 @@ module.exports = {
           armorstr += '<:recomb:881094744183275540>'
         }
 
+        if(item.reforge != 'None') {
+          armorstr += `${item.reforge} `
+        }
+        
           armorstr += `${item.name} `
 
         if(item.health != 0) {
@@ -106,6 +110,10 @@ module.exports = {
           swordstr += `[${swordnum}] `
         if(item.recombobulated == true) {
           swordstr += '<:recomb:881094744183275540>'
+        }
+
+        if(item.reforge != 'None') {
+          swordstr += `${item.reforge} `
         }
 
         swordstr += `${item.name} `

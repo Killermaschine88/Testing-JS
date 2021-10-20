@@ -330,7 +330,7 @@ module.exports = {
           }
           await collection.updateOne(
             { _id: interaction.user.id },
-            { $set: { 'data.equipment.fishing.rod.name': rodname, 'data.equipment.fishing.rod.sea_creature_chance': rodscc, 'data.equipment.fishing.rod.fishing_speed': rodspeed } },
+            { $set: { 'data.equipment.fishing.rod.name': rodname, 'data.equipment.fishing.rod.sea_creature_chance': rodscc, 'data.equipment.fishing.rod.fishing_speed': rodspeed, "reforge": "None" } },
             { upsert: true })
 
           let player = await collection.findOne({ _id: interaction.user.id })
@@ -380,7 +380,7 @@ module.exports = {
           let item = dungloot[choosen]
           await collection.updateOne(
           { _id: interaction.user.id },
-          { $push: { "data.inventory.sword": { "name": choosen, "damage": item.damage, "strength": item.strength, "crit_chance": item.crit_chance, "crit_damage": item.crit_damage, "recombobulated": item.recombobulated }}},
+          { $push: { "data.inventory.sword": { "name": choosen, "damage": item.damage, "strength": item.strength, "crit_chance": item.crit_chance, "crit_damage": item.crit_damage, "recombobulated": item.recombobulated, "reforge": "None" }}},
           {upsert: true })
           await collection.updateOne(
             { _id: interaction.user.id },
@@ -395,7 +395,7 @@ module.exports = {
           let item = dungloot[choosen2]
           await collection.updateOne(
           { _id: interaction.user.id },
-          { $push: { "data.inventory.armor": { "name": choosen2, "health": item.health, "defense": item.defense, "strength": item.strength, "crit_chance": item.crit_chance, "crit_damage": item.crit_damage, "magic_find": item.magic_find, "sea_creature_chance": item.sea_creature_chance, "recombobulated": item.recombobulated }}},
+          { $push: { "data.inventory.armor": { "name": choosen2, "health": item.health, "defense": item.defense, "strength": item.strength, "crit_chance": item.crit_chance, "crit_damage": item.crit_damage, "magic_find": item.magic_find, "sea_creature_chance": item.sea_creature_chance, "recombobulated": item.recombobulated, "reforge": "None" }}},
           {upsert: true })
           await collection.updateOne(
             { _id: interaction.user.id },

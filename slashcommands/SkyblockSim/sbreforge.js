@@ -33,6 +33,10 @@ module.exports = {
 
     let sword = player.data.inventory.sword
     let armor = player.data.inventory.armor
+    let apply_reforge = ''
+    let path = ''
+
+    
 
     //returning error if invalid itemId
     if(type == 'sword' && sword.length <= itemId) {
@@ -57,7 +61,9 @@ module.exports = {
 
     if (type == 'sword') {
       let validreforges = ['dragon claw', 'wither blood', 'warped stone']
-      
+      let itemname = sword[itemId].name
+      console.log(itemname)
+
       if(!validreforges.includes(reforge)) {
       const errembed = new Discord.MessageEmbed()
       .setTitle('Invalid Reforge')
@@ -68,8 +74,25 @@ module.exports = {
       return interaction.editReply({ embeds: [errembed]})
     }
 
+    if (reforge == 'dragon claw') {
+      apply_reforge = 'Fabled'
+    } else if (reforge == 'wither blood') {
+      apply_reforge = 'Withered'
+    } else if (reforge == 'warped stone') {
+      apply_reforge = 'warped'
+    }
+
+
+    //add function to remove reforge stone from inventory
+    await collection.updateOne(
+      { _id: interaction.user.id, "data.inventory.sword.name": itemname },
+      { $set: { "data.inventory.sword.$.reforge": apply_reforge } },
+      { upsert: true })
+      console.log('diamonite')
+    
+
     } else if (type == 'armor') {
-      let validreforges = ['deep sea orb', 'dragon horn', 'precurso gear', 'sadan\'s brooch']
+      let validreforges = ['deep sea orb', 'dragon horn', 'precursor gear', 'sadan\'s brooch']
 
       if(!validreforges.includes(reforge)) {
       const errembed = new Discord.MessageEmbed()
