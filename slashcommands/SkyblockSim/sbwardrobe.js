@@ -29,6 +29,16 @@ module.exports = {
       return;
     }
 
+    if(number < 0) {
+      const errembed = new Discord.MessageEmbed()
+      .setTitle('Negative Number')
+      .setDescription(`You can\'t enter an negative Number.'`)
+      .setColor('RED')
+      .setFooter('Skyblock Simulator')
+
+      return interaction.editReply({embeds: [errembed]})
+    }
+
     if(type == 'sword' && sword.length <= number) {
       const errembed = new Discord.MessageEmbed()
       .setTitle('Invalid Item Number')
@@ -37,11 +47,12 @@ module.exports = {
       .setFooter('Skyblock Simulator')
 
       return interaction.editReply({embeds: [errembed]})
-    } 
+    }
+     
     if (type == 'armor' && armor.length <= number) {
       const errembed = new Discord.MessageEmbed()
       .setTitle('Invalid Item Number')
-      .setDescription(`You don\'t own a Sword with the Number \`${number}\`.\nCheck the Armor Category at \`/sb info\` to see what Items you own.`)
+      .setDescription(`You don\'t own an Armor with the Number \`${number}\`.\nCheck the Armor Category at \`/sb info\` to see what Items you own.`)
       .setColor('RED')
       .setFooter('Skyblock Simulator')
 
@@ -58,7 +69,7 @@ module.exports = {
       
       const sucembed = new Discord.MessageEmbed()
       .setTitle('Sword Changed')
-      .setDescription(`Successfully changed Sword to **${item.name}**`)
+      .setDescription(`Successfully changed equipped Sword to **${item.name}**`)
       .setColor('GREEN')
       .setFooter('Skyblock Simulator')
 
@@ -72,7 +83,7 @@ module.exports = {
         
       const sucembed = new Discord.MessageEmbed()
       .setTitle('Armor Changed')
-      .setDescription(`Successfully changed Armor to **${item.name}**`)
+      .setDescription(`Successfully changed equipped Armor to **${item.name}**`)
       .setColor('GREEN')
       .setFooter('Skyblock Simulator')
 

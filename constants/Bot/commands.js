@@ -160,8 +160,8 @@ const data = [
         type: 'SUB_COMMAND',
       },
       {
-        name: 'farm',
-        description: 'Lets you farm Mobs for Combat XP and Items',
+        name: 'grind',
+        description: 'Lets you grind Mobs for Combat XP and Items',
         type: 'SUB_COMMAND',
       },
       {
@@ -304,6 +304,49 @@ const data = [
         name: 'mining',
         description: 'Opens a Mine for you to gather Ores',
         type: 'SUB_COMMAND',
+      },
+      {
+        name: 'reforge',
+        description: 'Allows you to reforge Items to increase their Stats',
+        type: 'SUB_COMMAND',
+        options: [
+          {
+            name: 'choice',
+            description: 'Type of Item to reforge',
+            type: 'STRING',
+            required: true,
+            choices: [
+              {
+                name: 'armor',
+                value: 'armor',
+              },
+              {
+                name: 'sword',
+                value: 'sword',
+              },
+              {
+                name: 'pickaxe',
+                value: 'pickaxe',
+              },
+              {
+                name: 'rod',
+                value: 'rod',
+              },
+            ],
+          },
+          {
+            name: 'number',
+            description: 'Item Number',
+            type: 'INTEGER',
+            required: true,
+          },
+          {
+            name: 'reforge',
+            description: 'Reforge to apply',
+            type: 'STRING',
+            required: true,
+          },
+        ],
       },
     ],
   },

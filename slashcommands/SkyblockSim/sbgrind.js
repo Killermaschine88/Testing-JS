@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const lt = require('../../constants/Simulator/LootTables/loottables.js')
 
 module.exports = {
-  name: "sbfarm",
+  name: "sbgrind",
   description: "Earnes you Money",
   usage: "sbfarm",
   perms: "None",
