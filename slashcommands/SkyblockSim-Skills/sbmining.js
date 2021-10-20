@@ -49,13 +49,15 @@ module.exports = {
     }
 
     let ps = await playerStats(player)
+    
     let cd = await getCooldown(ps)
+    let location = player.data.misc.location
     let ore = { name: 'Cobblestone', img: 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/a/a2/Bruchstein.png'}
 
     let embed = new Discord.MessageEmbed()
       .setTitle('Mine')
-      .setDescription(`Pickaxe: **${player.data.equipment.mining.pickaxe.name}**\nMining Speed: **${ps.mining_speed}**`)
-      .setImage(ore.img)
+      .setDescription(`Pickaxe: **${player.data.equipment.mining.pickaxe.name}**\nMining Speed: **${ps.mining_speed}**\nMining Fortune: **${ps.mining_fortune}**`)
+      
       .setFooter('Skyblock Simulator')
       .setColor('GREY')
 
@@ -87,7 +89,7 @@ module.exports = {
       return i.user.id === interaction.user.id;
     };
 
-    const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 858000 })
+    const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 858000, idle: 60000 })
 
     await collection1.updateOne(
       { _id: interaction.channelId },
@@ -100,11 +102,14 @@ module.exports = {
       if(i.customId == 'mine') {
         let ore = getOre(player, ps)
         embed.setImage(ore.img)
+        embed.fields = []
+        embed.addField('\u200B', `Mined **${ore.amount}x ${ore.name}** at the **${location}**`)
 
         
         interaction.editReply({embeds: [embed], components: [row1]})
 
         await sleep(cd)
+
         player = await collection.findOne({ _id: interaction.user.id })
 
           const updatePlayer = await addItems(ore, player)
@@ -113,6 +118,11 @@ module.exports = {
             { _id: interaction.user.id },
             updatePlayer
           )
+          
+          await collection.updateOne(
+      { _id: interaction.user.id },
+      { $inc: { "data.skills.mining": ore.xp } },
+      { upsert: true })
         
 
         interaction.editReply({embeds: [embed], components: [row]})
@@ -206,49 +216,72 @@ function getOre(player, ps) {
   if(randore == 'Cobblestone') {
     name = 'Cobblestone'
     img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/a/a2/Bruchstein.png'
+    xp = 3
   } else if(randore == 'Coal') {
     name = 'Coal'
     img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/c/c1/Kohle.png'
+    xp = 5
   } else if(randore == 'Iron Ingot') {
     name = 'Iron Ingot'
     img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/2/24/Eisenbarren.png'
+    xp = 7
   } else if(randore == 'Gold Ingot') {
     name = 'Gold Ingot'
     img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/9/93/Goldbarren.png'
+    xp = 10
   } else if(randore == 'Lapis Lazuli') {
     name = 'Lapis Lazuli'
     img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/8/81/Lapislazuli.png'
+    xp = 15
   } else if(randore == 'Redstone') {
     name = 'Redstone'
     img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/2/20/Redstone-Staub.png'
+    xp = 20
   } else if(randore == 'Emerald') {
     name = 'Emerald'
     img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/c/c5/Smaragd.png'
+    xp = 25
   } else if(randore == 'Diamond') {
     name = 'Diamond'
     img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/6/64/Diamant.png'
+    xp = 30
   } else if(randore == 'Obsidian') {
     name = 'Obsidian'
     img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/2/24/Obsidian.png'
+    xp = 35
   } else if(randore == 'Mithril') {
     name = 'Mithril'
     img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/0/0c/Prismarinkristalle.png'
   } else if(randore == 'Hardstone') {
     name = 'Hardstone'
     img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/4/45/Stein.png'
+    xp = 10
   } else if(randore == 'Gemstone') {
     name = 'Gemstone'
     img = 'https://static.wikia.nocookie.net/hypixel-skyblock/images/8/8d/Rough_Ruby_Gemstone.png'
+    xp = 40
   } else if(randore == 'Titanium') {
     name = 'Titanium'
     img = 'https://static.wikia.nocookie.net/hypixel-skyblock/images/c/cc/Titanium.png'
+    xp = 35
+  }
+
+  if(ps.mining_fortune < 50) {
+    amount = 1
+  } else if(ps.mining_fortune < 100) {
+    amount = 2
+  } else if(ps.mining_fortune < 150) {
+    amount = 3
+  } else if(ps.mining_fortune < 200) {
+    amount = 4
   }
 
   //return data
   return {
     name: name,
     img: img,
-    amount: amount
+    amount: amount,
+    xp: xp
   }
 }
 

@@ -27,6 +27,7 @@ function playerStats(player) {
   let magic_find = stats.magic_find
   let sea_creature_chance = stats.sea_creature_chance
   let mining_speed = stats.mining_speed
+  let mining_fortune = stats.mining_fortune
 
 
     inv = player.data.equipment.combat
@@ -49,6 +50,7 @@ function playerStats(player) {
     sea_creature_chance += inv2.rod.sea_creature_chance + (fishinglvl / 2) + inv.armor.sea_creature_chance
 
     mining_speed += mininglvl + inv3.pickaxe.mining_speed
+    mining_fortune += mininglvl / 2 + inv3.pickaxe.mining_fortune
 
   //Add Booster Cookie Stats
   if (cookie == true) {
@@ -62,6 +64,7 @@ function playerStats(player) {
     magic_find = Math.floor(magic_find * 1.1)
     sea_creature_chance = Math.floor(sea_creature_chance * 1.1)
     mining_speed = Math.floor(mining_speed * 1.1)
+    mining_fortune = Math.floor(mining_fortune * 1.1)
   }
 
   health = Math.floor(health * (1 + defense / 100))
@@ -75,7 +78,8 @@ function playerStats(player) {
     crit_damage,
     magic_find,
     sea_creature_chance,
-    mining_speed
+    mining_speed,
+    mining_fortune
   }
 }
 

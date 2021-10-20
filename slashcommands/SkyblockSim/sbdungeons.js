@@ -336,7 +336,7 @@ module.exports = {
       .setTitle('Requirements not met.')
       .setDescription(`**Needed Requirements**\nFloor 1 -> Combat 10\nFloor 2 -> Catacombs 4\nFloor 3 -> Catacombs 8\n\n**Your Stats**\nCombat: ${combatlvl}\nCatacombs: ${catalevel}\n`)
       .setColor('RED')
-//add lvl checknagain
+//add lvl check again
     /*
     if (floor == 1 && combatlvl <= 10) {
       menu.edit({ embeds: [invalidreqs], components: [] })

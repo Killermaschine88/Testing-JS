@@ -35,7 +35,7 @@ module.exports = {
               coins: 0, gems: 0, cute_name: profilename, started: starttime
             },
             stats: {
-              health: 100, defense: 0, damage: 5, strength: 0, crit_chance: 20, crit_damage: 50, magic_find: 0, sea_creature_chance: 20, mining_speed: 0
+              health: 100, defense: 0, damage: 5, strength: 0, crit_chance: 20, crit_damage: 50, magic_find: 0, sea_creature_chance: 20, mining_speed: 0, mining_fortune: 0
             },
             skills: {
               mining: 0, foraging: 0, enchanting: 0, farming: 0, combat: 0, fishing: 0
@@ -85,7 +85,7 @@ module.exports = {
                   name: 'None', health: 0, defense: 0, strength: 0, crit_chance: 0, crit_damage: 0, magic_find: 0, sea_creature_chance: 0, recombobulated: false
                 }
               }, fishing: { rod: { name: 'Fishing Rod', sea_creature_chance: 0, fishing_speed: 0 } },
-              mining: { pickaxe: { name: 'Wood Pickaxe', mining_speed: 0 } },
+              mining: { pickaxe: { name: 'Wood Pickaxe', mining_speed: 0, mining_fortune: 0 } },
             },
             misc: {
               location: 'Graveyard', is_fishing: false, is_mining: false, in_dungeon: false, daily: {
