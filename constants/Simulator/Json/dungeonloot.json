@@ -7,7 +7,8 @@
     "crit_chance": 5,
     "crit_damage": 10,
     "magic_find": 0,
-    "sea_creature_chance": 0
+    "sea_creature_chance": 0,
+    "reforge": "None"
   },
   "Golem Armor": {
     "recombobulated": false,
@@ -17,7 +18,8 @@
     "crit_chance": 10,
     "crit_damage": 20,
     "magic_find": 0,
-    "sea_creature_chance": 0
+    "sea_creature_chance": 0,
+    "reforge": "None"
   },
   "Monster Hunter Armor": {
     "recombobulated": false,
@@ -27,7 +29,8 @@
     "crit_chance": 15,
     "crit_damage": 40,
     "magic_find": 0,
-    "sea_creature_chance": 0
+    "sea_creature_chance": 0,
+    "reforge": "None"
   },
   "Tarantula Armor": {
     "recombobulated": false,
@@ -37,7 +40,8 @@
     "crit_chance": 25,
     "crit_damage": 75,
     "magic_find": 0,
-    "sea_creature_chance": 0
+    "sea_creature_chance": 0,
+    "reforge": "None"
   },
   "Frozen Blaze Armor": {
     "recombobulated": false,
@@ -47,7 +51,8 @@
     "crit_chance": 15,
     "crit_damage": 50,
     "magic_find": 0,
-    "sea_creature_chance": 0
+    "sea_creature_chance": 0,
+    "reforge": "None"
   },
   "Superior Dragon Armor": {
     "recombobulated": false,
@@ -57,7 +62,8 @@
     "crit_chance": 40,
     "crit_damage": 150,
     "magic_find": 15,
-    "sea_creature_chance": 0
+    "sea_creature_chance": 0,
+    "reforge": "None"
   },
   "Rotten Armor": {
     "recombobulated": false,
@@ -68,7 +74,8 @@
     "crit_damage": 15,
     "magic_find": 0,
     "sea_creature_chance": 0,
-    "coins": 100000
+    "coins": 100000,
+    "reforge": "None"
   },
   "Skeleton Master Armor": {
     "recombobulated": false,
@@ -79,7 +86,8 @@
     "crit_damage": 50,
     "magic_find": 0,
     "sea_creature_chance": 0,
-    "coins": 200000
+    "coins": 200000,
+    "reforge": "None"
   },
   "Skeletor Armor": {
     "recombobulated": false,
@@ -90,7 +98,8 @@
     "crit_damage": 125,
     "magic_find": 0,
     "sea_creature_chance": 0,
-    "coins": 400000
+    "coins": 400000,
+    "reforge": "None"
   },
   "Adaptive Armor": {
     "recombobulated": false,
@@ -101,7 +110,8 @@
     "crit_damage": 75,
     "magic_find": 0,
     "sea_creature_chance": 0,
-    "coins": 1000000
+    "coins": 1000000,
+    "reforge": "None"
   },
   "Shadow Assassin Armor": {
     "recombobulated": false,
@@ -112,7 +122,8 @@
     "crit_damage": 150,
     "magic_find": 0,
     "sea_creature_chance": 0,
-    "coins": 10000000
+    "coins": 10000000,
+    "reforge": "None"
   },
   "Undead Sword": {
     "recombobulated": false,
@@ -120,7 +131,8 @@
     "strength": 10,
     "crit_chance": 0,
     "crit_damage": 10,
-    "coins": 50000
+    "coins": 50000,
+    "reforge": "None"
   },
   "Golem Sword": {
     "recombobulated": false,
@@ -128,7 +140,8 @@
     "strength": 40,
     "crit_chance": 10,
     "crit_damage": 30,
-    "coins": 50000
+    "coins": 50000,
+    "reforge": "None"
   },
   "Zombie Sword": {
     "recombobulated": false,
@@ -136,7 +149,8 @@
     "strength": 60,
     "crit_chance": 20,
     "crit_damage": 50,
-    "coins": 50000
+    "coins": 50000,
+    "reforge": "None"
   },
   "Tactician's Sword": {
     "recombobulated": false,
@@ -144,7 +158,8 @@
     "strength": 80,
     "crit_chance": 30,
     "crit_damage": 75,
-    "coins": 50000
+    "coins": 50000,
+    "reforge": "None"
   },
   "Leaping Sword": {
     "recombobulated": false,
@@ -152,7 +167,8 @@
     "strength": 110,
     "crit_chance": 40,
     "crit_damage": 100,
-    "coins": 50000
+    "coins": 50000,
+    "reforge": "None"
   },
   "Dreadlord Sword": {
     "recombobulated": false,
@@ -160,7 +176,8 @@
     "strength": 20,
     "crit_chance": 5,
     "crit_damage": 25,
-    "coins": 50000
+    "coins": 50000,
+    "reforge": "None"
   },
   "Silent Death": {
     "recombobulated": false,
@@ -168,7 +185,8 @@
     "strength": 50,
     "crit_chance": 10,
     "crit_damage": 50,
-    "coins": 150000
+    "coins": 150000,
+    "reforge": "None"
   },
   "Zombie Knight Sword": {
     "recombobulated": false,
@@ -176,7 +194,8 @@
     "strength": 70,
     "crit_chance": 20,
     "crit_damage": 75,
-    "coins": 250000
+    "coins": 250000,
+    "reforge": "None"
   },
   "Adaptive Blade": {
     "recombobulated": false,
@@ -184,7 +203,8 @@
     "strength": 100,
     "crit_chance": 30,
     "crit_damage": 110,
-    "coins": 1000000
+    "coins": 1000000,
+    "reforge": "None"
   },
   "Livid Dagger": {
     "recombobulated": false,
@@ -192,6 +212,7 @@
     "strength": 150,
     "crit_chance": 40,
     "crit_damage": 160,
-    "coins": 5000000
+    "coins": 5000000,
+    "reforge": "None"
   }
 }

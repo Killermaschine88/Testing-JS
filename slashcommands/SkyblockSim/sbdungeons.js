@@ -273,7 +273,7 @@ module.exports = {
       [0, 3, 1, 1, 0, 1, 1, 0],
       [0, 0, 0, 0, 0, 0, 0, 0]
     ]
-    let f3_map = [
+    /*let f3_map = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 2, 1, 1, 1, 1, 1, 1, 1, 0],
       [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
@@ -284,6 +284,16 @@ module.exports = {
       [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
       [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]*/
+    let f3_map = [
+      [0, 0, 0, 6, 6, 0, 0, 0],
+      [0, 2, 5, 1, 1, 0, 3, 0],
+      [0, 3, 1, 1, 1, 0, 1, 0],
+      [0, 4, 1, 1, 1, 1, 1, 0],
+      [0, 0, 1, 1, 0, 0, 1, 0],
+      [0, 1, 1, 4, 0, 4, 1, 0],
+      [0, 3, 1, 1, 0, 1, 1, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0]
     ]
 
     //Floor Selection
@@ -829,18 +839,43 @@ module.exports = {
             gold_loot = lt.gold.roll(pstats.magic_find)
             test.fields = []
             test.description = '\n'
-            test.description += `<:oak_wood:882624301503754350> Wood Chest: **${wood_loot}\n**`
-            test.description += `<:gold:869126927011708929> Gold Chest: **${gold_loot}\n**`
-            if (floor == 2 && score >= 160) {
+            if(isNaN(wood_loot)) {
+              test.description += `<:oak_wood:882624301503754350> Wood Chest: **${wood_loot}\n**`
+            } else {
+              test.description += `<:oak_wood:882624301503754350> Wood Chest: **${wood_loot} Coins\n**`
+            }
+            if(isNaN(gold_loot)) {
+              test.description += `<:gold:869126927011708929> Gold Chest: **${gold_loot}\n**`
+            } else {
+              test.description += `<:gold:869126927011708929> Gold Chest: **${gold_loot} Coins\n**`
+            }
+            if (floor == 2 && score >= 140) {
               diamond_loot = lt.diamond.roll(pstats.magic_find)
               test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot}\n**`
               lootrow.addComponents(diamond_button)
-            } else if (floor == 3 >= 200) {
+            } else if (floor == 3 && score >= 180) {
               diamond_loot = lt.diamond.roll(pstats.magic_find)
-              emerald_loot = lt.emerald_loot(pstats.magic_find)
-              test.description += `Diamond Chest: **${diamond_loot}\n**`
-              test.description += `Emerlad Chest: **${emerald_loot}\n**`
+              emerald_loot = lt.emerald.roll(pstats.magic_find)
+              if(isNaN(diamond_loot)) {
+                test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot}\n**`
+              } else {
+                test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot} Coins\n**`
+              }
+              if(isNaN(emerald_loot)) {
+                test.description += `<:emerald:869126927380779008> Emerlad Chest: **${emerald_loot}\n**`
+              } else {
+                test.description += `<:emerald:869126927380779008> Emerlad Chest: **${emerald_loot} Coins\n**`
+              }
               lootrow.addComponents(diamond_button, emerald_button)
+            } else if(floor == 3 && score >= 160) {
+              diamond_loot = lt.diamond.roll(pstats.magic_find)
+              if(isNaN(diamond_loot)) {
+                test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot}\n**`
+              } else {
+                test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot} Coins\n**`
+              }
+              
+              lootrow.addComponents(diamond_button)
             }
             test.setColor('FFD700')
             atLoot = true
@@ -1065,7 +1100,7 @@ module.exports = {
 
             await collection.updateOne(
           { _id: interaction.user.id },
-          { $push: { "data.inventory.armor": { "name": loot, "health": item.health, "defense": item.defense, "strength": item.strength, "crit_chance": item.crit_chance, "crit_damage": item.crit_damage, "magic_find": item.magic_find, "sea_creature_chance": item.sea_creature_chance, "recombobulated": item.recombobulated }}},
+          { $push: { "data.inventory.armor": { "name": loot, "health": item.health, "defense": item.defense, "strength": item.strength, "crit_chance": item.crit_chance, "crit_damage": item.crit_damage, "magic_find": item.magic_find, "sea_creature_chance": item.sea_creature_chance, "recombobulated": item.recombobulated, "reforge": item.reforge }}},
           {upsert: true })
 
           const lootembed = new MessageEmbed()
@@ -1099,7 +1134,7 @@ module.exports = {
 
             await collection.updateOne(
           { _id: interaction.user.id },
-          { $push: { "data.inventory.sword": { "name": loot, "damage": item.damage, "strength": item.strength, "crit_chance": item.crit_chance, "crit_damage": item.crit_damage, "recombobulated": item.recombobulated }}},
+          { $push: { "data.inventory.sword": { "name": loot, "damage": item.damage, "strength": item.strength, "crit_chance": item.crit_chance, "crit_damage": item.crit_damage, "recombobulated": item.recombobulated, "reforge": item.reforge }}},
           {upsert: true })
 
           const lootembed = new MessageEmbed()

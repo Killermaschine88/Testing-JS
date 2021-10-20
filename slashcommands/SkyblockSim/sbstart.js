@@ -55,6 +55,7 @@ module.exports = {
                   "crit_damage": 0,
                   "magic_find": 0,
                   "sea_creature_chance": 0,
+                  "reforge": "None",
                 },
               ],
               sword: [
@@ -65,6 +66,7 @@ module.exports = {
                   "strength": 0,
                   "crit_chance": 0,
                   "crit_damage": 0,
+                  "reforge": "None",
                 },
               ],
             },
@@ -80,12 +82,12 @@ module.exports = {
             equipment: {
               combat: {
                 sword: {
-                  name: 'Fist', damage: 0, strength: 0, crit_chance: 0, crit_damage: 0, recombobulated: false
+                  name: 'Fist', damage: 0, strength: 0, crit_chance: 0, crit_damage: 0, recombobulated: false, reforge: "None"
                 }, armor: {
-                  name: 'None', health: 0, defense: 0, strength: 0, crit_chance: 0, crit_damage: 0, magic_find: 0, sea_creature_chance: 0, recombobulated: false
+                  name: 'None', health: 0, defense: 0, strength: 0, crit_chance: 0, crit_damage: 0, magic_find: 0, sea_creature_chance: 0, recombobulated: false, reforge: "None"
                 }
-              }, fishing: { rod: { name: 'Fishing Rod', sea_creature_chance: 0, fishing_speed: 0 } },
-              mining: { pickaxe: { name: 'Wood Pickaxe', mining_speed: 0, mining_fortune: 0 } },
+              }, fishing: { rod: { name: 'Fishing Rod', sea_creature_chance: 0, fishing_speed: 0, reforge: "None" } },
+              mining: { pickaxe: { name: 'Wood Pickaxe', mining_speed: 0, mining_fortune: 0, reforge: "None" } },
             },
             misc: {
               location: 'Graveyard', is_fishing: false, is_mining: false, in_dungeon: false, daily: {
