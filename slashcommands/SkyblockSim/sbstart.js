@@ -46,7 +46,7 @@ module.exports = {
               ],
               armor: [
                 {
-                  "name": "None",
+                  "name": "Naked",
                   "recombobulated": false,
                   "health": 0,
                   "defense": 0,
@@ -68,6 +68,9 @@ module.exports = {
                   "crit_damage": 0,
                   "reforge": "None",
                 },
+              ],
+              talisman: [
+                //Empty as talismans arent set to come yet
               ],
             },
             slayer: {
