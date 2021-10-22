@@ -32,6 +32,8 @@ app.post("/dblwebhook", webhook.listener(async vote => {
   const collection = mclient.db('SkyblockSim').collection('Players');
   let found = await collection.findOne({ _id: vote.user })
 
+if(found != null) {
+
   await collection.updateOne(
     { _id: vote.user },
     { $inc: { "data.profile.gems": 2 } },
@@ -40,11 +42,22 @@ app.post("/dblwebhook", webhook.listener(async vote => {
 
   const tyembed = new Discord.MessageEmbed()
     .setTitle('🥰 Thanks for Voting 🥰')
-    .setDescription(`As a reward i added you 2 Gems <:gems:879264850348486696> to your Profile, those can be used to buy special Items 😉`)
+    .setDescription(`As a reward i added you 2 Gems <:gems:879264850348486696> to your Profile, those can be used to buy special Items 😉\n\nThis really supports my Developer and helps me grow in popularity.`)
+
 
     client.users.fetch(vote.user).then(async user => {
       user.send({ embeds: [tyembed] }).catch(() => console.log('Not dmed'))
     }).catch(console.error)
+} else {
+const tyembed = new Discord.MessageEmbed()
+    .setTitle('🥰 Thanks for Voting 🥰')
+    .setDescription(`This really supports my Developer and helps me grow in popularity.`)
+
+
+    client.users.fetch(vote.user).then(async user => {
+      user.send({ embeds: [tyembed] }).catch(() => console.log('Not dmed'))
+    }).catch(console.error)
+}
 
 
   client.channels.fetch('850847486826643516')

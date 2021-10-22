@@ -57,13 +57,22 @@ module.exports = {
 
 
     let str = ''
-    if (player.data.inventory.items === undefined) {
+    let i = 0
+    if (player.data.inventory.items.length == 0) {
       str = 'Empty'
     } else {
+      
       for (item of player.data.inventory.items) {
+        if(i < 25) {
         str += item.name + ': ' + item.amount + '\n'
+        } else {
+          break;
+        }
+        
+        i += 1
       }
     }
+    i = 0
 
     let armorstr = ''
     let armornum = 0
@@ -144,12 +153,27 @@ module.exports = {
     //Various Stats
     let playerfishingspeed = player.data.equipment.fishing.rod.fishing_speed
 
+    let eqsword = ''
+    let eqarmor = ''
+    
+    if(player.data.equipment.combat.sword.reforge != 'None') {
+      eqsword = player.data.equipment.combat.sword.reforge + ' ' + player.data.equipment.combat.sword.name
+    } else {
+      eqsword = player.data.equipment.combat.sword.name
+    }
 
+    if(player.data.equipment.combat.armor.reforge != 'None') {
+      eqarmor = player.data.equipment.combat.armor.reforge + ' ' + player.data.equipment.combat.armor.name
+    } else {
+      eqarmor = player.data.equipment.combat.armor.name
+      
+    }
 
+  
     const foundinfo = new Discord.MessageEmbed()
       .setFooter('Skyblock Simulator')
       .setColor('90EE90')
-      .setDescription(`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins} <:coins:861974605203636253>**\nGems: **${player.data.profile.gems} <:gems:879264850348486696>**\nWeapon: **${player.data.equipment.combat.sword.name}**\nArmor: **${player.data.equipment.combat.armor.name}**\nRod: **${player.data.equipment.fishing.rod.name}**\nPickaxe: **${player.data.equipment.mining.pickaxe.name}**`)
+      .setDescription(`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins} <:coins:861974605203636253>**\nGems: **${player.data.profile.gems} <:gems:879264850348486696>**\nWeapon: **${eqsword}**\nArmor: **${eqarmor}**\nRod: **${player.data.equipment.fishing.rod.name}**\nPickaxe: **${player.data.equipment.mining.pickaxe.name}**`)
       .addField(`Skills [${sa}]`, `<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp}**\n<:foraging:852069714447695872> Foraging [${foraging.level}]: **${foraging.xp}**\n<:enchanting:852069714511659058> Enchanting [${enchanting.level}]: **${enchanting.xp}**\n<:farming:852069714451759114> Farming [${farming.level}]: **${farming.xp}**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp}**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp}**`, true)
       .addField('Stats', `Health: **${ps.health}**\nDefense: **${ps.defense}**\nDamage: **${ps.damage}**\nStrength: **${ps.strength}**\nCrit Chance: **${ps.crit_chance} %**\nCrit Damage: **${ps.crit_damage}**\nMagic Find: **${ps.magic_find}**\nSea Creature Chance: **${ps.sea_creature_chance} %**\nFishing Speed: **${playerfishingspeed} %**\nMining Speed: **${ps.mining_speed} %**`, true)
       .addField('Location', `${player.data.misc.location}`, true)
@@ -209,7 +233,7 @@ module.exports = {
           const main = new Discord.MessageEmbed()
             .setFooter('Skyblock Simulator')
             .setColor('90EE90')
-            .setDescription(`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins} <:coins:861974605203636253>**\nGems: **${player.data.profile.gems} <:gems:879264850348486696>**\nWeapon: **${player.data.equipment.combat.sword.name}**\nArmor: **${player.data.equipment.combat.armor.name}**\nRod: **${player.data.equipment.fishing.rod.name}**\nPickaxe: **${player.data.equipment.mining.pickaxe.name}**`)
+            .setDescription(`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins} <:coins:861974605203636253>**\nGems: **${player.data.profile.gems} <:gems:879264850348486696>**\nWeapon: **${eqsword}**\nArmor: **${eqarmor}**\nRod: **${player.data.equipment.fishing.rod.name}**\nPickaxe: **${player.data.equipment.mining.pickaxe.name}**`)
             .addField(`Skills [${sa}]`, `<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp}**\n<:foraging:852069714447695872> Foraging [${foraging.level}]: **${foraging.xp}**\n<:enchanting:852069714511659058> Enchanting [${enchanting.level}]: **${enchanting.xp}**\n<:farming:852069714451759114> Farming [${farming.level}]: **${farming.xp}**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp}**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp}**`, true)
             .addField('Stats', `Health: **${ps.health}**\nDefense: **${ps.defense}**\nDamage: **${ps.damage}**\nStrength: **${ps.strength}**\nCrit Chance: **${ps.crit_chance} %**\nCrit Damage: **${ps.crit_damage}**\nMagic Find: **${ps.magic_find}**\nSea Creature Chance: **${ps.sea_creature_chance} %**\nFishing Speed: **${playerfishingspeed} %**\nMining Speed: **${ps.mining_speed} %**`, true)
             .addField('Location', `${player.data.misc.location}`, true)
