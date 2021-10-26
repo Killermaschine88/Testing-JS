@@ -4,6 +4,7 @@ module.exports = {
   name: 'interactionCreate',
   async execute(interaction, mclient) {
     if (!interaction.isCommand()) return;
+    
 
     let validchannels = ['GUILD_TEXT', 'GUILD_PUBLIC_THREAD', 'GUILD_PRIVATE_THREAD']
 
@@ -80,6 +81,72 @@ const row = new Discord.MessageActionRow()
        }
       }
     }
+
+    const { cooldowns } = interaction.client;
+
+  if (!cooldowns.has(commandExecute)) {
+    cooldowns.set(commandExecute, new Discord.Collection());
+  }
+
+  const now = Date.now();
+  const timestamps = cooldowns.get(commandExecute);
+    let cd = interaction.client.slashcommands.get(commandExecute).cooldown      
+    
+  let cooldownAmount = (cd || 3) * 1000;
+
+ /* //Owner Cooldown Bypass
+  if (message.author.id === '570267487393021969') {
+    cooldownAmount = 0
+  }*/
+
+  if (timestamps.has(interaction.user.id)) {
+    let expirationTime = timestamps.get(interaction.user.id) + cooldownAmount;
+
+    /*const collection = mclient.db('Sky-Bot').collection('SkyblockSim')
+    const found = await collection.findOne({ _id: message.author.id })
+
+    //Phoenix Pet Cooldown Reduction
+    let cdr1 = 0
+    let cdr2 = 0
+    let cdr3 = 0
+    let cdr4 = 0
+
+    if (found.phoenix === true) {
+      cdr1 = 2000
+    }
+    if (found.dragon === true) {
+      cdr2 = 2000
+    }
+    if (found.luckcharm === true) {
+      cdr3 = 1000
+    }
+    if (found.enderman === true) {
+      cdr4 = 1000
+    }
+
+
+    let reduced = cdr1 + cdr2 + cdr3 + cdr4*/
+    let exptime = expirationTime
+
+
+
+    if (now < exptime) {
+      const timeLeft = (exptime - now) / 1000;
+      let cdembed = new Discord.MessageEmbed()
+      .setTitle('Command Cooldown')
+      .setColor('ORANGE')
+      .setDescription(`You need to wait **${timeLeft.toFixed(1)}s** before using **${commandExecute}** again.`)         
+        
+  
+      return interaction.reply({embeds: [cdembed], ephemeral: true});
+    }
+  }
+
+  timestamps.set(interaction.user.id, now);
+  setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
+    /*console.log(timestamps)
+    console.log(now)
+    console.log(cooldownAmount)*/
 
     try {
       const collection = mclient.db('Sky-Bot').collection('commanduses');

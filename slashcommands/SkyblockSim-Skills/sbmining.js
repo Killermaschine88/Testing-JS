@@ -68,11 +68,13 @@ module.exports = {
 
     const mine = new Discord.MessageButton()
       .setCustomId('mine')
+      .setEmoji('852069714577719306')
       .setLabel('Mine Ore')
       .setStyle('PRIMARY')
 
     const mineoff = new Discord.MessageButton()
       .setCustomId('mineoff')
+      .setEmoji('852069714577719306')
       .setLabel('Mine Ore')
       .setStyle('PRIMARY')
       .setDisabled(true)

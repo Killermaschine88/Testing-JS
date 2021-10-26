@@ -70,22 +70,26 @@ module.exports = {
     //Buttons for Catching Fish
     const bcatch = new Discord.MessageButton()
       .setCustomId('cast')
+      .setEmoji('852069714359877643')
       .setLabel('Cast Rod')
       .setStyle('PRIMARY')
 
     const blure = new Discord.MessageButton()
       .setCustomId('lure')
+      .setEmoji('🐟')
       .setLabel('Lure Rod')
       .setStyle('PRIMARY')
 
     const bcatchoff = new Discord.MessageButton()
       .setCustomId('a')
+      .setEmoji('852069714359877643')
       .setLabel('Cast Rod')
       .setStyle('PRIMARY')
       .setDisabled(true)
 
     const blureoff = new Discord.MessageButton()
       .setCustomId('aaaa')
+      .setEmoji('🐟')
       .setLabel('Lure Rod')
       .setStyle('PRIMARY')
       .setDisabled(true)
@@ -93,11 +97,13 @@ module.exports = {
     //Buttons for Killing Sea Creatures
     const bkillsc = new Discord.MessageButton()
       .setCustomId('killsc')
+      .setEmoji('852079613052059658')
       .setLabel('Attack Sea Creature')
       .setStyle('PRIMARY')
 
     const bkillscoff = new Discord.MessageButton()
       .setCustomId('aa')
+      .setEmoji('852079613052059658')
       .setLabel('Attack Sea Creature')
       .setStyle('PRIMARY')
       .setDisabled(true)

@@ -6,6 +6,7 @@ const start = require('../constants/Bot/start.js')
 module.exports = {
   name: 'ready',
   execute(client, mclient) {
+    client.cooldowns = new Discord.Collection();
   console.log(
     String.raw`
 ${color.blue('  ________  __   ___  ___  ___      _______     ______  ___________')}  

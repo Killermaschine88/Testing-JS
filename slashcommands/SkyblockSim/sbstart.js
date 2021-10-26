@@ -87,7 +87,7 @@ module.exports = {
                 sword: {
                   name: 'Fist', damage: 0, strength: 0, crit_chance: 0, crit_damage: 0, recombobulated: false, reforge: "None"
                 }, armor: {
-                  name: 'None', health: 0, defense: 0, strength: 0, crit_chance: 0, crit_damage: 0, magic_find: 0, sea_creature_chance: 0, recombobulated: false, reforge: "None"
+                  name: 'Naked', health: 0, defense: 0, strength: 0, crit_chance: 0, crit_damage: 0, magic_find: 0, sea_creature_chance: 0, recombobulated: false, reforge: "None"
                 }
               }, fishing: { rod: { name: 'Fishing Rod', sea_creature_chance: 0, fishing_speed: 0, reforge: "None" } },
               mining: { pickaxe: { name: 'Wood Pickaxe', mining_speed: 0, mining_fortune: 0, reforge: "None" } },
@@ -109,7 +109,7 @@ module.exports = {
       .setImage('https://cdn.discordapp.com/attachments/860131688385478666/865211353491570708/maxresdefault.png')
       .setColor('90EE90')
       .setTitle('<a:yes:847468695772987423> Profile Created')
-      .setDescription(`To start Grinding Coins use \`/sb farm\`\nTo view your Profile or another Persons Profile use \`/sb info (@User)\`\n**FOR A GUIDE ON HOW TO PLAY USE \`/sb guide\`**`)
+      .setDescription(`To start Grinding Coins use \`/sb grind\`\nTo view your Profile or another Persons Profile use \`/sb info (@User)\`\n**FOR A GUIDE ON HOW TO PLAY USE \`/sb guide\`**`)
       .setFooter('Skyblock Simulator\nValues in () aren\'t needed')
 
     menu.edit({ embeds: [created] })
