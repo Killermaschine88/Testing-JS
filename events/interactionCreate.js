@@ -5,11 +5,13 @@ module.exports = {
   async execute(interaction, mclient) {
     if (!interaction.isCommand()) return;
 
-    if(interaction.channel.type != 'GUILD_TEXT') {
+    let validchannels = ['GUILD_TEXT', 'GUILD_PUBLIC_THREAD', 'GUILD_PRIVATE_THREAD']
+
+    if(!validchannels.includes(interaction.channel.type)) {
       const embed = new Discord.MessageEmbed()
       .setTitle('Unsupported Channel')
       .setColor('ORANGE')
-      .setDescription('I only work in Text Channels please invite me to a Server using the attached Button and use me there.')
+      .setDescription('I only work in Text Channels and Threads please invite me to a Server using the attached Button or create an Thread and use me there.')
       .setFooter('Sky Bot Dev')
 
 const row = new Discord.MessageActionRow()
@@ -64,7 +66,7 @@ const row = new Discord.MessageActionRow()
           const blockedembed = new Discord.MessageEmbed()
           .setColor('ORANGE')
           .setTitle('Channel occupied')
-          .setDescription('This channel is already being used by someone to play Dungeons or to fish.\n\nTo reduce lag for them please consider inviting me to your own Server to play there.')
+          .setDescription('This channel is already being used by someone to play dungeons or to fish/mime.\n\nTo reduce lag for them please consider inviting me to your own Server or creating a Thread to play there.')
           .setFooter('Kind regards Sky Bot Developer')
           const row = new Discord.MessageActionRow()
             .addComponents(
@@ -73,7 +75,7 @@ const row = new Discord.MessageActionRow()
                 .setURL('https://discord.com/api/oauth2/authorize?client_id=839835292785704980&permissions=139653925953&scope=applications.commands%20bot')
                 .setStyle('LINK'),
           );
-          return interaction.reply({embeds: [blockedembed], components: [row]})
+          return interaction.reply({embeds: [blockedembed], components: [row], ephemeral: true})
          }
        }
       }

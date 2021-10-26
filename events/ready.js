@@ -5,7 +5,7 @@ const start = require('../constants/Bot/start.js')
 
 module.exports = {
   name: 'ready',
-  execute(client) {
+  execute(client, mclient) {
   console.log(
     String.raw`
 ${color.blue('  ________  __   ___  ___  ___      _______     ______  ___________')}  
@@ -31,7 +31,8 @@ ${color.blue('[INFO]')}${color.blue(' └─ Loaded')} ${color.green(c)} ${color
   })
 
   //Startup Stuff from function
-  start()
+    
+  start(mclient)
 
   }
 };
