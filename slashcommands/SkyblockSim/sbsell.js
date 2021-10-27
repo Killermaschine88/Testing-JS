@@ -9,7 +9,7 @@ module.exports = {
   perms: "None",
   folder: "SkyblockSim",
   aliases: ['sell'],
-  cooldown: 10,
+  cooldown: 5,
   async execute(interaction, mclient) {
 
     const collection = mclient.db('SkyblockSim').collection('Players');

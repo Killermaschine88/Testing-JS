@@ -188,9 +188,9 @@ module.exports = {
     const foundinfo = new Discord.MessageEmbed()
       .setFooter('Skyblock Simulator')
       .setColor('90EE90')
-      .setDescription(`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins} <:coins:861974605203636253>**\nGems: **${player.data.profile.gems} <:gems:879264850348486696>**\nWeapon: **${eqsword}**\nArmor: **${eqarmor}**\nRod: **${eqrod}**\nPickaxe: **${eqpickaxe}**`)
+      .setDescription(`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins.toLocaleString()} <:coins:861974605203636253>**\nGems: **${player.data.profile.gems} <:gems:879264850348486696>**\nWeapon: **${eqsword}**\nArmor: **${eqarmor}**\nRod: **${eqrod}**\nPickaxe: **${eqpickaxe}**`)
       .addField(`Skills [${sa}]`, `<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp}**\n<:foraging:852069714447695872> Foraging [${foraging.level}]: **${foraging.xp}**\n<:enchanting:852069714511659058> Enchanting [${enchanting.level}]: **${enchanting.xp}**\n<:farming:852069714451759114> Farming [${farming.level}]: **${farming.xp}**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp}**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp}**`, true)
-      .addField('Stats', `Health: **${ps.health}**\nDefense: **${ps.defense}**\nDamage: **${ps.damage}**\nStrength: **${ps.strength}**\nCrit Chance: **${ps.crit_chance} %**\nCrit Damage: **${ps.crit_damage}**\nMagic Find: **${ps.magic_find}**\nSea Creature Chance: **${ps.sea_creature_chance} %**\nFishing Speed: **${playerfishingspeed} %**\nMining Speed: **${ps.mining_speed} %**`, true)
+      .addField('Stats', `Health: **\`${ps.health} ❤\`**\nDefense: \`${ps.defense} ❈\`\nDamage: \`${ps.damage} ⚔️\`\nStrength: \`${ps.strength} ❁\`\nCrit Chance: \`${ps.crit_chance} ☣\`\nCrit Damage: \`${ps.crit_damage} ☠\`\nMagic Find: \`${ps.magic_find} ✯\`\nSea Creature Chance: \`${ps.sea_creature_chance} α\`\nFishing Speed: \`${playerfishingspeed} 🎣\`\nMining Speed: \`${ps.mining_speed} ⸕\`\nMining Fortune: \`${ps.mining_fortune} ☘\``, true)
       .addField('Location', `${player.data.misc.location}`, true)
 
     if (player.data.misc.booster_cookie.active == true) {
@@ -246,12 +246,12 @@ module.exports = {
         if (i.customId === 'main') {
           await i.deferUpdate()
           const main = new Discord.MessageEmbed()
-            .setFooter('Skyblock Simulator')
-            .setColor('90EE90')
-            .setDescription(`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins} <:coins:861974605203636253>**\nGems: **${player.data.profile.gems} <:gems:879264850348486696>**\nWeapon: **${eqsword}**\nArmor: **${eqarmor}**\nRod: **${eqrod}**\nPickaxe: **${eqpickaxe}**`)
-            .addField(`Skills [${sa}]`, `<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp}**\n<:foraging:852069714447695872> Foraging [${foraging.level}]: **${foraging.xp}**\n<:enchanting:852069714511659058> Enchanting [${enchanting.level}]: **${enchanting.xp}**\n<:farming:852069714451759114> Farming [${farming.level}]: **${farming.xp}**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp}**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp}**`, true)
-            .addField('Stats', `Health: **${ps.health}**\nDefense: **${ps.defense}**\nDamage: **${ps.damage}**\nStrength: **${ps.strength}**\nCrit Chance: **${ps.crit_chance} %**\nCrit Damage: **${ps.crit_damage}**\nMagic Find: **${ps.magic_find}**\nSea Creature Chance: **${ps.sea_creature_chance} %**\nFishing Speed: **${playerfishingspeed} %**\nMining Speed: **${ps.mining_speed} %**`, true)
-            .addField('Location', `${player.data.misc.location}`, true)
+      .setFooter('Skyblock Simulator')
+      .setColor('90EE90')
+      .setDescription(`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins.toLocaleString()} <:coins:861974605203636253>**\nGems: **${player.data.profile.gems} <:gems:879264850348486696>**\nWeapon: **${eqsword}**\nArmor: **${eqarmor}**\nRod: **${eqrod}**\nPickaxe: **${eqpickaxe}**`)
+      .addField(`Skills [${sa}]`, `<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp}**\n<:foraging:852069714447695872> Foraging [${foraging.level}]: **${foraging.xp}**\n<:enchanting:852069714511659058> Enchanting [${enchanting.level}]: **${enchanting.xp}**\n<:farming:852069714451759114> Farming [${farming.level}]: **${farming.xp}**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp}**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp}**`, true)
+      .addField('Stats', `Health: **\`${ps.health} ❤\`**\nDefense: \`${ps.defense} ❈\`\nDamage: \`${ps.damage} ⚔️\`\nStrength: \`${ps.strength} ❁\`\nCrit Chance: \`${ps.crit_chance} ☣\`\nCrit Damage: \`${ps.crit_damage} ☠\`\nMagic Find: \`${ps.magic_find} ✯\`\nSea Creature Chance: \`${ps.sea_creature_chance} α\`\nFishing Speed: \`${playerfishingspeed} 🎣\`\nMining Speed: \`${ps.mining_speed} ⸕\`\nMining Fortune: \`${ps.mining_fortune} ☘\``, true)
+      .addField('Location', `${player.data.misc.location}`, true)
 
           menu.edit({ embeds: [main] })
         } else if (i.customId === 'inv') {

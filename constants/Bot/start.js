@@ -44,12 +44,7 @@ async function start(client, mclient) {
   mfoff.start() //Magic find Disable
 
   //Check if Events Running
-  console.log(`Magic Find event running? Enable: ${mfon.running}, Disable: ${mfoff.running}`);
-
-
-
-
-  
+  console.log(`Magic Find event running? Enable: ${mfon.running}, Disable: ${mfoff.running}`);  
 }
 
 module.exports = start;

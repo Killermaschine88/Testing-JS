@@ -10,3 +10,4 @@ node_modules/
 # Replit
 .replit
 replit.nix
+.cache/replit/nix

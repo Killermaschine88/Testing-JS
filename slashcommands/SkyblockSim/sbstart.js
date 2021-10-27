@@ -119,7 +119,7 @@ module.exports = {
       .setFooter('Values in () aren\'t needed')
       .setColor('ORANGE')
       .setTitle('You already have a Profile')
-      .setDescription(`Use \`/sb info (@User)\` to see your Stats and \`/sb farm\` to earn Money`)
+      .setDescription(`Use \`/sb info\` to see your Stats and \`/sb grind\` to earn Money`)
       .setFooter('Skyblock Simulator')
     menu.edit({ embeds: [profilealready] })
     // }
