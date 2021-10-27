@@ -62,7 +62,6 @@ module.exports = {
     if (type == 'sword') {
       let validreforges = ['dragon claw', 'wither blood', 'warped stone']
       let itemname = sword[itemId].name
-     // console.log(itemname)
 
       if(!validreforges.includes(reforge)) {
       const errembed = new Discord.MessageEmbed()
@@ -73,6 +72,16 @@ module.exports = {
 
       return interaction.editReply({ embeds: [errembed]})
     }
+    
+    if(!player.data.inventory.items.find(item => item.name.toLowerCase() == reforge && item.amount > 0)) {
+        const errembed = new Discord.MessageEmbed()
+      .setTitle('No Reforge Stone')
+      .setDescription(`You don't have any **${caps(reforge)}** Reforge Stones.`)
+      .setColor('RED')
+      .setFooter('Skyblock Simulator')
+
+      return interaction.editReply({ embeds: [errembed]})
+      }
 
     if (reforge == 'dragon claw') {
       apply_reforge = 'Fabled'
@@ -82,13 +91,27 @@ module.exports = {
       apply_reforge = 'warped'
     }
 
+    let reforged = caps(reforge)
+
 
     //add function to remove reforge stone from inventory
     await collection.updateOne(
       { _id: interaction.user.id, "data.inventory.sword.name": itemname },
       { $set: { "data.inventory.sword.$.reforge": apply_reforge } },
       { upsert: true })
-     // console.log('diamonite')
+
+    await collection.updateOne(
+      { _id: interaction.user.id, "data.inventory.items.name": reforged },
+      { $inc: { "data.inventory.items.$.amount": -1 } },
+      { upsert: true })
+    
+    let applied = new Discord.MessageEmbed()
+      .setTitle('Reforge applied')
+      .setDescription(`Successfully applied **${apply_reforge}** to **${itemname}**.`)
+      .setColor('90EE90')
+      .setFooter('Skyblock Simulator')
+
+      return interaction.editReply({embeds: [applied]})
     
 
     } else if (type == 'armor') {
@@ -106,7 +129,7 @@ module.exports = {
     }
    
 
-      if(!player.data.inventory.items.find(item => item.name.toLowerCase() == reforge)) {
+      if(!player.data.inventory.items.find(item => item.name.toLowerCase() == reforge && item.amount > 0)) {
         const errembed = new Discord.MessageEmbed()
       .setTitle('No Reforge Stone')
       .setDescription(`You don't have any **${caps(reforge)}** Reforge Stones.`)
@@ -114,7 +137,7 @@ module.exports = {
       .setFooter('Skyblock Simulator')
 
       return interaction.editReply({ embeds: [errembed]})
-      }    
+      }
       
     
       if(reforge == 'deep sea orb') {
@@ -126,30 +149,20 @@ module.exports = {
       } else if (reforge == 'sadan\'s brooch') {
         apply_reforge = 'Empowered'
       }
+
       let reforged = caps(reforge)
-      const itemindex = player.data.inventory.items.findIndex(item => item.name == reforged)
-      
-      
+       
 
-      //add function to remove reforge stone from inventory
-    await collection.updateOne(
-      { _id: interaction.user.id, "data.inventory.armor.name": itemname },
-      { $set: { "data.inventory.armor.$.reforge": apply_reforge } },
-      { upsert: true })
-
-      /*if(player.data.inventory.items.find(item => item.name == reforged && item.amount == 1)) {
-        await collection.updateOne(
-      { _id: interaction.user.id },
-      { $pull: { "data.inventory.items": { name: reforged } } },
-      { multi: true })
-        
-      } else {*/
+      
+      await collection.updateOne(
+        { _id: interaction.user.id, "data.inventory.armor.name": itemname },
+        { $set: { "data.inventory.armor.$.reforge": apply_reforge } },
+        { upsert: true })
 
       await collection.updateOne(
-      { _id: interaction.user.id, "data.inventory.items.name": reforged },
-      { $inc: { "data.inventory.items.$.amount": -1 } },
-      { upsert: true })
-    //  }
+        { _id: interaction.user.id, "data.inventory.items.name": reforged },
+        { $inc: { "data.inventory.items.$.amount": -1 } },
+        { upsert: true })
     
 
       let applied = new Discord.MessageEmbed()
@@ -172,6 +185,45 @@ module.exports = {
 
       return interaction.editReply({ embeds: [errembed]})
     }
+
+    if(!player.data.inventory.items.find(item => item.name.toLowerCase() == reforge && item.amount > 0)) {
+        const errembed = new Discord.MessageEmbed()
+      .setTitle('No Reforge Stone')
+      .setDescription(`You don't have any **${caps(reforge)}** Reforge Stones.`)
+      .setColor('RED')
+      .setFooter('Skyblock Simulator')
+
+      return interaction.editReply({ embeds: [errembed]})
+      }
+
+    if(reforge == 'onyx') {
+      apply_reforge = 'Fruitful'
+    } else if(reforge == 'diamonite') {
+      apply_reforge = 'Fleet'
+    } else if(reforge == 'rock gemstone') {
+      apply_reforge = 'Auspicious'
+    }
+
+    let reforged = caps(reforge)
+
+    await collection.updateOne(
+        { _id: interaction.user.id },
+        { $set: { "data.equipment.mining.pickaxe.reforge": apply_reforge } },
+        { upsert: true })
+
+      await collection.updateOne(
+        { _id: interaction.user.id, "data.inventory.items.name": reforged },
+        { $inc: { "data.inventory.items.$.amount": -1 } },
+        { upsert: true })
+
+    let applied = new Discord.MessageEmbed()
+      .setTitle('Reforge applied')
+      .setDescription(`Successfully applied **${apply_reforge}** to **Pickaxe**.`)
+      .setColor('90EE90')
+      .setFooter('Skyblock Simulator')
+
+      return interaction.editReply({embeds: [applied]})
+
     } else if (type == 'rod') {
       let validreforges = ['hardened wood', 'lucky dice']
 
@@ -184,6 +236,42 @@ module.exports = {
 
       return interaction.editReply({ embeds: [errembed]})
     }
+
+    if(!player.data.inventory.items.find(item => item.name.toLowerCase() == reforge && item.amount > 0)) {
+        const errembed = new Discord.MessageEmbed()
+      .setTitle('No Reforge Stone')
+      .setDescription(`You don't have any **${caps(reforge)}** Reforge Stones.`)
+      .setColor('RED')
+      .setFooter('Skyblock Simulator')
+
+      return interaction.editReply({ embeds: [errembed]})
+      }
+
+    if(reforge == 'hardened wood') {
+      apply_reforge = 'Stiff'
+    } else if(reforge == 'lucky dice') {
+      apply_reforge = 'Lucky'
+    }
+
+    let reforged = caps(reforge)
+
+    await collection.updateOne(
+        { _id: interaction.user.id },
+        { $set: { "data.equipment.fishing.rod.reforge": apply_reforge } },
+        { upsert: true })
+
+      await collection.updateOne(
+        { _id: interaction.user.id, "data.inventory.items.name": reforged },
+        { $inc: { "data.inventory.items.$.amount": -1 } },
+        { upsert: true })
+
+    let applied = new Discord.MessageEmbed()
+      .setTitle('Reforge applied')
+      .setDescription(`Successfully applied **${apply_reforge}** to **Fishing Rod**.`)
+      .setColor('90EE90')
+      .setFooter('Skyblock Simulator')
+
+      return interaction.editReply({embeds: [applied]})
     }
 
 
@@ -192,7 +280,6 @@ module.exports = {
 };
 
 function caps(words) {
-  //words = words.replace("_", " ")
   let separateWord = words.toLowerCase().split(' ');
   for (let i = 0; i < separateWord.length; i++) {
     separateWord[i] = separateWord[i].charAt(0).toUpperCase() +
