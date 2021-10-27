@@ -17,6 +17,7 @@ const toptoken = process.env['toptoken']
 const MongoClient = require('mongodb').MongoClient;
 const mclient = new MongoClient(urii, { useNewUrlParser: true, useUnifiedTopology: true });
 mclient.connect()
+global.mmclient = mclient
 
 
 /*//Topgg votes detectionsa

@@ -33,7 +33,7 @@ ${color.blue('[INFO]')}${color.blue(' └─ Loaded')} ${color.green(c)} ${color
 
   //Startup Stuff from function
     
-  start(mclient)
+  start(client, mclient)
 
   }
 };

@@ -150,7 +150,7 @@ module.exports = {
     //Player Stats
     let type = 'all'
     let cookie = player.data.misc.booster_cookie.active
-    const ps = playerStats(player, type, cookie)
+    const ps = await playerStats(player, type, cookie)
 
     //Various Stats
     let playerfishingspeed = player.data.equipment.fishing.rod.fishing_speed

@@ -1,6 +1,12 @@
 const level = require('./skilllvl.js')
 
-function playerStats(player) {
+async function playerStats(player) {
+
+  //Events
+  const collection = mmclient.db('SkyblockSim').collection('events');
+  let events = await collection.find({}).toArray()
+  let mf_event = events.find(event => event._id == 'magic_find')
+
 
   //Base Variables
   let stats = player.data.stats
@@ -51,6 +57,11 @@ function playerStats(player) {
 
     mining_speed += mininglvl + inv3.pickaxe.mining_speed
     mining_fortune += mininglvl / 2 + inv3.pickaxe.mining_fortune
+
+  //Adding Stats for Events
+  if(mf_event.enabled == true) {
+    magic_find += 15
+  }
 
   //Add Booster Cookie Stats
   if (cookie == true) {

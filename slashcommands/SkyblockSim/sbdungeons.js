@@ -202,7 +202,7 @@ module.exports = {
 
     //Players Stats
     let type = 'combat'
-    let pstats = playerStats(player, type) //Type decides what gear is needed for the Action
+    let pstats = await playerStats(player, type) //Type decides what gear is needed for the Action
 
     let combatlvl = skillLevel(player.data.skills.combat).level
 
