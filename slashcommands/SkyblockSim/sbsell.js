@@ -107,11 +107,12 @@ module.exports = {
     //Add Coins and remove Items
     if (earnedcoins) {
 
-      const updatePlayer = addItem(sellitem, amount, player)
+    //  const updatePlayer = addItem(sellitem, amount, player)
+    //  console.log(amount)
 
-      await collection.replaceOne(
-        { _id: interaction.user.id },
-        updatePlayer
+      await collection.updateOne(
+        { _id: interaction.user.id, "data.inventory.items.name": sellitem },
+  { $inc: { "data.inventory.items.$.amount": -amount }}
       )
 
      /* await collection.updateOne(
@@ -121,14 +122,14 @@ module.exports = {
       )*/
 
       //Remove Item if 0
-      if (founditem.amount == 0) {
+      /*if (founditem.amount == 0) {
         let removeItem = updateItem(player, itemindex)
 
         await collection.replaceOne(
           { _id: interaction.user.id },
           removeItem
         )
-      }
+      }*/
 
       await collection.updateOne(
         { _id: interaction.user.id },

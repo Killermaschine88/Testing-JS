@@ -51,8 +51,8 @@ module.exports = {
     classxp = catalvl(classxp).level
     
 
-    let salevel = mining.level + foraging.level + enchanting.level + farming.level + combat.level + fishing.level
-    salevel = salevel / 6
+    let salevel = mining.level + combat.level + fishing.level
+    salevel = salevel / 3
     let sa = salevel.toFixed(2)
 
 
@@ -63,10 +63,12 @@ module.exports = {
     } else {
       
       for (item of player.data.inventory.items) {
-        if(i < 25) {
+        if(item.amount != 0) {
+        if(i <= 50 && i <= player.data.inventory.items.length) {
         str += item.name + ': ' + item.amount + '\n'
         } else {
           break;
+        }
         }
         
         i += 1

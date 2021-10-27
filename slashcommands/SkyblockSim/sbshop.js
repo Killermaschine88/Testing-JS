@@ -333,13 +333,10 @@ module.exports = {
             { $set: { 'data.equipment.fishing.rod.name': rodname, 'data.equipment.fishing.rod.sea_creature_chance': rodscc, 'data.equipment.fishing.rod.fishing_speed': rodspeed, "reforge": "None" } },
             { upsert: true })
 
-          let player = await collection.findOne({ _id: interaction.user.id })
-          const updatePlayer = addItem(sellitem, amount, player)
-
-          await collection.replaceOne(
-            { _id: interaction.user.id },
-            updatePlayer
-          )
+          await collection.updateOne(
+            { _id: interaction.user.id, "data.inventory.items.name": sellitem },
+            { $inc: { 'data.inventory.items.$.amount': -amount } },
+            { upsert: true })
           if (gemsneeded != 0) {
             const finished = new Discord.MessageEmbed()
               .setTitle('Rod Upgarded')
@@ -417,7 +414,8 @@ module.exports = {
   }
 };
 
-function addItem(sellitem, amount, player) {
+/*
+  function addItem(sellitem, amount, player) {
   if (!player.data.inventory.items) player.data.inventory.items = []
 
   if (player.data.inventory.items.length === 0) {
@@ -441,3 +439,4 @@ function addItem(sellitem, amount, player) {
   })
   return player
 }
+*/

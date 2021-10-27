@@ -137,19 +137,19 @@ module.exports = {
       { $set: { "data.inventory.armor.$.reforge": apply_reforge } },
       { upsert: true })
 
-      if(player.data.inventory.items.find(item => item.name == reforged && item.amount == 1)) {
+      /*if(player.data.inventory.items.find(item => item.name == reforged && item.amount == 1)) {
         await collection.updateOne(
       { _id: interaction.user.id },
       { $pull: { "data.inventory.items": { name: reforged } } },
       { multi: true })
         
-      } else {
+      } else {*/
 
       await collection.updateOne(
       { _id: interaction.user.id, "data.inventory.items.name": reforged },
       { $inc: { "data.inventory.items.$.amount": -1 } },
       { upsert: true })
-      }
+    //  }
     
 
       let applied = new Discord.MessageEmbed()

@@ -28,7 +28,7 @@ module.exports = {
       interaction.editReply({
         embeds: [
           new Discord.MessageEmbed()
-            .setTitle("Current Bot Info")
+            .setTitle("Current Bot Ping")
             .setColor('GREEN')
             .addFields(
               { name: `${ping} BOT Latency`, value: `${m.createdTimestamp - interaction.createdTimestamp}ms.`, inline: false },
