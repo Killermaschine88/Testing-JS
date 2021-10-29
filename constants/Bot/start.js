@@ -1,4 +1,5 @@
 let CronJob = require('cron').CronJob;
+let Discord = require('discord.js')
 
 async function start(client, mclient) {
   //Player Collection
@@ -18,14 +19,36 @@ async function start(client, mclient) {
   //Updating blocked channels
   collection1.updateMany({}, {$set: {blocked: false}}) 
 
-  //Events
+  //Event Embeds
+  const mfonembed = new Discord.MessageEmbed()
+  .setTitle('🍀 Magic Find Event Enabled')
+  .setDescription('All Users now have **+15 Magic Find** for the **next 2 Hours.**')
+  .setColor('GREEN')
+  .setFooter('Skyblock Simulator Events')
+
+  const mfoffembed = new Discord.MessageEmbed()
+  .setTitle('🍀 Magic Find Event Disabled')
+  .setDescription('The extra Magic Find have been removed again.')  
+  .setFooter('Skyblock Simulator Events')
+
+  //Event Jobs
   const mfon = new CronJob('0 16 * * *', async function() {
 	  collection2.updateOne(
       { _id: 'magic_find'},
       { $set: { enabled: true } })
 
       client.channels.fetch('871669216703578152')
-        .then(channel => channel.send(`Magic Find Event enabled.`))
+        .then(channel => channel.send({embeds: [mfonembed]}))
+        .catch(console.error)
+  }, null, true, 'Europe/Rome');
+
+  const mfon2 = new CronJob('0 6 * * *', async function() {
+	  collection2.updateOne(
+      { _id: 'magic_find'},
+      { $set: { enabled: true } })
+
+      client.channels.fetch('871669216703578152')
+        .then(channel => channel.send({embeds: [mfonembed]}))
         .catch(console.error)
   }, null, true, 'Europe/Rome');
 
@@ -35,16 +58,28 @@ async function start(client, mclient) {
       { $set: { enabled: false } })
 
       client.channels.fetch('871669216703578152')
-        .then(channel => channel.send(`Magic Find Event disabled.`))
+        .then(channel => channel.send({embeds: [mfoffembed]}))
+        .catch(console.error)
+  }, null, true, 'Europe/Rome');
+
+  const mfoff2 = new CronJob('0 8 * * *', async function() {
+	  collection2.updateOne(
+      { _id: 'magic_find'},
+      { $set: { enabled: false } })
+
+      client.channels.fetch('871669216703578152')
+        .then(channel => channel.send({embeds: [mfoffembed]}))
         .catch(console.error)
   }, null, true, 'Europe/Rome');
 
   //Starting Events
-  mfon.start(); //Magic Find Enable
-  mfoff.start() //Magic find Disable
+  mfon.start(); //Magic Find Enable (Evening)
+  mfoff.start() //Magic find Disable (Evrning)
+  mfon2.start() //Magic Find Enable (Morning)
+  mfoff2.start() //Magic Find Disableb(Morning)
 
   //Check if Events Running
-  console.log(`Magic Find event running? Enable: ${mfon.running}, Disable: ${mfoff.running}`);  
+  console.log(`Magic Find event running? Enable: ${mfon.running} ${mfon2.running}, Disable: ${mfoff.running} ${mfoff2.running}`);  
 }
 
 module.exports = start;
