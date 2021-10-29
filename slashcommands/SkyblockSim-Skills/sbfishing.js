@@ -41,7 +41,7 @@ module.exports = {
 
     //Values needed
     let type = 'all'
-    let pstats = playerStats(player, type)
+    let pstats = await playerStats(player, type)
     let fishinglvl = getLevel(player.data.skills.fishing).level
     let rod = player.data.equipment.fishing.rod.name
     let rod_speed = player.data.equipment.fishing.rod.fishing_speed

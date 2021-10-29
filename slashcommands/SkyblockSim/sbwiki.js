@@ -8,7 +8,12 @@ module.exports = {
   folder: "SkyblockSim",
   aliases: [],
   cooldown: 10,
-  async execute(interaction) {
+  async execute(interaction, mclient) {
+
+    const collection = mclient.db('SkyblockSim').collection('events');
+    let events = await collection.find({ }).toArray()
+
+    let mf_event = events[0]
 
     const embed = new Discord.MessageEmbed()
     .setTitle('Skyblock Simulator Wiki')
@@ -28,9 +33,14 @@ module.exports = {
       .setCustomId('misc')
       .setLabel('Misc')
       .setStyle('PRIMARY')
+    const button4 = new Discord.MessageButton()
+       .setCustomId('events')
+       .setLabel('Events')
+       .setStyle('PRIMARY')
+  
 
     const row = new Discord.MessageActionRow()
-      .addComponents(button1, button2)
+      .addComponents(button1, button2, button4)
 
     let menu = await interaction.editReply({embeds: [embed], components: [row]})
 
@@ -58,7 +68,40 @@ module.exports = {
         .setDescription('\`❤ Health\`\n\`❈ Defense\`\n\`⚔️ Damage\`\n\`❁ Strength\`\n\`☣ Crit Chance\`\n\`☠ Crit Damage\`\n\`✯ Magic Find\`\n\`α Sea Creature Chance\`\n\`🎣 Fishing Speed\`\n\`⸕ Mining Speed\`\n\`☘ Mining Fortune\`')
 
         menu.edit({embeds: [symbolembed]})
+      } else if(i.customId == 'events') {
+        let time = Date.now() / 1000
+        time = currentTime(time)
+        let eventembed = new Discord.MessageEmbed()
+        eventembed.setTitle('Event Information')
+        eventembed.setColor('90EE90')
+       eventembed .setFooter('Skyblock Simulator')
+          if(mf_event.enabled == false) {
+        eventembed.addField(`Magic Find`, `Everyday from 6:00 - 8:00 (6 am - 8 am) and 16:00 - 18:00 (4:00 pm - 6:00 pm)\nEvent Active: ${mf_event.enabled}\nNext Event: <t:${mf_event.next_event}:r>`)
+          } else {
+            eventembed.addField(`Magic Find`, `Everyday from 6:00 - 8:00 (6 am - 8 am) and 16:00 - 18:00 (4:00 pm - 6:00 pm)\nEvent Active: ${mf_event.enabled}\nEvent End: <t:${mf_event.end_event}:r>`)
+          }
+          
+        menu.edit({embeds: [eventembed]})
       }
     })
   }
 };
+
+function currentTime(totalSeconds) {
+    if (!totalSeconds) {
+      return '00:00:00';
+    }
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor(totalSeconds % 3600 / 60);
+    const seconds = totalSeconds % 60;
+    const hhmmss = padTo2(hours) + ':' + padTo2(minutes) + ':' + padTo2(seconds);
+    return hhmmss;
+}
+
+// function to convert single digit to double digit
+function padTo2(value) {
+    if (!value) {
+      return '00';
+    }
+    return value < 10 ? String(value).padStart(2, '0') : value;
+}

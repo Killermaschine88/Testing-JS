@@ -30,12 +30,17 @@ async function start(client, mclient) {
   .setTitle('🍀 Magic Find Event Disabled')
   .setDescription('The extra Magic Find have been removed again.')  
   .setFooter('Skyblock Simulator Events')
+  
 
   //Event Jobs
   const mfon = new CronJob('0 16 * * *', async function() {
+    let next_eventtime = (Date.now() / 1000).toFixed(0) + (14*60*60)
+    let event_endtime = next_eventtime + (2*60*60)
 	  collection2.updateOne(
       { _id: 'magic_find'},
-      { $set: { enabled: true } })
+      { $set: { enabled: true, next_event: next_eventtime, end_event: event_endtime} },
+      { upsert: true }
+    )
 
       client.channels.fetch('871669216703578152')
         .then(channel => channel.send({embeds: [mfonembed]}))
@@ -43,9 +48,13 @@ async function start(client, mclient) {
   }, null, true, 'Europe/Rome');
 
   const mfon2 = new CronJob('0 6 * * *', async function() {
+    let next_eventtime = (Date.now() / 1000).toFixed(0) + (10*60*60)
+    let event_endtime = next_eventtime + (2*60*60)
 	  collection2.updateOne(
       { _id: 'magic_find'},
-      { $set: { enabled: true } })
+      { $set: { enabled: true, next_event: next_eventtime, end_event: event_endtime } },
+      { upsert: true}
+    )
 
       client.channels.fetch('871669216703578152')
         .then(channel => channel.send({embeds: [mfonembed]}))
@@ -53,9 +62,11 @@ async function start(client, mclient) {
   }, null, true, 'Europe/Rome');
 
   const mfoff = new CronJob('0 18 * * *', async function() {
+    
 	  collection2.updateOne(
       { _id: 'magic_find'},
-      { $set: { enabled: false } })
+      { $set: { enabled: false } },
+      { upsert: true })
 
       client.channels.fetch('871669216703578152')
         .then(channel => channel.send({embeds: [mfoffembed]}))
@@ -63,6 +74,7 @@ async function start(client, mclient) {
   }, null, true, 'Europe/Rome');
 
   const mfoff2 = new CronJob('0 8 * * *', async function() {
+    
 	  collection2.updateOne(
       { _id: 'magic_find'},
       { $set: { enabled: false } })

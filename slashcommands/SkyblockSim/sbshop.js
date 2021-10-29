@@ -410,7 +410,7 @@ module.exports = {
           interaction.editReply({ embeds: [cancelled], components: [] })
           return
         }
-      }).catch(err => console.log(err))
+      }).catch(err => console.log(''))
   }
 };
 
