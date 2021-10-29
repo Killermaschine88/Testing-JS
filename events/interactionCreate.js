@@ -1,9 +1,19 @@
 const Discord = require('discord.js')
+const config = require('../constants/Bot/config.json')
 
 module.exports = {
   name: 'interactionCreate',
   async execute(interaction, mclient) {
     if (!interaction.isCommand()) return;
+
+    if(config.blacklistedusers.includes(interaction.user.id)) {
+      let blockedembed = new Discord.MessageEmbed()
+      .setTitle('User Blocked')
+      .setDescription("You are blocked from using this Bot if you think this is false join my [Support Server](https://discord.gg/Ca6XpTRQaR) and DM Baltraz#4874 to appeal.")
+      .setColor('RED')
+
+      return interaction.reply({embeds: [blockedembed], ephemeral: true})
+    }
     
 
     let validchannels = ['GUILD_TEXT', 'GUILD_PUBLIC_THREAD', 'GUILD_PRIVATE_THREAD']

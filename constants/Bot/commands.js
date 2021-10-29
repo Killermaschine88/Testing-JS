@@ -4,8 +4,16 @@ const data = [
     description: 'Shows Info about the Bot'
   },
   {
-    name: 'commandlist',
-    description: 'Shows a list of Valid Slash Commands'
+    name: 'suggest',
+    description: 'Suggest Features/Report Bugs at the Bot',
+    options: [
+      {
+        name: 'suggestion',
+        description: 'Suggestion to send',
+        type: 'STRING',
+        required: true,
+      },
+    ],
   },
   {
     name: 'invite',
@@ -19,7 +27,7 @@ const data = [
     name: 'vote',
     description: 'Shows the Bots Vote Site',
   },
-  {
+  /*{
     name: 'serverinfo',
     description: 'Shows Info about the server',
   },
@@ -34,7 +42,7 @@ const data = [
         required: true,
       },
     ],
-  },
+  },*/
   //Skyblock Features
   {
     name: 'bazaar',
