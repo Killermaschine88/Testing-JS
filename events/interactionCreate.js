@@ -10,7 +10,7 @@ module.exports = {
       if(interaction.options._subcommand == 'reforge') {
         let stones = ['Deep Sea Orb', 'Onyx', 'Dragon Claw', 'Lucky Orb']
         let found = []
-        let seen = stones.filter(stone => stone.includes(focused))
+        let seen = stones.filter(stone => (stone.toLowerCase()).includes(focused) || stone.includes(focused))
      
         if(seen.length != 0) {
           for(const stone of seen) {
