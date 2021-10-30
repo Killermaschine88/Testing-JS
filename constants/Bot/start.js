@@ -30,12 +30,15 @@ async function start(client, mclient) {
   .setTitle('🍀 Magic Find Event Disabled')
   .setDescription('The extra Magic Find have been removed again.')  
   .setFooter('Skyblock Simulator Events')
+  .setColor('RED')
   
 
   //Event Jobs
   const mfon = new CronJob('0 16 * * *', async function() {
-    let next_eventtime = (Date.now() / 1000).toFixed(0) + (14*60*60)
-    let event_endtime = next_eventtime + (2*60*60)
+    let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + (14*60*60)
+    next_eventtime = Number(next_eventtime)
+    let event_endtime = Number((Date.now() / 1000).toFixed(0)) + 2*60*60
+    event_endtime = Number(event_endtime)
 	  collection2.updateOne(
       { _id: 'magic_find'},
       { $set: { enabled: true, next_event: next_eventtime, end_event: event_endtime} },
@@ -48,8 +51,10 @@ async function start(client, mclient) {
   }, null, true, 'Europe/Rome');
 
   const mfon2 = new CronJob('0 6 * * *', async function() {
-    let next_eventtime = (Date.now() / 1000).toFixed(0) + (10*60*60)
-    let event_endtime = next_eventtime + (2*60*60)
+    let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + (10*60*60)
+    next_eventtime = Number(next_eventtime)
+    let event_endtime = Number((Date.now() / 1000).toFixed(0)) + 2*60*60
+    event_endtime = Number(event_endtime)
 	  collection2.updateOne(
       { _id: 'magic_find'},
       { $set: { enabled: true, next_event: next_eventtime, end_event: event_endtime } },

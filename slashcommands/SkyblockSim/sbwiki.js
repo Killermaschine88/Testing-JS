@@ -70,15 +70,16 @@ module.exports = {
         menu.edit({embeds: [symbolembed]})
       } else if(i.customId == 'events') {
         let time = Date.now() / 1000
-        time = currentTime(time)
+        
         let eventembed = new Discord.MessageEmbed()
         eventembed.setTitle('Event Information')
         eventembed.setColor('90EE90')
        eventembed .setFooter('Skyblock Simulator')
           if(mf_event.enabled == false) {
-        eventembed.addField(`Magic Find`, `Everyday from 6:00 - 8:00 (6 am - 8 am) and 16:00 - 18:00 (4:00 pm - 6:00 pm)\nEvent Active: ${mf_event.enabled}\nNext Event: <t:${mf_event.next_event}:r>`)
+        eventembed.addField(`Magic Find`, `Everyday from 6:00 - 8:00 (6 am - 8 am) and 16:00 - 18:00 (4:00 pm - 6:00 pm)\nEvent Active: ${mf_event.enabled}\nNext Event: <t:${mf_event.next_event}:R>`)
           } else {
-            eventembed.addField(`Magic Find`, `Everyday from 6:00 - 8:00 (6 am - 8 am) and 16:00 - 18:00 (4:00 pm - 6:00 pm)\nEvent Active: ${mf_event.enabled}\nEvent End: <t:${mf_event.end_event}:r>`)
+            
+            eventembed.addField(`Magic Find`, `Everyday from 6:00 - 8:00 (6 am - 8 am) and 16:00 - 18:00 (4:00 pm - 6:00 pm)\nEvent Active: ${mf_event.enabled}\nEvent End: <t:${mf_event.end_event}:R>`)
           }
           
         menu.edit({embeds: [eventembed]})
@@ -86,22 +87,3 @@ module.exports = {
     })
   }
 };
-
-function currentTime(totalSeconds) {
-    if (!totalSeconds) {
-      return '00:00:00';
-    }
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor(totalSeconds % 3600 / 60);
-    const seconds = totalSeconds % 60;
-    const hhmmss = padTo2(hours) + ':' + padTo2(minutes) + ':' + padTo2(seconds);
-    return hhmmss;
-}
-
-// function to convert single digit to double digit
-function padTo2(value) {
-    if (!value) {
-      return '00';
-    }
-    return value < 10 ? String(value).padStart(2, '0') : value;
-}
