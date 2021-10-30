@@ -322,7 +322,7 @@ const data = [
             name: 'choice',
             description: 'Type of Item to reforge',
             type: 'STRING',
-            required: true,
+            required: true,         
             choices: [
               {
                 name: 'armor',
@@ -349,9 +349,10 @@ const data = [
             required: true,
           },
           {
-            name: 'reforge',
+            name: 'reforge-stone',
             description: 'Reforge to apply',
             type: 'STRING',
+            autocomplete: true,
             required: true,
           },
         ],

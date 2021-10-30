@@ -4,7 +4,38 @@ const config = require('../constants/Bot/config.json')
 module.exports = {
   name: 'interactionCreate',
   async execute(interaction, mclient) {
+    
+  if(interaction.isAutocomplete()) {
+      const focused = interaction.options.getFocused()   
+      if(interaction.options._subcommand == 'reforge') {
+        let stones = ['Deep Sea Orb', 'Onyx', 'Dragon Claw', 'Lucky Orb']
+        let found = []
+        let seen = stones.filter(stone => stone.includes(focused))
+     
+        if(seen.length != 0) {
+          for(const stone of seen) {
+            
+            found.push(
+              {
+                name: stone,
+                value: stone
+              }
+            )
+          }
+        }        
+        
+        if(found.length != 0) {
+        interaction.respond(found)         
+        } else {                 
+        interaction.respond(stones)
+        }
+      }
+    }
+
+    
     if (!interaction.isCommand()) return;
+
+
 
     if(config.blacklistedusers.includes(interaction.user.id)) {
       let blockedembed = new Discord.MessageEmbed()
@@ -17,7 +48,6 @@ module.exports = {
     
 
     let validchannels = ['GUILD_TEXT', 'GUILD_PUBLIC_THREAD', 'GUILD_PRIVATE_THREAD']
-
     if(!validchannels.includes(interaction.channel.type)) {
       const embed = new Discord.MessageEmbed()
       .setTitle('Unsupported Channel')

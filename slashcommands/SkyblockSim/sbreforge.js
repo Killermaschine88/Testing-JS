@@ -28,7 +28,7 @@ module.exports = {
 
     let type = interaction.options.getString('choice')
     let itemId = interaction.options.getInteger('number')
-    let reforge = interaction.options.getString('reforge')
+    let reforge = interaction.options.getString('reforge-stone')
     reforge = reforge.toLowerCase()
 
     let sword = player.data.inventory.sword
