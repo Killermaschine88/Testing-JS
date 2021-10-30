@@ -350,7 +350,7 @@ const data = [
           },
           {
             name: 'reforge-stone',
-            description: 'Reforge to apply',
+            description: 'Reforge Stone to apply',
             type: 'STRING',
             autocomplete: true,
             required: true,

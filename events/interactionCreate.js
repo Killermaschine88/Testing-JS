@@ -8,7 +8,7 @@ module.exports = {
   if(interaction.isAutocomplete()) {
       const focused = interaction.options.getFocused()   
       if(interaction.options._subcommand == 'reforge') {
-        let stones = ['Deep Sea Orb', 'Onyx', 'Dragon Claw', 'Lucky Orb']
+        let stones = ['Dragon Claw', 'Wither Blood', 'Warped Stone', 'Deep Sea Orb', 'Dragon Horn', 'Precursor Gear', 'Sadan\'s Brooch', 'Onyx', 'Diamonite', 'Rock Gemstons', 'Hardened Wood', 'Lucky Dice']
         let found = []
         let seen = stones.filter(stone => (stone.toLowerCase()).includes(focused) || stone.includes(focused))
      
