@@ -130,7 +130,8 @@ module.exports = {
       .setTitle('Fishing Pond')
       .setColor('BLUE')
       .setFooter('Skyblock Simulator')
-      .setDescription(`Rod: **${rod}**\nSea Creature Chance: **${sea_creature_chance}**\nFishing Speed: **${rod_speed}**%\n\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}${emoji.water}\n`)
+      .setDescription(`Rod: **${rod}**\nSea Creature Chance: **${sea_creature_chance}**\nFishing Speed: **${rod_speed}**%`)
+      .setImage('') //rod in hand
 
     const menu = await interaction.editReply({ embeds: [pond], components: [row] })
 
@@ -158,6 +159,7 @@ module.exports = {
         rod_casted = true
         pond.fields = []
         pond.addField('\u200b', '<a:wait:847471618272002059> Waiting for something to bite the Bait.')
+        .setImage('') //rod in water
 
         menu.edit({ embeds: [pond], components: [row3] })
 
@@ -165,6 +167,7 @@ module.exports = {
 
         pond.fields = []
         pond.addField('\u200b', 'Something bit the Bait, lure it in.')
+        .setImage('') //fish close to rod
 
         menu.edit({ embeds: [pond], components: [row1] })
 
@@ -213,6 +216,7 @@ module.exports = {
             rod_casted = false
             pond.fields = [];
             pond.addField(`Caught a ${fishname}`, `earned **${fishxp} Fishing XP** and sold it for **<:coins:861974605203636253> ${fishingcoins} Coins**`)
+            .setImage('') //rod in hand
 
             await collection.updateOne(
               { _id: interaction.user.id },

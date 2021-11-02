@@ -56,6 +56,7 @@ module.exports = {
       if(i.customId == 'general') {
         const generalembed = new Discord.MessageEmbed()
         .setTitle('General Information')
+        .setDescription('**Available Commands**\n\`sb class\`, \`sb daily\`, \`sb dragon\`, \`sb dungeons\`, \`sb grind\`, \`sb info\`, \`sb reforge\`, \`sb sell\`, \`sb settings\`, \`sb shop\`, \`sb start\`, \`sb wardrobe\`, \`sb warp\`, \`sb wiki\`, \`sb fishing\`, \`sb mining\`')
         .setColor('90EE90')
         .setFooter('Skyblock Simulator')
 
