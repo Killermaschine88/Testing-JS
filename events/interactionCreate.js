@@ -25,13 +25,8 @@ module.exports = {
                 break
               }
             }
-          } else {
-            found2.push({
-              name: `No match for '${focused}'`,
-              value: `No match for '${focused}'`
-            })
           }
-            //alternatively show fully list of items if no match
+
           if(found.length != 0) {
             interaction.respond(found)         
           } else {
@@ -57,11 +52,6 @@ module.exports = {
                 break
               }
             }
-          } else {
-            found2.push({
-              name: `No match for '${focused}'`,
-              value: `No match for '${focused}'`
-            })
           }
 
           if(found.length != 0) {
