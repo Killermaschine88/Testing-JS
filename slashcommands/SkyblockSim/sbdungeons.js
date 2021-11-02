@@ -14,6 +14,7 @@ module.exports = {
   aliases: [],
   cooldown: 10,
   async execute(interaction, mclient) {
+    try{
 
     const movePlayer = (movement, ignoreEvent) => {
       let [x, y] = location
@@ -48,7 +49,9 @@ module.exports = {
         for (const item of row) {
           index++
           if (item == 0) string += wall
-          else if (item == 1 || item == 5) string += air
+          //else if (item == 1 || item == 5) string += air
+            else if(item == 1) string += air
+            else if(item == 5) string += '⚪'
           else if (item == 2) string += Player
           else if (item == 3) string += puzzle
           else if (item == 4) string += enemy
@@ -643,7 +646,7 @@ module.exports = {
      // console.log(map[mapxplace][mapyplace])
       
 
-      if(map[mapxplace][mapyplace] == 1 && (map[mapxplace-1][mapyplace] != 6  && map[mapxplace+1][mapyplace] != 6 && map[mapxplace][mapyplace-1] != 6 && map[mapxplace][mapyplace+1] != 6)) {
+      if(map[mapxplace][mapyplace] == 1 && (map[mapxplace-1][mapyplace] != 6  && map[mapxplace+1][mapyplace] != 6 && map[mapxplace][mapyplace-1] != 6 && map[mapxplace][mapyplace+1] != 6) && (map[mapxplace-1][mapyplace] != 2  && map[mapxplace+1][mapyplace] != 2 && map[mapxplace][mapyplace-1] != 2 && map[mapxplace][mapyplace+1] != 2)) {
         
         if(mobplaced < mobamount) {
           map[mapxplace][mapyplace] = 4
@@ -1265,6 +1268,12 @@ module.exports = {
 
       }
     })
+  
+  } catch (e) {
+      test.setDescription('An Error occured!')
+      test.setColor('Red')
+    return interaction.editReply({embeds: [test], components: []})
+  }
   }
 }
 
