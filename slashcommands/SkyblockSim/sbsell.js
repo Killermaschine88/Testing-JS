@@ -60,7 +60,12 @@ module.exports = {
 
 
     if (founditem === undefined) {
-      interaction.editReply('Invalid Item entered')
+      let invaliditemembed = new Discord.MessageEmbed()
+      .setTitle('Invalid Item Name')
+      .setColor('RED')
+      .setDescription(`\`${sellitem}\` isn't an valid Itemname.`)
+      .setFooter('Skyblock Simulator')
+      interaction.editReply({embeds: [invaliditemembed]})
       return;
     }
 
