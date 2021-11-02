@@ -834,6 +834,7 @@ module.exports = {
             return collector.stop()
           }
           if (fightEnded) {
+            let preclaim = false
             fightEnded = false
             wood_loot = lt.wood.roll(pstats.magic_find)
             gold_loot = lt.gold.roll(pstats.magic_find)
@@ -866,8 +867,10 @@ module.exports = {
               } else {
                 test.description += `<:emerald:869126927380779008> Emerlad Chest: **${emerald_loot} Coins\n**`
               }
-              lootrow.addComponents(diamond_button, emerald_button)
-            } else if(floor == 3 && score >= 150) {
+              lootrow.addComponents(diamond_button)
+              lootrow.addComponents(emerald_button)
+              preclaim = true
+            } else if(floor == 3 && score >= 150 && preclaim == false) {
               diamond_loot = lt.diamond.roll(pstats.magic_find)
               if(isNaN(diamond_loot)) {
                 test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot}\n**`
