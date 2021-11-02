@@ -849,7 +849,7 @@ module.exports = {
             } else {
               test.description += `<:gold:869126927011708929> Gold Chest: **${gold_loot} Coins\n**`
             }
-            if (floor == 2 && score >= 140) {
+            if (floor == 2 && score >= 150) {
               diamond_loot = lt.diamond.roll(pstats.magic_find)
               test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot}\n**`
               lootrow.addComponents(diamond_button)
@@ -867,7 +867,7 @@ module.exports = {
                 test.description += `<:emerald:869126927380779008> Emerlad Chest: **${emerald_loot} Coins\n**`
               }
               lootrow.addComponents(diamond_button, emerald_button)
-            } else if(floor == 3 && score >= 160) {
+            } else if(floor == 3 && score >= 150) {
               diamond_loot = lt.diamond.roll(pstats.magic_find)
               if(isNaN(diamond_loot)) {
                 test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot}\n**`

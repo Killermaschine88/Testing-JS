@@ -37,10 +37,14 @@ module.exports = {
        .setCustomId('events')
        .setLabel('Events')
        .setStyle('PRIMARY')
+    const button5 = new Discord.MessageButton()
+       .setCustomId('dungeons')
+       .setLabel('Dungeons')
+       .setStyle('PRIMARY')
   
 
     const row = new Discord.MessageActionRow()
-      .addComponents(button1, button2, button4)
+      .addComponents(button1, button2, button4, button5)
 
     let menu = await interaction.editReply({embeds: [embed], components: [row]})
 
@@ -89,6 +93,14 @@ module.exports = {
         .setTitle('Dungeons Information')
         .setColor('90EE90')
         .setFooter('Skyblock Simulator')
+        .addField('Classes', 'Classes give bonuses inside Dungeon Runs\n\nAssassin (\`2 ❁\` per Class Level\nBerserker (\`1 ❁\` and \`1 ❈\` per Class Level\nTank (\`1 ❈\` and \`2 ❤\` per Class Level', true)
+        .addField('Score', 'Score is used to determine the Loot Chests you will recieve after the dungeon run', true)
+        .addField('Puzzles', 'Small Puzzles like a Quiz and Tic Tac Toe are found in a dungeon run which grant 20 Score.', true)
+        .addField('Loot Chests', 'Loot Chests spawn after defeating a Dungeon Boss\n\n<:oak_wood:882624301503754350> Chest (Guaranteed)\n<:gold:869126927011708929> Chest (Guaranteed)\n<:diamond:869126926646788097> Chest (min. F2 & min. 150 Score)\n<:emerald:869126927380779008> Chest (min. F3 & min. 180 Score)', true)
+        .addField('Dungeon Loot', 'Is found in Loot Chests at the end of the dungeon run.\nCurrently Recombobulators, 5 different Armors and 5 different Swords can be found in Loot Chests.', true)
+
+
+        menu.edit({embeds: [dungeonsembed]})
       }
     })
   }
