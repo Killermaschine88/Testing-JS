@@ -71,7 +71,7 @@ module.exports = {
       if(item.reforge != 'None') {
         eqsword = item.reforge + ' ' + item.name
       } else {
-        eqswors = item.name
+        eqsword = item.name
       }
       
       const sucembed = new Discord.MessageEmbed()

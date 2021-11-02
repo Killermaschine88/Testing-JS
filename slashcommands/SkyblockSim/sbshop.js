@@ -196,7 +196,7 @@ module.exports = {
       armor_button.setDisabled(false)
       choosen2 = 'Golem Armor'
       armorcost = 100
-    }else if(armorinv.find(item => item.name === 'None') && coins > 100) {
+    }else if(armorinv.find(item => item.name === 'Naked') && coins > 100) {
       armor_button.setDisabled(false)
       choosen2 = 'Leaflet Armor'
       armorcost = 100
@@ -243,58 +243,58 @@ module.exports = {
 
     //Rod Fields
     if (rod.name == 'Fishing Rod') {
-      shopembed.addField('Prismarine Rod', '**Cost:** 5k Coins + 10 Lilypads\n\n**Stats:**\n5 α, 10% 🎣', true)
+      shopembed.addField('Prismarine Rod', '**Cost:** 5k Coins + 10 Lilypads\n\n**Stats:**\n\`5 α\`, \`10% 🎣\`', true)
     } else if (rod.name == 'Prismarine Rod') {
-      shopembed.addField('Sponge Rod', '**Cost:** 25k Coins + 20 Lilypads\n\n**Stats:**\n10 α, 20% 🎣', true)
+      shopembed.addField('Sponge Rod', '**Cost:** 25k Coins + 20 Lilypads\n\n**Stats:**\n\`10 α\`, \`20% 🎣\`', true)
     } else if (rod.name == 'Sponge Rod') {
-      shopembed.addField('Speedster Rod', '**Cost:** 50k Coins + 30 Lilypads\n\n**Stats:**\n15 α, 30% 🎣', true)
+      shopembed.addField('Speedster Rod', '**Cost:** 50k Coins + 30 Lilypads\n\n**Stats:**\n\`15 α\`, 30% 🎣', true)
     } else if (rod.name == 'Speedster Rod') {
-      shopembed.addField('Farmer\'s Rod', '**Cost:** 100k Coins + 50 Lilypads\n\n**Stats:**\n20 α, 40% 🎣', true)
+      shopembed.addField('Farmer\'s Rod', '**Cost:** 100k Coins + 50 Lilypads\n\n**Stats:**\n\`20 α\`, \`40% 🎣\`', true)
     } else if (rod.name == 'Farmer\'s Rod') {
-      shopembed.addField('Challenging Rod', '**Cost:** 250k Coins + 75 Lilypads\n\n**Stats:**\n25 α, 50% 🎣', true)
+      shopembed.addField('Challenging Rod', '**Cost:** 250k Coins + 75 Lilypads\n\n**Stats:**\n\`25 α\`, \`50% 🎣\`', true)
     } else if (rod.name == 'Challenging Rod') {
-      shopembed.addField('Rod of Champions', '**Cost:** 500k Coins + 100 Lilypads\n\n**Stats:**\n30 α\n60% Fishing Speed', true)
+      shopembed.addField('Rod of Champions', '**Cost:** 500k Coins + 100 Lilypads\n\n**Stats:**\n\`30 α\`, \`60% 🎣\`', true)
     } else if (rod.name == 'Rod of Champions') {
-      shopembed.addField('Rod of Legends', '**Cost:** 1M Coins + 150 Lilypads\n\n**Stats:**\n40 α, 70% 🎣', true)
+      shopembed.addField('Rod of Legends', '**Cost:** 1M Coins + 150 Lilypads\n\n**Stats:**\n\`40 α\`, \`70% 🎣\`', true)
     } else if (rod.name == 'Rod of Legends') {
-      shopembed.addField('Rod of the Sea', '**Cost:** 50 Gems + 100 Lilypads\n\n**Stats:**\n50 α, 75% 🎣', true)
+      shopembed.addField('Rod of the Sea', '**Cost:** 50 Gems + 100 Lilypads\n\n**Stats:**\n\`50 α\`, \`75% 🎣\`', true)
     }
 
     //Cookie Field
     if (player.data.misc.booster_cookie.active == false) {
-      shopembed.addField('Booster Cookie', '**Cost:** 4 Gems\n\n**Stats:**\n10 ✯, 10% Overall Stat incerase', true)
+      shopembed.addField('Booster Cookie', '**Cost:** 4 Gems\n\n**Stats:**\n\`10 ✯\`, 10% Overall Stat incerase', true)
     }
 
     //Sword Fields
     if(swordinv.find(item => item.name == 'Leaping Sword')) {
 
     } else if(swordinv.find(item => item.name == 'Tactician\'s Sword')) {
-      shopembed.addField('Leaping Sword', '**Cost:** x\n\n**Stats:** 150 ⚔️, 110 ❁, 40 ☣, 100 ☠', true)
+      shopembed.addField('Leaping Sword', '**Cost:** x\n\n**Stats:** \`150 ⚔️\`, \`110 ❁\`, \`40 ☣\`, \`100 ☠\`', true)
     } else if(swordinv.find(item => item.name == 'Zombie Sword')) {
-      shopembed.addField('Tactician\'s Sword', '**Cost:** x\n\n**Stats:** 100 ⚔️, 80 ❁, 30 ☣, 75 ☠', true)
+      shopembed.addField('Tactician\'s Sword', '**Cost:** x\n\n**Stats:** \`100 ⚔️\`, \`80 ❁\`, \`30 ☣\`, \`75 ☠\`', true)
     } else if(swordinv.find(item => item.name == 'Golem Sword')) {
-      shopembed.addField('Zombie Sword', '**Cost:** x\n\n**Stats:** 75 ⚔️, 60 ❁, 20 ☣, 50 ☠', true)
+      shopembed.addField('Zombie Sword', '**Cost:** x\n\n**Stats:** \`75 ⚔️\`, \`60 ❁\`, \`20 ☣\`, \`50 ☠\`', true)
     } else if(swordinv.find(item => item.name == 'Undead Sword')) {
-      shopembed.addField('Golem Sword', '**Cost:** x\n\n**Stats:** 50 ⚔️, 40 ❁, 10 ☣, 30 ☠', true)
+      shopembed.addField('Golem Sword', '**Cost:** x\n\n**Stats:** \`50 ⚔️\`, \`40 ❁\`, \`10 ☣\`, \`30 ☠\`', true)
     } else if(swordinv.find(item => item.name == 'Fist')) {
-      shopembed.addField('Undead Sword', '**Cost:** x\n\n**Stats:** 20 ⚔️, 15 ❁, 10 ☠', true)
+      shopembed.addField('Undead Sword', '**Cost:** x\n\n**Stats:** \`20 ⚔️\`, \`15 ❁\`, \`10 ☠\`', true)
     }
     
     //Armor Fields
     if(armorinv.find(item => item.name == 'Superior Dragon Armor')) {
       
     } else if(armorinv.find(item => item.name == 'Frozen Blaze Armor')) {
-      shopembed.addField('Superior Dragon Armor', '**Cost:** x\n\n**Stats:** 300 ❤, 150 ❈, 150 ❁, 40 ☣, 150 ☠, 15 ✯', true)
+      shopembed.addField('Superior Dragon Armor', '**Cost:** x\n\n**Stats:** \`300 ❤\`, \`150 ❈\`, \`150 ❁\`, \`40 ☣\`, \`150 ☠\`, \`15 ✯\`', true)
     } else if (armorinv.find(item => item.name == 'Tarantula Armor')) {
-      shopembed.addField('Frozen Blaze Armor', '**Cost:** x\n\n**Stats:** 200 ❤, 150 ❈, 100 ❁, 15 ☣, 50 ☠', true)
+      shopembed.addField('Frozen Blaze Armor', '**Cost:** x\n\n**Stats:** \`200 ❤\`, \`150 ❈\`, \`100 ❁\`, \`15 ☣\`, \`50 ☠\`', true)
     } else if (armorinv.find(item => item.name == 'Monster Hunter Armor')) {
-      shopembed.addField('Tarantula Armor', '**Cost:** x\n\n**Stats:** 225 ❤, 100 ❈, 50 ❁, 25 ☣, 75 ☠', true)
+      shopembed.addField('Tarantula Armor', '**Cost:** x\n\n**Stats:** \`225 ❤\`, \`100 ❈\`, \`50 ❁\`, \`25 ☣\`, \`75 ☠\`', true)
     } else if (armorinv.find(item => item.name == 'Golem Armor')) {
-      shopembed.addField('Monster Hunter Armor', '**Cost:** x\n\n**Stats:** 150 ❤, 60 ❈, 30 ❁, 15 ☣, 40 ☠', true)
+      shopembed.addField('Monster Hunter Armor', '**Cost:** x\n\n**Stats:** \`150 ❤\`, \`60 ❈\`, \`30 ❁\`, \`15 ☣\`, \`40 ☠\`', true)
     } else if (armorinv.find(item => item.name == 'Leaflet Armor')) {
-      shopembed.addField('Golem Armor', '**Cost:** x\n\n**Stats:** 100 ❤, 30 ❈, 10 ❁, 10 ☣, 20 ☠', true)
-    } else if (armorinv.find(item => item.name == 'None')) {
-      shopembed.addField('Leaflet Armor', '**Cost:** x\n\n**Stats:** 50 ❤, 10 ❈, 5 ☣, 10 ☠', true)
+      shopembed.addField('Golem Armor', '**Cost:** x\n\n**Stats:** \`100 ❤\`, \`30 ❈\`, \`10 ❁\`, \`10 ☣\`, \`20 ☠\`', true)
+    } else if (armorinv.find(item => item.name == 'Naked')) {
+      shopembed.addField('Leaflet Armor', '**Cost:** x\n\n**Stats:** \`50 ❤\`, \`10 ❈\`, \`5 ☣\`, \`10 ☠\`', true)
       console.log('A')
     }
 

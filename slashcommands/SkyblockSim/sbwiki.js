@@ -84,6 +84,11 @@ module.exports = {
           }
           
         menu.edit({embeds: [eventembed]})
+      } else if(i.customId == 'dungeons') {
+        let dungeonsembed = new Discord.MessageEmbed()
+        .setTitle('Dungeons Information')
+        .setColor('90EE90')
+        .setFooter('Skyblock Simulator')
       }
     })
   }

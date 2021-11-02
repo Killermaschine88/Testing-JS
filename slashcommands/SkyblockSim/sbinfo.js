@@ -93,25 +93,25 @@ module.exports = {
           armorstr += `${item.name} `
 
         if(item.health != 0) {
-          armorstr += `${item.health} ❤, `
+          armorstr += `\`${item.health} ❤\`, `
         }
         if(item.defense != 0) {
-          armorstr += `${item.defense} ❈, `
+          armorstr += `\`${item.defense} ❈\`, `
         }
         if(item.strength != 0) {
-          armorstr += `${item.strength} ❁, `
+          armorstr += `\`${item.strength} ❁\`, `
         }
         if(item.crit_chance != 0) {
-          armorstr += `${item.crit_chance} ☣, `
+          armorstr += `\`${item.crit_chance} ☣\`, `
         }
         if(item.crit_damage != 0) {
-          armorstr += `${item.crit_damage} ☠, `
+          armorstr += `\`${item.crit_damage} ☠\`, `
         }
         if(item.magic_find != 0) {
-          armorstr += `${item.magic_find} ✯, `
+          armorstr += `\`${item.magic_find} ✯\`, `
         }
         if(item.sea_creature_chance != 0) {
-          armorstr += `${item.sea_creature_chance} α, `
+          armorstr += `\`${item.sea_creature_chance} α\`, `
         }
         armorstr += '\n'
         armornum += 1
@@ -130,16 +130,16 @@ module.exports = {
         swordstr += `${item.name} `
 
         if(item.damage != 0) {
-          swordstr += `${item.damage} ⚔️, `
+          swordstr += `\`${item.damage} ⚔️\`, `
         }
         if(item.strength != 0) {
-          swordstr += `${item.strength} ❁, `
+          swordstr += `\`${item.strength} ❁\`, `
         }
         if(item.crit_chance != 0) {
-          swordstr += `${item.crit_chance} ☣, `
+          swordstr += `\`${item.crit_chance} ☣\`, `
         }
         if(item.crit_damage != 0) {
-          swordstr += `${item.crit_damage} ☠, `
+          swordstr += `\`${item.crit_damage} ☠\`, `
         }
         swordstr += '\n'
         swordnum += 1
