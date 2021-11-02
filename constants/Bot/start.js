@@ -29,7 +29,7 @@ async function start(client, mclient) {
 
   const mfoffembed = new Discord.MessageEmbed()
   .setTitle('🍀 Magic Find Event Disabled')
-  .setDescription('The extra Magic Find have been removed again.')  
+  .setDescription('The extra Magic Find has been disabled again.')  
   .setFooter('Skyblock Simulator Events')
   .setColor('RED')
   
