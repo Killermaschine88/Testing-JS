@@ -241,7 +241,7 @@ module.exports = {
       [0, 1, 1, 1, 1, 1, 0],
       [0, 0, 0, 0, 0, 0, 0]
     ]*/
-    let f1_map = [
+    /*let f1_map = [
       [0, 0, 0, 6, 6, 0, 0, 0],
       [0, 2, 5, 1, 1, 0, 3, 0],
       [0, 3, 1, 1, 1, 0, 1, 0],
@@ -250,10 +250,19 @@ module.exports = {
       [0, 1, 1, 4, 0, 4, 1, 0],
       [0, 3, 1, 1, 0, 1, 1, 0],
       [0, 0, 0, 0, 0, 0, 0, 0]
+    ]*/
+    let f1_map = [
+      [0, 0, 6, 6, 0, 0, 0],
+      [0, 2, 1, 1, 1, 1, 0],
+      [0, 1, 1, 1, 1, 1, 0],
+      [0, 1, 1, 1, 1, 1, 0],
+      [0, 1, 1, 1, 1, 1, 0],
+      [0, 1, 1, 1, 1, 1, 0],      
+      [0, 0, 0, 0, 0, 0, 0]
     ]
     
     let f2_map = [
-      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 6, 6, 0, 0, 0],
       [0, 2, 1, 1, 1, 1, 1, 0],
       [0, 1, 1, 1, 1, 1, 1, 0],
       [0, 1, 1, 1, 1, 1, 1, 0],
@@ -262,39 +271,20 @@ module.exports = {
       [0, 1, 1, 1, 1, 1, 1, 0],
       [0, 0, 0, 0, 0, 0, 0, 0]
     ]
-    // sample floor 2 map
-    f2_map = [
-      [0, 0, 0, 6, 6, 0, 0, 0],
-      [0, 2, 5, 1, 1, 0, 3, 0],
-      [0, 3, 1, 1, 1, 0, 1, 0],
-      [0, 4, 1, 1, 1, 1, 1, 0],
-      [0, 0, 1, 1, 0, 0, 1, 0],
-      [0, 1, 1, 4, 0, 4, 1, 0],
-      [0, 3, 1, 1, 0, 1, 1, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0]
-    ]
-    /*let f3_map = [
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 2, 1, 1, 1, 1, 1, 1, 1, 0],
-      [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-      [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-      [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-      [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-      [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-      [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-      [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]*/
+    
+    
     let f3_map = [
-      [0, 0, 0, 6, 6, 0, 0, 0],
-      [0, 2, 5, 1, 1, 0, 3, 0],
-      [0, 3, 1, 1, 1, 0, 1, 0],
-      [0, 4, 1, 1, 1, 1, 1, 0],
-      [0, 0, 1, 1, 0, 0, 1, 0],
-      [0, 1, 1, 4, 0, 4, 1, 0],
-      [0, 3, 1, 1, 0, 1, 1, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0]
+      [0, 0, 0, 6, 6, 0, 0, 0, 0],
+      [0, 2, 1, 1, 1, 1, 1, 1, 0],
+      [0, 1, 1, 1, 1, 1, 1, 1, 0],
+      [0, 1, 1, 1, 1, 1, 1, 1, 0],      
+      [0, 1, 1, 1, 1, 1, 1, 1, 0],
+      [0, 1, 1, 1, 1, 1, 1, 1, 0],
+      [0, 1, 1, 1, 1, 1, 1, 1, 0],
+      [0, 1, 1, 1, 1, 1, 1, 1, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
+    
 
     //Floor Selection
     const floors = new MessageActionRow()
@@ -451,7 +441,7 @@ module.exports = {
     const wall = '<:wall:876211886746636288>'
     const air = '<:air:876209923875303424>'
     const puzzle = '🟪'
-    const enemy = '<:zombie:876573165751509023>'
+    const enemy = '🧟'
     const door = '<:wooddoor:882163369174503435>'
 
     const puzzles = ['ttt', 'quiz']
@@ -468,7 +458,7 @@ module.exports = {
     // If enemy is near, fight button activates
     row1.components[0].disabled = nearEnemy()[0] ? false : true
 
-    menu.edit({ embeds: [test], components: [row1, row2] })
+   // menu.edit({ embeds: [test], components: [row1, row2] })
 
     const collector = menu.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 1000 * 60 * 5 })
 
@@ -588,6 +578,95 @@ module.exports = {
     let quiz, randomOptions
 
     let inTTT = false, inQuiz = false, runFailed = false, runCancelled = false, bossFight = false, atLoot = false, runFinished = false
+
+    //generating random map
+    const generatingmap = new MessageEmbed()
+    .setTitle('Generating Dungeon Map')
+    .setColor('GREEN')
+    .setFooter('Skyblock Simulator')
+    
+   // interaction.editReply({embeds: [generatingmap], components: []})
+
+//console.log(map)
+    
+    let mapx = ''
+    let mapxarray = ''
+    let mapy = ''
+    let mapyarray = ''
+    let finishedGenerating = false
+    
+    let mobamount = ''
+    let puzzleamount = ''
+    let secretamount = ''
+    let wallamount = ''
+    
+    let mobplaced = 0
+    let puzzleplaced = 0
+    let secretplaced = 0
+    let wallplaced = 0
+    
+    if(floor == 1) {
+      mapx = 7
+      mapxarray = [0, 1, 2, 3, 4, 5, 6]
+      mapy = 7
+      mapyarray = [0, 1, 2, 3, 4, 5, 6]
+      mobamount = 2
+      puzzleamount = 2
+      secretamount = 1
+      wallamount = 5
+    } else if(floor == 2) {
+      mapx = 8
+      mapxarray = [0, 1, 2, 3, 4, 5, 6, 7]
+      mapy = 8
+      mapyarray = [0, 1, 2, 3, 4, 5, 6, 7]
+      mobamount = 2
+      puzzleamount = 3
+      secretamount = 2
+      wallamount = 6
+    } else if(floor == 3) {
+      mapx = 9
+      mapxarray = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+      mapy = 9
+      mapyarray = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+      mobamount = 3
+      puzzleamount = 3
+      secretamount = 3
+      wallamount = 8
+    }
+
+    while(finishedGenerating == false) {
+      //let i = 0
+      //i++
+     // console.log(i)
+      let mapxplace = mapxarray[Math.floor(Math.random() * mapx)]
+      let mapyplace = mapyarray[Math.floor(Math.random() * mapy)]
+     // console.log(map[mapxplace][mapyplace])
+      
+
+      if(map[mapxplace][mapyplace] == 1 && (map[mapxplace-1][mapyplace] != 6  && map[mapxplace+1][mapyplace] != 6 && map[mapxplace][mapyplace-1] != 6 && map[mapxplace][mapyplace+1] != 6)) {
+        
+        if(mobplaced < mobamount) {
+          map[mapxplace][mapyplace] = 4
+          mobplaced += 1
+        } else if(puzzleplaced < puzzleamount) {
+          map[mapxplace][mapyplace] = 3
+          puzzleplaced += 1
+        } else if(secretplaced != secretamount) {
+          map[mapxplace][mapyplace] = 5
+          secretplaced += 1
+        } else if(wallplaced != wallamount) {
+          map[mapxplace][mapyplace] = 0
+          wallplaced += 1
+        } else {
+          finishedGenerating = true
+          //console.log(map)
+        }
+      }
+    }
+    test.setDescription(`🎯 Score: **${score}**\n\n${mapArray(map)}`)
+    interaction.editReply({embeds: [test], components: [row1, row2]})
+    
+    
 
     collector.on('collect', async i => {
       const { customId: id } = i
