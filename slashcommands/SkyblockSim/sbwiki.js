@@ -19,7 +19,7 @@ module.exports = {
     .setTitle('Skyblock Simulator Wiki')
     .setColor('90EE90')
     .setFooter('Skyblock Simulator')
-    .setDescription('Press the Button that you want to see the Information off.')
+    .setDescription('Press the corresponding Button that you want to see the Information off.')
 
     const button1 = new Discord.MessageButton()
       .setCustomId('general')

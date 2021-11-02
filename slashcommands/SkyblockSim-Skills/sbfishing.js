@@ -131,7 +131,7 @@ module.exports = {
       .setColor('BLUE')
       .setFooter('Skyblock Simulator')
       .setDescription(`Rod: **${rod}**\nSea Creature Chance: **${sea_creature_chance}**\nFishing Speed: **${rod_speed}**%`)
-      .setImage('') //rod in hand
+      .setImage('https://cdn.discordapp.com/attachments/871669216703578152/905004300835631174/unknown.png') //rod in hand
 
     const menu = await interaction.editReply({ embeds: [pond], components: [row] })
 
@@ -159,7 +159,7 @@ module.exports = {
         rod_casted = true
         pond.fields = []
         pond.addField('\u200b', '<a:wait:847471618272002059> Waiting for something to bite the Bait.')
-        .setImage('') //rod in water
+        .setImage('https://cdn.discordapp.com/attachments/871669216703578152/905004413695983636/unknown.png') //rod in water
 
         menu.edit({ embeds: [pond], components: [row3] })
 
@@ -167,7 +167,7 @@ module.exports = {
 
         pond.fields = []
         pond.addField('\u200b', 'Something bit the Bait, lure it in.')
-        .setImage('') //fish close to rod
+        .setImage('https://cdn.discordapp.com/attachments/871669216703578152/905004487725441064/unknown.png') //fish close to rod
 
         menu.edit({ embeds: [pond], components: [row1] })
 
@@ -216,7 +216,7 @@ module.exports = {
             rod_casted = false
             pond.fields = [];
             pond.addField(`Caught a ${fishname}`, `earned **${fishxp} Fishing XP** and sold it for **<:coins:861974605203636253> ${fishingcoins} Coins**`)
-            .setImage('') //rod in hand
+            .setImage('https://cdn.discordapp.com/attachments/871669216703578152/905004300835631174/unknown.png') //rod in hand
 
             await collection.updateOne(
               { _id: interaction.user.id },
