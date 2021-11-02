@@ -29,14 +29,24 @@ module.exports = {
         { _id: interaction.user.id },
         { $set: { 'data.settings.imgshown': false } },
         { upsert: true })
-      interaction.editReply('Disabled Images being shown')
+
+      let embed = new Discord.MessageEmbed()
+      .setTitle('Setting changed')
+      .setColor('GREEN')
+      .setDescription('Images shown is now disabled.')
+      interaction.editReply({embeds: [embed]})
       return;
     } else if (choosen === 'imgshown' && player.data.settings.imgshown === false) {
       await collection.updateOne(
         { _id: interaction.user.id },
         { $set: { 'data.settings.imgshown': true } },
         { upsert: true })
-      interaction.editReply('Enabled Images being shown')
+
+      let embed = new Discord.MessageEmbed()
+      .setTitle('Setting changed')
+      .setColor('GREEN')
+      .setDescription('Images shown is now enabled.')
+      interaction.editReply({embeds: [embed]})
       return;
     }
   }

@@ -193,6 +193,7 @@ const data = [
             name: 'item',
             description: 'Item to Sell',
             type: 'STRING',
+            autocomplete: true,
             required: true,
           },
           {

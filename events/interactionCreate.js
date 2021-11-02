@@ -10,32 +10,69 @@ module.exports = {
       if(interaction.options._subcommand == 'reforge') {
         let stones = ['Dragon Claw', 'Wither Blood', 'Warped Stone', 'Deep Sea Orb', 'Dragon Horn', 'Precursor Gear', 'Sadan\'s Brooch', 'Onyx', 'Diamonite', 'Rock Gemstons', 'Hardened Wood', 'Lucky Dice']
         let found = []
+        let found2 = []
         let seen = stones.filter(stone => (stone.toLowerCase()).includes(focused) || stone.includes(focused))
      
         if(seen.length != 0) {
+          let i = 0
           for(const stone of seen) {
-            
-            found.push(
-              {
+            if(i < 25) {
+            found.push({
                 name: stone,
                 value: stone
+              })
+              } else {
+                break
               }
-            )
+            }
+          } else {
+            found2.push({
+              name: `No match for '${focused}'`,
+              value: `No match for '${focused}'`
+            })
           }
-        }        
-        
-        if(found.length != 0) {
-        interaction.respond(found)         
-        } else {                 
-        interaction.respond(stones)
+            //alternatively show fully list of items if no match
+          if(found.length != 0) {
+            interaction.respond(found)         
+          } else {
+            interaction.respond(found2)
+          }
+
+        } else if(interaction.options._subcommand == 'sell') {
+        let items = ['Hardstone', 'Coal', 'Iron Ingot', 'Gold Ingot', 'Lapis Lazuli', 'Redstone', 'Emerald', 'Diamond', 'Mithril', 'Titanium', 'Gemstone', 'Lilypad', 'Recombobulator', 'Gold Nugget', 'Blaze Rod', 'Enchanted Gold Ingot', 'Enchanted Blaze Rod', 'Magma Cream', 'Bone', 'Enchanted Magma Cream', 'Enchanted Bone', 'Enchanted Coal', 'Ghast Tear', 'Enchanted Ghast Tear', 'Ender Pearl', 'Enchanted Ender Pearl', 'Eye of Ender', 'Enchanted Eye of Ender', 'Obsidian', 'Enchanted Obsidian', 'Summoning Eye', 'Arrow', 'Slimeball', 'String', 'Spider Eye', 'Enchanted Slimeball', 'Enchanted String', 'Enchanted Spider Eye', 'Rotten Flesh', 'Carrot', 'Potatoe']
+        let found = []
+        let found2 = []
+        let seen = items.filter(item => (item.toLowerCase()).includes(focused) || item.includes(focused))
+
+        if(seen.length != 0) {
+          let i = 0
+          for(const item of seen) {
+            if(i < 10) {
+            found.push({
+                name: item,
+                value: item
+              })
+              i++
+              } else {
+                break
+              }
+            }
+          } else {
+            found2.push({
+              name: `No match for '${focused}'`,
+              value: `No match for '${focused}'`
+            })
+          }
+
+          if(found.length != 0) {
+            interaction.respond(found)         
+          } else {
+            interaction.respond(found2)
+          }
         }
       }
-    }
 
-    
     if (!interaction.isCommand()) return;
-
-
 
     if(config.blacklistedusers.includes(interaction.user.id)) {
       let blockedembed = new Discord.MessageEmbed()
