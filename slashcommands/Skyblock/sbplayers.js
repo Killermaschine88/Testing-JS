@@ -23,8 +23,8 @@ module.exports = {
 
 
 async function getApiData() {
-  delete require.cache[require.resolve('../../config.json')];
-  const config = require('../../config.json');
+  delete require.cache[require.resolve('../../constants/Bot/config.json')];
+  const config = require('../../constants/Bot/config.json');
 
   const response = await fetch(`https://api.slothpixel.me/api/counts`);
   return await response.json();
