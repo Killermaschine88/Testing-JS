@@ -16,6 +16,15 @@ module.exports = {
 
     let classchoosen = interaction.options.getString('choice')
 
+    if (player === null) {
+      const noprofile = new Discord.MessageEmbed()
+        .setColor('RED')
+        .setTitle('No Profile found')
+        .setDescription(`Create a Profile using \`/sb start\``)
+      interaction.editReply({ embeds: [noprofile] })
+      return;
+    }
+
     let assassinxp = player.data.dungeons.class.available.assassin.xp
     let berserkerxp = player.data.dungeons.class.available.berserker.xp
     let tankxp = player.data.dungeons.class.available.tank.xp
@@ -25,16 +34,6 @@ module.exports = {
     let assassinlevel = await cataLevel(assassinxp).level
     let berserkerlevel = await cataLevel(berserkerxp).level
     let tanklevel = cataLevel(tankxp).level
-
-
-    if (player === null) {
-      const noprofile = new Discord.MessageEmbed()
-        .setColor('RED')
-        .setTitle('No Profile found')
-        .setDescription(`Create a Profile using \`/sb start\``)
-      interaction.editReply({ embeds: [noprofile] })
-      return;
-    }
 
     if (classchoosen === null) {
       const classes = new Discord.MessageEmbed()

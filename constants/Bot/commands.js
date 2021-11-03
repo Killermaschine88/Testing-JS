@@ -358,6 +358,19 @@ const data = [
           },
         ],
       },
+      {
+        name: 'progress',
+        description: 'Lets you view a Players Progress',
+        type: 'SUB_COMMAND',
+        options: [
+          {
+            name: 'user',
+            description: 'User to view',
+            type: 'USER',
+            required: false,
+          },
+        ],
+      },
     ],
   },
 ]

@@ -254,6 +254,7 @@ function getOre(player, ps) {
   } else if(randore == 'Mithril') {
     name = 'Mithril'
     img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/0/0c/Prismarinkristalle.png'
+    xp = 30
   } else if(randore == 'Hardstone') {
     name = 'Hardstone'
     img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/4/45/Stein.png'

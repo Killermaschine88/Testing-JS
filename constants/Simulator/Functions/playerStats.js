@@ -55,12 +55,46 @@ async function playerStats(player) {
 
     sea_creature_chance += inv2.rod.sea_creature_chance + (fishinglvl / 2) + inv.armor.sea_creature_chance
 
+    magic_find += inv.armor.magic_find
+
     mining_speed += mininglvl + inv3.pickaxe.mining_speed
     mining_fortune += mininglvl / 2 + inv3.pickaxe.mining_fortune
 
   //Adding Stats for Events
   if(mf_event.enabled == true) {
     magic_find += 15
+  }
+
+  //reforge bonuses
+  //sword
+  if(inv.sword.recombobulated == true) {
+    damage += ((inv.sword.damage * 1.1) - inv.sword.damage)
+    console.log(damage)
+    strength += ((inv.sword.strength * 1.1) - inv.sword.strength)
+    crit_chance += ((inv.sword.crit_chance * 1.1) - inv.sword.crit_chance)
+    crit_damage += ((inv.sword.crit_damage * 1.1) - inv.sword.crit_damage)
+  }
+
+  //armor
+  if(inv.armor.recombobulated == true) {
+    health += ((inv.armor.health * 1.1) - inv.armor.health)
+    defense += ((inv.armor.defense * 1.1) - inv.armor.defense)
+    strength += ((inv.armor.strength * 1.1) - inv.armor.strength)
+    crit_chance += ((inv.armor.crit_chance * 1.1) - inv.armor.crit_chance)
+    crit_damage += ((inv.armor.crit_damage * 1.1) - inv.armor.crit_damage)
+    sea_creature_chance += ((inv.armor.sea_creature_chance * 1.1) - inv.armor.sea_creature_chance)
+    magic_find += ((inv.armor.magic_find * 1.1) - inv.armor.magic_find)
+  }
+
+  //rod
+  if(inv2.rod.recombobulated == true) {
+    sea_creature_chance += ((inv2.rod.sea_creature_chance * 1.1) - inv2.rod.sea_creature_chance)
+  }
+
+  //pickaxe
+  if(inv3.pickaxe.recombobulated == true) {
+    mining_fortune += ((inv3.pickaxe.mining_fortune * 1.1) - inv3.pickaxe.mining_fortune)
+    mining_speed += ((inv3.pickaxe.mining_speed * 1.1) - inv3.pickaxe.mining_speed)
   }
 
   //Add Booster Cookie Stats

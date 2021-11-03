@@ -8,7 +8,7 @@ module.exports = {
   if(interaction.isAutocomplete()) {
       const focused = interaction.options.getFocused()   
       if(interaction.options._subcommand == 'reforge') {
-        let stones = ['Dragon Claw', 'Wither Blood', 'Warped Stone', 'Deep Sea Orb', 'Dragon Horn', 'Precursor Gear', 'Sadan\'s Brooch', 'Onyx', 'Diamonite', 'Rock Gemstons', 'Hardened Wood', 'Lucky Dice']
+        let stones = ['Dragon Claw', 'Wither Blood', 'Warped Stone', 'Deep Sea Orb', 'Dragon Horn', 'Precursor Gear', 'Sadan\'s Brooch', 'Onyx', 'Diamonite', 'Rock Gemstons', 'Hardened Wood', 'Lucky Dice', 'Recombobulator 3000']
         let found = []
         let found2 = []
         let seen = stones.filter(stone => (stone.toLowerCase()).includes(focused) || stone.includes(focused))
@@ -34,7 +34,7 @@ module.exports = {
           }
 
         } else if(interaction.options._subcommand == 'sell') {
-        let items = ['Hardstone', 'Coal', 'Iron Ingot', 'Gold Ingot', 'Lapis Lazuli', 'Redstone', 'Emerald', 'Diamond', 'Mithril', 'Titanium', 'Gemstone', 'Lilypad', 'Recombobulator', 'Gold Nugget', 'Blaze Rod', 'Enchanted Gold Ingot', 'Enchanted Blaze Rod', 'Magma Cream', 'Bone', 'Enchanted Magma Cream', 'Enchanted Bone', 'Enchanted Coal', 'Ghast Tear', 'Enchanted Ghast Tear', 'Ender Pearl', 'Enchanted Ender Pearl', 'Eye of Ender', 'Enchanted Eye of Ender', 'Obsidian', 'Enchanted Obsidian', 'Summoning Eye', 'Arrow', 'Slimeball', 'String', 'Spider Eye', 'Enchanted Slimeball', 'Enchanted String', 'Enchanted Spider Eye', 'Rotten Flesh', 'Carrot', 'Potatoe']
+        let items = ['Hardstone', 'Coal', 'Iron Ingot', 'Gold Ingot', 'Lapis Lazuli', 'Redstone', 'Emerald', 'Diamond', 'Mithril', 'Titanium', 'Gemstone', 'Lilypad', 'Recombobulator 3000', 'Gold Nugget', 'Blaze Rod', 'Enchanted Gold Ingot', 'Enchanted Blaze Rod', 'Magma Cream', 'Bone', 'Enchanted Magma Cream', 'Enchanted Bone', 'Enchanted Coal', 'Ghast Tear', 'Enchanted Ghast Tear', 'Ender Pearl', 'Enchanted Ender Pearl', 'Eye of Ender', 'Enchanted Eye of Ender', 'Obsidian', 'Enchanted Obsidian', 'Summoning Eye', 'Arrow', 'Slimeball', 'String', 'Spider Eye', 'Enchanted Slimeball', 'Enchanted String', 'Enchanted Spider Eye', 'Rotten Flesh', 'Carrot', 'Potatoe']
         let found = []
         let found2 = []
         let seen = items.filter(item => (item.toLowerCase()).includes(focused) || item.includes(focused))

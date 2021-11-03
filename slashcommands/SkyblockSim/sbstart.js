@@ -77,7 +77,7 @@ module.exports = {
               zombiexp: 0, spiderxp: 0, wolfxp: 0, endermanxp: 0, zombiekills: 0, spiderkills: 0, wolfkills: 0, endermankills: 0
             },
             dungeons: {
-              xp: 0, total_runs: 0, class: { selected: { name: 'Assassin', xp: 0 }, available: { assassin: { xp: 0 }, berserker: { xp: 0 }, tank: { xp: 0 } } }
+              xp: 0, total_runs: 0, class: { selected: { name: 'Assassin', xp: 0 }, available: { assassin: { name: 'Assassin', xp: 0 }, berserker: { name: 'Berserker', xp: 0 }, tank: { name: 'Tank', xp: 0 } } }
             },
             settings: {
               imgshown: true
@@ -89,8 +89,8 @@ module.exports = {
                 }, armor: {
                   name: 'Naked', health: 0, defense: 0, strength: 0, crit_chance: 0, crit_damage: 0, magic_find: 0, sea_creature_chance: 0, recombobulated: false, reforge: "None"
                 }
-              }, fishing: { rod: { name: 'Fishing Rod', sea_creature_chance: 0, fishing_speed: 0, reforge: "None" } },
-              mining: { pickaxe: { name: 'Wood Pickaxe', mining_speed: 0, mining_fortune: 0, reforge: "None" } },
+              }, fishing: { rod: { name: 'Fishing Rod', sea_creature_chance: 0, fishing_speed: 0, reforge: "None", recombobulated: false } },
+              mining: { pickaxe: { name: 'Wood Pickaxe', mining_speed: 0, mining_fortune: 0, reforge: "None", recombobulated: false } },
             },
             misc: {
               location: 'Graveyard', is_fishing: false, is_mining: false, in_dungeon: false, daily: {

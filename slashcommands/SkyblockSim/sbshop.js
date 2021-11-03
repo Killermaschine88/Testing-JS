@@ -330,7 +330,7 @@ module.exports = {
           }
           await collection.updateOne(
             { _id: interaction.user.id },
-            { $set: { 'data.equipment.fishing.rod.name': rodname, 'data.equipment.fishing.rod.sea_creature_chance': rodscc, 'data.equipment.fishing.rod.fishing_speed': rodspeed, "reforge": "None" } },
+            { $set: { 'data.equipment.fishing.rod.name': rodname, 'data.equipment.fishing.rod.sea_creature_chance': rodscc, 'data.equipment.fishing.rod.fishing_speed': rodspeed, "reforge": "None", recombobulated: false } },
             { upsert: true })
 
           await collection.updateOne(

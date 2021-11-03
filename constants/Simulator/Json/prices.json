@@ -34,5 +34,21 @@
   {
     "name": "Gemstone",
     "price": 20
+  },
+  {
+    "name": "Hardstone",
+    "price": 5
+  },
+  {
+    "name": "Lapis Lazuli",
+    "price": 8
+  },
+  {
+    "name": "Mithril",
+    "price": 11
+  },
+  {
+    "name": "Titanium",
+    "price": 60
   }
 ]

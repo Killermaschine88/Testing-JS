@@ -60,7 +60,7 @@ module.exports = {
     }
 
     if (type == 'sword') {
-      let validreforges = ['dragon claw', 'wither blood', 'warped stone']
+      let validreforges = ['dragon claw', 'wither blood', 'warped stone', 'recombobulator 3000']
       let itemname = sword[itemId].name
 
       if(!validreforges.includes(reforge)) {
@@ -89,16 +89,25 @@ module.exports = {
       apply_reforge = 'Withered'
     } else if (reforge == 'warped stone') {
       apply_reforge = 'warped'
+    } else if(reforge == 'recombobulator 3000') {
+      apply_reforge = 'Recombobulator 3000'
     }
 
     let reforged = caps(reforge)
 
 
     //add function to remove reforge stone from inventory
+    if(reforge != 'recombobulator 3000') {
     await collection.updateOne(
       { _id: interaction.user.id, "data.inventory.sword.name": itemname },
       { $set: { "data.inventory.sword.$.reforge": apply_reforge } },
       { upsert: true })
+    } else {
+      await collection.updateOne(
+      { _id: interaction.user.id, "data.inventory.sword.name": itemname },
+      { $set: { "data.inventory.sword.$.recombobulated": true } },
+      { upsert: true })
+    }
 
     await collection.updateOne(
       { _id: interaction.user.id, "data.inventory.items.name": reforged },
@@ -115,7 +124,7 @@ module.exports = {
     
 
     } else if (type == 'armor') {
-      let validreforges = ['deep sea orb', 'dragon horn', 'precursor gear', 'sadan\'s brooch']
+      let validreforges = ['deep sea orb', 'dragon horn', 'precursor gear', 'sadan\'s brooch', 'recombobulator 3000']
       let itemname = armor[itemId].name
 
       if(!validreforges.includes(reforge)) {
@@ -148,16 +157,24 @@ module.exports = {
         apply_reforge = 'Ancient'
       } else if (reforge == 'sadan\'s brooch') {
         apply_reforge = 'Empowered'
-      }
+      } else if(reforge == 'recombobulator 3000') {
+      apply_reforge = 'Recombobulator 3000'
+    }
 
       let reforged = caps(reforge)
        
 
-      
+      if(reforge != 'recombobulator 3000') {
       await collection.updateOne(
         { _id: interaction.user.id, "data.inventory.armor.name": itemname },
         { $set: { "data.inventory.armor.$.reforge": apply_reforge } },
         { upsert: true })
+      } else {
+        await collection.updateOne(
+        { _id: interaction.user.id, "data.inventory.armor.name": itemname },
+        { $set: { "data.inventory.armor.$.recombobulated": true } },
+        { upsert: true })
+      }
 
       await collection.updateOne(
         { _id: interaction.user.id, "data.inventory.items.name": reforged },
@@ -174,7 +191,7 @@ module.exports = {
       return interaction.editReply({embeds: [applied]})
 
     } else if (type == 'pickaxe') {
-      let validreforges = ['onyx', 'diamonite', 'rock gemstone']
+      let validreforges = ['onyx', 'diamonite', 'rock gemstone', 'recombobulator 3000']
 
       if(!validreforges.includes(reforge)) {
       const errembed = new Discord.MessageEmbed()
@@ -202,14 +219,27 @@ module.exports = {
       apply_reforge = 'Fleet'
     } else if(reforge == 'rock gemstone') {
       apply_reforge = 'Auspicious'
+    } else if(reforge == 'recombobulator 3000') {
+      apply_reforge = 'Recombobulator 3000'
     }
 
     let reforged = caps(reforge)
+
+    if(reforge != 'recombobulator 3000') {
 
     await collection.updateOne(
         { _id: interaction.user.id },
         { $set: { "data.equipment.mining.pickaxe.reforge": apply_reforge } },
         { upsert: true })
+
+    } else {
+
+      await collection.updateOne(
+        { _id: interaction.user.id },
+        { $set: { "data.equipment.mining.pickaxe.recombobulated": true } },
+        { upsert: true })
+
+    }
 
       await collection.updateOne(
         { _id: interaction.user.id, "data.inventory.items.name": reforged },
@@ -225,7 +255,7 @@ module.exports = {
       return interaction.editReply({embeds: [applied]})
 
     } else if (type == 'rod') {
-      let validreforges = ['hardened wood', 'lucky dice']
+      let validreforges = ['hardened wood', 'lucky dice', 'recombobulator 3000']
 
       if(!validreforges.includes(reforge)) {
       const errembed = new Discord.MessageEmbed()
@@ -251,14 +281,26 @@ module.exports = {
       apply_reforge = 'Stiff'
     } else if(reforge == 'lucky dice') {
       apply_reforge = 'Lucky'
+    } else if(reforge == 'recombobulator 3000') {
+      apply_reforge = 'Recombobulator 3000'
     }
 
     let reforged = caps(reforge)
 
-    await collection.updateOne(
+    if(reforge != 'recombobulator 3000') {
+
+      await collection.updateOne(
         { _id: interaction.user.id },
         { $set: { "data.equipment.fishing.rod.reforge": apply_reforge } },
         { upsert: true })
+
+    } else {
+      await collection.updateOne(
+        { _id: interaction.user.id },
+        { $set: { "data.equipment.fishing.rod.recombobulated": true } },
+        { upsert: true })
+    }
+    
 
       await collection.updateOne(
         { _id: interaction.user.id, "data.inventory.items.name": reforged },

@@ -159,29 +159,42 @@ module.exports = {
     let eqarmor = ''
     let eqpickaxe = ''
     let eqrod = ''
+
+    if(player.data.equipment.combat.sword.recombobulated == true) {
+      eqsword += '<:recomb:881094744183275540> '
+    }
     
     if(player.data.equipment.combat.sword.reforge != 'None') {
-      eqsword = player.data.equipment.combat.sword.reforge + ' ' + player.data.equipment.combat.sword.name
+      eqsword += player.data.equipment.combat.sword.reforge + ' ' + player.data.equipment.combat.sword.name
     } else {
-      eqsword = player.data.equipment.combat.sword.name
+      eqsword += player.data.equipment.combat.sword.name
     }
 
+    if(player.data.equipment.combat.armor.recombobulated == true) {
+      eqarmor += '<:recomb:881094744183275540> '
+    }
     if(player.data.equipment.combat.armor.reforge != 'None') {
-      eqarmor = player.data.equipment.combat.armor.reforge + ' ' + player.data.equipment.combat.armor.name
+      eqarmor += player.data.equipment.combat.armor.reforge + ' ' + player.data.equipment.combat.armor.name
     } else {
-      eqarmor = player.data.equipment.combat.armor.name
+      eqarmor += player.data.equipment.combat.armor.name
     }
 
+    if(player.data.equipment.mining.pickaxe.recombobulated == true) {
+      eqpickaxe += '<:recomb:881094744183275540> '
+    }
     if(player.data.equipment.mining.pickaxe.reforge != 'None') {
-      eqpickaxe = player.data.equipment.mining.pickaxe.reforge + ' ' + player.data.equipment.mining.pickaxe.name
+      eqpickaxe += player.data.equipment.mining.pickaxe.reforge + ' ' + player.data.equipment.mining.pickaxe.name
     } else {
-      eqpickaxe = player.data.equipment.mining.pickaxe.name
+      eqpickaxe += player.data.equipment.mining.pickaxe.name
     }
 
+    if(player.data.equipment.fishing.rod.recombobulated == true) {
+      eqrod += '<:recomb:881094744183275540> '
+    }
     if(player.data.equipment.fishing.rod.reforge != 'None') {
-      eqrod = player.data.equipment.fishing.rod.reforge + ' ' + player.data.equipment.fishing.rod.name
+      eqrod += player.data.equipment.fishing.rod.reforge + ' ' + player.data.equipment.fishing.rod.name
     } else {
-      eqrod = player.data.equipment.fishing.rod.name
+      eqrod += player.data.equipment.fishing.rod.name
     }
 
   
