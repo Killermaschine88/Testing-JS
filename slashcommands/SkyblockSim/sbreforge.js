@@ -116,7 +116,7 @@ module.exports = {
     
     let applied = new Discord.MessageEmbed()
       .setTitle('Reforge applied')
-      .setDescription(`Successfully applied **${apply_reforge}** to **${itemname}**.`)
+      .setDescription(`Successfully applied **${apply_reforge}** to **${itemname}**.\nFor the changes to work you need to re-equip the Sword.`)
       .setColor('90EE90')
       .setFooter('Skyblock Simulator')
 
@@ -184,7 +184,7 @@ module.exports = {
 
       let applied = new Discord.MessageEmbed()
       .setTitle('Reforge applied')
-      .setDescription(`Successfully applied **${apply_reforge}** to **${itemname}**.`)
+      .setDescription(`Successfully applied **${apply_reforge}** to **${itemname}**.\nFor the changes to work you need to re-equip the Armor.`)
       .setColor('90EE90')
       .setFooter('Skyblock Simulator')
 
