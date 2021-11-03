@@ -564,7 +564,7 @@ module.exports = {
       {
         question: `How many Talisman are there?`,
         options: [
-          ['76', true], ['70', false], ['73', false]
+          ['77', true], ['70', false], ['73', false]
         ]
       },
       {
