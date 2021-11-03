@@ -294,14 +294,17 @@ module.exports = {
       .addComponents(
         new MessageButton()
           .setCustomId('f1')
+        .setEmoji('852111493859115019')
           .setLabel('Floor 1')
           .setStyle('PRIMARY'),
         new MessageButton()
           .setCustomId('f2')
+        .setEmoji('852111493909446686')
           .setLabel('Floor 2')
           .setStyle('PRIMARY'),
         new MessageButton()
           .setCustomId('f3')
+        .setEmoji('852111493952176148')
           .setLabel('Floor 3')
           .setStyle('PRIMARY')
       )

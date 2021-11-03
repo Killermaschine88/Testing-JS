@@ -93,7 +93,7 @@ module.exports = {
         .setTitle('Dungeons Information')
         .setColor('90EE90')
         .setFooter('Skyblock Simulator')
-        .addField('Classes', 'Classes give bonuses inside Dungeon Runs\n\nAssassin (\`2 ❁\` per Class Level\nBerserker (\`1 ❁\` and \`1 ❈\` per Class Level\nTank (\`1 ❈\` and \`2 ❤\` per Class Level', true)
+        .addField('Classes', 'Classes give bonuses inside Dungeon Runs\n\nAssassin (\`2 ❁\` per Class Level)\nBerserker (\`1 ❁\` and \`1 ❈\` per Class Level)\nTank (\`1 ❈\` and \`2 ❤\` per Class Level)', true)
         .addField('Score', 'Score is used to determine the Loot Chests you will recieve after the dungeon run', true)
         .addField('Puzzles', 'Small Puzzles like a Quiz and Tic Tac Toe are found in a dungeon run which grant 20 Score.', true)
         .addField('Loot Chests', 'Loot Chests spawn after defeating a Dungeon Boss\n\n<:oak_wood:882624301503754350> Chest (Guaranteed)\n<:gold:869126927011708929> Chest (Guaranteed)\n<:diamond:869126926646788097> Chest (min. F2 & min. 150 Score)\n<:emerald:869126927380779008> Chest (min. F3 & min. 180 Score)', true)
