@@ -1075,7 +1075,7 @@ module.exports = {
             runFailed = true
             return collector.stop()
           }
-          // FINISH FIGHT
+          // FINISH FIGHTa
 
           if (fightEnded) {
             if(direction == undefined) {
