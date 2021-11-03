@@ -23,7 +23,7 @@ async function start(client, mclient) {
   let timeleft = Number((Date.now() / 1000).toFixed(0)) + 2*60*60
   const mfonembed = new Discord.MessageEmbed()
   .setTitle('🍀 Magic Find Event Enabled')
-  .setDescription(`All Users now have **+15 Magic Find** for the **next 2 Hours** (Ends <t:${timeleft}:R>`)
+  .setDescription(`All Users now have **+15 Magic Find** for the **next 2 Hours** (Ends <t:${timeleft}:R>)`)
   .setColor('GREEN')
   .setFooter('Skyblock Simulator Events')
 
