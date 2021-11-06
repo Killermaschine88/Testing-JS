@@ -348,8 +348,7 @@ module.exports = {
       .setTitle('Requirements not met.')
       .setDescription(`**Needed Requirements**\nFloor 1 -> Combat 10\nFloor 2 -> Catacombs 4\nFloor 3 -> Catacombs 8\n\n**Your Stats**\nCombat: ${combatlvl}\nCatacombs: ${catalevel}\n`)
       .setColor('RED')
-//add lvl check again
-    /*
+    
     if (floor == 1 && combatlvl <= 10) {
       menu.edit({ embeds: [invalidreqs], components: [] })
       return;
@@ -359,7 +358,7 @@ module.exports = {
     } else if (floor == 3 && catalevel <= 8) {
       menu.edit({ embeds: [invalidreqs], components: [] })
       return;
-    }*/
+    }
 
       //Sets the Player into the Dungeon so they cant open another run.
      await collection.updateOne(
@@ -1312,6 +1311,53 @@ module.exports = {
         await collection.updateOne(
           { _id: interaction.user.id },
           { $set: { "data.misc.in_dungeon": false } },
+          { upsert: true })
+
+        let xpearned = ''
+        let classselect = ''
+
+        if(floor == 1) {
+          xpearned = 50
+        } else if(floor == 2) {
+          xpearned = 100
+        } else if(floor == 3) {
+          xpearned = 300
+        } else if(floor == 4) {
+          xpearned = 1000
+        } else if(floor == 5) {
+          xpearned = 2000
+        } else if(floor == 6) {
+          xpearned = 5000
+        } else if(floor == 7) {
+          xpearned = 30000
+        }
+
+        if(player.data.dungeons.class.selected.name == 'Assassin') {
+
+          await collection.updateOne(
+          { _id: interaction.user.id },
+          { $inc: { "data.dungeons.class.selected.xp": xpearned, "data.dugeons.class.available.assassin.xp": xpearned } },
+          { upsert: true })
+
+        } else if(player.data.dungeons.class.selected.xp == 'Tank') {
+
+          await collection.updateOne(
+          { _id: interaction.user.id },
+          { $inc: { "data.dungeons.class.selected.xp": xpearned, "data.dugeons.class.available.tank.xp": xpearned } },
+          { upsert: true })
+
+        } else if(player.data.dungeons.class.selected.xp == 'Berserker') {
+
+          await collection.updateOne(
+          { _id: interaction.user.id },
+          { $inc: { "data.dungeons.class.selected.xp": xpearned, "data.dugeons.class.available.berserker.xp": xpearned } },
+          { upsert: true })
+          
+        }
+
+        await collection.updateOne(
+          { _id: interaction.user.id },
+          { $inc: { "data.dungeons.xp": xpearned, "data.dungeons.total_runs": 1 } },
           { upsert: true })
 
         await collection1.updateOne(
