@@ -14,10 +14,7 @@ module.exports = {
   aliases: [],
   cooldown: 10,
   async execute(interaction, mclient) {
-   // try{
-
     const movePlayer = (movement, ignoreEvent) => {
-      //console.log(location + 'move')
       let [x, y] = location
 
       if (movement === 'up') {
@@ -50,12 +47,8 @@ module.exports = {
 
       const puzzle = map[a][b] == 5 ? true : false
       map[a][b] = 2
-      //console.log(location + ' ' + puzzle)
       return [location, puzzle]
     }
-   /* }catch (e) {
-      return interaction.editReply({content: 'test'})
-    }*/
     const mapArray = () => {
       let string = ''
       let index = 0
@@ -78,7 +71,6 @@ module.exports = {
     }
     
     const nearEnemy = () => {
-      //console.log(location + 'enemy')
       if(location == undefined) {
         collector.stop()
         test.fields = []
@@ -107,7 +99,6 @@ module.exports = {
       return false
     }
     const nearPuzzle = () => {
-      //console.log(location + 'puzzle')
       if(location == undefined) {
         collector.stop()
         test.fields = []
@@ -238,8 +229,7 @@ module.exports = {
     }
 
     //Players Stats
-    let type = 'combat'
-    let pstats = await playerStats(player, type) //Type decides what gear is needed for the Action
+    let pstats = await playerStats(player)
 
     let combatlvl = skillLevel(player.data.skills.combat).level
 
@@ -269,26 +259,7 @@ module.exports = {
     let emerald_loot = ''
     let obsidian_loot = ''
 
-    /*let f1_map = [
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 2, 1, 1, 1, 1, 0],
-      [0, 1, 1, 1, 1, 1, 0],
-      [0, 1, 1, 1, 1, 1, 0],
-      [0, 1, 1, 1, 1, 1, 0],
-      [0, 1, 1, 1, 1, 1, 0],
-      [0, 0, 0, 0, 0, 0, 0]
-    ]*/
-    /*let f1_map = [
-      [0, 0, 0, 6, 6, 0, 0, 0],
-      [0, 2, 5, 1, 1, 0, 3, 0],
-      [0, 3, 1, 1, 1, 0, 1, 0],
-      [0, 4, 1, 1, 1, 1, 1, 0],
-      [0, 0, 1, 1, 0, 0, 1, 0],
-      [0, 1, 1, 4, 0, 4, 1, 0],
-      [0, 3, 1, 1, 0, 1, 1, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0]
-    ]*/
-    let f1_map = [
+    let f1_map_1 = [
       [0, 0, 6, 6, 0, 0, 0],
       [0, 2, 1, 1, 1, 1, 0],
       [0, 1, 1, 1, 1, 1, 0],
@@ -298,7 +269,7 @@ module.exports = {
       [0, 0, 0, 0, 0, 0, 0]
     ]
     
-    let f2_map = [
+    let f2_map_1 = [
       [0, 0, 0, 6, 6, 0, 0, 0],
       [0, 2, 1, 1, 1, 1, 1, 0],
       [0, 1, 1, 1, 1, 1, 1, 0],
@@ -310,7 +281,7 @@ module.exports = {
     ]
     
     
-    let f3_map = [
+    let f3_map_1 = [
       [0, 0, 0, 6, 6, 0, 0, 0, 0],
       [0, 2, 1, 1, 1, 1, 1, 1, 0],
       [0, 1, 1, 1, 1, 1, 1, 1, 0],
@@ -321,6 +292,7 @@ module.exports = {
       [0, 1, 1, 1, 1, 1, 1, 1, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
+
     
 
     //Floor Selection
@@ -360,9 +332,9 @@ module.exports = {
       .then(i => {
         const { customId: id } = i
 
-        if (id == 'f1') map = f1_map, floor = 1
-        else if (id == 'f2') map = f2_map, floor = 2
-        else if (id === 'f3') map = f3_map, floor = 3
+        if (id == 'f1') floor = 1
+        else if (id == 'f2') floor = 2
+        else if (id === 'f3') floor = 3
         else {
           const cancelled = new MessageEmbed()
             .setTitle('Menu Cancelled')
@@ -619,15 +591,23 @@ module.exports = {
 
     let inTTT = false, inQuiz = false, runFailed = false, runCancelled = false, bossFight = false, atLoot = false, runFinished = false
 
-    //generating random map
-    const generatingmap = new MessageEmbed()
-    .setTitle('Generating Dungeon Map')
-    .setColor('GREEN')
-    .setFooter('Skyblock Simulator')
-    
-   // interaction.editReply({embeds: [generatingmap], components: []})
+    //grabbing random map from choosen floor
+    if (floor == 1) {
 
-//console.log(map)
+      let maps = [f1_map_1]
+      map = maps[Math.floor(Math.random() * maps.length)]
+
+    } else if (floor == 2) {
+
+      let maps = [f2_map_1]
+      map = maps[Math.floor(Math.random() * maps.length)]
+
+    } else if (floor == 3) {
+
+      let maps = [f3_map_1]
+      map = maps[Math.floor(Math.random() * maps.length)]
+
+    }
     
     let mapx = ''
     let mapxarray = ''
