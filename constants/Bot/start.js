@@ -20,13 +20,6 @@ async function start(client, mclient) {
   collection1.updateMany({}, {$set: {blocked: false}}) 
 
   //Event Embeds
-  let timeleft = Number((Date.now() / 1000).toFixed(0)) + 2*60*60
-  const mfonembed = new Discord.MessageEmbed()
-  .setTitle('🍀 Magic Find Event Enabled')
-  .setDescription(`All Users now have **+15 Magic Find** for the **next 2 Hours** (Ends <t:${timeleft}:R>)`)
-  .setColor('GREEN')
-  .setFooter('Skyblock Simulator Events')
-
   const mfoffembed = new Discord.MessageEmbed()
   .setTitle('🍀 Magic Find Event Disabled')
   .setDescription('The extra Magic Find has been disabled again.')  
@@ -36,6 +29,14 @@ async function start(client, mclient) {
 
   //Event Jobs
   const mfon = new CronJob('0 16 * * *', async function() {
+    
+    let timeleft = Number((Date.now() / 1000).toFixed(0)) + 2*60*60
+  const mfonembed = new Discord.MessageEmbed()
+  .setTitle('🍀 Magic Find Event Enabled')
+  .setDescription(`All Users now have **+15 Magic Find** for the **next 2 Hours** (Ends <t:${timeleft}:R>)`)
+  .setColor('GREEN')
+  .setFooter('Skyblock Simulator Events')
+    
     let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + (15*60*60)
     next_eventtime = Number(next_eventtime)
     let event_endtime = Number((Date.now() / 1000).toFixed(0)) + 2*60*60
@@ -52,6 +53,14 @@ async function start(client, mclient) {
   }, null, true, 'Europe/Rome');
 
   const mfon2 = new CronJob('0 6 * * *', async function() {
+    
+    let timeleft = Number((Date.now() / 1000).toFixed(0)) + 2*60*60
+  const mfonembed = new Discord.MessageEmbed()
+  .setTitle('🍀 Magic Find Event Enabled')
+  .setDescription(`All Users now have **+15 Magic Find** for the **next 2 Hours** (Ends <t:${timeleft}:R>)`)
+  .setColor('GREEN')
+  .setFooter('Skyblock Simulator Events')
+    
     let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + (10*60*60)
     next_eventtime = Number(next_eventtime)
     let event_endtime = Number((Date.now() / 1000).toFixed(0)) + 2*60*60

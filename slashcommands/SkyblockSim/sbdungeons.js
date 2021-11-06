@@ -14,7 +14,7 @@ module.exports = {
   aliases: [],
   cooldown: 10,
   async execute(interaction, mclient) {
-    try{
+   // try{
 
     const movePlayer = (movement, ignoreEvent) => {
       //console.log(location + 'move')
@@ -63,9 +63,9 @@ module.exports = {
         for (const item of row) {
           index++
           if (item == 0) string += wall
-          //else if (item == 1 || item == 5) string += air
-            else if(item == 1) string += air
-            else if(item == 5) string += '⚪'
+          else if (item == 1 || item == 5) string += air
+          //  else if(item == 1) string += air
+          //  else if(item == 5) string += '⚪'
           else if (item == 2) string += Player
           else if (item == 3) string += puzzle
           else if (item == 4) string += enemy
@@ -79,6 +79,15 @@ module.exports = {
     
     const nearEnemy = () => {
       //console.log(location + 'enemy')
+      if(location == undefined) {
+        collector.stop()
+        test.fields = []
+        var noButtonedit = true
+        let crashembed = new MessageEmbed()
+        .addField('Dungeon Run Crashed', '**Reason:**\nUser spammed Button.\nIn order to prevent this don\'t spam Buttons so the Bot has time to respond.')
+        .setColor('RED')
+        return interaction.followUp({embeds: [crashembed], ephemeral: true})
+      }
       let [x, y] = location
 
       let oldX = map[x]
@@ -99,6 +108,15 @@ module.exports = {
     }
     const nearPuzzle = () => {
       //console.log(location + 'puzzle')
+      if(location == undefined) {
+        collector.stop()
+        test.fields = []
+        var noButtonedit = true
+        let crashembed = new MessageEmbed()
+        .addField('Dungeon Run Crashed', '**Reason:**\nUser spammed Button.\nIn order to prevent this don\'t spam Buttons so the Bot has time to respond.')
+        .setColor('RED')
+        return interaction.followUp({embeds: [crashembed], ephemeral: true})
+      }
       let [x, y] = location
 
       let oldX = map[x]
@@ -455,7 +473,7 @@ module.exports = {
     const lootrow = new MessageActionRow()
       .addComponents(wood_button, gold_button)
 
-    const test = new MessageEmbed()
+    var test = new MessageEmbed()
     test.setFooter('Skyblock Simulator')
     test.setColor('GREY')
 
@@ -697,9 +715,7 @@ module.exports = {
         let x, y
         if (test.fields.length > 0) {
           test.fields = [] // remove the addition field like the "killed a mod with x hp left"
-          if(noButtonedit == false) {
           menu.edit({ embeds: [test] })
-          }
         }
 
         if (id == 1) x = 0, y = 0
@@ -757,10 +773,8 @@ module.exports = {
           if (E == '🟩' || !E) {
             inTTT = false
             score += 30
-            if(noButtonedit == false) {
-            await menu.edit({ embeds: [test], components: [row1, row2] })
-            }
-            await sleep(1000)
+            //await menu.edit({ embeds: [test], components: [row1, row2] })
+            //await sleep(1000)
             test.description = `🎯 Score: **${score}** (+30)` + '\n\n' + mapArray()
 
             table = [
@@ -778,9 +792,7 @@ module.exports = {
             row5.components[0].disabled = false
             row5.components[1].disabled = false
             row5.components[2].disabled = false // reset components for new tictactoe
-            if(noButtonedit == false) {
             return await menu.edit({ embeds: [test], components: [row1, row2] })
-            }
           } else {
             runFailed = false
             inTTT = false
@@ -801,9 +813,7 @@ module.exports = {
             row5.components[0].disabled = false
             row5.components[1].disabled = false
             row5.components[2].disabled = false // reset components for new tictactoe
-            if(noButtonedit == false) {
             return await menu.edit({ embeds: [test], components: [row1, row2] })
-            }
           }
         }
 
@@ -816,10 +826,8 @@ module.exports = {
           if (e == '🟩' || !e) {
             inTTT = false
             test.description += `\n${txt}`
-            if(noButtonedit == false) {
-            await menu.edit({ embeds: [test], components: [row1, row2] })
-            }
-            await sleep(1000)
+            //await menu.edit({ embeds: [test], components: [row1, row2] })
+            //await sleep(1000)
             test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray()
 
             table = [
@@ -837,9 +845,7 @@ module.exports = {
             row5.components[0].disabled = false
             row5.components[1].disabled = false
             row5.components[2].disabled = false // reset components for new tictactoe
-            if(noButtonedit == false) {
             return await menu.edit({ embeds: [test], components: [row1, row2] })
-            }
           } else {
             runFailed = false
             inTTT = false
@@ -860,21 +866,18 @@ module.exports = {
             row5.components[0].disabled = false
             row5.components[1].disabled = false
             row5.components[2].disabled = false // reset components for new tictactoe
-            if(noButtonedit == false) {
             return await menu.edit({ embeds: [test], components: [row1, row2] })
-            }
           }
         }
-        if(noButtonedit == false) {
         await menu.edit({ embeds: [test], components: [row3, row4, row5] })
-        }
       } else if (inQuiz) {
-        if (test.fields.length > 0) {
+        /*if (test.fields.length > 0) {
           test.fields = []  // remove the addition field like the "killed a mod with x hp left"
-          if(noButtonedit == false) {
+      //    if(noButtonedit == false) {
           menu.edit({ embeds: [test] })
-          }
-        }
+      //    }
+        }*/
+        test.fields = []
 
         let rightChoise = '', i = 0
 
@@ -889,9 +892,9 @@ module.exports = {
 
         if (id == rightChoise) {
           inQuiz = false
-          if(noButtonedit == false) {
+         // if(noButtonedit == false) {
           await menu.edit({ embeds: [test], components: [row1, row2] })
-          }
+      //    }
           await sleep(1000)
           score += 30
           test.description = `🎯 Score: **${score}** (+30)` + '\n\n' + mapArray()
@@ -902,9 +905,9 @@ module.exports = {
           inQuiz = false
           score -= 30
           test.description = `🎯 Score: **${score}** (-30)` + '\n\n' + mapArray()
-          if(noButtonedit == false) {
+      //    if(noButtonedit == false) {
           await menu.edit({ embeds: [test], components: [row1, row2] })
-          }
+      //    }
         }
       } else if (id == 'up' || id == 'left' || id == 'right' || id == 'down') {
         const locationAndPuzzleCheck = movePlayer(id, false)
@@ -933,10 +936,10 @@ module.exports = {
           test.addField(`Battle`, `Player Health: ❤️ ${php} (- ${mdmg})
                 Boss Health: ❤️ ${mhp} (-${crit ? '<:crit:870306942806020106>' : ''} ${pdmg})`)
 
-          if(noButtonedit == false) {
+       //   if(noButtonedit == false) {
 
           menu.edit({ embeds: [test], components: [bossrow] })
-          }
+      //    }
 
           if (mhp <= 0) {
             fightEnded = true
@@ -948,10 +951,10 @@ module.exports = {
               { $inc: { "data.skills.combat": 500 } },
               { upsert: true })
 
-            if(noButtonedit == false) {
+       //     if(noButtonedit == false) {
 
             menu.edit({ embeds: [test], components: [bossrow] })
-            }
+        //    }
 
             await sleep(1000) // waiting a second so you can actually read the message
 
@@ -1011,10 +1014,10 @@ module.exports = {
             }
             test.setColor('FFD700')
             atLoot = true
-            if(noButtonedit == false) {
+        //    if(noButtonedit == false) {
             
             menu.edit({ embeds: [test], components: [lootrow] })  //add row for chests
-            }
+        //    }
           }
         } else {
 
@@ -1095,6 +1098,7 @@ module.exports = {
           menu.edit({ embeds: [test], components: [row1, row2] }) // Components need to get adjusted might be wrong
         }
       } else if (id == 'interact') {
+        //console.log('bing')
         if (nearDoor()[0]) {
           // Lock arrows
           bossFight = true
@@ -1105,15 +1109,17 @@ module.exports = {
           test.fields = []
           test.addField(`Battle`, `Player Health: ❤️ ${php}
                 Mob Health: ❤️ ${mhp}`)
-          if(noButtonedit == false) {
+        //  if(noButtonedit == false) {
           await menu.edit({ embeds: [test], components: [bossrow] })
-          }
+      //    }
           const direction = nearDoor()[1]
         } else {
           const direction = nearPuzzle()[1]
 
           // START PUZZLE
           let puzzle = puzzles[Math.floor(Math.random() * puzzles.length)] // get random puzzle
+        //  console.log(puzzle)
+          
           if (puzzle == 'ttt') {
             inTTT = true
             const randomPick = [[0, 1, 2][Math.floor(Math.random() * 3)], [0, 1, 2][Math.floor(Math.random() * 3)]]
@@ -1135,9 +1141,9 @@ module.exports = {
               else if (columnPick == 2) row5.components[2].disabled = true
             }
 
-            if(noButtonedit == false) {
+           // if(noButtonedit == false) {
             await menu.edit({ embeds: [test], components: [row3, row4, row5] })
-            }
+       //     }
           } else if (puzzle == 'quiz') {
             inQuiz = true
 
@@ -1156,9 +1162,9 @@ module.exports = {
             }
 
             test.addField(quiz.question, answers, false)
-            if(noButtonedit == false) {
+            //if(noButtonedit == false) {
             await menu.edit({ embeds: [test], components: [row6] })
-            }
+            //}
           }
 
           location = movePlayer(direction, true)[0] // replace the mob emoji only after mob is killed
@@ -1205,9 +1211,9 @@ module.exports = {
             .setDescription(`<:coins:861974605203636253> **${loot}** Coins added to your Profile.`)
             .setColor('GREEN')
             .setFooter('Skyblock Simulator')
-            if(noButtonedit == false) {
+            //if(noButtonedit == false) {
           menu.edit({ embeds: [lootembed], components: [] })
-            }
+          //  }
           runFinished = true
           collector.stop()
         } else if (loot == 'Recombobulator 3000' && choosen == true) {
@@ -1227,9 +1233,9 @@ module.exports = {
             .setDescription(`<:recomb:881094744183275540> **${loot}** added to your Profile.`)
             .setColor('GREEN')
             .setFooter('Skyblock Simulator')
-            if(noButtonedit == false) {
+           // if(noButtonedit == false) {
           menu.edit({ embeds: [lootembed], components: [] })
-            }
+         //   }
           runFinished = true
           collector.stop()
         } else {
@@ -1248,9 +1254,9 @@ module.exports = {
             .setDescription(`You already own <:tank:852079613051666472> **${loot}** so i added you <:coins:861974605203636253> **${num(item.coins)}** Coins to your Profile.`)
             .setColor('GREEN')
             .setFooter('Skyblock Simulator')
-            if(noButtonedit == false) {
+           // if(noButtonedit == false) {
           menu.edit({ embeds: [lootembed], components: [] })
-            }
+          //  }
               runFinished = true
               collector.stop()
             } else {
@@ -1265,9 +1271,9 @@ module.exports = {
             .setDescription(`<:tank:852079613051666472> **${loot}** added to your Profile.`)
             .setColor('GREEN')
             .setFooter('Skyblock Simulator')
-            if(noButtonedit == false) {
+         //   if(noButtonedit == false) {
           menu.edit({ embeds: [lootembed], components: [] })
-            }
+         //   }
           runFinished = true
           collector.stop()
             }
@@ -1286,9 +1292,9 @@ module.exports = {
             .setDescription(`You already own <:berserker:852079613052059658> **${loot}** so i added you <:coins:861974605203636253> **${num(item.coins)}** Coins to your Profile.`)
             .setColor('GREEN')
             .setFooter('Skyblock Simulator')
-            if(noButtonedit == false) {
+      //      if(noButtonedit == false) {
           menu.edit({ embeds: [lootembed], components: [] })
-            }
+          //  }
               runFinished = true
               collector.stop()
             } else {
@@ -1303,9 +1309,9 @@ module.exports = {
             .setDescription(`<:berserker:852079613052059658> **${loot}** added to your Profile.`)
             .setColor('GREEN')
             .setFooter('Skyblock Simulator')
-            if(noButtonedit == false) {
+          //  if(noButtonedit == false) {
           menu.edit({ embeds: [lootembed], components: [] })
-            }
+         //   }
           runFinished = true
           collector.stop()
             }
@@ -1334,7 +1340,7 @@ module.exports = {
       { upsert: true })
         test.fields = []
         if (runFailed) {
-          test.addField('Dungeon Run Over', '**Reason**\n* Failed Puzzle\n* Died to Mob')
+          test.addField('Dungeon Run Over', '**Reason**\n* Died to Mob/Boss')
         } else if (runCancelled) {
           test.addField('Dungeon Run Over', '**Reason**\n* Timed out\n* Cancelled')
         } else if (runFinished) {
@@ -1349,11 +1355,11 @@ module.exports = {
       }
     })
   
-  } catch (e) {
+/*  } catch (e) {
       test.setDescription('An Error occured!')
       test.setColor('Red')
     return interaction.editReply({embeds: [test], components: []})
-  }
+  }*/
   }
 }
 

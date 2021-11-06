@@ -3,11 +3,13 @@ const config = require('../constants/Bot/config.json')
 
 module.exports = {
   name: 'interactionCreate',
-  async execute(interaction, mclient) {
+  async execute(interaction, mclient) { 
     
   if(interaction.isAutocomplete()) {
+    
       const focused = interaction.options.getFocused()   
-      if(interaction.options._subcommand == 'reforge') {
+       
+    if(interaction.options._subcommand == 'reforge') {
         let stones = ['Dragon Claw', 'Wither Blood', 'Warped Stone', 'Deep Sea Orb', 'Dragon Horn', 'Precursor Gear', 'Sadan\'s Brooch', 'Onyx', 'Diamonite', 'Rock Gemstons', 'Hardened Wood', 'Lucky Dice', 'Recombobulator 3000']
         let found = []
         let found2 = []
