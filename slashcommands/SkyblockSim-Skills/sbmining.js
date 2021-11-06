@@ -193,6 +193,8 @@ function getOre(player, ps) {
   //Get valid ores for area
   if(location == 'Coal Mine') {
     ores = ['Cobblestone', 'Coal']
+  } else if(location == 'Gold Mine') {
+    ores = ['Cobblestone', 'Coal', 'Iron Ingot', 'Gold Ingot']
   } else if(location == 'Gunpowder Mines') {
     ores = ['Cobblestone', 'Coal', 'Iron Ingot', 'Gold Ingot']
   } else if(location == 'Lapis Quarry') {
