@@ -76,7 +76,7 @@ module.exports = {
     }
     i = 0
 
-    let armorstr = ''
+    let armorstr = '**Format:** [ItemId] Recombobulator Reforge Itemname Stats'
     let armornum = 0
     let swordstr = ''
     let swordnum = 0
@@ -246,6 +246,11 @@ module.exports = {
           .setEmoji('852079613052059658')
           .setLabel('Sword')
           .setStyle('PRIMARY'),
+        new Discord.MessageButton()
+        .setCustomId('settings')
+        .setEmoji('🛠️')
+        .setLabel('Settings')
+        .setStyle('PRIMARY')
       );
 
     const menu = await interaction.editReply({ embeds: [foundinfo], components: [row, row2] })
@@ -307,6 +312,16 @@ module.exports = {
             .setColor('90EE90')
             .setDescription(`${swordstr}\nYou can change your Sword using \`/sb wardrobe sword number\`\nExample: \`/sb wardrobe sword 0\``)
           menu.edit({ embeds: [dungeons] })
+        } else if (i.customId == 'settings') {
+          await i.deferUpdate()
+          let settingembed = new Discord.MessageEmbed()
+            let set = player.data.settings.confirmation || true
+              
+              
+          settingembed.setDescription(`Settings Info for <@${id}>`)
+          settingembed.addField('Image Shown', `${player.data.settings.imgshown}`, true)
+          settingembed.addField('Confirmation Message', `${set}`)
+          interaction.editReply({embeds: [settingembed]})
         }
       }
     })

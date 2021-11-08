@@ -32,7 +32,7 @@ module.exports = {
         $set: {
           data: {
             profile: {
-              coins: 0, gems: 0, cute_name: profilename, started: starttime
+              coins: 0, gems: 0, cute_name: profilename, started: starttime, name: interaction.user.tag
             },
             stats: {
               health: 100, defense: 0, damage: 5, strength: 0, crit_chance: 20, crit_damage: 50, magic_find: 0, sea_creature_chance: 20, mining_speed: 0, mining_fortune: 0
