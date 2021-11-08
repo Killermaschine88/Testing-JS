@@ -41,12 +41,18 @@ module.exports = {
        .setCustomId('dungeons')
        .setLabel('Dungeons')
        .setStyle('PRIMARY')
+    const button6 = new Discord.MessageButton()
+       .setCustomId('reforges')
+       .setLabel('Reforges')
+       .setStyle('PRIMARY')
   
 
-    const row = new Discord.MessageActionRow()
+    const row1 = new Discord.MessageActionRow()
       .addComponents(button1, button2, button4, button5)
+    const row2 = new Discord.MessageActionRow()
+      .addComponents(button6)
 
-    let menu = await interaction.editReply({embeds: [embed], components: [row]})
+    let menu = await interaction.editReply({embeds: [embed], components: [row1, row2]})
 
 
     const filter = i => {
@@ -60,7 +66,7 @@ module.exports = {
       if(i.customId == 'general') {
         const generalembed = new Discord.MessageEmbed()
         .setTitle('General Information')
-        .setDescription('**Available Commands**\n\`sb class\`, \`sb daily\`, \`sb dragon\`, \`sb dungeons\`, \`sb grind\`, \`sb info\`, \`sb reforge\`, \`sb sell\`, \`sb settings\`, \`sb shop\`, \`sb start\`, \`sb wardrobe\`, \`sb warp\`, \`sb wiki\`, \`sb fishing\`, \`sb mining\`')
+        .setDescription('**Available Commands**\n\`sb class\`, \`sb daily\`, \`sb dungeons\`, \`sb grind\`, \`sb info\`, \`sb reforge\`, \`sb sell\`, \`sb settings\`, \`sb shop\`, \`sb start\`, \`sb wardrobe\`, \`sb warp\`, \`sb wiki\`, \`sb fishing\`, \`sb mining\`')
         .setColor('90EE90')
         .setFooter('Skyblock Simulator')
 
@@ -101,6 +107,19 @@ module.exports = {
 
 
         menu.edit({embeds: [dungeonsembed]})
+      } else if(i.customId == 'reforges') {
+        let reforgeembed = new Discord.MessageEmbed()
+        .setTitle('Reforge Information')
+        .setColor('90EE90')
+        .setFooter('Skyblock Simulator')
+          .setDescription('**Format:** Reforge Stone Name (Reforge Bonus) [Reforge Name] {Item Origin}')
+        .addField('General Reforges', 'Recombobulator 3000 (10% Item Stat increase) [] {Dungeons any Floor}', true)
+        .addField('Sword Reforges', 'Dragon Claw () [Fabled] {Dragons}\nWither Blood () [Withered] {Dungeons}\nWarped Stone () [Warped] {}', true)
+        .addField('Armor Reforges', 'Deep Sea Orb () [Submerged] {Fishing}\nDragon Horn () [Renowned] {Dragons}\nPrecursor Gear () [Ancient] {Dungeons}\nSadan\'s Brooch () [Empowered] {Dungeons}', true)
+        .addField('Fishing Rod Reforges', 'Hardened Wood () [Stiff] {Fishing}\nLucky Dice () [Lucky] {Fishing}', true)
+        .addField('Pickaxe Reforges', 'Onyx () [Fruitful] {Mining}\nDiamonite () [Fleet] {Mining}\nRock Gemstone () [Auspicious] {Mining}', true)
+
+        menu.edit({embeds: [reforgeembed]})
       }
     })
   }

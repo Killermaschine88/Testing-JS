@@ -23,29 +23,39 @@ module.exports = {
     }
 
     let choosen = interaction.options.getString('choice')
+    let state = interaction.options.getString('state')
+    let show = ''
+    if(state == 'true') {
+      state = true
+      show = 'enabled'
+    } else {
+      state = false
+      show = 'disabled'
+    }
+      
 
-    if (choosen === 'imgshown' && player.data.settings.imgshown === true) {
+    if (choosen === 'imgshown') {
       await collection.updateOne(
         { _id: interaction.user.id },
-        { $set: { 'data.settings.imgshown': false } },
+        { $set: { 'data.settings.imgshown': state } },
         { upsert: true })
 
       let embed = new Discord.MessageEmbed()
       .setTitle('Setting changed')
       .setColor('GREEN')
-      .setDescription('Images shown is now disabled.')
+      .setDescription(`Images shown is now ${show}.`)
       interaction.editReply({embeds: [embed]})
       return;
-    } else if (choosen === 'imgshown' && player.data.settings.imgshown === false) {
+    } else if (choosen === 'confirmation') {
       await collection.updateOne(
         { _id: interaction.user.id },
-        { $set: { 'data.settings.imgshown': true } },
+        { $set: { 'data.settings.confirmation': state } },
         { upsert: true })
 
       let embed = new Discord.MessageEmbed()
       .setTitle('Setting changed')
       .setColor('GREEN')
-      .setDescription('Images shown is now enabled.')
+      .setDescription(`Confirmation Messages are now ${show}.`)
       interaction.editReply({embeds: [embed]})
       return;
     }

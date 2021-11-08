@@ -161,18 +161,18 @@ module.exports = {
       sword_button.setDisabled(false)
       choosen = 'Tactician\'s Sword'
       swordcost = 100
-    } else if(swordinv.find(item => item.name == 'Golem Sword') && coins > 100) {
+    } else if(swordinv.find(item => item.name == 'Golem Sword') && coins > 100000) {
       sword_button.setDisabled(false)
       choosen = 'Zombie Sword'
-      swordcost = 100
-    } else if(swordinv.find(item => item.name == 'Undead Sword') && coins > 100) {
+      swordcost = 100000
+    } else if(swordinv.find(item => item.name == 'Undead Sword') && coins > 50000) {
       sword_button.setDisabled(false)
       choosen = 'Golem Sword'
-      swordcost = 100
-    } else if(swordinv.find(item => item.name == 'Fist') && coins > 100) {
+      swordcost = 50000
+    } else if(swordinv.find(item => item.name == 'Fist') && coins > 15000) {
       sword_button.setDisabled(false)
       choosen = 'Undead Sword'
-      swordcost = 100
+      swordcost = 15000
     }
 
     //Armor Upgrades
@@ -188,18 +188,18 @@ module.exports = {
       armor_button.setDisabled(false)
       choosen2 = 'Tarantula Armor'
       armorcost = 100
-    }else if(armorinv.find(item => item.name === 'Golem Armor') && coins > 100) {
+    }else if(armorinv.find(item => item.name === 'Golem Armor') && coins > 100000) {
       armor_button.setDisabled(false)
       choosen2 = 'Monster Hunter Armor'
-      armorcost = 100
-    }else if(armorinv.find(item => item.name === 'Leaflet Armor') && coins > 100) {
+      armorcost = 100000
+    }else if(armorinv.find(item => item.name === 'Leaflet Armor') && coins > 50000) {
       armor_button.setDisabled(false)
       choosen2 = 'Golem Armor'
-      armorcost = 100
-    }else if(armorinv.find(item => item.name === 'Naked') && coins > 100) {
+      armorcost = 50000
+    }else if(armorinv.find(item => item.name === 'Naked') && coins > 15000) {
       armor_button.setDisabled(false)
       choosen2 = 'Leaflet Armor'
-      armorcost = 100
+      armorcost = 15000
     }
 
     //Booster Cookie
@@ -273,11 +273,11 @@ module.exports = {
     } else if(swordinv.find(item => item.name == 'Zombie Sword')) {
       shopembed.addField('Tactician\'s Sword', '**Cost:** x\n\n**Stats:** \`100 ⚔️\`, \`80 ❁\`, \`30 ☣\`, \`75 ☠\`', true)
     } else if(swordinv.find(item => item.name == 'Golem Sword')) {
-      shopembed.addField('Zombie Sword', '**Cost:** x\n\n**Stats:** \`75 ⚔️\`, \`60 ❁\`, \`20 ☣\`, \`50 ☠\`', true)
+      shopembed.addField('Zombie Sword', '**Cost:** 100k\n\n**Stats:** \`75 ⚔️\`, \`60 ❁\`, \`20 ☣\`, \`50 ☠\`', true)
     } else if(swordinv.find(item => item.name == 'Undead Sword')) {
-      shopembed.addField('Golem Sword', '**Cost:** x\n\n**Stats:** \`50 ⚔️\`, \`40 ❁\`, \`10 ☣\`, \`30 ☠\`', true)
+      shopembed.addField('Golem Sword', '**Cost:** 50k\n\n**Stats:** \`50 ⚔️\`, \`40 ❁\`, \`10 ☣\`, \`30 ☠\`', true)
     } else if(swordinv.find(item => item.name == 'Fist')) {
-      shopembed.addField('Undead Sword', '**Cost:** x\n\n**Stats:** \`20 ⚔️\`, \`15 ❁\`, \`10 ☠\`', true)
+      shopembed.addField('Undead Sword', '**Cost:** 15k\n\n**Stats:** \`20 ⚔️\`, \`15 ❁\`, \`10 ☠\`', true)
     }
     
     //Armor Fields
@@ -290,11 +290,11 @@ module.exports = {
     } else if (armorinv.find(item => item.name == 'Monster Hunter Armor')) {
       shopembed.addField('Tarantula Armor', '**Cost:** x\n\n**Stats:** \`225 ❤\`, \`100 ❈\`, \`50 ❁\`, \`25 ☣\`, \`75 ☠\`', true)
     } else if (armorinv.find(item => item.name == 'Golem Armor')) {
-      shopembed.addField('Monster Hunter Armor', '**Cost:** x\n\n**Stats:** \`150 ❤\`, \`60 ❈\`, \`30 ❁\`, \`15 ☣\`, \`40 ☠\`', true)
+      shopembed.addField('Monster Hunter Armor', '**Cost:** 100k\n\n**Stats:** \`150 ❤\`, \`60 ❈\`, \`30 ❁\`, \`15 ☣\`, \`40 ☠\`', true)
     } else if (armorinv.find(item => item.name == 'Leaflet Armor')) {
-      shopembed.addField('Golem Armor', '**Cost:** x\n\n**Stats:** \`100 ❤\`, \`30 ❈\`, \`10 ❁\`, \`10 ☣\`, \`20 ☠\`', true)
+      shopembed.addField('Golem Armor', '**Cost:** 50k\n\n**Stats:** \`100 ❤\`, \`30 ❈\`, \`10 ❁\`, \`10 ☣\`, \`20 ☠\`', true)
     } else if (armorinv.find(item => item.name == 'Naked')) {
-      shopembed.addField('Leaflet Armor', '**Cost:** x\n\n**Stats:** \`50 ❤\`, \`10 ❈\`, \`5 ☣\`, \`10 ☠\`', true)
+      shopembed.addField('Leaflet Armor', '**Cost:** 15k\n\n**Stats:** \`50 ❤\`, \`10 ❈\`, \`5 ☣\`, \`10 ☠\`', true)
       console.log('A')
     }
 

@@ -211,13 +211,33 @@ const data = [
         options: [
           {
             name: 'choice',
-            description: 'Allow you to toggle Settings ON/OFF',
+            description: 'Choose the setting to enable/disabls',
             type: 'STRING',
             required: true,
             choices: [
               {
-                name: 'imgshown',
+                name: 'Images Shown',
                 value: 'imgshown',
+              },
+              {
+                name: 'Confirmation Messages',
+                value: 'confirmation'
+              },
+            ],
+          },
+          {
+            name: 'state',
+            description: 'Specify if you want to enable/disable said setting',
+            type: 'STRING',
+            required: true,
+            choices: [
+              {
+                name: 'enable',
+                value: 'true',
+              },
+              {
+                name: 'disable',
+                value: 'false',
               },
             ],
           },

@@ -22,9 +22,9 @@ module.exports = {
       return;
     }
 
-    if(interaction.user.id != '570267487393021969') {
+    /*if(interaction.user.id != '570267487393021969') {
        return interaction.editReply('WIP')
-    }
+    }*/
 
     let type = interaction.options.getString('choice')
     let itemId = interaction.options.getInteger('number')
@@ -35,6 +35,15 @@ module.exports = {
     let armor = player.data.inventory.armor
     let apply_reforge = ''
     let path = ''
+
+    if(itemId < 0) {
+      const embed = new Discord.MessageEmbed()
+      .setTitle('Invalid Item')
+      .setColor('RED')
+      .setFooter('Skyblock Simulator')
+      .setDescription("Can't have negative ItemId.")
+      return interaction.editReply({embeds: [embed]})
+    }
 
     
 

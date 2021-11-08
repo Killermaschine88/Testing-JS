@@ -10,6 +10,8 @@ module.exports = {
   cooldown: 30,
   async execute(interaction, mclient) {
 
+    return interaction.editReply({content: 'not added yet'})
+
     const collection = mclient.db('SkyblockSim').collection('Players');
     let player = await collection.findOne({ _id: interaction.user.id })
 

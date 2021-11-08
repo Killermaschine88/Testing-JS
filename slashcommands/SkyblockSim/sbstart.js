@@ -25,7 +25,7 @@ module.exports = {
 
     let starttime = interaction.createdTimestamp / 1000
     starttime = starttime.toFixed()
-    // if (player !== null) {
+     if (player == null) {
     await collection.updateOne(
       { _id: interaction.user.id },
       {
@@ -76,11 +76,25 @@ module.exports = {
             slayer: {
               zombiexp: 0, spiderxp: 0, wolfxp: 0, endermanxp: 0, zombiekills: 0, spiderkills: 0, wolfkills: 0, endermankills: 0
             },
+            /*slayer: {
+              zombie: {
+xp: 0, kills: 0
+              },
+spider: {
+xp: 0, kills: 0
+},
+wolf: {
+xp: 0, kills: 0
+},
+enderman: {
+xp: 0, kills: 0
+},
+            },*/
             dungeons: {
               xp: 0, total_runs: 0, class: { selected: { name: 'Assassin', xp: 0 }, available: { assassin: { name: 'Assassin', xp: 0 }, berserker: { name: 'Berserker', xp: 0 }, tank: { name: 'Tank', xp: 0 } } }
             },
             settings: {
-              imgshown: true
+              imgshown: true, confirmation: true
             },
             equipment: {
               combat: {
@@ -114,15 +128,15 @@ module.exports = {
 
     menu.edit({ embeds: [created] })
     return;
-    //  } else {
+      } else {
     const profilealready = new Discord.MessageEmbed()
       .setFooter('Values in () aren\'t needed')
       .setColor('ORANGE')
       .setTitle('You already have a Profile')
-      .setDescription(`Use \`/sb info\` to see your Stats and \`/sb grind\` to earn Money`)
+      .setDescription(`Use \`/sb info\` to see your Stats, \`/sb grind\` to earn Money and \`/sb wiki\` for Info about the Simulator.`)
       .setFooter('Skyblock Simulator')
     menu.edit({ embeds: [profilealready] })
-    // }
+     }
   }
 };
 

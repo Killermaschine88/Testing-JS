@@ -55,7 +55,7 @@ module.exports = {
     let sellitem = words.join(" ");
 
 
-    const founditem = player.data.inventory.items.find(item => item.name === sellitem)
+    const founditem = player.data.inventory.items.find(item => item.name == sellitem)
     const itemindex = player.data.inventory.items.findIndex(item => item.name === sellitem)
 
     if (founditem === undefined) {

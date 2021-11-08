@@ -7,6 +7,7 @@ module.exports = {
   perms: "None",
   folder: "Bot",
   aliases: [],
+  cooldown: 60,
   execute: (interaction) => {
 
     let input = interaction.options.getString('suggestion')
@@ -23,8 +24,12 @@ module.exports = {
     .setDescription(`${input}`)
     .setFooter(`${interaction.user.id}`)
 
-interaction.client.channels.fetch('871669216703578152')
-        .then(channel => channel.send({embeds: [suggestembed]}).then(msg => msg.react('👍') && msg.react('👎')))
-        .catch(console.error)
+interaction.client.channels.fetch('906928690640879716')
+        .then(channel => channel.send({embeds: [suggestembed]}).then(msg => msg.react('👍') && msg.react('👎') && msg.startThread({
+    name: `Suggestion`,
+   // autoArchiveDuration: 60,
+    //reason: 'Needed a separate thread f',
+  }))).catch(console.error)
+        
   }
 };

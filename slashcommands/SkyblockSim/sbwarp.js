@@ -561,7 +561,10 @@ module.exports = {
             .setLabel('Cancel')
             .setStyle('DANGER'),
         );
-      menu.edit({ embeds: [confirm], components: [row] })
+     // menu.edit({ embeds: [confirm], components: [row] })
+
+      if(player.data.settings.confirmation == true) {
+        menu.edit({ embeds: [confirm], components: [row] })
 
       await menu.awaitMessageComponent({ filter, componentType: 'BUTTON', time: 60000 })
         .then(async i => {
@@ -584,6 +587,18 @@ module.exports = {
             return;
           }
         }).catch(err => menu.edit({ components: [] }));
+    } else {
+        await collection.updateOne(
+              { _id: interaction.user.id },
+              { $set: { "data.misc.location": location } },
+              { upsert: true })
+
+            const travelled = new Discord.MessageEmbed()
+              .setDescription(`Travelled to the **${location}**.`)
+              .setColor('90EE90')
+              .setFooter('Skyblock Simulator')
+            menu.edit({ embeds: [travelled], components: [] })
+    }
     }
   }
 }

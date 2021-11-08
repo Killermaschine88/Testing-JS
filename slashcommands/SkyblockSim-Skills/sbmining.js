@@ -114,6 +114,10 @@ module.exports = {
 
         player = await collection.findOne({ _id: interaction.user.id })
 
+        if(!validlocations.includes(player.data.misc.location)) {
+          collector.stop()
+        }
+
           const updatePlayer = await addItems(ore, player)
 
           await collection.replaceOne(

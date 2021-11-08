@@ -250,7 +250,7 @@ module.exports = {
     let map = ''
     let location = [1, 1]
     let score = 100
-    let floor = ''
+    let floor = null
 
     //Vars needed for Chests
     let wood_loot = ''
@@ -319,7 +319,7 @@ module.exports = {
       .setTitle('Dungeons Floor Selection')
       .setFooter('Skyblock Simulator')
       .setColor('GREY')
-      .setDescription('**<:bonzo:852111493859115019> Floor 1 (Combat 10)**\n**<:scarff:852111493909446686> Floor 2 (Cata 4)**\n**<:professor:852111493952176148> Floor 3 (Cata 8)**')
+      .setDescription('**<:bonzo:852111493859115019> Floor 1 (Combat 8)**\n**<:scarff:852111493909446686> Floor 2 (Cata 4)**\n**<:professor:852111493952176148> Floor 3 (Cata 8)**')
 
     const menu = await interaction.editReply({ embeds: [floorSelect], components: [floors] })
 
@@ -344,12 +344,18 @@ module.exports = {
         }
       }).catch(err => menu.edit({ components: [] }))
 
+    //console.log(floor)
+    
+    if(floor == null) {
+    return menu.edit({components: []})
+    }
+
     const invalidreqs = new MessageEmbed()
       .setTitle('Requirements not met.')
-      .setDescription(`**Needed Requirements**\nFloor 1 -> Combat 10\nFloor 2 -> Catacombs 4\nFloor 3 -> Catacombs 8\n\n**Your Stats**\nCombat: ${combatlvl}\nCatacombs: ${catalevel}\n`)
+      .setDescription(`**Needed Requirements**\nFloor 1 -> Combat 8\nFloor 2 -> Catacombs 4\nFloor 3 -> Catacombs 8\n\n**Your Stats**\nCombat: ${combatlvl}\nCatacombs: ${catalevel}\n`)
       .setColor('RED')
     
-    if (floor == 1 && combatlvl <= 10) {
+    if (floor == 1 && combatlvl <= 8) {
       menu.edit({ embeds: [invalidreqs], components: [] })
       return;
     } else if (floor == 2 && catalevel <= 4) {
