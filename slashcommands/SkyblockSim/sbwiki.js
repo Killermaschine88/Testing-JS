@@ -19,7 +19,7 @@ module.exports = {
     .setTitle('Skyblock Simulator Wiki')
     .setColor('90EE90')
     .setFooter('Skyblock Simulator')
-    .setDescription('Press the corresponding Button that you want to see the Information off.')
+    .setDescription('Press the corresponding Button to see the Information of the desired Item.')
 
     const button1 = new Discord.MessageButton()
       .setCustomId('general')
@@ -99,11 +99,11 @@ module.exports = {
         .setTitle('Dungeons Information')
         .setColor('90EE90')
         .setFooter('Skyblock Simulator')
-        .addField('Classes', 'Classes give bonuses inside Dungeon Runs\n\nAssassin (\`2 ❁\` per Class Level)\nBerserker (\`1 ❁\` and \`1 ❈\` per Class Level)\nTank (\`1 ❈\` and \`2 ❤\` per Class Level)', true)
-        .addField('Score', 'Score is used to determine the Loot Chests you will recieve after the dungeon run', true)
+        .addField('Classes', 'Give bonuses inside Dungeon Runs\n\nAssassin (\`2 ❁\` per Class Level)\nBerserker (\`1 ❁\` and \`1 ❈\` per Class Level)\nTank (\`1 ❈\` and \`2 ❤\` per Class Level)', true)
+        .addField('Score', 'Used to determine the Loot Chests you will recieve after the dungeon run', true)
         .addField('Puzzles', 'Small Puzzles like a Quiz and Tic Tac Toe are found in a dungeon run which grant 20 Score.', true)
-        .addField('Loot Chests', 'Loot Chests spawn after defeating a Dungeon Boss\n\n<:oak_wood:882624301503754350> Chest (Guaranteed)\n<:gold:869126927011708929> Chest (Guaranteed)\n<:diamond:869126926646788097> Chest (min. F2 & min. 150 Score)\n<:emerald:869126927380779008> Chest (min. F3 & min. 180 Score)', true)
-        .addField('Dungeon Loot', 'Is found in Loot Chests at the end of the dungeon run.\nCurrently Recombobulators, 5 different Armors and 5 different Swords can be found in Loot Chests.', true)
+        .addField('Loot Chests', 'Spawn after defeating the Dungeon Boss\n\n<:oak_wood:882624301503754350> Chest (Guaranteed)\n<:gold:869126927011708929> Chest (Guaranteed)\n<:diamond:869126926646788097> Chest (min. F2 & min. 150 Score)\n<:emerald:869126927380779008> Chest (min. F3 & min. 180 Score)', true)
+        .addField('Dungeon Loot', 'Found in Loot Chests at the end of the dungeon run.\nCurrently Recombobulators, 5 different Armor sets and 5 different Swords can be found in Loot Chests.', true)
 
 
         menu.edit({embeds: [dungeonsembed]})
