@@ -76,9 +76,9 @@ module.exports = {
     }
     i = 0
 
-    let armorstr = '**Format:** [ItemId] Recombobulator Reforge Itemname Stats'
+    let armorstr = '**Format:** [ItemId] Recombobulator Reforge Itemname Stats\n\n'
     let armornum = 0
-    let swordstr = ''
+    let swordstr = '**Format:** [ItemId] Recombobulator Reforge Itemname Stats\n\n'
     let swordnum = 0
     for (item of player.data.inventory.armor) {
           armorstr += `[${armornum}] `
@@ -303,14 +303,14 @@ module.exports = {
           const dungeons = new Discord.MessageEmbed()
             .setFooter('Skyblock Simulator')
             .setColor('90EE90')
-            .setDescription(`${armorstr}\nYou can change your Armor using \`/sb wardrobe armor number\`\nExample: \`/sb wardrobe armor 0\``)
+            .setDescription(`${armorstr}\nYou can change your Armor using \`/sb wardrobe armor itemid\`\nExample: \`/sb wardrobe armor 0\``)
           menu.edit({ embeds: [dungeons] })
         } else if (i.customId === 'swordlist') {
           await i.deferUpdate()
           const dungeons = new Discord.MessageEmbed()
             .setFooter('Skyblock Simulator')
             .setColor('90EE90')
-            .setDescription(`${swordstr}\nYou can change your Sword using \`/sb wardrobe sword number\`\nExample: \`/sb wardrobe sword 0\``)
+            .setDescription(`${swordstr}\nYou can change your Sword using \`/sb wardrobe sword itemid\`\nExample: \`/sb wardrobe sword 0\``)
           menu.edit({ embeds: [dungeons] })
         } else if (i.customId == 'settings') {
           await i.deferUpdate()

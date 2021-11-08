@@ -25,14 +25,83 @@ module.exports = {
       return;
     }
 
-    //Creating the String for the Inventory
-    let str = ''
-    if (player.data.inventory.items === undefined) {
-      str = 'Empty'
-    } else {
-      for (item of player.data.inventory.items) {
-        str += item.name + ': ' + item.amount + '\n'
+  
+    let sellall = interaction.options.getString('sell-all')
+    let sellallcoins = 0
+    let sellallitems = 0
+
+    let b4embed = new Discord.MessageEmbed()
+    .setTitle('Started Selling all Items')
+    .setColor('GREEN')
+    .setFooter('Skyblock Simulator')
+    interaction.editReply({embeds: [b4embed]})
+
+    if(sellall == 'yes') {
+      
+      for(const item of player.data.inventory.items) {
+        if(item.amount != 0) {
+        let sellname = item.name.split(" ")
+        sellname = sellname.join("_").toUpperCase()            
+    
+        let price = await getPrice1(sellname)
+        if(!price.error) {       
+        price = Number(price.quick_status.sellPrice.toFixed(2))
+
+const words = item.name.split(" ");
+
+    for (let i = 0; i < words.length; i++) {
+      words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+    }
+
+    let sellitem = words.join(" ");
+          let earned = price * item.amount
+
+          await collection.updateOne(
+        { _id: interaction.user.id, "data.inventory.items.name": sellitem },
+  { $inc: { "data.inventory.items.$.amount": -item.amount }}
+      )
+          await collection.updateOne(
+        { _id: interaction.user.id },
+  { $inc: { "data.profile.coins": earned }}
+      )
+          sellallcoins += earned
+          sellallitems += item.amount
+
+          
+        } else {
+          let price = 0
+          const words = item.name.split(" ");
+
+    for (let i = 0; i < words.length; i++) {
+      words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+    }
+
+    let sellitem = words.join(" ");
+          
+          price = getPrice(sellitem)
+          price = Number(price)
+
+          let earned = price * item.amount
+
+          await collection.updateOne(
+        { _id: interaction.user.id, "data.inventory.items.name": sellitem },
+  { $inc: { "data.inventory.items.$.amount": -item.amount }}
+      )
+          await collection.updateOne(
+        { _id: interaction.user.id },
+  { $inc: { "data.profile.coins": earned }}
+      )
+          sellallcoins += earned
+          sellallitems += item.amount
+        }
+        }
       }
+      let embed = new Discord.MessageEmbed()
+      .setTitle('Sell All Finished')
+      .setColor('90EE90')
+      .setFooter('Skyblock Simulator')
+      .setDescription(`Sold ${sellallitems} Items for ${sellallcoins} Coins.`)
+      return interaction.editReply({embeds: [embed]})
     }
 
 

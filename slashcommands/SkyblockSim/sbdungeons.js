@@ -355,7 +355,7 @@ module.exports = {
       .setDescription(`**Needed Requirements**\nFloor 1 -> Combat 8\nFloor 2 -> Catacombs 4\nFloor 3 -> Catacombs 8\n\n**Your Stats**\nCombat: ${combatlvl}\nCatacombs: ${catalevel}\n`)
       .setColor('RED')
     
-    if (floor == 1 && combatlvl <= 8) {
+    if (floor == 1 && combatlvl <= 7) {
       menu.edit({ embeds: [invalidreqs], components: [] })
       return;
     } else if (floor == 2 && catalevel <= 4) {

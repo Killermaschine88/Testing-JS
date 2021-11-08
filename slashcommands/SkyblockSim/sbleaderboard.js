@@ -16,12 +16,13 @@ let type = interaction.options.getString('type')
 
     let embed = new Discord.MessageEmbed()
     .setTitle('Leaderboard')
+    .setDescription('Choose the Leaderboard you want to see from the Select Menu.')
+    .setFooter('Skyblock Simulator')
+    
 
     
     
 let i = 0
-    let j = 0
-
     //different leaderboards
     //coins
     let coins_lb = await collection.find({}).sort({ "data.profile.coins": -1 }).toArray()
@@ -54,11 +55,14 @@ let i = 0
       //add select menu with dif leaderboards
       
     } else if(type == 'coins') {
+
+      embed.setTitle('Coins Leaderboard')
       embed.setDescription(coinstring)
       embed.setFooter(`You are #${coinindex+1} out of ${coins_lb.length}`)
       
     } else if(type == 'combat') {
 
+      embed.setTitle('Combat XP Leaderboard')
       embed.setDescription(combatstring)
       embed.setFooter(`You are #${combatindex+1} out of ${combat_lb.length}`)
       

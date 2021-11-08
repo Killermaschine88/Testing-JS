@@ -14,7 +14,7 @@ module.exports = {
     let player = await collection.findOne({ _id: interaction.user.id })
 
     let type = interaction.options.getString('type')
-    let number = interaction.options.getInteger('number')
+    let number = interaction.options.getInteger('itemid')
 
     let sword = player.data.inventory.sword
     let armor = player.data.inventory.armor

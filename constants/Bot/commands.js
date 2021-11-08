@@ -202,6 +202,21 @@ const data = [
             type: 'INTEGER',
             required: true,
           },
+          {
+            name: 'sell-all',
+            description: 'ALL SELLABLE ITEMS WILL BE SOLD!!! (If this is enabled just enter anything for the other Options)',
+            type: 'STRING',
+            required: false,
+            choices: [
+              {
+                name: 'yes',
+                value: 'yes',
+              },
+              {
+                name: 'no',
+                value: 'no'
+              }],
+          },
         ],
       },
       {
@@ -313,7 +328,7 @@ const data = [
               }],
           },
           {
-            name: 'number',
+            name: 'itemid',
             description: 'Item Number',
             type: 'INTEGER',
             required: true,
@@ -364,7 +379,7 @@ const data = [
             ],
           },
           {
-            name: 'number',
+            name: 'itemid',
             description: 'Item Number',
             type: 'INTEGER',
             required: true,

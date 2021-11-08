@@ -27,7 +27,7 @@ module.exports = {
     }*/
 
     let type = interaction.options.getString('choice')
-    let itemId = interaction.options.getInteger('number')
+    let itemId = interaction.options.getInteger('itemid')
     let reforge = interaction.options.getString('reforge-stone')
     reforge = reforge.toLowerCase()
 
