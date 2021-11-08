@@ -131,7 +131,7 @@ const words = item.name.split(" ");
       let invaliditemembed = new Discord.MessageEmbed()
       .setTitle('Invalid Item Name')
       .setColor('RED')
-      .setDescription(`\`${sellitem}\` isn't an valid Itemname.`)
+      .setDescription(`\`${sellitem}\` isn't a valid item name.`)
       .setFooter('Skyblock Simulator')
       interaction.editReply({embeds: [invaliditemembed]})
       return;
@@ -142,7 +142,7 @@ const words = item.name.split(" ");
       .setTitle('Invalid Amount')
       .setColor('RED')
       .setFooter('Skyblock Simulator')
-      .setDescription("Can't sell negative Items")
+      .setDescription("Can't sell negative items")
       return interaction.editReply({embeds: [embed]})
     }
 
@@ -161,7 +161,7 @@ const words = item.name.split(" ");
       const littleitems = new Discord.MessageEmbed()
         .setFooter('Skyblock Simulator')
         .setColor('RED')
-        .setDescription(`You entered a Number higher than the Amount of ${sellitem} than you own.\nEntered: **${amount}**\nOwned: **${founditem.amount}**`)
+        .setDescription(`You entered a number higher than the amount of ${sellitem} than your own.\nEntered: **${amount}**\nOwned: **${founditem.amount}**`)
       interaction.editReply({ embeds: [littleitems] })
       return;
     }
