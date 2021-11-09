@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 app.all('/', (req, res) => {
-  res.send(`<meta property="og:description"
+	res.send(`<meta property="og:description"
   content="Don\'t ask me what i can do." />
 <meta property="og:title" content="Baltraz" />
   <style>
@@ -53,11 +53,11 @@ h4 {
   </form>
   <form method="post" action="https://discord.com/oauth2/authorize?client_id=839835292785704980&permissions=470150231&scope=bot"> 
     <input class="Button Align2" type="submit" value="Invite The Bot" />
-  </form> Website By: Knei</p>`)
-})
+  </form> Website By: Knei</p>`);
+});
 
 function keepAlive() {
-  app.listen(3000)
+	app.listen(3000);
 }
 
 module.exports = keepAlive;

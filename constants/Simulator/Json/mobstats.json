@@ -1,93 +1,93 @@
 {
-  "Squid": {
-    "name": "Squid",
-    "hp": "200",
-    "dmg": 0,
-    "level": 0,
-    "xp": 41
-  },
-  "Sea Walker": {
-    "name": "Sea Walker",
-    "hp": "150",
-    "dmg": 30,
-    "level": 2,
-    "xp": 68
-  },
-  "Sea Guardian": {
-    "name": "Sea Guardian",
-    "hp": "250",
-    "dmg": 75,
-    "level": 5,
-    "xp": 101
-  },
-  "Sea Witch": {
-    "name": "Sea Witch",
-    "hp": "600",
-    "dmg": 40,
-    "level": 7,
-    "xp": 338
-  },
-  "Sea Archer": {
-    "name": "Sea Archer",
-    "hp": "700",
-    "dmg": 70,
-    "level": 10,
-    "xp": 169
-  },
-  "Monster of the Deep": {
-    "name": "Monster of the Deep",
-    "hp": "2000",
-    "dmg": 110,
-    "level": 11,
-    "xp": 270
-  },
-  "Catfish": {
-    "name": "Catfish",
-    "hp": "2000",
-    "dmg": 130,
-    "level": 11,
-    "xp": 405
-  },
-  "Carrot King": {
-    "name": "Carrot King",
-    "hp": "3200",
-    "dmg": 0,
-    "level": 15,
-    "xp": 810
-  },
-  "Sea Leech": {
-    "name": "Sea Leech",
-    "hp": "60000",
-    "dmg": 150,
-    "level": 16,
-    "xp": 675
-  },
-  "Guardian Defender": {
-    "name": "Guardian Defender",
-    "hp": "7600",
-    "dmg": 111,
-    "level": 17,
-    "xp": 1013
-  },
-  "Deep Sea Protector": {
-    "name": "Deep Sea Protector",
-    "hp": "15000",
-    "dmg": 350,
-    "level": 18,
-    "xp": 1350
-  },
-  "Water Hydra": {
-    "name": "Water Hydra",
-    "hp": "20000",
-    "dmg": 250,
-    "level": 19,
-    "xp": 3000
-  },
-  "Sea Emperor": {
-    "name": "Sea Emperor",
-    "hp": "30000",
-    "dmg": 300,
-    "level": 20,
-    "xp": 3375
-  }
+	"Squid": {
+		"name": "Squid",
+		"hp": "200",
+		"dmg": 0,
+		"level": 0,
+		"xp": 41
+	},
+	"Sea Walker": {
+		"name": "Sea Walker",
+		"hp": "150",
+		"dmg": 30,
+		"level": 2,
+		"xp": 68
+	},
+	"Sea Guardian": {
+		"name": "Sea Guardian",
+		"hp": "250",
+		"dmg": 75,
+		"level": 5,
+		"xp": 101
+	},
+	"Sea Witch": {
+		"name": "Sea Witch",
+		"hp": "600",
+		"dmg": 40,
+		"level": 7,
+		"xp": 338
+	},
+	"Sea Archer": {
+		"name": "Sea Archer",
+		"hp": "700",
+		"dmg": 70,
+		"level": 10,
+		"xp": 169
+	},
+	"Monster of the Deep": {
+		"name": "Monster of the Deep",
+		"hp": "2000",
+		"dmg": 110,
+		"level": 11,
+		"xp": 270
+	},
+	"Catfish": {
+		"name": "Catfish",
+		"hp": "2000",
+		"dmg": 130,
+		"level": 11,
+		"xp": 405
+	},
+	"Carrot King": {
+		"name": "Carrot King",
+		"hp": "3200",
+		"dmg": 0,
+		"level": 15,
+		"xp": 810
+	},
+	"Sea Leech": {
+		"name": "Sea Leech",
+		"hp": "60000",
+		"dmg": 150,
+		"level": 16,
+		"xp": 675
+	},
+	"Guardian Defender": {
+		"name": "Guardian Defender",
+		"hp": "7600",
+		"dmg": 111,
+		"level": 17,
+		"xp": 1013
+	},
+	"Deep Sea Protector": {
+		"name": "Deep Sea Protector",
+		"hp": "15000",
+		"dmg": 350,
+		"level": 18,
+		"xp": 1350
+	},
+	"Water Hydra": {
+		"name": "Water Hydra",
+		"hp": "20000",
+		"dmg": 250,
+		"level": 19,
+		"xp": 3000
+	},
+	"Sea Emperor": {
+		"name": "Sea Emperor",
+		"hp": "30000",
+		"dmg": 300,
+		"level": 20,
+		"xp": 3375
+	}
 }
