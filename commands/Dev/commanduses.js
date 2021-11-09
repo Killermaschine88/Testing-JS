@@ -18,11 +18,11 @@ module.exports = {
 		let i = 0;
 
 		const embed = new Discord.MessageEmbed()
-			.setTitle('5 Most used Commands')
+			.setTitle('Most used Commands')
 			.setDescription('')
 			.setColor('90EE90');
 
-		while (i < cmduse.length) {
+		while (i < cmduse.length && i < 20) {
 			embed.description += `${cmduse[i]._id}: ${cmduse[i].uses}\n`;
 			i += 1;
 		}
