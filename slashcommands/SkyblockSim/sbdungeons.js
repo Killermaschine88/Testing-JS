@@ -222,7 +222,7 @@ module.exports = {
     if (player.data.misc.in_dungeon) {
       const runopen = new MessageEmbed()
         .setTitle('Another Dungeon is already open somewhere.')
-        .setDescription('The Dungeon automatically closes after 1 Minute of no input')
+        .setDescription('The Dungeon automatically closes after 1 minute of inactivity')
         .setColor('RED')
         .setFooter('Skyblock Simulator')
       return interaction.editReply({ embeds: [runopen] })
@@ -555,7 +555,7 @@ module.exports = {
         ]
       },
       {
-        question: `How many Catacombs XP do you need for Level 50`,
+        question: `How much Catacombs XP do you need for Level 50`, // Did u ever learn english grammar bro? "much" if the value is too big to count, "many" if you can count it.
         options: [
           ['569 Mil', true], ['560 Mil', false], ['575 Mil', false]
         ]
@@ -573,7 +573,7 @@ module.exports = {
         ]
       },
       {
-        question: `How many Talisman are there?`,
+        question: `How many Talismans are there?`,  // bruh, plural for talisman  is talismans
         options: [
           ['77', true], ['70', false], ['73', false]
         ]
@@ -699,7 +699,7 @@ module.exports = {
       if (inTTT) {
         let x, y
         if (test.fields.length > 0) {
-          test.fields = [] // remove the addition field like the "killed a mod with x hp left"
+          test.fields = [] // remove the addition field like the "killed a mod with x hp left" // no, ur dumb
           menu.edit({ embeds: [test] })
         }
 
@@ -776,7 +776,7 @@ module.exports = {
             row4.components[2].disabled = false
             row5.components[0].disabled = false
             row5.components[1].disabled = false
-            row5.components[2].disabled = false // reset components for new tictactoe
+            row5.components[2].disabled = false // reset components for new tictactoe // ew
             return await menu.edit({ embeds: [test], components: [row1, row2] })
           } else {
             runFailed = false
