@@ -61,9 +61,9 @@ module.exports = {
 			let finditem = player.data.inventory.items.find(
 				(item) => item.name == caps(tradeitem)
 			);
-			console.log(finditem);
+			//console.log(finditem);
 
-			if (finditem == undefined || finditem.amount == 0) {
+			if (finditem == undefined || finditem.amount == 0 && amount < 0) {
 				let noitemembed = new Discord.MessageEmbed()
 					.setTitle('No Item found.')
 					.setDescription(
@@ -180,7 +180,7 @@ module.exports = {
 				(item) => item.name == caps(tradeitem)
 			);
 
-			if (finditem == undefined && finditem?.amount == 0) {
+			if (finditem == undefined && finditem.amount == 0 && amount < 0) {
 				let noitemembed = new Discord.MessageEmbed()
 					.setTitle('No Item found.')
 					.setDescription(
