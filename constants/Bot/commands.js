@@ -429,6 +429,55 @@ const data = [
           },
         ],
       },
+      {
+        name: 'trade',
+        description: 'Lets you trade with the mentioned Player',
+        type: 'SUB_COMMAND',
+        options: [
+          {
+            name: 'action',
+            description: 'send and reply require the optional fields',
+            type: 'STRING',
+            required: true,
+            choices: [
+              {
+                name: 'send-offer',
+                value: 'send'
+              },
+              {
+                name: 'reply-offer',
+                value: 'reply'
+              },
+              {
+                name: 'accept-offer',
+                value: 'accept'
+              },
+              {
+                name: 'deny-offer',
+                value: 'deny'
+              },
+            ],
+          },
+          {
+            name: 'user',
+            description: 'User to trade',
+            type: 'USER',
+            required: true,
+          },
+          {
+            name: 'trade-item',
+            description: 'Can be Items or Coins',
+            type: 'STRING',
+            required: false,
+          },
+          {
+            name: 'amount',
+            description: 'Amount of said Trade Item to offer',
+            type: 'INTEGER',
+            required: false
+          },
+          ],
+      },
     ],
   },
 ]
