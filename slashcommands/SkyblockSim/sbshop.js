@@ -384,7 +384,7 @@ module.exports = {
             { $inc: { 'data.profile.coins': -swordcost } },
             { upsert: true })
             const lootembed = new Discord.MessageEmbed()
-            .setDescription(`Purchased **${choosen}**! Use \`/sb wardrobe\` to equip it.
+            .setDescription(`**${choosen}** purchased! Use \`/sb wardrobe\` to equip it.
             `)
             .setColor('GREEN')
             .setFooter('Skyblock Simulator')
@@ -400,7 +400,7 @@ module.exports = {
             { $inc: { 'data.profile.coins': -armorcost } },
             { upsert: true })
             const lootembed = new Discord.MessageEmbed()
-            .setDescription(`Purchased **${choosen2}**! Use \`/sb wardrobe\` to equip it.`)
+            .setDescription(`**${choosen2}** purchased! Use \`/sb wardrobe\` to equip it.`)
             .setColor('GREEN')
             .setFooter('Skyblock Simulator')
           return interaction.editReply({ embeds: [lootembed], components: [] })
