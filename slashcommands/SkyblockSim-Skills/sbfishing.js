@@ -37,8 +37,6 @@ module.exports = {
       return;
     }
 
-
-
     //Values needed
     let type = 'all'
     let pstats = await playerStats(player, type)

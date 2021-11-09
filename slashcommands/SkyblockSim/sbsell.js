@@ -38,7 +38,7 @@ module.exports = {
 
     let date1 = Date.now()
 
-    if(sellall == 'yes') {
+    if(sellall == 'yes') { //&&plyer.data.misc.is_massselling == false so they cant multi sell often
       
       for(const item of player.data.inventory.items) {
         if(item.amount != 0 && item.name != '') {

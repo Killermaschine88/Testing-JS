@@ -107,7 +107,7 @@ xp: 0, kills: 0
               mining: { pickaxe: { name: 'Wood Pickaxe', mining_speed: 0, mining_fortune: 0, reforge: "None", recombobulated: false } },
             },
             misc: {
-              location: 'Graveyard', is_fishing: false, is_mining: false, in_dungeon: false, daily: {
+              location: 'Graveyard', is_fishing: false, is_mining: false, in_dungeon: false, is_massselling: false, daily: {
                 last_claimed: 0, streak: 0
               }, booster_cookie: {
                 active: false, expires: 0
