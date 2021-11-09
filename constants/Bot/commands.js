@@ -442,19 +442,19 @@ const data = [
             choices: [
               {
                 name: 'send-offer',
-                value: 'send'
+                value: 'send-offer'
               },
               {
                 name: 'reply-offer',
-                value: 'reply'
+                value: 'reply-offer'
               },
               {
                 name: 'accept-offer',
-                value: 'accept'
+                value: 'accept-offer'
               },
               {
                 name: 'deny-offer',
-                value: 'deny'
+                value: 'deny-offer'
               },
             ],
           },
