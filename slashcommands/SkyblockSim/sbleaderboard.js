@@ -1,105 +1,72 @@
 const Discord = require('discord.js');
+const { TYPES, GetType } = require('../../constants/Simulator/leaderboard');
 
 module.exports = {
-    name: "sbleaderboard",
-    description: "a",
-    usage: "sbsettings (Setting Name)",
-    perms: "None",
-    folder: "SkyblockSim",
-    aliases: [],
-    cooldown: 10,
-    async execute(interaction, mclient) {
+  name: "sbleaderboard",
+  description: "Shows a skyblock leaderboard",
+  usage: "sbleaderboard (Leaderboard name)",
+  perms: "None",
+  folder: "SkyblockSim",
+  aliases: [],
+  cooldown: 10,
+  async execute(interaction, mclient) {
+    const collection = mclient.db('SkyblockSim').collection('Players');
 
-        const collection = mclient.db('SkyblockSim').collection('Players');
+    // Build the select box for the leaderboard
+    const leaderRow = new Discord.MessageActionRow();
+    const leaderSelect = new Discord.MessageSelectMenu()
+      .setCustomId('leaderSelect')
+      .setMaxValues(1)
+      .setMinValues(1);
 
-        let type = interaction.options.getString('type')
-
-        let embed = new Discord.MessageEmbed()
-            .setTitle('Leaderboard')
-            .setDescription('Choose the Leaderboard you want to see from the Select Menu.')
-            .setFooter('Skyblock Simulator')
-
-        let i = 0
-        //different leaderboards
-        //coins
-        let coins_lb = await collection.find({}).sort({
-            "data.profile.coins": -1
-        }).toArray()
-        let coinstring = ''
-        let coinindex = coins_lb.findIndex(lb => lb._id == interaction.user.id)
-
-        while (i < coins_lb.length && i < 10) {
-            coinstring += `${i+1}# - <@!${coins_lb[i]._id}>: ${coins_lb[i].data.profile.coins.toLocaleString()}\n`
-            i++
-        }
-        i = 0
-
-        //combat xp
-        let combat_lb = await collection.find({}).sort({
-            "data.skills.combat": -1
-        }).toArray()
-        let combatstring = ''
-        let combatindex = combat_lb.findIndex(lb => lb._id == interaction.user.id)
-
-        while (i < combat_lb.length && i < 10) {
-            combatstring += `${i+1}# - <@!${combat_lb[i]._id}>: ${combat_lb[i].data.skills.combat.toLocaleString()}\n`
-            i++
-        }
-        i = 0
-
-        if (type == null) {
-            //add select menu with dif leaderboards
-            const leaderRow = new Discord.MessageActionRow();
-            const leaderSelect = new Discord.MessageSelectMenu()
-              .setCustomId('leaderSelect')
-              .setMaxValues(1)
-              .setMinValues(1)
-              .setOptions([
-                { label: 'Coins', value: 'coins' },
-                { label: 'Combat-XP', value: 'combat' }
-              ]);
-            leaderRow.addComponents(leaderSelect);
-            interaction.editReply({
-              embeds: [embed],
-              components: [leaderRow]
-            });
-
-            const filter = i => i.customId === 'leaderSelect' && i.user.id === interaction.user.id;
-            const leaderCollector = await interaction.channel.createMessageComponentCollector({ filter, componentType: 'SELECT_MENU' })
-
-            leaderCollector.on('collect', async collectedTypeInteraction => {
-              type = collectedTypeInteraction.values[0]
-              if (type == 'coins') {
-                embed.setTitle('Coins Leaderboard')
-                embed.setDescription(coinstring)
-                embed.setFooter(`You are #${coinindex+1} out of ${coins_lb.length}`)
-              } else if (type == 'combat') {
-                embed.setTitle('Combat XP Leaderboard')
-                embed.setDescription(combatstring)
-                embed.setFooter(`You are #${combatindex+1} out of ${combat_lb.length}`)
-              }
-
-              await collectedTypeInteraction.update({ embeds: [embed] });
-            });
-
-            leaderCollector.on('end', async collected => {
-              const reply = await interaction.fetchReply();
-              reply.delete();
-            })
-        } else {
-          if (type == 'coins') {
-            embed.setTitle('Coins Leaderboard')
-            embed.setDescription(coinstring)
-            embed.setFooter(`You are #${coinindex+1} out of ${coins_lb.length}`)
-          } else if (type == 'combat') {
-            embed.setTitle('Combat XP Leaderboard')
-            embed.setDescription(combatstring)
-            embed.setFooter(`You are #${combatindex+1} out of ${combat_lb.length}`)
-          }
-
-          interaction.editReply({
-            embeds: [embed]
-          })
-        }
+    let data = [];
+    
+    // Fill the selectbox with types
+    for (const [key, value] of Object.entries(TYPES)) {
+      data.push({ label: value.name, value: value.value, emoji: value.emote })
     }
+
+    leaderSelect.addOptions(data);
+    leaderRow.addComponents(leaderSelect);
+
+    let embed = new Discord.MessageEmbed()
+        .setTitle('Leaderboard')
+        .setDescription('Choose the Leaderboard you want to see from the Select Menu.')
+        .setFooter('Skyblock Simulator')
+
+    await interaction.editReply({ embeds: [embed], components: [leaderRow] });
+
+    // Wait for a selectbox option to be chosen and then
+    // send a leaderboard of the selected type
+    const filter = i => i.customId === 'leaderSelect' && i.user.id === interaction.user.id;
+    const leaderCollector = await interaction.channel.createMessageComponentCollector({ filter, componentType: 'SELECT_MENU', time: 300000 })
+
+    leaderCollector.on('collect', async collectedTypeInteraction => {
+      type = GetType(collectedTypeInteraction.values[0]);
+      
+      // Get the collection values sorted by the selected type
+      let lbCol = await eval(`collection.find({}).sort({ "${type.data}": -1 }).toArray()`);
+
+      let lbString = '';
+      let index = lbCol.findIndex(lb => lb._id == interaction.user.id);
+
+      // Build a string showing the values of selected type
+      let i = 0;
+      while (i < lbCol.length && i < 10) {
+        lbString += `#${i + 1} - <@!${lbCol[i]._id}>: ${eval(`lbCol[i].${type.data}.toLocaleString()`)}\n`;
+        i++;
+      }
+
+      embed.setTitle(`${type.emote} ${type.name} Leaderboard`);
+      embed.setDescription(lbString);
+      embed.setFooter(`You are #${index + 1} out of ${lbCol.length}`);
+
+      await collectedTypeInteraction.update({ embeds: [embed] });
+    });
+
+    leaderCollector.on('end', async collected => {
+      const reply = await interaction.fetchReply();
+      reply.delete();
+    })
+  }
 }
