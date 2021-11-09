@@ -408,26 +408,8 @@ const data = [
       },
       {
         name: 'leaderboard',
-        description: 'Allows you to viee the TOP Players',
+        description: 'Allows you to view the TOP Players',
         type: 'SUB_COMMAND',
-        options: [
-          {
-            name: 'type',
-            description: 'Leaderboard Type',
-            type: 'STRING',
-            required: false,
-            choices: [
-              {
-                name: 'coins',
-                value: 'coins'
-              },
-              {
-                name: 'combat',
-                value: 'combat'
-              },
-            ],
-          },
-        ],
       },
     ],
   },
