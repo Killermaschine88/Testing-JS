@@ -123,7 +123,7 @@ xp: 0, kills: 0
       .setImage('https://cdn.discordapp.com/attachments/860131688385478666/865211353491570708/maxresdefault.png')
       .setColor('90EE90')
       .setTitle('<a:yes:847468695772987423> Profile Created')
-      .setDescription(`To start Grinding Coins use \`/sb grind\`\nTo view your Profile or another Persons Profile use \`/sb info (@User)\`\n**For a Wiki including most Info check \`/sb wiki\`**`)
+      .setDescription(`To start Grinding Coins use \`/sb grind\`\nTo view your Profile or someone else's Profile use \`/sb info (@User)\`\n**For a Wiki including most Info check \`/sb wiki\`**`)
       .setFooter('Skyblock Simulator\nValues in () aren\'t needed')
 
     menu.edit({ embeds: [created] })
