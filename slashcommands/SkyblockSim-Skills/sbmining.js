@@ -103,7 +103,9 @@ module.exports = {
     collector.on('collect', async i => {
       if(i.customId == 'mine') {
         let ore = getOre(player, ps)
+        if(player.data.settings.imgshown == true) {
         embed.setImage(ore.img)
+        }
         embed.fields = []
         embed.addField('\u200B', `Mined **${ore.amount}x ${ore.name}** at the **${location}**`)
 
@@ -114,7 +116,8 @@ module.exports = {
 
         player = await collection.findOne({ _id: interaction.user.id })
 
-        if(!validlocations.includes(player.data.misc.location)) {
+        if(!validlocations.includes(player.data.misc.location) || player.data.misc.is_fishing == true) {
+          interaction.followUp({content: 'You cheeky tried to multi grind Skills not with me :).', ephemeral: true})
           collector.stop()
         }
 

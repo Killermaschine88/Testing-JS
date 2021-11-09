@@ -153,14 +153,14 @@ module.exports = {
     }
 
     //Sword Upgrades
-    if(swordinv.find(item => item.name == 'Tactician\'s Sword') && coins > 100) {
+    if(swordinv.find(item => item.name == 'Tactician\'s Sword') && coins > 5000000) {
       sword_button.setDisabled(false)
       choosen = 'Leaping Sword'
-      swordcost = 100
-    } else if(swordinv.find(item => item.name == 'Zombie Sword') && coins > 100) {
+      swordcost = 5000000
+    } else if(swordinv.find(item => item.name == 'Zombie Sword') && coins > 1000000) {
       sword_button.setDisabled(false)
       choosen = 'Tactician\'s Sword'
-      swordcost = 100
+      swordcost = 1000000
     } else if(swordinv.find(item => item.name == 'Golem Sword') && coins > 100000) {
       sword_button.setDisabled(false)
       choosen = 'Zombie Sword'
@@ -176,30 +176,30 @@ module.exports = {
     }
 
     //Armor Upgrades
-    if(armorinv.find(item => item.name == 'Frozen Blaze Armor') && coins > 100) {
+    if(armorinv.find(item => item.name == 'Frozen Blaze Armor') && coins > 10000000) {
       armor_button.setDisabled(false)
       choosen2 = 'Superior Dragon Armor'
-      armorcost = 100
-    } else if(armorinv.find(item => item.name === 'Tarantula Armor') && coins > 100) {
+      armorcost = 10000000
+    } else if(armorinv.find(item => item.name === 'Tarantula Armor') && coins > 5000000) {
       armor_button.setDisabled(false)
       choosen2 = 'Frozen Blaze Armor'
-      armorcost = 100
-    }else if(armorinv.find(item => item.name === 'Monster Hunter Armor') && coins > 100) {
+      armorcost = 5000000
+    }else if(armorinv.find(item => item.name === 'Monster Hunter Armor') && coins > 1000000) {
       armor_button.setDisabled(false)
       choosen2 = 'Tarantula Armor'
-      armorcost = 100
-    }else if(armorinv.find(item => item.name === 'Golem Armor') && coins > 100000) {
+      armorcost = 1000000
+    }else if(armorinv.find(item => item.name === 'Golem Armor') && coins > 500000) {
       armor_button.setDisabled(false)
       choosen2 = 'Monster Hunter Armor'
-      armorcost = 100000
-    }else if(armorinv.find(item => item.name === 'Leaflet Armor') && coins > 50000) {
+      armorcost = 500000
+    }else if(armorinv.find(item => item.name === 'Leaflet Armor') && coins > 100000) {
       armor_button.setDisabled(false)
       choosen2 = 'Golem Armor'
-      armorcost = 50000
-    }else if(armorinv.find(item => item.name === 'Naked') && coins > 15000) {
+      armorcost = 100000
+    }else if(armorinv.find(item => item.name === 'Naked' || item.name === 'None') && coins > 50000) {
       armor_button.setDisabled(false)
       choosen2 = 'Leaflet Armor'
-      armorcost = 15000
+      armorcost = 50000
     }
 
     //Booster Cookie
@@ -269,9 +269,9 @@ module.exports = {
     if(swordinv.find(item => item.name == 'Leaping Sword')) {
 
     } else if(swordinv.find(item => item.name == 'Tactician\'s Sword')) {
-      shopembed.addField('Leaping Sword', '**Cost:** x\n\n**Stats:** \`150 ⚔️\`, \`110 ❁\`, \`40 ☣\`, \`100 ☠\`', true)
+      shopembed.addField('Leaping Sword', '**Cost:** 5m\n\n**Stats:** \`150 ⚔️\`, \`110 ❁\`, \`40 ☣\`, \`100 ☠\`', true)
     } else if(swordinv.find(item => item.name == 'Zombie Sword')) {
-      shopembed.addField('Tactician\'s Sword', '**Cost:** x\n\n**Stats:** \`100 ⚔️\`, \`80 ❁\`, \`30 ☣\`, \`75 ☠\`', true)
+      shopembed.addField('Tactician\'s Sword', '**Cost:** 1m\n\n**Stats:** \`100 ⚔️\`, \`80 ❁\`, \`30 ☣\`, \`75 ☠\`', true)
     } else if(swordinv.find(item => item.name == 'Golem Sword')) {
       shopembed.addField('Zombie Sword', '**Cost:** 100k\n\n**Stats:** \`75 ⚔️\`, \`60 ❁\`, \`20 ☣\`, \`50 ☠\`', true)
     } else if(swordinv.find(item => item.name == 'Undead Sword')) {
@@ -284,17 +284,17 @@ module.exports = {
     if(armorinv.find(item => item.name == 'Superior Dragon Armor')) {
       
     } else if(armorinv.find(item => item.name == 'Frozen Blaze Armor')) {
-      shopembed.addField('Superior Dragon Armor', '**Cost:** x\n\n**Stats:** \`300 ❤\`, \`150 ❈\`, \`150 ❁\`, \`40 ☣\`, \`150 ☠\`, \`15 ✯\`', true)
+      shopembed.addField('Superior Dragon Armor', '**Cost:** 10m\n\n**Stats:** \`300 ❤\`, \`150 ❈\`, \`150 ❁\`, \`40 ☣\`, \`150 ☠\`, \`15 ✯\`', true)
     } else if (armorinv.find(item => item.name == 'Tarantula Armor')) {
-      shopembed.addField('Frozen Blaze Armor', '**Cost:** x\n\n**Stats:** \`200 ❤\`, \`150 ❈\`, \`100 ❁\`, \`15 ☣\`, \`50 ☠\`', true)
+      shopembed.addField('Frozen Blaze Armor', '**Cost:** 5m\n\n**Stats:** \`200 ❤\`, \`150 ❈\`, \`100 ❁\`, \`15 ☣\`, \`50 ☠\`', true)
     } else if (armorinv.find(item => item.name == 'Monster Hunter Armor')) {
-      shopembed.addField('Tarantula Armor', '**Cost:** x\n\n**Stats:** \`225 ❤\`, \`100 ❈\`, \`50 ❁\`, \`25 ☣\`, \`75 ☠\`', true)
+      shopembed.addField('Tarantula Armor', '**Cost:** 1m\n\n**Stats:** \`225 ❤\`, \`100 ❈\`, \`50 ❁\`, \`25 ☣\`, \`75 ☠\`', true)
     } else if (armorinv.find(item => item.name == 'Golem Armor')) {
-      shopembed.addField('Monster Hunter Armor', '**Cost:** 100k\n\n**Stats:** \`150 ❤\`, \`60 ❈\`, \`30 ❁\`, \`15 ☣\`, \`40 ☠\`', true)
+      shopembed.addField('Monster Hunter Armor', '**Cost:** 500k\n\n**Stats:** \`150 ❤\`, \`60 ❈\`, \`30 ❁\`, \`15 ☣\`, \`40 ☠\`', true)
     } else if (armorinv.find(item => item.name == 'Leaflet Armor')) {
-      shopembed.addField('Golem Armor', '**Cost:** 50k\n\n**Stats:** \`100 ❤\`, \`30 ❈\`, \`10 ❁\`, \`10 ☣\`, \`20 ☠\`', true)
+      shopembed.addField('Golem Armor', '**Cost:** 100k\n\n**Stats:** \`100 ❤\`, \`30 ❈\`, \`10 ❁\`, \`10 ☣\`, \`20 ☠\`', true)
     } else if (armorinv.find(item => item.name == 'Naked')) {
-      shopembed.addField('Leaflet Armor', '**Cost:** 15k\n\n**Stats:** \`50 ❤\`, \`10 ❈\`, \`5 ☣\`, \`10 ☠\`', true)
+      shopembed.addField('Leaflet Armor', '**Cost:** 50k\n\n**Stats:** \`50 ❤\`, \`10 ❈\`, \`5 ☣\`, \`10 ☠\`', true)
       console.log('A')
     }
 

@@ -9,7 +9,7 @@ module.exports = {
   perms: "None",
   folder: "SkyblockSim",
   aliases: ['sell'],
-  cooldown: 5,
+  cooldown: 15,
   async execute(interaction, mclient) {
 
     const collection = mclient.db('SkyblockSim').collection('Players');
@@ -36,10 +36,12 @@ module.exports = {
     .setFooter('Skyblock Simulator')
     interaction.editReply({embeds: [b4embed]})
 
+    let date1 = Date.now()
+
     if(sellall == 'yes') {
       
       for(const item of player.data.inventory.items) {
-        if(item.amount != 0) {
+        if(item.amount != 0 && item.name != '') {
         let sellname = item.name.split(" ")
         sellname = sellname.join("_").toUpperCase()            
     
@@ -96,11 +98,18 @@ const words = item.name.split(" ");
         }
         }
       }
+      let date2 = Date.now()
+      let taken = date2 - date1
+      if(taken < 1000) {
+        taken = taken + ' ms'
+      } else if(taken < 10000) {
+        taken = taken / 1000 + ' s'
+      }
       let embed = new Discord.MessageEmbed()
       .setTitle('Sell All Finished')
       .setColor('90EE90')
       .setFooter('Skyblock Simulator')
-      .setDescription(`Sold ${sellallitems} Items for ${sellallcoins} Coins.`)
+      .setDescription(`Sold ${sellallitems} Items for ${sellallcoins.toFixed(2)} Coins.\nTook: \`${taken}\``)
       return interaction.editReply({embeds: [embed]})
     }
 
