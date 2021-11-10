@@ -446,9 +446,10 @@ async function getSeaCreatureStats(mob, mobs, fishinglvl, mclient) {
 		);
 	} else {
 		seacreatures = Object.entries(mobs).filter(
-			([name, props]) => props.level <= fishinglvl
+			([name, props]) => props.level <= fishinglvl && !props.shark_mob
 		);
 	}
+ // console.log(seacreatures)
 
 	if (seacreatures === undefined) {
 		mob = 'None';
