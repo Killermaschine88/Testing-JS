@@ -122,6 +122,12 @@ module.exports = {
 			idle: 60000,
 		});
 
+		await collection.updateOne(
+			{ _id: interaction.user.id },
+			{ $set: { 'data.misc.is_mining': true } },
+			{ upsert: true }
+		);
+
 		await collection1.updateOne(
 			{ _id: interaction.channelId },
 			{ $set: { blocked: true, user: interaction.user.id } },
