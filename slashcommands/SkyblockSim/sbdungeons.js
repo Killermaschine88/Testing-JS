@@ -1647,13 +1647,15 @@ module.exports = {
 					xpearned = 30000;
 				}
 
+        if(runFinished) {
+
 				if (player.data.dungeons.class.selected.name == 'Assassin') {
 					await collection.updateOne(
 						{ _id: interaction.user.id },
 						{
 							$inc: {
 								'data.dungeons.class.selected.xp': xpearned,
-								'data.dugeons.class.available.assassin.xp':
+								'data.dungeons.class.available.assassin.xp':
 									xpearned,
 							},
 						},
@@ -1665,7 +1667,7 @@ module.exports = {
 						{
 							$inc: {
 								'data.dungeons.class.selected.xp': xpearned,
-								'data.dugeons.class.available.tank.xp':
+								'data.dungeons.class.available.tank.xp':
 									xpearned,
 							},
 						},
@@ -1679,13 +1681,14 @@ module.exports = {
 						{
 							$inc: {
 								'data.dungeons.class.selected.xp': xpearned,
-								'data.dugeons.class.available.berserker.xp':
+								'data.dungeons.class.available.berserker.xp':
 									xpearned,
 							},
 						},
 						{ upsert: true }
 					);
 				}
+        
 
 				await collection.updateOne(
 					{ _id: interaction.user.id },
@@ -1697,6 +1700,7 @@ module.exports = {
 					},
 					{ upsert: true }
 				);
+        }
 
 				await collection1.updateOne(
 					{ _id: interaction.channelId },
