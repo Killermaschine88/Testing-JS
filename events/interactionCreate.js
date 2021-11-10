@@ -3,11 +3,17 @@ const config = require('../constants/Bot/config.json');
 
 module.exports = {
 	name: 'interactionCreate',
+	/**
+	 * 
+	 * @param {Discord.Interaction} interaction 
+	 * @param {*} mclient 
+	 * @returns 
+	 */
 	async execute(interaction, mclient) {
 		if (interaction.isAutocomplete()) {
 			const focused = interaction.options.getFocused();
 
-			if (interaction.options._subcommand == 'reforge') {
+			if (interaction.options.getSubcommand() == 'reforge') {
 				let stones = [
 					'Dragon Claw',
 					'Wither Blood',
@@ -50,7 +56,7 @@ module.exports = {
 				} else {
 					interaction.respond(found2);
 				}
-			} else if (interaction.options._subcommand == 'sell') {
+			} else if (interaction.options.getSubcommand() == 'sell') {
 				let items = [
 					'Hardstone',
 					'Coal',
@@ -174,9 +180,9 @@ module.exports = {
 
 		let commandExecute = interaction.commandName;
 
-		if (interaction.options._subcommand != null) {
+		if (interaction.options.getSubcommand() != null) {
 			commandExecute =
-				interaction.commandName + interaction.options._subcommand;
+				interaction.commandName + interaction.options.getSubcommand();
 		}
 
 		const collection1 = mclient.db('Sky-Bot').collection('settings');
