@@ -162,11 +162,11 @@ const data = [
 		description: 'Skyblock Simulator Commands',
 		type: 'SUB_COMMAND_GROUP',
 		options: [
-			{
+			/*{
 				name: 'dragon',
 				description: 'Lets you place Summoning Eye to fight Dragons',
 				type: 'SUB_COMMAND',
-			},
+			},*/
 			{
 				name: 'grind',
 				description: 'Lets you grind Mobs for Combat XP and Items',
