@@ -12,7 +12,9 @@ module.exports = {
 		let action = interaction.options.getString('action');
 		let user = interaction.options.getUser('user');
 		let tradeitem = interaction.options.getString('trade-item');
-    tradeitem = tradeitem.toLowerCase();
+    if(tradeitem) {
+      tradeitem = tradeitem.toLowerCase();
+    }
 		let amount = interaction.options.getInteger('amount');
 
 		const collection = mclient.db('SkyblockSim').collection('Players');
@@ -61,19 +63,73 @@ module.exports = {
 
       if(tradeitem.includes('coin')) {
         tradeitem = 'Coins'
-        if(amount > player.data.profile.coins) {
-          let noitemembed = new Discord.MessageEmbed()
-					.setTitle('No Item found.')
-					.setDescription(
-						`Couldn\'t find any Items matching \`${caps(
-							tradeitem
-						)}\` or Amount being above 0, make sure you spelled it corrrectly.`
-					)
-					.setFooter('Skyblock Simulator')
-					.setColor('RED');
 
-				return interaction.editReply({ embeds: [noitemembed] });
-        }
+        if (amount > player.data.profile.coins) {
+				let lowitemsembed = new Discord.MessageEmbed()
+					.setTitle('Too few Items')
+					.setDescription(
+						`You only have ${player.data.profile.coins} ${tradeitem}, but tried to trade ${amount} ${tradeitem}.`
+					)
+					.setColor('RED')
+					.setFooter('Skyblock Simulator');
+
+				return interaction.editReply({ embeds: [lowitemsembed] });
+			}
+
+      await collection1.updateOne(
+				{ _id: interaction.user.id },
+				{
+					$set: {
+						sender: {
+							id: interaction.user.id,
+							item: caps(tradeitem),
+							amount: amount,
+							accepted: false,
+						},
+						reciever: {
+							id: user.id,
+							item: 'None',
+							amount: 0,
+							accepted: false,
+						},
+					},
+				},
+				{ upsert: true }
+			);
+
+			await collection.updateOne(
+				{
+					_id: interaction.user.id,
+				},
+				{ $inc: { 'data.profile.coins': -amount } },
+				{ upsert: true }
+			);
+
+			let dmed = 'yes';
+			try {
+				let tradereq = new Discord.MessageEmbed()
+					.setTitle(`Trade Offer from ${interaction.user.tag}`)
+					.setDescription(
+						`Wants to trade **${amount} ${tradeitem}**.\n\nSend your offer back with \`/sb trade reply-offer @User/UserId Item amount\` once you sent them an offer back you need to wait for them to accept or deny it.`
+					);
+				let fetched = await interaction.client.users.fetch(user.id);
+				await fetched.send({ embeds: [tradereq] });
+			} catch (e) {
+				console.log(e);
+				dmed = 'no';
+			}
+
+			let sentembed = new Discord.MessageEmbed()
+				.setTitle('Trade sent')
+				.setDescription(
+					`Sent a trade to the User offering them **${amount} ${caps(
+						tradeitem
+					)}**.\nWait for the User to reply you with an offer which u then can accept or deny (you get dmed when they reply an offer)\n\nUser dmed: ${dmed}`
+				)
+				.setColor('GREEN')
+				.setFooter('Skyblock Simulator');
+
+			return interaction.editReply({ embeds: [sentembed] });
       }
 
 			let finditem = player.data.inventory.items.find(
@@ -194,6 +250,73 @@ module.exports = {
 				return interaction.editReply({ embeds: [invalid] });
 			}
 
+      if(tradeitem.includes('coin')) {
+        tradeitem = 'Coins'
+
+        if (amount > player.data.profile.coins) {
+				let lowitemsembed = new Discord.MessageEmbed()
+					.setTitle('Too few Items')
+					.setDescription(
+						`You only have ${player.data.profile.coins} ${tradeitem}, but tried to trade ${amount} ${tradeitem}.`
+					)
+					.setColor('RED')
+					.setFooter('Skyblock Simulator');
+
+				return interaction.editReply({ embeds: [lowitemsembed] });
+			}
+
+////////////////////////////////////////////////
+await collection1.updateOne(
+				{ _id: user.id },
+				{
+					$set: {
+						reciever: {
+							id: interaction.user.id,
+							item: caps(tradeitem),
+							amount: amount,
+							accepted: true,
+						},
+					},
+				},
+				{ upsert: true }
+			);
+
+			await collection.updateOne(
+				{
+					_id: interaction.user.id,
+				},
+				{ $inc: { 'data.profile.coins': -amount } },
+				{ upsert: true }
+			);
+
+			let dmed = 'yes';
+			try {
+				let tradereq = new Discord.MessageEmbed()
+					.setTitle(`Trade Offer from ${interaction.user.tag}`)
+					.setDescription(
+						`Wants to offer **${amount} ${tradeitem}** for the Items you offered them.\n\nAccept or deny the trade with \`/sb trade accpet-offer/deny-offer @User/UserId\` if you accept the offer the items will be transfered else you get them back.`
+					);
+				let fetched = await interaction.client.users.fetch(user.id);
+				await fetched.send({ embeds: [tradereq] });
+			} catch (e) {
+				console.log(e);
+				dmed = 'no';
+			}
+
+			let sentembed = new Discord.MessageEmbed()
+				.setTitle('Trade sent')
+				.setDescription(
+					`Sent a trade to the User offering them **${amount} ${caps(
+						tradeitem
+					)}** for their Items.\nWait for the User to accept or deny your offer if they accept the trade gets completed else the items get returned.\nUser dmed: ${dmed}`
+				)
+				.setColor('GREEN')
+				.setFooter('Skyblock Simulator');
+
+			return interaction.editReply({ embeds: [sentembed] });
+
+      }
+
 			let finditem = player.data.inventory.items.find(
 				(item) => item.name == caps(tradeitem)
 			);
@@ -289,7 +412,22 @@ module.exports = {
 			});
 			console.log(offer);
 
-			const updatePlayer = await addItems(
+      if(offer.sender.item == 'Coins') {
+        console.log('coin')
+
+        await collection.updateOne(
+				{ _id: offer.reciever.id },
+				{
+					$inc: {
+						"data.profile.coins": offer.sender.amount
+					},
+				},
+				{ upsert: true }
+			);
+
+      } else {
+
+        const updatePlayer = await addItems(
 				offer.sender.item,
 				offer.sender.amount,
 				user1
@@ -300,7 +438,24 @@ module.exports = {
 				updatePlayer
 			);
 
-			const updatePlayer1 = await addItems(
+      }
+
+      if(offer.reciever.item == 'Coins') {
+        console.log('coin2')
+
+        await collection.updateOne(
+				{ _id: offer.sender.id },
+				{
+					$inc: {
+						"data.profile.coins": offer.reciever.amount
+					},
+				},
+				{ upsert: true }
+			);
+
+      } else {
+
+        const updatePlayer1 = await addItems(
 				offer.reciever.item,
 				offer.reciever.amount,
 				user2
@@ -311,11 +466,13 @@ module.exports = {
 				updatePlayer1
 			);
 
+      }
+
 			try {
 				let tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade accepted`)
 					.setDescription(
-						`Trade accepted you got the ${offer.sender.amount} ${offer.sender.item}`
+						`Trade accepted you got the ${offer.reciever.amount} ${offer.reciever.item}`
 					);
 				let fetched = await interaction.client.users.fetch(
 					offer.sender.id
@@ -326,7 +483,7 @@ module.exports = {
 				let tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade accepted`)
 					.setDescription(
-						`Trade accepted you got the ${offer.reciever.amount} ${offer.reciever.item}`
+						`Trade accepted you got the ${offer.sender.amount} ${offer.sender.item}`
 					);
 				let fetched = await interaction.client.users.fetch(
 					offer.reciever.id
@@ -362,7 +519,24 @@ module.exports = {
 			});
 			console.log(offer);
 
-			const updatePlayer = await addItems(
+      if(offer.reciever.item == 'Coins') {
+        console.log('coin')
+        console.log(offer.reciever.amount)
+
+        await collection.updateOne(
+				{ _id: offer.reciever.id },
+				{
+					$inc: {
+						"data.profile.coins": offer.reciever.amount
+					},
+				},
+				{ upsert: true }
+			);
+      console.log('coin done')
+
+      } else {
+
+        const updatePlayer = await addItems(
 				offer.reciever.item,
 				offer.reciever.amount,
 				user1
@@ -373,7 +547,26 @@ module.exports = {
 				updatePlayer
 			);
 
-			const updatePlayer1 = await addItems(
+      }
+
+      if(offer.sender.item == 'Coins') {
+        console.log('coin2')
+        console.log(offer.sender.amount)
+
+        await collection.updateOne(
+				{ _id: offer.sender.id },
+				{
+					$inc: {
+						"data.profile.coins": offer.sender.amount
+					},
+				},
+				{ upsert: true }
+			);
+      console.log('coins2 done')
+
+      } else {
+
+        const updatePlayer1 = await addItems(
 				offer.sender.item,
 				offer.sender.amount,
 				user2
@@ -383,6 +576,8 @@ module.exports = {
 				{ _id: offer.sender.id },
 				updatePlayer1
 			);
+
+      }
 
 			try {
 				let tradereq = new Discord.MessageEmbed()
