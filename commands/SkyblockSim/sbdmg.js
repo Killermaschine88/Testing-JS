@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const prefix = require('@replit/database');
+const { getFooter, getColor } = require('../../constants/Bot/embeds');
 const prefixx = new prefix();
 
 module.exports = {
@@ -23,8 +24,8 @@ module.exports = {
 		}
 
 		const start = new Discord.MessageEmbed()
-			.setFooter('Skyblock Simulator')
-			.setColor('90EE90')
+			.setFooter(getFooter(player))
+			.setColor(getColor(player))
 			.setDescription(`Dmg Testing`);
 		const row = new Discord.MessageActionRow().addComponents(
 			new Discord.MessageButton()
@@ -87,8 +88,8 @@ module.exports = {
 				mhp = dmgdealt(mhp, pdmg);
 
 				const mobembed = new Discord.MessageEmbed()
-					.setFooter('Skyblock Simulator')
-					.setColor('90EE90');
+					.setFooter(getFooter(player))
+					.setColor(getColor(player));
 				if (crit === 'yes') {
 					mobembed.setDescription(
 						`Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (-<:crit:870306942806020106> ${pdmg})`
@@ -102,8 +103,8 @@ module.exports = {
 
 				if (i.customId === 'dmg' && mhp <= 0) {
 					const killed = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(
 							`Killed the Enemy with **❤️ ${php}** left.`
 						);
@@ -111,8 +112,8 @@ module.exports = {
 					menu.edit({ embeds: [killed], components: [] });
 				} else if (i.customId === 'dmg' && php <= 0) {
 					const died = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(
 							`Died to the Enemy which had **❤️ ${mhp}** left.`
 						);

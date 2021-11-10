@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const prefix = require('@replit/database');
+const { getFooter, getColor } = require('../../constants/Bot/embeds');
 const prefixx = new prefix();
 
 module.exports = {
@@ -63,8 +64,8 @@ module.exports = {
 			.setDescription(
 				'<a:wait:847471618272002059> Placing Eyes to Summon the Dragon'
 			)
-			.setColor('PURPLE')
-			.setFooter('Skyblock Simulator');
+			.setColor(getColor(player))
+			.setFooter(getFooter(player));
 
 		const menu = await message.channel.send({ embeds: [start] });
 
@@ -97,8 +98,8 @@ module.exports = {
 			.setDescription(
 				`<:berserker:852079613052059658> **${dragname} Dragon** has spawned!`
 			)
-			.setColor('PURPLE')
-			.setFooter('Skyblock Simulator');
+			.setColor(getColor(player))
+			.setFooter(getFooter(player));
 
 		menu.edit({ embeds: [spawned] });
 
@@ -160,10 +161,8 @@ module.exports = {
 			);
 		}
 		end.setTitle('Dragon Loot')
-			.setColor('PURPLE')
-			.setFooter(
-				'Skyblock Simulator\nThis is purely cosmetic as of now will change in the Future'
-			);
+			.setColor(getColor(player))
+			.setFooter(getFooter(player));
 		if (loot === 'Fragments') {
 			end.setDescription(
 				`You killed an **${dragname} Dragon** which dropped you **${fragsamount}x ${loot}** earning you **<:coins:861974605203636253> ${earned} Coins**`

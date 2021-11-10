@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const prefix = require('@replit/database');
+const { getFooter, getColor } = require('../../constants/Bot/embeds');
 const prefixx = new prefix();
 
 module.exports = {
@@ -35,11 +36,11 @@ module.exports = {
 		let mf = player.data.skills.magic_find;
 
 		const start = new Discord.MessageEmbed()
-			.setColor('90EE90')
+			.setColor(getColor(player))
 			.setDescription(
 				`<a:runningsteve:865198832316317706> Wandering around the **${location}** to find Mobs.`
 			)
-			.setFooter('Skyblock Simulator');
+			.setFooter(getFooter(player));
 
 		const menu = await message.channel.send({ embeds: [start] });
 
@@ -52,11 +53,11 @@ module.exports = {
 
 		if (findmobs === rolledmobs) {
 			const nomobsfound = new Discord.MessageEmbed()
-				.setColor('RED')
+				.setColor(getColor(player))
 				.setDescription(
 					`Failed to find any Mobs in the **${location}**`
 				)
-				.setFooter('Skyblock Simulator');
+				.setFooter(getFooter(player));
 			menu.edit({ embeds: [nomobsfound] });
 			return;
 		}
@@ -159,24 +160,24 @@ module.exports = {
 		//Deciding Mob Name that gets killed
 		let mobname = mob[Math.floor(Math.random() * mob.length)];
 
-		const endembed = new Discord.MessageEmbed();
+		const endembed = new Discord.MessageEmbed()
+			.setColor(getColor(player))
+			.setFooter(getFooter(player));
 		if (player.data.settings.imgshown === true) {
 			endembed.setImage(`${img}`);
 		}
-		endembed.setColor('90EE90');
 
 		let imgShown = player.data.settings.imgshown ? 'disable' : 'enable';
-		endembed.setFooter(
-			`Skyblock Simulator\nIf you wish to ${imgShown} a picture of the area being shown, use ${gprefix}sbsettings img`
-		);
 
 		if (mobkills === 1) {
 			endembed.setDescription(
-				`<:berserker:852079613052059658> Killing **${mobkills} ${mobname}** at the **${location}** dropped you **${amount}x ${mobdrop}**`
+				`<:berserker:852079613052059658> Killing **${mobkills} ${mobname}** at the **${location}** dropped you **${amount}x ${mobdrop}**` +
+					`\n\nIf you wish to ${imgShown} a picture of the area being shown, use ${gprefix}sbsettings img`
 			);
 		} else {
 			endembed.setDescription(
-				`<:berserker:852079613052059658> Killing **${mobkills} ${mobname}s** at the **${location}** dropped you **${amount}x ${mobdrop}**`
+				`<:berserker:852079613052059658> Killing **${mobkills} ${mobname}s** at the **${location}** dropped you **${amount}x ${mobdrop}**` +
+					`\n\nIf you wish to ${imgShown} a picture of the area being shown, use ${gprefix}sbsettings img`
 			);
 		}
 		menu.edit({ embeds: [endembed] });

@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const prefix = require('@replit/database');
+const { getFooter, getColor } = require('../../constants/Bot/embeds');
 const prefixx = new prefix();
 
 module.exports = {
@@ -85,8 +86,8 @@ module.exports = {
 			player.data.equipment.fishing.rod.fishing_speed;
 
 		const foundinfo = new Discord.MessageEmbed()
-			.setFooter('Skyblock Simulator')
-			.setColor('90EE90')
+			.setFooter(getFooter(player))
+			.setColor(getColor(player))
 			.setDescription(
 				`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins} <:coins:861974605203636253>**\nWeapon: **${player.data.equipment.combat.weapon.name}**\nArmor: **${player.data.equipment.combat.armor.name}**`
 			)
@@ -136,8 +137,8 @@ module.exports = {
 				if (i.customId === 'main') {
 					await i.deferUpdate();
 					const main = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(
 							`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${player.data.profile.started}:f>\nCoins: **${player.data.profile.coins} <:coins:861974605203636253>**\nTotal Kills: **${player.data.misc.tkills} <:berserker:852079613052059658>**\nWeapon: **${player.data.equipment.combat.weapon.name}**\nArmor: **${player.data.equipment.combat.armor.name}**`
 						)
@@ -160,15 +161,15 @@ module.exports = {
 				} else if (i.customId === 'inv') {
 					await i.deferUpdate();
 					const inv = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(`**Inventory for <@${id}>**\n${str}`);
 					menu.edit({ embeds: [inv] });
 				} else if (i.customId === 'slayer') {
 					await i.deferUpdate();
 					const slayer = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(`**Slayer Info for <@${id}>**`)
 						.addField(
 							'<:rev:852892164559732806> Revenant Horror',
@@ -194,8 +195,8 @@ module.exports = {
 				} else if (i.customId === 'dungeons') {
 					await i.deferUpdate();
 					const dungeons = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(
 							`**Dungeons Info for <@${id}>**\n<:catacombs:854399510951624775> Dungeons XP [1]: **${player.data.dungeons.xp}**\n<:mage:852079612699607072> Selected Class: **${player.data.dungeons.class}**\n<:secrets:867327541584068649> Secrets found: **${player.data.dungeons.secrets}**`
 						);

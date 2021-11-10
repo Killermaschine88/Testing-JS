@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const prefix = require('@replit/database');
 const prefixx = new prefix();
 const fetch = require('node-fetch');
+const { getFooter, getColor } = require('../../constants/Bot/embeds');
 
 module.exports = {
 	name: 'Sbsell',
@@ -40,8 +41,8 @@ module.exports = {
 		if (args[0] === undefined) {
 			const sellmenu = new Discord.MessageEmbed()
 				.setTitle('Skyblock Simulator Sell')
-				.setFooter('Skyblock Simulator')
-				.setColor('90EE90')
+				.setFooter(getFooter(player))
+				.setColor(getColor(player))
 				.setDescription(
 					`**Usage:** ${gprefix}sbsell (Amount/All*) (Itemname)\nItem and Amount are needed to sell an Item\n*Sells all Items from said Item you own\n\n**Inventory:**\n${str}`
 				);
@@ -71,8 +72,8 @@ module.exports = {
 		//Check if Input exists
 		if (args[0] === undefined || args[1] === undefined) {
 			const notset = new Discord.MessageEmbed()
-				.setFooter('Skyblock Simulator')
-				.setColor('RED')
+				.setFooter(getFooter(player))
+				.setColor(getColor(player))
 				.setDescription(
 					`You didn\'t specify the **Amount of Items** to be Sold or the **Item** to be sold please do so.`
 				);
@@ -101,8 +102,8 @@ module.exports = {
 		//Check if more than 1 of said item exists
 		if (founditem === undefined || founditem.amount === 0) {
 			const noitems = new Discord.MessageEmbed()
-				.setFooter('Skyblock Simulator')
-				.setColor('RED')
+				.setFooter(getFooter(player))
+				.setColor(getColor(player))
 				.setDescription(`You don\'t have enough Items to be sold.`);
 			message.channel.send({ embeds: [noitems] });
 			return;
@@ -111,8 +112,8 @@ module.exports = {
 		//Check if a Number higher than the owned Amount is enterd
 		if (founditem.amount < amount) {
 			const littleitems = new Discord.MessageEmbed()
-				.setFooter('Skyblock Simulator')
-				.setColor('RED')
+				.setFooter(getFooter(player))
+				.setColor(getColor(player))
 				.setDescription(
 					`You entered a Number higher than the Amount of ${sellitem} than you own.\nEntered: **${amount}**\nOwned: **${founditem.amount}**`
 				);
@@ -147,8 +148,8 @@ module.exports = {
 			);
 
 			const sold = new Discord.MessageEmbed()
-				.setFooter('Skyblock Simulator')
-				.setColor('90EE90')
+				.setFooter(getFooter(player))
+				.setColor(getColor(player))
 				.setDescription(
 					`Successfully sold **${amount}x ${sellitem}** for **${earnedcoins} Coins**`
 				);

@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const prefix = require('@replit/database');
+const { getFooter, getColor } = require('../../constants/Bot/embeds');
 const prefixx = new prefix();
 
 module.exports = {
@@ -31,8 +32,8 @@ module.exports = {
 
 		const start = new Discord.MessageEmbed()
 			.setTitle('Skyblock Simulator Slayer Menu')
-			.setColor('90EE90')
-			.setFooter('Skyblock Simulator')
+			.setFooter(getFooter(player))
+			.setColor(getColor(player))
 			.setDescription(
 				'Press the Corresponding Emoji for the Slayer you want to do.'
 			);
@@ -109,8 +110,8 @@ module.exports = {
 		if (choosen) {
 			const tembed = new Discord.MessageEmbed()
 				.setTitle(`${choosen} Slayer Menu`)
-				.setColor('90EE90')
-				.setFooter('Skyblock Simulator')
+				.setFooter(getFooter(player))
+				.setColor(getColor(player))
 				.setDescription(
 					`Decide the Tier of ${choosen} Slayer you want to fight.\n\n**Cost per Slayer**\nT1: **2.5k Coins**\nT2: **7.5k Coins**\nT3: **10kCoins**\nT4: **50k Coins**`
 				);
@@ -239,8 +240,8 @@ module.exports = {
 		if (!color || !tier) {
 			const poor = new Discord.MessageEmbed()
 				.setTitle('Insuffucicient Coins')
-				.setColor('RED')
-				.setFooter('Skyblock Simulator')
+				.setFooter(getFooter(player))
+				.setColor(getColor(player))
 				.setDescription(
 					`You can\'t afford to kill a **${tier} ${choosen}** Slayer!`
 				);

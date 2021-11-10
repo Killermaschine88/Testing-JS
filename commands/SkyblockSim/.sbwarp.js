@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const prefix = require('@replit/database');
+const { getFooter, getColor } = require('../../constants/Bot/embeds');
 const prefixx = new prefix();
 
 module.exports = {
@@ -45,8 +46,8 @@ module.exports = {
 
 		const start = new Discord.MessageEmbed()
 			.setTitle('Skyblock Simulator Warps')
-			.setFooter('Skyblock Simulator')
-			.setColor('90EE90')
+			.setFooter(getFooter(player))
+			.setColor(getColor(player))
 			.setDescription('Choose the Island Type where you want to Travel');
 
 		const row = new Discord.MessageActionRow().addComponents(
@@ -116,8 +117,8 @@ module.exports = {
 		if (type === 'combat') {
 			const combatembed = new Discord.MessageEmbed()
 				.setTitle('Skyblock Simulator Combat Islands')
-				.setFooter('Skyblock Simulator')
-				.setColor('90EE90')
+				.setFooter(getFooter(player))
+				.setColor(getColor(player))
 				.setDescription(
 					'**Available Islands (Combat Level)**\nand found drops on the Islands'
 				)
@@ -189,8 +190,8 @@ module.exports = {
 		} else if (type === 'mining') {
 			const miningembed = new Discord.MessageEmbed()
 				.setTitle('Skyblock Simulator Mining Islands')
-				.setFooter('Skyblock Simulator')
-				.setColor('90EE90')
+				.setFooter(getFooter(player))
+				.setColor(getColor(player))
 				.setDescription(
 					'**Available Islands (Mining Level)**\nand found Ores on the Islands'
 				)
@@ -348,8 +349,8 @@ module.exports = {
 			if (island === 'Hub') {
 				const hubwarp = new Discord.MessageEmbed()
 					.setTitle('Skyblock Simulator Hub Areas')
-					.setFooter('Skyblock Simulator')
-					.setColor('90EE90')
+					.setFooter(getFooter(player))
+					.setColor(getColor(player))
 					.setDescription(
 						'**Available Areas (Combat Level)**\nand found Drops at the Areas\n\nGraveyard(0) <:rotten_flesh:869900884409221191><:carrot:869900884300165230><:potatoe:869900884593762304>\nRuins (1) <:bone:869900884405002270>\nHighlevel (2) <:bone:869900884405002270><:arrow:869900884379832320>'
 					);
@@ -415,8 +416,8 @@ module.exports = {
 			} else if (island === "Spider's Den") {
 				const spiderwarp = new Discord.MessageEmbed()
 					.setTitle('Skyblock Simulator Hub Areas')
-					.setFooter('Skyblock Simulator')
-					.setColor('90EE90')
+					.setFooter(getFooter(player))
+					.setColor(getColor(player))
 					.setDescription(
 						'**Available Areas (Combat Level)**\nand found Drops at the Areas\n\nLower Spiders Hill (1) <:string:869908281215299635><:spider_eye:869908281341132830>\nUpper Spiders Hill (3) <:string:869908281215299635><:spider_eye:869908281341132830>\nSpider Cave (4) <:string:869908281215299635><:spider_eye:869908281341132830><:slimeball:869900884308549653>'
 					);
@@ -482,8 +483,8 @@ module.exports = {
 			} else if (island === 'Blazing Fortress') {
 				const blazingwarp = new Discord.MessageEmbed()
 					.setTitle('Skyblock Simulator Blazing Fortress Areas')
-					.setFooter('Skyblock Simulator')
-					.setColor('90EE90')
+					.setFooter(getFooter(player))
+					.setColor(getColor(player))
 					.setDescription(
 						'**Available Areas (Combat Level)**\nand found Drops at the Areas\n\nMolten Castle (5) <:gold_nugget:869900883977183244><:gold:869126927011708929><:blaze_rod:869900884358860820>\nMolten Bridge (8) <:magma_cream:869900884144947201><:coal:869126927062028298><:bone:869900884405002270>\nLava Field (10) <:magma_cream:869900884144947201><:ghast_tear:869900884337905684>'
 					);
@@ -553,8 +554,8 @@ module.exports = {
 			//Different Areas at the Deep Caverns
 			const cavernswarp = new Discord.MessageEmbed()
 				.setTitle('Skyblock Simulator Deep Caverns Areas')
-				.setFooter('Skyblock Simulator')
-				.setColor('90EE90')
+				.setFooter(getFooter(player))
+				.setColor(getColor(player))
 				.setDescription(
 					"**Available Areas (Mining Level)**\nand found Ores at the Areas\n\nGunpowder Mines (5) <:cobblestone:869126927124938832><:coal:869126927062028298><:iron:869126927082991636><:gold:869126927011708929>\nLapis Quarry (6) <:cobblestone:869126927124938832><:lapis:869126926986530847>\nPigman's Den (7) <:cobblestone:869126927124938832><:redstone:869126927263367168>\nSlimehill (8) <:cobblestone:869126927124938832><:emerald:869126927380779008>\nDiamond Reserve (9) <:cobblestone:869126927124938832><:diamond:869126926646788097>\nObsidian Sanctuary (10) <:cobblestone:869126927124938832><:diamond:869126926646788097><:obsidian:869490639769853992>"
 				);
@@ -664,8 +665,8 @@ module.exports = {
 		if (location) {
 			const confirm = new Discord.MessageEmbed()
 				.setTitle(`Travel to ${location}`)
-				.setColor('ORANGE')
-				.setFooter('Skyblock Simulator')
+				.setColor(getColor(player))
+				.setFooter(getFooter(player))
 				.setDescription(
 					`Are you sure you want to Travel to the **${location}**`
 				);
@@ -697,8 +698,8 @@ module.exports = {
 
 						const travelled = new Discord.MessageEmbed()
 							.setDescription(`Travelled to the **${location}**.`)
-							.setColor('90EE90')
-							.setFooter('Skyblock Simulator');
+							.setColor(getColor(player))
+							.setFooter(getFooter(player));
 						menu.edit({ embeds: [travelled], components: [] });
 					} else {
 						const cancelled = new Discord.MessageEmbed()

@@ -127,7 +127,7 @@ module.exports = {
 			.setDescription(
 				`To start Grinding Coins use \`${gprefix}sbgrind\` or \`${gprefix}sbfarm\`\nTo view your Profile or another Persons Profile use \`${gprefix}sbinfo (ID/@User)\`\n**FOR A GUIDE ON HOW TO PLAY USE \`${gprefix}sbguide\`**`
 			)
-			.setFooter("Skyblock Simulator\nValues in () aren't needed");
+			.setFooter("Skyblock Simulator • Values in () aren't needed");
 
 		menu.edit({ embeds: [created] });
 		return;
