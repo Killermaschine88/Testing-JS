@@ -19,8 +19,16 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No Profile found')
 				.setDescription(`Create a Profile using \`/sb start\``);
-			interaction.editReply({ embeds: [noprofile] });
-			return;
+			return interaction.editReply({ embeds: [noprofile] });
+		}
+
+		if (player.data.misc.is_massselling) {
+			const nosell = new Discord.MessageEmbed()
+				.setColor('RED')
+				.setTitle('Selling blocked!')
+				.setDescription('Selling blocked! You are currently mass-selling!')
+				.setFooter('Skyblock Simulator');
+			return interaction.editReply({ embeds: [nosell] });
 		}
 
 		let sellall = interaction.options.getString('sell-all');
@@ -36,8 +44,10 @@ module.exports = {
 		let date1 = Date.now();
 
 		if (sellall == 'yes') {
-			//&&plyer.data.misc.is_massselling == false so they cant multi sell often
-
+			await collection.updateOne(
+				{ _id: interaction.user.id },
+				{ $set: { 'data.misc.is_massselling': true } }
+			);
 			for (const item of player.data.inventory.items) {
 				if (item.amount != 0 && item.name != '') {
 					let sellname = item.name.split(' ');
@@ -119,6 +129,10 @@ module.exports = {
 			} else if (taken < 10000) {
 				taken = taken / 1000 + ' s';
 			}
+			await collection.updateOne(
+				{ _id: interaction.user.id },
+				{ $set: { 'data.misc.is_massselling': false } }
+			);
 			let embed = new Discord.MessageEmbed()
 				.setTitle('Sell All Finished')
 				.setColor('90EE90')
