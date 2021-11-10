@@ -99,6 +99,7 @@ module.exports = {
 					'Rotten Flesh',
 					'Carrot',
 					'Potatoe',
+          'Shark Fin',
 				];
 				let found = [];
 				let found2 = [];
