@@ -20,13 +20,21 @@ module.exports = {
 			return interaction.editReply({ embeds: [noprofile] });
 		}
 
-		let activity = player.data.misc.is_fishing ? 'fishing' : player.data.misc.is_mining ? 'mining' : player.data.misc.in_dungeon ? 'in a dungeon' : '';
+		let activity = player.data.misc.is_fishing
+			? 'fishing'
+			: player.data.misc.is_mining
+			? 'mining'
+			: player.data.misc.in_dungeon
+			? 'in a dungeon'
+			: '';
 		if (activity) {
 			const activityEmbed = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('Warp Blocked')
-				.setDescription(`Warping blocked! You are currently ${activity}!`)
-				.setFooter('Skyblock Simulator')
+				.setDescription(
+					`Warping blocked! You are currently ${activity}!`
+				)
+				.setFooter('Skyblock Simulator');
 			return interaction.editReply({ embeds: [activityEmbed] });
 		}
 
