@@ -175,7 +175,7 @@ module.exports = {
 		} else if (
 			rod.name == 'Rod of Legends' &&
 			player.data.profile.gems >= 50 &&
-			lilyamount >= 100
+			lilyamount >= 250
 		) {
 			rod_button.setDisabled(false);
 			rodname = 'Rod of the Sea';
@@ -183,7 +183,7 @@ module.exports = {
 			rodspeed = 75;
 
 			gemsneeded = 50;
-			amount = 100;
+			amount = 250;
 		}
 
 		//Sword Upgrades
@@ -375,7 +375,7 @@ module.exports = {
 		} else if (rod.name == 'Rod of Legends') {
 			shopembed.addField(
 				'Rod of the Sea',
-				'**Cost:** 50 Gems + 100 Lilypads\n\n**Stats:**\n`50 α`, `75% 🎣`',
+				'**Cost:** 50 Gems + 250 Lilypads\n\n**Stats:**\n`50 α`, `75% 🎣`',
 				true
 			);
 		}
