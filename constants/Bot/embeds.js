@@ -60,7 +60,7 @@ const getColor = (playerOrString) => {
 		case 'Gold Mine':
 			return COLORS.GOLD;
 
-		case 'Catacombs':
+		case 'Dungeons':
 		case 'Graveyard':
 		case 'Ruins':
 		case 'Hub':
