@@ -1647,60 +1647,62 @@ module.exports = {
 					xpearned = 30000;
 				}
 
-        if(runFinished) {
+				if (runFinished) {
+					if (
+						player.data.dungeons.class.selected.name == 'Assassin'
+					) {
+						await collection.updateOne(
+							{ _id: interaction.user.id },
+							{
+								$inc: {
+									'data.dungeons.class.selected.xp': xpearned,
+									'data.dungeons.class.available.assassin.xp':
+										xpearned,
+								},
+							},
+							{ upsert: true }
+						);
+					} else if (
+						player.data.dungeons.class.selected.xp == 'Tank'
+					) {
+						await collection.updateOne(
+							{ _id: interaction.user.id },
+							{
+								$inc: {
+									'data.dungeons.class.selected.xp': xpearned,
+									'data.dungeons.class.available.tank.xp':
+										xpearned,
+								},
+							},
+							{ upsert: true }
+						);
+					} else if (
+						player.data.dungeons.class.selected.xp == 'Berserker'
+					) {
+						await collection.updateOne(
+							{ _id: interaction.user.id },
+							{
+								$inc: {
+									'data.dungeons.class.selected.xp': xpearned,
+									'data.dungeons.class.available.berserker.xp':
+										xpearned,
+								},
+							},
+							{ upsert: true }
+						);
+					}
 
-				if (player.data.dungeons.class.selected.name == 'Assassin') {
 					await collection.updateOne(
 						{ _id: interaction.user.id },
 						{
 							$inc: {
-								'data.dungeons.class.selected.xp': xpearned,
-								'data.dungeons.class.available.assassin.xp':
-									xpearned,
-							},
-						},
-						{ upsert: true }
-					);
-				} else if (player.data.dungeons.class.selected.xp == 'Tank') {
-					await collection.updateOne(
-						{ _id: interaction.user.id },
-						{
-							$inc: {
-								'data.dungeons.class.selected.xp': xpearned,
-								'data.dungeons.class.available.tank.xp':
-									xpearned,
-							},
-						},
-						{ upsert: true }
-					);
-				} else if (
-					player.data.dungeons.class.selected.xp == 'Berserker'
-				) {
-					await collection.updateOne(
-						{ _id: interaction.user.id },
-						{
-							$inc: {
-								'data.dungeons.class.selected.xp': xpearned,
-								'data.dungeons.class.available.berserker.xp':
-									xpearned,
+								'data.dungeons.xp': xpearned,
+								'data.dungeons.total_runs': 1,
 							},
 						},
 						{ upsert: true }
 					);
 				}
-        
-
-				await collection.updateOne(
-					{ _id: interaction.user.id },
-					{
-						$inc: {
-							'data.dungeons.xp': xpearned,
-							'data.dungeons.total_runs': 1,
-						},
-					},
-					{ upsert: true }
-				);
-        }
 
 				await collection1.updateOne(
 					{ _id: interaction.channelId },

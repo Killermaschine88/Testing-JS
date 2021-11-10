@@ -19,7 +19,9 @@ module.exports = {
 				.get('869124249225429022')
 				?.commands.set(cmdfile.data);
 
-			const command1 = await client.guilds.cache.get('905483235344121887') ?.commands.set(cmdfile.data)
+			const command1 = await client.guilds.cache
+				.get('905483235344121887')
+				?.commands.set(cmdfile.data);
 			//client.commands.set([])
 			message.channel.send('Commands deployed.');
 		}

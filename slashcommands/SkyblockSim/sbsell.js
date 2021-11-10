@@ -26,7 +26,9 @@ module.exports = {
 			const nosell = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('Selling blocked!')
-				.setDescription('Selling blocked! You are currently mass-selling!')
+				.setDescription(
+					'Selling blocked! You are currently mass-selling!'
+				)
 				.setFooter('Skyblock Simulator');
 			return interaction.editReply({ embeds: [nosell] });
 		}

@@ -4,10 +4,10 @@ const config = require('../constants/Bot/config.json');
 module.exports = {
 	name: 'interactionCreate',
 	/**
-	 * 
-	 * @param {Discord.Interaction} interaction 
-	 * @param {*} mclient 
-	 * @returns 
+	 *
+	 * @param {Discord.Interaction} interaction
+	 * @param {*} mclient
+	 * @returns
 	 */
 	async execute(interaction, mclient) {
 		if (interaction.isAutocomplete()) {
@@ -182,7 +182,8 @@ module.exports = {
 
 		if (interaction.options.getSubcommand(false) != null) {
 			commandExecute =
-				interaction.commandName + interaction.options.getSubcommand(false);
+				interaction.commandName +
+				interaction.options.getSubcommand(false);
 		}
 
 		const collection1 = mclient.db('Sky-Bot').collection('settings');
