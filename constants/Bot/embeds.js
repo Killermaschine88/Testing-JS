@@ -18,7 +18,7 @@ const getColor = (playerOrString) => {
 
 	/*
 		Hardcoded locations:
-		• The Park (for fishing)
+		• Pond (for fishing)
 		• Catacombs (for dungeon)
 	*/
 	switch (location) {
@@ -29,7 +29,7 @@ const getColor = (playerOrString) => {
 		case 'Diamond Reserve':
 		case 'Crystal Hollows':
 		case 'Lapis Quarry':
-		case 'The Park':
+		case 'Pond':
 			return COLORS.LIGHT_BLUE;
 
 		case 'Gunpowder Mines':
