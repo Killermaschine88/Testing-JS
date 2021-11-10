@@ -19,7 +19,7 @@ async function start(client, mclient) {
 				'data.misc.is_fishing': false,
 				'data.misc.is_mining': false,
 				'data.misc.in_dungeon': false,
-        'data.misc.is_massselling': false
+				'data.misc.is_massselling': false,
 			},
 		}
 	);
@@ -34,8 +34,8 @@ async function start(client, mclient) {
 		.setFooter('Skyblock Simulator Events')
 		.setColor('RED');
 
-  const sharkoffembed = new Discord.MessageEmbed()
-    .setTitle('🦈 Shark Fishing Event Disabled')
+	const sharkoffembed = new Discord.MessageEmbed()
+		.setTitle('🦈 Shark Fishing Event Disabled')
 		.setDescription('The Shark Fishing has been disabled again.')
 		.setFooter('Skyblock Simulator Events')
 		.setColor('RED');
@@ -158,7 +158,7 @@ async function start(client, mclient) {
 		'Europe/Rome'
 	);
 
-  const sharkon1 = new CronJob(
+	const sharkon1 = new CronJob(
 		'0 19 * * *',
 		async function () {
 			let timeleft = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
@@ -198,7 +198,7 @@ async function start(client, mclient) {
 		'Europe/Rome'
 	);
 
-  const sharkon2 = new CronJob(
+	const sharkon2 = new CronJob(
 		'0 9 * * *',
 		async function () {
 			let timeleft = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
@@ -238,7 +238,7 @@ async function start(client, mclient) {
 		'Europe/Rome'
 	);
 
-  const sharkoff1 = new CronJob(
+	const sharkoff1 = new CronJob(
 		'0 11 * * *',
 		async function () {
 			collection2.updateOne(
@@ -257,7 +257,7 @@ async function start(client, mclient) {
 		'Europe/Rome'
 	);
 
-  const sharkoff2 = new CronJob(
+	const sharkoff2 = new CronJob(
 		'0 21 * * *',
 		async function () {
 			collection2.updateOne(
@@ -282,17 +282,16 @@ async function start(client, mclient) {
 	mfon2.start(); //Magic Find Enable (Morning)
 	mfoff2.start(); //Magic Find Disableb(Morning)
 
-  sharkon1.start()
-  sharkon2.start()
-  sharkoff1.start()
-  sharkoff2.start()
-
+	sharkon1.start();
+	sharkon2.start();
+	sharkoff1.start();
+	sharkoff2.start();
 
 	//Check if Events Running
 	console.log(
 		`Magic Find event running? Enable: ${mfon.running} ${mfon2.running}, Disable: ${mfoff.running} ${mfoff2.running}`
 	);
-  console.log(
+	console.log(
 		`Shark Fishing event running? Enable: ${sharkon1.running} ${sharkon2.running}, Disable: ${sharkoff1.running} ${sharkoff2.running}`
 	);
 }

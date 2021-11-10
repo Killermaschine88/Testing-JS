@@ -179,15 +179,15 @@ module.exports = {
 		});
 
 		collector.on('collect', async (i) => {
-      if (player.data.misc.is_mining == true) {
-							interaction.followUp({
-								content:
-									'You cheeky tried to multi grind Skills not with me :).',
-								ephemeral: true,
-							});
-							return collector.stop();
-						}
-      
+			if (player.data.misc.is_mining == true) {
+				interaction.followUp({
+					content:
+						'You cheeky tried to multi grind Skills not with me :).',
+					ephemeral: true,
+				});
+				return collector.stop();
+			}
+
 			if (i.customId === 'cast' && rod_casted === false) {
 				rod_casted = true;
 				pond.fields = [];
@@ -217,7 +217,12 @@ module.exports = {
 			} else if (i.customId === 'lure' && rod_casted === true) {
 				let creature = isSeaCreature(sea_creature_chance, isCreature);
 				if (creature === 'yes') {
-					foundmob = await getSeaCreatureStats(mob, mobs, fishinglvl, mclient);
+					foundmob = await getSeaCreatureStats(
+						mob,
+						mobs,
+						fishinglvl,
+						mclient
+					);
 					mhp = foundmob.hp;
 					mdmg = foundmob.dmg;
 					pond.fields = [];
@@ -300,7 +305,6 @@ module.exports = {
 						);
 
 						menu.edit({ embeds: [pond], components: [row] });
-						
 					}
 				}
 			} else if (i.customId === 'killsc') {
@@ -342,10 +346,15 @@ module.exports = {
 				if (i.customId === 'killsc' && mhp <= 0) {
 					let amount = Math.floor(Math.random() * (3 - 1) + 1);
 					let mobdrop = 'Lilypad';
-          let special_mobs = ['Nurse Shark', 'Blue Shark', 'Tiger Shark', 'Great White Shark']
-          if(special_mobs.includes(foundmob.name)) {
-            mobdrop = 'Shark Fin'
-          }
+					let special_mobs = [
+						'Nurse Shark',
+						'Blue Shark',
+						'Tiger Shark',
+						'Great White Shark',
+					];
+					if (special_mobs.includes(foundmob.name)) {
+						mobdrop = 'Shark Fin';
+					}
 					pond.fields = [];
 					pond.setColor('BLUE');
 					pond.addField(
@@ -424,19 +433,22 @@ function isSeaCreature(sea_creature_chance, isCreature) {
 }
 
 async function getSeaCreatureStats(mob, mobs, fishinglvl, mclient) {
-  const collection = mmclient.db('SkyblockSim').collection('events');
+	const collection = mmclient.db('SkyblockSim').collection('events');
 	let events = await collection.find({}).toArray();
 	let shark_event = events.find((event) => event._id == 'shark_fishing');
 
-  let seacreatures = ''
-  if(shark_event.enabled) {
-    seacreatures = Object.entries(mobs).filter(
-		([name, props]) => props.level <= fishinglvl || (props.level <= fishinglvl && props.shark_mob))
-  } else {
-    seacreatures = Object.entries(mobs).filter(
-		([name, props]) => props.level <= fishinglvl 
-	);
-  }
+	let seacreatures = '';
+	if (shark_event.enabled) {
+		seacreatures = Object.entries(mobs).filter(
+			([name, props]) =>
+				props.level <= fishinglvl ||
+				(props.level <= fishinglvl && props.shark_mob)
+		);
+	} else {
+		seacreatures = Object.entries(mobs).filter(
+			([name, props]) => props.level <= fishinglvl
+		);
+	}
 
 	if (seacreatures === undefined) {
 		mob = 'None';

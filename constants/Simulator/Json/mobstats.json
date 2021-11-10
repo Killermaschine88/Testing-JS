@@ -90,36 +90,36 @@
 		"level": 20,
 		"xp": 3375
 	},
-  "Nurse Shark": {
-    "name": "Nurse Shark",
+	"Nurse Shark": {
+		"name": "Nurse Shark",
 		"hp": "500",
 		"dmg": 30,
 		"level": 5,
 		"xp": 405,
-    "shark_mob": true
-  },
-  "Blue Shark": {
-    "name": "Blue Shark",
+		"shark_mob": true
+	},
+	"Blue Shark": {
+		"name": "Blue Shark",
 		"hp": "1000",
 		"dmg": 50,
 		"level": 10,
 		"xp": 810,
-    "shark_mob": true
-  },
-  "Tiger Shark": {
-    "name": "Tiger Shark",
+		"shark_mob": true
+	},
+	"Tiger Shark": {
+		"name": "Tiger Shark",
 		"hp": "2000",
 		"dmg": 90,
 		"level": 18,
 		"xp": 1013,
-    "shark_mob": true
-  },
-  "Great White Shark": {
-    "name": "Great White Shark",
+		"shark_mob": true
+	},
+	"Great White Shark": {
+		"name": "Great White Shark",
 		"hp": "7500",
 		"dmg": 150,
 		"level": 24,
 		"xp": 2025,
-    "shark_mob": true
-  }
+		"shark_mob": true
+	}
 }
