@@ -189,35 +189,35 @@ module.exports = {
 		//Sword Upgrades
 		if (
 			swordinv.find((item) => item.name == "Tactician's Sword") &&
-			coins > 5000000
+			coins > 5000000 && !swordinv.find((item) => item.name == 'Leaping Sword')
 		) {
 			sword_button.setDisabled(false);
 			choosen = 'Leaping Sword';
 			swordcost = 5000000;
 		} else if (
 			swordinv.find((item) => item.name == 'Zombie Sword') &&
-			coins > 1000000
+			coins > 1000000 && !swordinv.find((item) => item.name == 'Leaping Sword')
 		) {
 			sword_button.setDisabled(false);
 			choosen = "Tactician's Sword";
 			swordcost = 1000000;
 		} else if (
 			swordinv.find((item) => item.name == 'Golem Sword') &&
-			coins > 100000
+			coins > 100000 && !swordinv.find((item) => item.name == 'Zombie Sword')
 		) {
 			sword_button.setDisabled(false);
 			choosen = 'Zombie Sword';
 			swordcost = 100000;
 		} else if (
 			swordinv.find((item) => item.name == 'Undead Sword') &&
-			coins > 50000
+			coins > 50000 && !swordinv.find((item) => item.name == 'Golem Sword')
 		) {
 			sword_button.setDisabled(false);
 			choosen = 'Golem Sword';
 			swordcost = 50000;
 		} else if (
 			swordinv.find((item) => item.name == 'Fist') &&
-			coins > 15000
+			coins > 15000 && !swordinv.find((item) => item.name == 'Undead Sword')
 		) {
 			sword_button.setDisabled(false);
 			choosen = 'Undead Sword';
@@ -227,44 +227,44 @@ module.exports = {
 		//Armor Upgrades
 		if (
 			armorinv.find((item) => item.name == 'Frozen Blaze Armor') &&
-			coins > 10000000
+			coins > 10000000 && !armorinv.find((item) => item.name === 'Superior Dragon Armor')
 		) {
 			armor_button.setDisabled(false);
 			choosen2 = 'Superior Dragon Armor';
 			armorcost = 10000000;
 		} else if (
 			armorinv.find((item) => item.name === 'Tarantula Armor') &&
-			coins > 5000000
+			coins > 5000000 && !armorinv.find((item) => item.name === 'Frozen Blaze Armor')
 		) {
 			armor_button.setDisabled(false);
 			choosen2 = 'Frozen Blaze Armor';
 			armorcost = 5000000;
 		} else if (
 			armorinv.find((item) => item.name === 'Monster Hunter Armor') &&
-			coins > 1000000
+			coins > 1000000 && !armorinv.find((item) => item.name === 'Tarantula Armor')
 		) {
 			armor_button.setDisabled(false);
 			choosen2 = 'Tarantula Armor';
 			armorcost = 1000000;
 		} else if (
 			armorinv.find((item) => item.name === 'Golem Armor') &&
-			coins > 500000
+			coins > 500000 && !armorinv.find((item) => item.name === 'Monster Hunter Armor')
 		) {
 			armor_button.setDisabled(false);
 			choosen2 = 'Monster Hunter Armor';
 			armorcost = 500000;
 		} else if (
 			armorinv.find((item) => item.name === 'Leaflet Armor') &&
-			coins > 100000
+			coins > 100000 && !armorinv.find((item) => item.name === 'Golem Armor')
 		) {
 			armor_button.setDisabled(false);
 			choosen2 = 'Golem Armor';
 			armorcost = 100000;
 		} else if (
 			armorinv.find(
-				(item) => item.name === 'Naked' || item.name === 'None'
+				(item) => item.name === 'Naked'
 			) &&
-			coins > 50000
+			coins > 50000 && !armorinv.find((item) => item.name === 'Leaflet Armor')
 		) {
 			armor_button.setDisabled(false);
 			choosen2 = 'Leaflet Armor';
@@ -463,7 +463,6 @@ module.exports = {
 				'**Cost:** 50k\n\n**Stats:** `50 ❤`, `10 ❈`, `5 ☣`, `10 ☠`',
 				true
 			);
-			console.log('A');
 		}
 
 		//Filter and Collector

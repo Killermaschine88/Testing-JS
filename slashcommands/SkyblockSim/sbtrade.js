@@ -12,6 +12,7 @@ module.exports = {
 		let action = interaction.options.getString('action');
 		let user = interaction.options.getUser('user');
 		let tradeitem = interaction.options.getString('trade-item');
+    tradeitem = tradeitem.toLowerCase();
 		let amount = interaction.options.getInteger('amount');
 
 		const collection = mclient.db('SkyblockSim').collection('Players');
@@ -57,6 +58,23 @@ module.exports = {
 
 				return interaction.editReply({ embeds: [invalid] });
 			}
+
+      if(tradeitem.includes('coin')) {
+        tradeitem = 'Coins'
+        if(amount > player.data.profile.coins) {
+          let noitemembed = new Discord.MessageEmbed()
+					.setTitle('No Item found.')
+					.setDescription(
+						`Couldn\'t find any Items matching \`${caps(
+							tradeitem
+						)}\` or Amount being above 0, make sure you spelled it corrrectly.`
+					)
+					.setFooter('Skyblock Simulator')
+					.setColor('RED');
+
+				return interaction.editReply({ embeds: [noitemembed] });
+        }
+      }
 
 			let finditem = player.data.inventory.items.find(
 				(item) => item.name == caps(tradeitem)
