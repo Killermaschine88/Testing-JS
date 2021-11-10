@@ -13,6 +13,7 @@ module.exports = {
 		let events = await collection.find({}).toArray();
 
 		let mf_event = events[0];
+    let shark_event = events[1]
 
 		const embed = new Discord.MessageEmbed()
 			.setTitle('Skyblock Simulator Wiki')
@@ -108,6 +109,18 @@ module.exports = {
 					eventembed.addField(
 						`Magic Find`,
 						`Everyday from 6:00 - 8:00 (6 am - 8 am) and 16:00 - 18:00 (4:00 pm - 6:00 pm)\nEvent Active: ${mf_event.enabled}\nEvent End: <t:${mf_event.end_event}:R>`
+					);
+        }
+
+        if (shark_event.enabled == false) {
+					eventembed.addField(
+						`Shark Fishing`,
+						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 19:00 - 21:00 (7:00 pm - 9:00 pm)\nEvent Active: ${shark_event.enabled}\nNext Event: <t:${shark_event.next_event}:R>`
+					);
+				} else {
+					eventembed.addField(
+						`Shark Fishing`,
+						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 19:00 - 21:00 (7:00 pm - 9:00 pm)\nEvent Active: ${shark_event.enabled}\nEvent End: <t:${shark_event.end_event}:R>`
 					);
 				}
 
