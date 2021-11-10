@@ -102,14 +102,14 @@ for (const folder of slashcommandFolders) {
 	}
 }
 
-const commandFolders = fs.readdirSync('./commands');
+const commandFolders = fs.readdirSync('./commands_DO_NOT_USE');
 
 for (const folder of commandFolders) {
 	const commandFiles = fs
-		.readdirSync(`./commands/${folder}`)
+		.readdirSync(`./commands_DO_NOT_USE/${folder}`)
 		.filter((file) => file.endsWith('.js'));
 	for (const file of commandFiles) {
-		const command = require(`./commands/${folder}/${file}`);
+		const command = require(`./commands_DO_NOT_USE/${folder}/${file}`);
 		c += 1;
 		client.commands.set(command.name.toLowerCase(), command);
 	}
