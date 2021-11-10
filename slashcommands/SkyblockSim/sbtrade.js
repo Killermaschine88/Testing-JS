@@ -115,7 +115,6 @@ module.exports = {
 				let fetched = await interaction.client.users.fetch(user.id);
 				await fetched.send({ embeds: [tradereq] });
 			} catch (e) {
-				console.log(e);
 				dmed = 'no';
 			}
 
@@ -135,7 +134,6 @@ module.exports = {
 			let finditem = player.data.inventory.items.find(
 				(item) => item.name == caps(tradeitem)
 			);
-			//console.log(finditem);
 
 			if (finditem == undefined || (finditem.amount == 0 && amount < 0)) {
 				let noitemembed = new Discord.MessageEmbed()
@@ -203,7 +201,6 @@ module.exports = {
 				let fetched = await interaction.client.users.fetch(user.id);
 				await fetched.send({ embeds: [tradereq] });
 			} catch (e) {
-				console.log(e);
 				dmed = 'no';
 			}
 
@@ -299,7 +296,6 @@ await collection1.updateOne(
 				let fetched = await interaction.client.users.fetch(user.id);
 				await fetched.send({ embeds: [tradereq] });
 			} catch (e) {
-				console.log(e);
 				dmed = 'no';
 			}
 
@@ -381,7 +377,6 @@ await collection1.updateOne(
 				let fetched = await interaction.client.users.fetch(user.id);
 				await fetched.send({ embeds: [tradereq] });
 			} catch (e) {
-				console.log(e);
 				dmed = 'no';
 			}
 
@@ -410,10 +405,8 @@ await collection1.updateOne(
 			let user2 = await await collection.findOne({
 				_id: offer.sender.id,
 			});
-			console.log(offer);
 
       if(offer.sender.item == 'Coins') {
-        console.log('coin')
 
         await collection.updateOne(
 				{ _id: offer.reciever.id },
@@ -441,7 +434,6 @@ await collection1.updateOne(
       }
 
       if(offer.reciever.item == 'Coins') {
-        console.log('coin2')
 
         await collection.updateOne(
 				{ _id: offer.sender.id },
@@ -494,7 +486,6 @@ await collection1.updateOne(
 			try {
 				await collection1.deleteOne({ _id: interaction.user.id });
 			} catch (e) {
-				console.log(e);
 			}
 
 			let tradedone = new Discord.MessageEmbed()
@@ -517,11 +508,8 @@ await collection1.updateOne(
 			let user2 = await await collection.findOne({
 				_id: offer.sender.id,
 			});
-			console.log(offer);
 
       if(offer.reciever.item == 'Coins') {
-        console.log('coin')
-        console.log(offer.reciever.amount)
 
         await collection.updateOne(
 				{ _id: offer.reciever.id },
@@ -532,7 +520,6 @@ await collection1.updateOne(
 				},
 				{ upsert: true }
 			);
-      console.log('coin done')
 
       } else {
 
@@ -550,8 +537,6 @@ await collection1.updateOne(
       }
 
       if(offer.sender.item == 'Coins') {
-        console.log('coin2')
-        console.log(offer.sender.amount)
 
         await collection.updateOne(
 				{ _id: offer.sender.id },
@@ -562,7 +547,6 @@ await collection1.updateOne(
 				},
 				{ upsert: true }
 			);
-      console.log('coins2 done')
 
       } else {
 
@@ -605,7 +589,6 @@ await collection1.updateOne(
 			try {
 				await collection1.deleteOne({ _id: interaction.user.id });
 			} catch (e) {
-				console.log(e);
 			}
 
 			let tradedone = new Discord.MessageEmbed()
