@@ -10,14 +10,17 @@ const COLORS = {
 	GREY: '#BFBFBD',
 };
 
-const getColor = (player) => {
-	const { location } = player.data.misc;
+const getColor = (playerOrString) => {
+	const location =
+		typeof playerOrString === 'string'
+			? playerOrString
+			: playerOrString.data.misc.location;
 
-	if (typeof location !== 'string')
-		throw new TypeError(
-			`Argument for location must be of type string (reading "${typeof location}")`
-		);
-
+	/*
+		Hardcoded locations:
+		• Pond (for fishing)
+		• Catacombs (for dungeon)
+	*/
 	switch (location) {
 		case 'Slimehill':
 		case "Pigman's Den":
@@ -26,6 +29,7 @@ const getColor = (player) => {
 		case 'Diamond Reserve':
 		case 'Crystal Hollows':
 		case 'Lapis Quarry':
+		case 'Pond':
 			return COLORS.LIGHT_BLUE;
 
 		case 'Gunpowder Mines':
@@ -56,9 +60,10 @@ const getColor = (player) => {
 		case 'Gold Mine':
 			return COLORS.GOLD;
 
-		case 'Hub':
+		case 'Catacombs':
 		case 'Graveyard':
 		case 'Ruins':
+		case 'Hub':
 			return COLORS.GREY;
 
 		default:
@@ -66,15 +71,13 @@ const getColor = (player) => {
 	}
 };
 
-const getFooter = (player) => {
-	const { location } = player.data.misc;
+const getFooter = (playerOrString) => {
+	const location =
+		typeof playerOrString === 'string'
+			? playerOrString
+			: playerOrString.data.misc.location;
 
-	if (typeof location !== 'string')
-		throw new TypeError(
-			`Argument for location must be of type string (reading "${typeof location}")`
-		);
-
-	return `Skyblock Simulator • ${location}`;
+	return `Skyblock Simulator • ${location} • /suggest idea`;
 };
 
 module.exports = { getColor, getFooter, COLORS };
