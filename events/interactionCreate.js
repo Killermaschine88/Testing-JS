@@ -13,7 +13,7 @@ module.exports = {
 		if (interaction.isAutocomplete()) {
 			const focused = interaction.options.getFocused();
 
-			if (interaction.options.getSubcommand() == 'reforge') {
+			if (interaction.options.getSubcommand(false) == 'reforge') {
 				let stones = [
 					'Dragon Claw',
 					'Wither Blood',
@@ -56,7 +56,7 @@ module.exports = {
 				} else {
 					interaction.respond(found2);
 				}
-			} else if (interaction.options.getSubcommand() == 'sell') {
+			} else if (interaction.options.getSubcommand(false) == 'sell') {
 				let items = [
 					'Hardstone',
 					'Coal',
@@ -180,9 +180,9 @@ module.exports = {
 
 		let commandExecute = interaction.commandName;
 
-		if (interaction.options.getSubcommand() != null) {
+		if (interaction.options.getSubcommand(false) != null) {
 			commandExecute =
-				interaction.commandName + interaction.options.getSubcommand();
+				interaction.commandName + interaction.options.getSubcommand(false);
 		}
 
 		const collection1 = mclient.db('Sky-Bot').collection('settings');
@@ -273,10 +273,10 @@ module.exports = {
 
 		let cooldownAmount = (cd || 3) * 1000;
 
-		/* //Owner Cooldown Bypass
-  if (message.author.id === '570267487393021969') {
-    cooldownAmount = 0
-  }*/
+		/*//Owner Cooldown Bypass
+		if (interaction.user.id === '570267487393021969') {
+			cooldownAmount = 0
+		}*/
 
 		if (timestamps.has(interaction.user.id)) {
 			let expirationTime =
@@ -308,7 +308,7 @@ module.exports = {
     let reduced = cdr1 + cdr2 + cdr3 + cdr4*/
 			let exptime = expirationTime;
 
-			if (now < exptime) {
+			if (now < exptime && interaction.user.id !== '570267487393021969') {
 				const timeLeft = (exptime - now) / 1000;
 				let cdembed = new Discord.MessageEmbed()
 					.setTitle('Command Cooldown')
