@@ -36,7 +36,7 @@ module.exports = {
 				},
 				{
 					name: '<:contributor:849605979589967922> Contributors',
-					value: 'Hima, Delta, Mend, Odino',
+					value: 'Odino, Chewie, Drango',
 					inline: true,
 				},
 				{
