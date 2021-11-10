@@ -334,7 +334,7 @@ module.exports = {
 
 						.setFooter('Skyblock Simulator')
 						.setColor('90EE90')
-						.setDescription(`**Slayer Info for <@${id}>**`)
+						.setDescription(`**Slayer Info for <@${id}>**\n\n**NOT ADDED YET!!!**`)
 						.addField(
 							'<:rev:852892164559732806> Revenant Horror',
 							`XP: **${player.data.slayer.zombiexp}**\nBoss Kills: **${player.data.slayer.zombiekills}**`,
