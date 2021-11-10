@@ -19,6 +19,7 @@ async function start(client, mclient) {
 				'data.misc.is_fishing': false,
 				'data.misc.is_mining': false,
 				'data.misc.in_dungeon': false,
+        'data.misc.is_massselling': false
 			},
 		}
 	);

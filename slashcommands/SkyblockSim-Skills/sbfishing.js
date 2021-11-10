@@ -179,6 +179,15 @@ module.exports = {
 		});
 
 		collector.on('collect', async (i) => {
+      if (player.data.misc.is_mining == true) {
+							interaction.followUp({
+								content:
+									'You cheeky tried to multi grind Skills not with me :).',
+								ephemeral: true,
+							});
+							return collector.stop();
+						}
+      
 			if (i.customId === 'cast' && rod_casted === false) {
 				rod_casted = true;
 				pond.fields = [];
@@ -291,14 +300,7 @@ module.exports = {
 						);
 
 						menu.edit({ embeds: [pond], components: [row] });
-						if (player.data.misc.is_mining == true) {
-							interaction.followUp({
-								content:
-									'You cheeky tried to multi grind Skills not with me :).',
-								ephemeral: true,
-							});
-							collector.stop();
-						}
+						
 					}
 				}
 			} else if (i.customId === 'killsc') {

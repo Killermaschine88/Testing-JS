@@ -136,6 +136,18 @@ module.exports = {
 
 		//Collector
 		collector.on('collect', async (i) => {
+      if (
+					!validlocations.includes(player.data.misc.location) ||
+					player.data.misc.is_fishing == true
+				) {
+					interaction.followUp({
+						content:
+							'You cheeky tried to multi grind Skills not with me :).',
+						ephemeral: true,
+					});
+					return collector.stop();
+				}
+      
 			if (i.customId == 'mine') {
 				let ore = getOre(player, ps);
 				if (player.data.settings.imgshown == true) {
@@ -151,19 +163,7 @@ module.exports = {
 
 				await sleep(cd);
 
-				player = await collection.findOne({ _id: interaction.user.id });
-
-				if (
-					!validlocations.includes(player.data.misc.location) ||
-					player.data.misc.is_fishing == true
-				) {
-					interaction.followUp({
-						content:
-							'You cheeky tried to multi grind Skills not with me :).',
-						ephemeral: true,
-					});
-					collector.stop();
-				}
+				player = await collection.findOne({ _id: interaction.user.id });				
 
 				const updatePlayer = await addItems(ore, player);
 
