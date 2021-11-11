@@ -1,7 +1,7 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 
-app.all('/', (req, res) => {
+app.all("/", (req, res) => {
 	res.send(`<meta property="og:description"
   content="Don\'t ask me what i can do." />
 <meta property="og:title" content="Baltraz" />

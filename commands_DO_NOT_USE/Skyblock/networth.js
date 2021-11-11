@@ -1,50 +1,50 @@
-const Discord = require('discord.js');
-const axios = require('axios');
-const fetch = require('node-fetch');
+const Discord = require("discord.js");
+const axios = require("axios");
+const fetch = require("node-fetch");
 
 module.exports = {
-	name: 'networth',
-	description: 'Get Networth Data for an Player',
-	usage: 'networth (ign)',
-	perms: 'None',
-	folder: 'Skyblock',
-	aliases: ['nw', 'net'],
+	name: "networth",
+	description: "Get Networth Data for an Player",
+	usage: "networth (ign)",
+	perms: "None",
+	folder: "Skyblock",
+	aliases: ["nw", "net"],
 	async execute(client, message, args) {
-		let ign = args[0];
+		const ign = args[0];
 
 		if (ign == undefined) {
-			message.channel.send('Provide an IGN to Check');
+			message.channel.send("Provide an IGN to Check");
 			return;
 		}
 
 		const waiting = new Discord.MessageEmbed().setTitle(
-			'Checking Player Data'
+			"Checking Player Data"
 		);
 
 		const wait = await message.channel.send({ embeds: [waiting] });
 
-		let net = await fetch(`http://db.superbonecraft.dk:8000/pages/${ign}`);
+		const net = await fetch(`http://db.superbonecraft.dk:8000/pages/${ign}`);
 		nw = await net.json();
 
-		let errtext = '';
+		let errtext = "";
 		if (net.status == 400) {
-			errtext = 'Invalid Username provided.';
+			errtext = "Invalid Username provided.";
 		} else if (net.status == 500) {
-			errtext = 'Internal Error';
+			errtext = "Internal Error";
 		} else {
-			errtext = 'Error';
+			errtext = "Error";
 		}
 
 		if (net.status != 200) {
 			const errorembed = new Discord.MessageEmbed()
-				.setTitle('An Error occured!')
+				.setTitle("An Error occured!")
 				.setDescription(`${errtext}`)
-				.setColor('RED');
+				.setColor("RED");
 			wait.edit({ embeds: [errorembed] });
 			return;
 		}
 
-		let total =
+		const total =
 			Math.floor(nw.purse.total) +
 			Math.floor(nw.banking.total) +
 			Math.floor(nw.inventory.total) +
@@ -56,41 +56,41 @@ module.exports = {
 			Math.floor(nw.storage.total) +
 			Math.floor(nw.pets.total);
 
-		let armor = nw.armor;
-		let wardrobe = nw.wardrobe;
-		let inventory = nw.inventory;
-		let ec = nw.ender_chest;
-		let storage = nw.storage;
-		let pets = nw.pets;
-		let talis = nw.accessories;
+		const { armor } = nw;
+		const { wardrobe } = nw;
+		const { inventory } = nw;
+		const ec = nw.ender_chest;
+		const { storage } = nw;
+		const { pets } = nw;
+		const talis = nw.accessories;
 
-		let armortext = '';
-		let wardrobetext = '';
-		let inventorytext = '';
-		let ectext = '';
-		let storagetext = '';
-		let petstext = '';
-		let talistext = '';
+		let armortext = "",
+		 ectext = "",
+		 i = 0,
+		 inventorytext = "",
+		 petstext = "",
+		 recomb = "<:recomb:881094744183275540>",
+		 storagetext = "",
 
-		let i = 0;
-		let recomb = '<:recomb:881094744183275540>';
+		 talistext = "",
+		 wardrobetext = "";
 
 		if (armor.prices.length == 0) {
-			armortext = 'API Disabled or no Items';
+			armortext = "API Disabled or no Items";
 		} else {
 			while (i < armor.prices.length) {
 				if (armor.prices[i].item.recombobulated) {
 					armortext +=
-						armor.prices[i].item.name +
-						` ${recomb}` +
+						`${armor.prices[i].item.name
+						} ${recomb}` +
 						` **(${num(armor.prices[i].total)})**` +
-						'\n';
+						"\n";
 					i += 1;
 				} else {
 					armortext +=
-						armor.prices[i].item.name +
-						` **(${num(armor.prices[i].total)})**` +
-						'\n';
+						`${armor.prices[i].item.name
+						} **(${num(armor.prices[i].total)})**` +
+						"\n";
 					i += 1;
 				}
 			}
@@ -98,21 +98,21 @@ module.exports = {
 		}
 
 		if (wardrobe.prices.length == 0) {
-			wardrobetext = 'API Disabled or no Items';
+			wardrobetext = "API Disabled or no Items";
 		} else {
 			while (i < wardrobe.prices.length) {
 				if (wardrobe.prices[i].item.recombobulated) {
 					wardrobetext +=
-						wardrobe.prices[i].item.name +
-						` ${recomb}` +
+						`${wardrobe.prices[i].item.name
+						} ${recomb}` +
 						` **(${num(wardrobe.prices[i].total)})**` +
-						'\n';
+						"\n";
 					i += 1;
 				} else {
 					wardrobetext +=
-						wardrobe.prices[i].item.name +
-						` **(${num(wardrobe.prices[i].total)})**` +
-						'\n';
+						`${wardrobe.prices[i].item.name
+						} **(${num(wardrobe.prices[i].total)})**` +
+						"\n";
 					i += 1;
 				}
 			}
@@ -120,21 +120,21 @@ module.exports = {
 		}
 
 		if (inventory.prices.length == 0) {
-			inventorytext = 'API Disabled or no Items';
+			inventorytext = "API Disabled or no Items";
 		} else {
 			while (i < inventory.prices.length) {
 				if (inventory.prices[i].item?.recombobulated) {
 					inventorytext +=
-						inventory.prices[i].item.name +
-						` ${recomb}` +
+						`${inventory.prices[i].item.name
+						} ${recomb}` +
 						` **(${num(inventory.prices[i].total)})**` +
-						'\n';
+						"\n";
 					i += 1;
 				} else {
 					inventorytext +=
-						inventory.prices[i].item.name +
-						` **(${num(inventory.prices[i].total)})**` +
-						'\n';
+						`${inventory.prices[i].item.name
+						} **(${num(inventory.prices[i].total)})**` +
+						"\n";
 					i += 1;
 				}
 			}
@@ -142,21 +142,21 @@ module.exports = {
 		}
 
 		if (ec.prices.length == 0) {
-			ectext = 'API Disabled or no Items';
+			ectext = "API Disabled or no Items";
 		} else {
 			while (i < ec.prices.length) {
 				if (ec.prices[i].item?.recombobulated) {
 					ectext +=
-						ec.prices[i].item.name +
-						` ${recomb}` +
+						`${ec.prices[i].item.name
+						} ${recomb}` +
 						` **(${num(ec.prices[i].total)})**` +
-						'\n';
+						"\n";
 					i += 1;
 				} else {
 					ectext +=
-						ec.prices[i].item.name +
-						` **(${num(ec.prices[i].total)})**` +
-						'\n';
+						`${ec.prices[i].item.name
+						} **(${num(ec.prices[i].total)})**` +
+						"\n";
 					i += 1;
 				}
 			}
@@ -164,21 +164,21 @@ module.exports = {
 		}
 
 		if (storage.prices.length == 0) {
-			storagetext = 'API Disabled or no Items';
+			storagetext = "API Disabled or no Items";
 		} else {
 			while (i < storage.prices.length) {
 				if (storage.prices[i].item?.recombobulated) {
 					storagetext +=
-						storage.prices[i].item.name +
-						` ${recomb}` +
+						`${storage.prices[i].item.name
+						} ${recomb}` +
 						` **(${num(storage.prices[i].total)})**` +
-						'\n';
+						"\n";
 					i += 1;
 				} else {
 					storagetext +=
-						storage.prices[i].item.name +
-						` **(${num(storage.prices[i].total)})**` +
-						'\n';
+						`${storage.prices[i].item.name
+						} **(${num(storage.prices[i].total)})**` +
+						"\n";
 					i += 1;
 				}
 			}
@@ -186,25 +186,25 @@ module.exports = {
 		}
 
 		if (pets.prices.length == 0) {
-			petstext = 'API Disabled or no Items';
+			petstext = "API Disabled or no Items";
 		} else {
 			while (i < pets.prices.length) {
 				if (pets.prices[i].item?.recombobulated) {
 					petstext +=
-						pets.prices[i].item.tier +
-						' ' +
-						pets.prices[i].item.type +
-						` ${recomb}` +
+						`${pets.prices[i].item.tier
+						} ${
+							pets.prices[i].item.type
+						} ${recomb}` +
 						` **(${num(pets.prices[i].total)})**` +
-						'\n';
+						"\n";
 					i += 1;
 				} else {
 					petstext +=
-						pets.prices[i].item.tier +
-						' ' +
-						pets.prices[i].item.type +
-						` **(${num(pets.prices[i].total)})**` +
-						'\n';
+						`${pets.prices[i].item.tier
+						} ${
+							pets.prices[i].item.type
+						} **(${num(pets.prices[i].total)})**` +
+						"\n";
 					i += 1;
 				}
 			}
@@ -212,21 +212,21 @@ module.exports = {
 		}
 
 		if (talis.prices.length == 0) {
-			talistext = 'API Disabled or no Items';
+			talistext = "API Disabled or no Items";
 		} else {
 			while (i < talis.prices.length) {
 				if (talis.prices[i].item?.recombobulated) {
 					talistext +=
-						talis.prices[i].item.name +
-						` ${recomb}` +
+						`${talis.prices[i].item.name
+						} ${recomb}` +
 						` **(${num(talis.prices[i].total)})**` +
-						'\n';
+						"\n";
 					i += 1;
 				} else {
 					talistext +=
-						talis.prices[i].item.name +
-						` **(${num(talis.prices[i].total)})**` +
-						'\n';
+						`${talis.prices[i].item.name
+						} **(${num(talis.prices[i].total)})**` +
+						"\n";
 					i += 1;
 				}
 			}
@@ -238,11 +238,11 @@ module.exports = {
 				`${ign}'s Networth is ${total.toLocaleString()} (${num(total)})`
 			)
 			.addField(
-				`<:coins:861974605203636253> Purse`,
+				"<:coins:861974605203636253> Purse",
 				`${num(nw.purse.total)}`
 			)
 			.addField(
-				`<:gold:869126927011708929> Bank`,
+				"<:gold:869126927011708929> Bank",
 				`${num(nw.banking.total)}`
 			)
 			.addField(
@@ -281,17 +281,19 @@ module.exports = {
 				)})`,
 				`${talistext}`
 			)
-			.setColor('90EE90');
+			.setColor("90EE90");
 
 		wait.edit({ embeds: [endembed] });
 	},
 };
 
-num = (num) => {
-	if (num >= 1000000000)
-		return (num / 1000000000).toFixed(1).replace(/.0$/, '') + 'B';
-	if (num >= 1000000)
-		return (num / 1000000).toFixed(1).replace(/.0$/, '') + 'M';
-	if (num >= 1000) return (num / 1000).toFixed(1).replace(/.0$/, '') + 'K';
+num = num => {
+	if (num >= 1000000000) {
+		return `${(num / 1000000000).toFixed(1).replace(/.0$/, "")}B`;
+	}
+	if (num >= 1000000) {
+		return `${(num / 1000000).toFixed(1).replace(/.0$/, "")}M`;
+	}
+	if (num >= 1000) return `${(num / 1000).toFixed(1).replace(/.0$/, "")}K`;
 	return num;
 };

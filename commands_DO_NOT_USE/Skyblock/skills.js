@@ -1,29 +1,27 @@
-const Discord = require('discord.js');
-const fetch = require('node-fetch');
+const Discord = require("discord.js");
+const fetch = require("node-fetch");
 
 module.exports = {
-	name: 'Skills',
-	description: 'Shows the Users Skills.',
-	usage: 'skills (IGN)',
-	perms: 'None',
-	folder: 'Skyblock',
-	aliases: ['s'],
+	name: "Skills",
+	description: "Shows the Users Skills.",
+	usage: "skills (IGN)",
+	perms: "None",
+	folder: "Skyblock",
+	aliases: ["s"],
 	async execute(client, message, args) {
 		if (!args[0]) {
 			var ign = message.member.displayName;
-		} else {
-			if (message.mentions.members.first()) {
-				var ign = message.mentions.members.first().displayName;
-			} else var ign = args[0];
-		} // Gets IGN
+		} else if (message.mentions.members.first()) {
+			var ign = message.mentions.members.first().displayName;
+		} else var ign = args[0]; // Gets IGN
 
-		var method = 'save';
+		let method = "save";
 		if (args[1]) method = args[1];
 
-		ign = ign.replace(/\W/g, ''); // removes weird characters
+		ign = ign.replace(/\W/g, ""); // removes weird characters
 
 		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(
-			(res) => {
+			res => {
 				if (res.status != 200) {
 					return message.channel.send({
 						embeds: [
@@ -31,7 +29,7 @@ module.exports = {
 								.setDescription(
 									`No Minecraft account found for \`${ign}\``
 								)
-								.setColor('DC143C')
+								.setColor("DC143C")
 								.setTimestamp(),
 						],
 					});
@@ -40,8 +38,8 @@ module.exports = {
 		); // Test if IGN esists
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription('Checking for Player Data . . .')
-			.setColor('ORANGE');
+			.setDescription("Checking for Player Data . . .")
+			.setColor("ORANGE");
 
 		const waitingembed = await message.channel.send({
 			embeds: [waitembed],
@@ -55,7 +53,7 @@ module.exports = {
 				embeds: [
 					new Discord.MessageEmbed()
 						.setDescription(apiData.reason)
-						.setColor('DC143C')
+						.setColor("DC143C")
 						.setTimestamp(),
 				],
 			});
@@ -63,7 +61,7 @@ module.exports = {
 
 		// IGN is valid and player has skyblock profiles
 
-		if (apiData.data.skills.apiEnabled == false)
+		if (apiData.data.skills.apiEnabled == false) {
 			return message.channel.send({
 				embeds: [
 					new Discord.MessageEmbed()
@@ -73,16 +71,17 @@ module.exports = {
 							`https://sky.shiiyu.moe/stats/${ign}`
 						)
 						.setDescription(
-							'You currently have skills API disabled, please enable it in the skyblock menu and try again'
+							"You currently have skills API disabled, please enable it in the skyblock menu and try again"
 						)
-						.setColor('DC143C')
+						.setColor("DC143C")
 						.setTimestamp(),
 				],
 			});
+		}
 
-		//calculations for the skills
+		// calculations for the skills
 
-		let totalxp =
+		const totalxp =
 			apiData.data.skills.mining.experience +
 			apiData.data.skills.foraging.experience +
 			apiData.data.skills.enchanting.experience +
@@ -95,123 +94,123 @@ module.exports = {
 		let ttotalxp = Math.floor(totalxp / 1000);
 		if (ttotalxp > 999999) {
 			ttotalxp =
-				Math.floor(totalxp / 1000000000) +
-				'.' +
-				Math.floor((ttotalxp % 1000000000) / 100000) +
-				'B';
+				`${Math.floor(totalxp / 1000000000)
+				}.${
+					Math.floor(ttotalxp % 1000000000 / 100000)
+				}B`;
 		} else if (ttotalxp > 999) {
 			{
 				ttotalxp =
-					Math.floor(totalxp / 1000000) +
-					'.' +
-					Math.floor((totalxp % 1000000) / 10000) +
-					'M';
+					`${Math.floor(totalxp / 1000000)
+					}.${
+						Math.floor(totalxp % 1000000 / 10000)
+					}M`;
 			}
 		} else {
-			ttotalxp = ttotalxp + 'K';
+			ttotalxp += "K";
 		}
 
-		let mixp = apiData.data.skills.mining.experience;
+		const mixp = apiData.data.skills.mining.experience;
 		let tmixp = Math.floor(mixp / 1000);
 		if (tmixp > 999) {
 			tmixp =
-				Math.floor(mixp / 1000000) +
-				'.' +
-				Math.floor((mixp % 1000000) / 10000) +
-				'M';
+				`${Math.floor(mixp / 1000000)
+				}.${
+					Math.floor(mixp % 1000000 / 10000)
+				}M`;
 		} else {
-			tmixp = tmixp + 'K';
+			tmixp += "K";
 		}
 
-		let foxp = apiData.data.skills.foraging.experience;
+		const foxp = apiData.data.skills.foraging.experience;
 		let tfoxp = Math.floor(foxp / 1000);
 		if (tfoxp > 999) {
 			tfoxp =
-				Math.floor(foxp / 1000000) +
-				'.' +
-				Math.floor((foxp % 1000000) / 10000) +
-				'M';
+				`${Math.floor(foxp / 1000000)
+				}.${
+					Math.floor(foxp % 1000000 / 10000)
+				}M`;
 		} else {
-			tfoxp = tfoxp + 'K';
+			tfoxp += "K";
 		}
 
-		let enxp = apiData.data.skills.enchanting.experience;
+		const enxp = apiData.data.skills.enchanting.experience;
 		let tenxp = Math.floor(enxp / 1000);
 		if (tenxp > 999) {
 			tenxp =
-				Math.floor(enxp / 1000000) +
-				'.' +
-				Math.floor((enxp % 1000000) / 10000) +
-				'M';
+				`${Math.floor(enxp / 1000000)
+				}.${
+					Math.floor(enxp % 1000000 / 10000)
+				}M`;
 		} else {
-			tenxp = tenxp + 'K';
+			tenxp += "K";
 		}
 
-		let faxp = apiData.data.skills.farming.experience;
+		const faxp = apiData.data.skills.farming.experience;
 		let tfaxp = Math.floor(faxp / 1000);
 		if (tfaxp > 999) {
 			tfaxp =
-				Math.floor(faxp / 1000000) +
-				'.' +
-				Math.floor((faxp % 1000000) / 10000) +
-				'M';
+				`${Math.floor(faxp / 1000000)
+				}.${
+					Math.floor(faxp % 1000000 / 10000)
+				}M`;
 		} else {
-			tfaxp = tfaxp + 'K';
+			tfaxp += "K";
 		}
 
-		let coxp = apiData.data.skills.combat.experience;
+		const coxp = apiData.data.skills.combat.experience;
 		let tcoxp = Math.floor(coxp / 1000);
 		if (tcoxp > 999) {
 			tcoxp =
-				Math.floor(coxp / 1000000) +
-				'.' +
-				Math.floor((coxp % 1000000) / 10000) +
-				'M';
+				`${Math.floor(coxp / 1000000)
+				}.${
+					Math.floor(coxp % 1000000 / 10000)
+				}M`;
 		} else {
-			tcoxp = tcoxp + 'K';
+			tcoxp += "K";
 		}
 
-		let fixp = apiData.data.skills.fishing.experience;
+		const fixp = apiData.data.skills.fishing.experience;
 		let tfixp = Math.floor(fixp / 1000);
 		if (tfixp > 999) {
 			tfixp =
-				Math.floor(fixp / 1000000) +
-				'.' +
-				Math.floor((fixp % 1000000) / 10000) +
-				'M';
+				`${Math.floor(fixp / 1000000)
+				}.${
+					Math.floor(fixp % 1000000 / 10000)
+				}M`;
 		} else {
-			tfixp = tfixp + 'K';
+			tfixp += "K";
 		}
 
-		let alxp = apiData.data.skills.alchemy.experience;
+		const alxp = apiData.data.skills.alchemy.experience;
 		let talxp = Math.floor(alxp / 1000);
 		if (talxp > 999) {
 			talxp =
-				Math.floor(alxp / 1000000) +
-				'.' +
-				Math.floor((alxp % 1000000) / 10000) +
-				'M';
+				`${Math.floor(alxp / 1000000)
+				}.${
+					Math.floor(alxp % 1000000 / 10000)
+				}M`;
 		} else {
-			talxp = talxp + 'K';
+			talxp += "K";
 		}
 
-		let taxp = apiData.data.skills.taming.experience;
+		const taxp = apiData.data.skills.taming.experience;
 		let ttaxp = Math.floor(taxp / 1000);
 		if (ttaxp > 999) {
 			ttaxp =
-				Math.floor(taxp / 1000000) +
-				'.' +
-				Math.floor((taxp % 1000000) / 10000) +
-				'M';
+				`${Math.floor(taxp / 1000000)
+				}.${
+					Math.floor(taxp % 1000000 / 10000)
+				}M`;
 		} else {
-			ttaxp = ttaxp + 'K';
+			ttaxp += "K";
 		}
 
 		return waitingembed.edit({
 			embeds: [
 				new Discord.MessageEmbed()
 					.setTitle(`Skill Data for ${ign}`)
-					.setColor('7CFC00')
+					.setColor("7CFC00")
 					.setAuthor(
 						ign,
 						`https://cravatar.eu/helmavatar/${ign}/600.png`,
@@ -225,56 +224,56 @@ module.exports = {
 					)
 					.addFields(
 						{
-							name: '<:mining:852069714577719306> Mining',
+							name: "<:mining:852069714577719306> Mining",
 							value: `Level: **${toFixed(
 								apiData.data.skills.mining.level
 							)}**\nTotal XP: **${tmixp}**`,
 							inline: true,
 						},
 						{
-							name: '<:foraging:852069714447695872> Foraging',
+							name: "<:foraging:852069714447695872> Foraging",
 							value: `Level: **${toFixed(
 								apiData.data.skills.foraging.level
 							)}**\nTotal XP: **${tfoxp}**`,
 							inline: true,
 						},
 						{
-							name: '<:enchanting:852069714511659058> Enchanting',
+							name: "<:enchanting:852069714511659058> Enchanting",
 							value: `Level: **${toFixed(
 								apiData.data.skills.enchanting.level
 							)}**\nTotal XP: **${tenxp}**`,
 							inline: true,
 						},
 						{
-							name: '<:farming:852069714451759114> Farming',
+							name: "<:farming:852069714451759114> Farming",
 							value: `Level: **${toFixed(
 								apiData.data.skills.farming.level
 							)}**\nTotal XP: **${tfaxp}**`,
 							inline: true,
 						},
 						{
-							name: '<:combat:852069714527911956> Combat',
+							name: "<:combat:852069714527911956> Combat",
 							value: `Level: **${toFixed(
 								apiData.data.skills.combat.level
 							)}**\nTotal XP: **${tcoxp}**`,
 							inline: true,
 						},
 						{
-							name: '<:fishing:852069714359877643> Fishing',
+							name: "<:fishing:852069714359877643> Fishing",
 							value: `Level: **${toFixed(
 								apiData.data.skills.fishing.level
 							)}**\nTotal XP: **${tfixp}**`,
 							inline: true,
 						},
 						{
-							name: '<:alchemy:852069714480988180> Alchemy',
+							name: "<:alchemy:852069714480988180> Alchemy",
 							value: `Level: **${toFixed(
 								apiData.data.skills.alchemy.level
 							)}**\nTotal XP: **${talxp}**`,
 							inline: true,
 						},
 						{
-							name: '<:taming:852069714493833227> Taming',
+							name: "<:taming:852069714493833227> Taming",
 							value: `Level: **${toFixed(
 								apiData.data.skills.taming.level
 							)}**\nTotal XP: **${ttaxp}**`,
@@ -295,8 +294,8 @@ async function getUUID(ign) {
 }
 
 async function getApiData(ign, method) {
-	delete require.cache[require.resolve('../../config.json')];
-	const config = require('../../config.json');
+	delete require.cache[require.resolve("../../config.json")];
+	const config = require("../../config.json");
 
 	const UUID = await getUUID(ign);
 	const response = await fetch(
@@ -314,6 +313,6 @@ async function getTrueIgn(ign) {
 }
 
 function toFixed(num) {
-	var re = new RegExp('^-?\\d+(?:.\\d{0,' + (2 || -1) + '})?');
+	const re = new RegExp(`^-?\\d+(?:.\\d{0,${2 || -1}})?`);
 	return num.toString().match(re)[0];
 }

@@ -1,36 +1,36 @@
-const Discord = require('discord.js');
-const prefix = require('@replit/database');
+const Discord = require("discord.js");
+const prefix = require("@replit/database");
 const prefixx = new prefix();
 
 module.exports = {
-	name: 'dmgtest',
-	description: 'Test DMG System',
-	usage: 'sbdmg',
-	perms: 'None',
-	folder: 'SkyblockSim',
-	aliases: ['t'],
+	name: "dmgtest",
+	description: "Test DMG System",
+	usage: "sbdmg",
+	perms: "None",
+	folder: "SkyblockSim",
+	aliases: ["t"],
 	cooldown: 10,
 	async execute(client, message, args, mclient) {
-		const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: message.author.id });
+		const collection = mclient.db("SkyblockSim").collection("Players");
+		const player = await collection.findOne({ _id: message.author.id });
 
 		if (player === null) {
 			const nodata = new Discord.MessageEmbed()
-				.setColor('RED')
+				.setColor("RED")
 				.setDescription(`No Profile found for <@${message.author.id}>`);
 			message.channel.send({ embeds: [nodata] });
 			return;
 		}
 
 		const start = new Discord.MessageEmbed()
-			.setFooter('Skyblock Simulator')
-			.setColor('90EE90')
-			.setDescription(`Dmg Testing`);
+			.setFooter("Skyblock Simulator")
+			.setColor("90EE90")
+			.setDescription("Dmg Testing");
 		const row = new Discord.MessageActionRow().addComponents(
 			new Discord.MessageButton()
-				.setCustomId('dmg')
-				.setLabel('Attack')
-				.setStyle('PRIMARY')
+				.setCustomId("dmg")
+				.setLabel("Attack")
+				.setStyle("PRIMARY")
 		);
 
 		const menu = await message.channel.send({
@@ -38,36 +38,36 @@ module.exports = {
 			components: [row],
 		});
 
-		//Player Stats
-		let php = player.data.stats.health;
-		let damage = player.data.stats.damage;
-		let strength = player.data.stats.strength;
-		let combatlvl = getLevelByXp(player.data.skills.combat).level;
-		let critchance = player.data.stats.crit_chance;
-		let critdmg = player.data.stats.crit_damage;
-		let critted = '';
-		let pdmg = '';
+		// Player Stats
+		let php = player.data.stats.health,
+		 { damage } = player.data.stats;
+		const { strength } = player.data.stats;
+		const combatlvl = getLevelByXp(player.data.skills.combat).level;
+		const critchance = player.data.stats.crit_chance;
+		const critdmg = player.data.stats.crit_damage;
+		const critted = "";
+		const pdmg = "";
 
-		//Mob Stats
-		let mhp = 50;
-		let mdmg = 4;
+		// Mob Stats
+		let mdmg = 4,
+		 mhp = 50;
 
-		const filter = (i) => {
+		const filter = i => {
 			i.deferUpdate();
 			return i.user.id === message.author.id;
 		};
 
 		const collector = menu.createMessageComponentCollector({
 			filter,
-			componentType: 'BUTTON',
+			componentType: "BUTTON",
 			time: 60000,
 		});
 
-		collector.on('collect', async (i) => {
-			if (i.customId === 'dmg' && php >= 0) {
-				let crit = isCrit(critchance, critted);
-				let pdmg = '';
-				if (crit === 'yes') {
+		collector.on("collect", async i => {
+			if (i.customId === "dmg" && php >= 0) {
+				const crit = isCrit(critchance, critted);
+				let pdmg = "";
+				if (crit === "yes") {
 					pdmg =
 						Math.floor(
 							(5 + damage) *
@@ -87,9 +87,9 @@ module.exports = {
 				mhp = dmgdealt(mhp, pdmg);
 
 				const mobembed = new Discord.MessageEmbed()
-					.setFooter('Skyblock Simulator')
-					.setColor('90EE90');
-				if (crit === 'yes') {
+					.setFooter("Skyblock Simulator")
+					.setColor("90EE90");
+				if (crit === "yes") {
 					mobembed.setDescription(
 						`Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (-<:crit:870306942806020106> ${pdmg})`
 					);
@@ -100,19 +100,19 @@ module.exports = {
 				}
 				menu.edit({ embeds: [mobembed] });
 
-				if (i.customId === 'dmg' && mhp <= 0) {
+				if (i.customId === "dmg" && mhp <= 0) {
 					const killed = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter("Skyblock Simulator")
+						.setColor("90EE90")
 						.setDescription(
 							`Killed the Enemy with **❤️ ${php}** left.`
 						);
 
 					menu.edit({ embeds: [killed], components: [] });
-				} else if (i.customId === 'dmg' && php <= 0) {
+				} else if (i.customId === "dmg" && php <= 0) {
 					const died = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter("Skyblock Simulator")
+						.setColor("90EE90")
 						.setDescription(
 							`Died to the Enemy which had **❤️ ${mhp}** left.`
 						);
@@ -135,12 +135,11 @@ function dmgdealt(mhp, pdmg) {
 }
 
 function isCrit(critchance, critted) {
-	let hit = Math.floor(Math.random() * 100) + 1;
+	const hit = Math.floor(Math.random() * 100) + 1;
 	if (hit < critchance) {
-		critted = 'yes';
-		return critted;
-	} else {
-		critted = 'no';
+		critted = "yes";
 		return critted;
 	}
+	critted = "no";
+	return critted;
 }

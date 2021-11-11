@@ -1,28 +1,27 @@
-const Discord = require('discord.js');
-const fetch = require('node-fetch');
-const list = require('../../constants/Skyblock/items.json');
-const Fuse = require('fuse.js');
-const fs = require('fs');
-const list2 = require('./list2.json');
+const Discord = require("discord.js");
+const fetch = require("node-fetch");
+const list = require("../../constants/Skyblock/items.json");
+const Fuse = require("fuse.js");
+const fs = require("fs");
+const list2 = require("./list2.json");
 
 module.exports = {
-	name: 'Bazaar',
-	description: 'Get Bazaar Data for an item',
-	usage: 'bazzar (item)',
-	perms: 'None',
-	folder: 'Skyblock',
-	aliases: ['bz'],
+	name: "Bazaar",
+	description: "Get Bazaar Data for an item",
+	usage: "bazzar (item)",
+	perms: "None",
+	folder: "Skyblock",
+	aliases: ["bz"],
 	async execute(interaction) {
-		Object.keys(list).forEach((key) =>
-			list[key].bazaar ? (list2[key] = list[key]) : ''
+		Object.keys(list).forEach(key => (list[key].bazaar ? list2[key] = list[key] : "")
 		);
 
-		var method = 'save';
+		const method = "save";
 
-		let result = interaction.options.getString('item');
+		let result = interaction.options.getString("item");
 
 		const waiting = new Discord.MessageEmbed()
-			.setTitle('Checking Bazaar Data')
+			.setTitle("Checking Bazaar Data")
 			.setFooter(
 				"If I don't respond within 10 Seconds then the Item wasn't found or an Error occurred"
 			);
@@ -35,7 +34,7 @@ module.exports = {
 			const options = {
 				isCaseSensitive: false,
 				treshold: 0.7,
-				keys: ['name'],
+				keys: ["name"],
 			};
 
 			const fuse = new Fuse(Object.keys(list2), options);
@@ -57,12 +56,12 @@ module.exports = {
 			wait.edit({ embeds: [notfound] });
 		}
 
-		//Related Items
-		var related = '';
+		// Related Items
+		let related = "";
 		if (apiData.related === undefined) {
-			related = 'None';
+			related = "None";
 		} else if (apiData.related.length === 0) {
-			related = 'None';
+			related = "None";
 		} else {
 			related = apiData.related;
 		}
@@ -71,7 +70,7 @@ module.exports = {
 			embeds: [
 				new Discord.MessageEmbed()
 					.setTitle(`Bazaar Data for ${result}`)
-					.setColor('7CFC00')
+					.setColor("7CFC00")
 					.setAuthor(
 						result,
 						`https://sky.lea.moe/item/${result}`,
@@ -79,45 +78,45 @@ module.exports = {
 					)
 					.addFields(
 						{
-							name: `Insta Sell Price`,
+							name: "Insta Sell Price",
 							value: `${toFixed(
 								apiData.quick_status.sellPrice
 							).toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Sell Offers`,
+							name: "Amount of Sell Offers",
 							value: `${toFixed(
 								apiData.quick_status.sellOrders
 							).toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Items in Sell Offers`,
+							name: "Amount of Items in Sell Offers",
 							value: `${apiData.quick_status.sellVolume.toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Insta Buy Price`,
+							name: "Insta Buy Price",
 							value: `${toFixed(
 								apiData.quick_status.buyPrice
 							).toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Buy Offers`,
+							name: "Amount of Buy Offers",
 							value: `${toFixed(
 								apiData.quick_status.buyOrders
 							).toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Items in Buy Offers`,
+							name: "Amount of Items in Buy Offers",
 							value: `${apiData.quick_status.buyVolume.toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Related Items`,
+							name: "Related Items",
 							value: `${related}`,
 							inline: false,
 						}
@@ -128,8 +127,8 @@ module.exports = {
 };
 
 async function getApiData(result) {
-	delete require.cache[require.resolve('../../constants/Bot/config.json')];
-	const config = require('../../constants/Bot/config.json');
+	delete require.cache[require.resolve("../../constants/Bot/config.json")];
+	const config = require("../../constants/Bot/config.json");
 
 	const response = await fetch(
 		`https://api.slothpixel.me/api/skyblock/bazaar/${result}?key=${config.apikey}`
@@ -138,6 +137,6 @@ async function getApiData(result) {
 }
 
 function toFixed(num) {
-	var re = new RegExp('^-?\\d+(?:.\\d{0,' + (2 || -1) + '})?');
+	const re = new RegExp(`^-?\\d+(?:.\\d{0,${2 || -1}})?`);
 	return num.toString().match(re)[0];
 }

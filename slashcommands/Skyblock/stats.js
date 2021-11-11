@@ -1,20 +1,20 @@
-const Discord = require('discord.js');
-const fetch = require('node-fetch');
+const Discord = require("discord.js");
+const fetch = require("node-fetch");
 
 module.exports = {
-	name: 'Stats',
-	usage: 'stats (IGN)',
-	description: 'Show Overall Stats for the mentioned User',
-	perms: 'None',
-	folder: 'Skyblock',
+	name: "Stats",
+	usage: "stats (IGN)",
+	description: "Show Overall Stats for the mentioned User",
+	perms: "None",
+	folder: "Skyblock",
 	aliases: [],
 	async execute(interaction) {
-		var ign = interaction.options.getString('ign');
+		let ign = interaction.options.getString("ign");
 
-		ign = ign.replace(/\W/g, ''); // removes weird characters
+		ign = ign.replace(/\W/g, ""); // removes weird characters
 
 		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(
-			(res) => {
+			res => {
 				if (res.status != 200) {
 					return interaction.editReply({
 						embeds: [
@@ -22,7 +22,7 @@ module.exports = {
 								.setDescription(
 									`No Minecraft account found for \`${ign}\``
 								)
-								.setColor('DC143C')
+								.setColor("DC143C")
 								.setTimestamp(),
 						],
 					});
@@ -36,8 +36,8 @@ module.exports = {
 		const apiData = await getApiData(ign); // Gets all skyblock player data from Senither's Hypixel API Facade
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription('Checking for Player Data . . .')
-			.setColor('ORANGE');
+			.setDescription("Checking for Player Data . . .")
+			.setColor("ORANGE");
 
 		const waitingembed = await interaction.editReply({
 			embeds: [waitembed],
@@ -48,35 +48,36 @@ module.exports = {
 				embeds: [
 					new Discord.MessageEmbed()
 						.setDescription(apiData.reason)
-						.setColor('DC143C')
+						.setColor("DC143C")
 						.setTimestamp(),
 				],
 			});
 		}
 
 		// IGN is valid and player has skyblock profiles
-		if (!apiData.apiEnabled === false)
-			return interaction.editReply('This players API is off.');
-		let bank = apiData.data.coins.bank;
-		if (!bank) bank = '0';
-		let purse = apiData.data.coins.purse;
-		if (!purse) purse = '0';
+		if (!apiData.apiEnabled === false) {
+			return interaction.editReply("This players API is off.");
+		}
+		let { bank } = apiData.data.coins;
+		if (!bank) bank = "0";
+		let { purse } = apiData.data.coins;
+		if (!purse) purse = "0";
 		return interaction.editReply({
 			embeds: [
 				new Discord.MessageEmbed()
 					.setTitle(
 						`Stats for ${ign} on Profile: ${apiData.data.name}`
 					)
-					.setColor('7CFC00')
+					.setColor("7CFC00")
 					.setAuthor(
 						ign,
 						`https://cravatar.eu/helmavatar/${ign}/600.png`,
 						`http://sky.shiiyu.moe/stats/${ign}`
 					)
-					.setDescription(`General Stats Overview for the Player`)
+					.setDescription("General Stats Overview for the Player")
 					.addFields(
 						{
-							name: '💰 Coins',
+							name: "💰 Coins",
 							value: `Total: ${toFixed(
 								apiData.data.coins.total
 							)}\nBank: ${toFixed(bank)}\nPurse: ${toFixed(
@@ -86,7 +87,7 @@ module.exports = {
 						},
 
 						{
-							name: '<:rev:852892164559732806> Slayers',
+							name: "<:rev:852892164559732806> Slayers",
 							value: `Zombie: ${toFixed(
 								apiData.data.slayers.bosses.revenant.level
 							)}\nSpider: ${toFixed(
@@ -98,7 +99,7 @@ module.exports = {
 						},
 
 						{
-							name: 'Weight',
+							name: "Weight",
 							value: `Total: ${toFixed(
 								apiData.data.weight
 							)}\nOverflow: ${toFixed(
@@ -114,7 +115,7 @@ module.exports = {
 						},
 
 						{
-							name: '<:combat:852069714527911956> Skill Average',
+							name: "<:combat:852069714527911956> Skill Average",
 							value: toFixed(apiData.data.skills.average_skills),
 							inline: true,
 						}
@@ -133,8 +134,8 @@ async function getUUID(ign) {
 }
 
 async function getApiData(ign) {
-	delete require.cache[require.resolve('../../constants/Bot/config.json')];
-	const config = require('../../constants/Bot/config.json');
+	delete require.cache[require.resolve("../../constants/Bot/config.json")];
+	const config = require("../../constants/Bot/config.json");
 
 	const UUID = await getUUID(ign);
 	const response = await fetch(
@@ -152,6 +153,6 @@ async function getTrueIgn(ign) {
 }
 
 function toFixed(num) {
-	var re = new RegExp('^-?\\d+(?:.\\d{0,' + (2 || -1) + '})?');
+	const re = new RegExp(`^-?\\d+(?:.\\d{0,${2 || -1}})?`);
 	return num.toString().match(re)[0];
 }

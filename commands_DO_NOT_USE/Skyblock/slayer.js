@@ -1,46 +1,43 @@
-const Discord = require('discord.js');
-const fetch = require('node-fetch');
+const Discord = require("discord.js");
+const fetch = require("node-fetch");
 
 module.exports = {
-	name: 'Slayer',
-	description: 'Shows the Users Slayer Data.',
-	usage: 'slayer (IGN)',
-	perms: 'None',
-	folder: 'Skyblock',
-	aliases: ['sl'],
+	name: "Slayer",
+	description: "Shows the Users Slayer Data.",
+	usage: "slayer (IGN)",
+	perms: "None",
+	folder: "Skyblock",
+	aliases: ["sl"],
 	async execute(client, message, args) {
 		if (!args[0]) {
 			var ign = message.member.displayName;
-		} else {
-			if (message.mentions.members.first()) {
-				var ign = message.mentions.members.first().displayName;
-			} else var ign = args[0];
-		} // Gets IGN
+		} else if (message.mentions.members.first()) {
+			var ign = message.mentions.members.first().displayName;
+		} else var ign = args[0]; // Gets IGN
 
-		var method = 'save';
+		let method = "save";
 		if (args[1]) method = args[1];
 
-		ign = ign.replace(/\W/g, ''); // removes weird characters
+		ign = ign.replace(/\W/g, ""); // removes weird characters
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription('Checking for Player Data . . .')
-			.setColor('ORANGE');
+			.setDescription("Checking for Player Data . . .")
+			.setColor("ORANGE");
 
 		const waitingembed = await message.channel.send({
 			embeds: [waitembed],
 		});
 
 		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(
-			(res) => {
+			res => {
 				if (res.status != 200) {
 					const nomcacc = new Discord.MessageEmbed()
 						.setDescription(
 							`No Minecraft account found for \`${ign}\``
 						)
-						.setColor('DC143C')
+						.setColor("DC143C")
 						.setTimestamp();
 					waitingembed.edit({ embeds: [nomcacc] });
-					return;
 				}
 			}
 		); // Test if IGN esists
@@ -55,71 +52,71 @@ module.exports = {
 				embeds: [
 					new Discord.MessageEmbed()
 						.setDescription(apiData.reason)
-						.setColor('DC143C')
+						.setColor("DC143C")
 						.setTimestamp(),
 				],
 			});
 		}
 
-		//all needed calculations
+		// all needed calculations
 		const rxp = apiData.data.slayers.bosses.revenant.experience;
 		let rrxp = Math.floor(rxp / 1000);
 		if (rrxp > 999) {
 			rrxp =
-				Math.floor(rxp / 1000000) +
-				'.' +
-				Math.floor((rxp % 1000000) / 1000) +
-				'M';
+				`${Math.floor(rxp / 1000000)
+				}.${
+					Math.floor(rxp % 1000000 / 1000)
+				}M`;
 		} else {
-			rrxp = rrxp + 'K';
+			rrxp += "K";
 		}
 
 		const txp = apiData.data.slayers.bosses.tarantula.experience;
 		let ttxp = Math.floor(txp / 1000);
 		if (ttxp > 999) {
 			ttxp =
-				Math.floor(txp / 1000000) +
-				'.' +
-				Math.floor((txp % 1000000) / 1000) +
-				'M';
+				`${Math.floor(txp / 1000000)
+				}.${
+					Math.floor(txp % 1000000 / 1000)
+				}M`;
 		} else {
-			ttxp = ttxp + 'K';
+			ttxp += "K";
 		}
 
 		const sxp = apiData.data.slayers.bosses.sven.experience;
 		let ssxp = Math.floor(sxp / 1000);
 		if (ssxp > 999) {
 			ssxp =
-				Math.floor(sxp / 1000000) +
-				'.' +
-				Math.floor((sxp % 1000000) / 1000) +
-				'M';
+				`${Math.floor(sxp / 1000000)
+				}.${
+					Math.floor(sxp % 1000000 / 1000)
+				}M`;
 		} else {
-			ssxp = ssxp + 'K';
+			ssxp += "K";
 		}
 
 		const exp = apiData.data.slayers.bosses.enderman.experience;
 		let eexp = Math.floor(exp / 1000);
 		if (eexp > 999) {
 			eexp =
-				Math.floor(exp / 1000000) +
-				'.' +
-				Math.floor((exp % 1000000) / 1000) +
-				'M';
+				`${Math.floor(exp / 1000000)
+				}.${
+					Math.floor(exp % 1000000 / 1000)
+				}M`;
 		} else {
-			eexp = eexp + 'K';
+			eexp += "K";
 		}
 
 		const totalxp = apiData.data.slayers.total_experience;
 		let ttotalxp = Math.floor(totalxp / 1000);
 		if (ttotalxp > 999) {
 			ttotalxp =
-				Math.floor(totalxp / 1000000) +
-				'.' +
-				Math.floor((totalxp % 1000000) / 1000) +
-				'M';
+				`${Math.floor(totalxp / 1000000)
+				}.${
+					Math.floor(totalxp % 1000000 / 1000)
+				}M`;
 		} else {
-			ttotalxp = ttotalxp + 'K';
+			ttotalxp += "K";
 		}
 
 		const rlevel = apiData.data.slayers.bosses.revenant.level;
@@ -158,7 +155,7 @@ module.exports = {
 		if (apiData.status != 200) {
 			const apierror = new Discord.MessageEmbed()
 				.setDescription(apiData.reason)
-				.setColor('DC143C')
+				.setColor("DC143C")
 				.setTimestamp();
 			waitingembed.edit({ embeds: [apierror] });
 			return;
@@ -174,16 +171,16 @@ module.exports = {
 					`https://sky.shiiyu.moe/stats/${ign}`
 				)
 				.setDescription(
-					'You currently have skills API disabled, please enable it in the skyblock menu and try again'
+					"You currently have skills API disabled, please enable it in the skyblock menu and try again"
 				)
-				.setColor('DC143C')
+				.setColor("DC143C")
 				.setTimestamp();
 			waitingembed.edit({ embeds: [noapion] });
 			return;
 		}
 
 		const slayerembed = new Discord.MessageEmbed()
-			.setColor('7CFC00')
+			.setColor("7CFC00")
 			.setAuthor(
 				ign,
 				`https://cravatar.eu/helmavatar/${ign}/600.png`,
@@ -218,7 +215,6 @@ module.exports = {
 			);
 
 		waitingembed.edit({ embeds: [slayerembed] });
-		return;
 	},
 };
 
@@ -258,7 +254,7 @@ function getSlayers(apiData) {
 		`Experience: **${sxp}**\n\n **Slayer Kills:** \n\`\`\`T1: ${s1}\nT2: ${s2}\nT3: ${s3}\nT4: ${s4}\`\`\``,
 		`<:eman:854253314747924511> **Enderman [${elevel}]**`,
 		`Experience: **${exp}**\n\n **Slayer Kills:** \n\`\`\`T1: ${e1}\nT2: ${e2}\nT3: ${e3}\nT4: ${e4}\`\`\``,
-	].join('\n');
+	].join("\n");
 }
 
 async function getUUID(ign) {
@@ -270,8 +266,8 @@ async function getUUID(ign) {
 }
 
 async function getApiData(ign, method) {
-	delete require.cache[require.resolve('../../config.json')];
-	const config = require('../../config.json');
+	delete require.cache[require.resolve("../../config.json")];
+	const config = require("../../config.json");
 
 	const UUID = await getUUID(ign);
 	const response = await fetch(
@@ -289,6 +285,6 @@ async function getTrueIgn(ign) {
 }
 
 function toFixed(num) {
-	var re = new RegExp('^-?\\d+(?:.\\d{0,' + (2 || -1) + '})?');
+	const re = new RegExp(`^-?\\d+(?:.\\d{0,${2 || -1}})?`);
 	return num.toString().match(re)[0];
 }
