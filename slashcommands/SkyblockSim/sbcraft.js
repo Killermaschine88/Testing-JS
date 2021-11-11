@@ -12,12 +12,23 @@ module.exports = {
 	async execute(interaction, mclient) {
 		const collection = mclient.db('SkyblockSim').collection('Players');
 		let player = await collection.findOne({ _id: interaction.user.id });
+
+    if (player === null) {
+			const noprofile = new Discord.MessageEmbed()
+				.setColor('RED')
+				.setTitle('No Profile found')
+				.setDescription(`Create a Profile using \`/sb start\``);
+			interaction.editReply({ embeds: [noprofile] });
+			return;
+		}
+
+    const inv = player.data.inventory.items
+      const inv2 = player.data.inventory.armor
     
     //Embed and Select Menu
     const embed = new Discord.MessageEmbed()
     .setTitle('Crafting')
-    .setDescription('Available Items with their respective Stats and Item Cost')
-    .addField('Shark Scale Armor', '**Stats:** aaa\n\n**Cost:** 100 Shark Fin and 100 Lilypads')
+    .setDescription('Available Items with their respective Stats and Item Cost\n')
     .setFooter('Skyblock Simulator')
 
     const row = new Discord.MessageActionRow()
@@ -27,6 +38,12 @@ module.exports = {
 			.setMaxValues(1)
 			.setMinValues(1);
 
+    if(!inv2.find(armor => armor.name == 'Shark Scale Armor')) {
+
+      embed.addField('Shark Scale Armor', '**Stats:** \`200 ❤\`, \`120 ❈\`, \`75 ❁\`, \`25 ☣\`, \`90 ☠\`, \`20 α\`\n\n**Cost:** 100 Shark Fin and 100 Lilypads', true)
+      
+    }
+
     craftmenu.addOptions([
       {
         label: 'Shark Scale Armor',
@@ -35,8 +52,11 @@ module.exports = {
     ])
 
     row.addComponents(craftmenu)
-  
 
+    if(embed.fields.length == 0) {
+      embed.addField('All craftable Items owned', '\u200B', true)
+    }
+  
     const menu = await interaction.editReply({embeds: [embed], components: [row]})
 
   
@@ -53,8 +73,7 @@ module.exports = {
 			});
 
 		leaderCollector.on('collect', async (i) => {
-      const inv = player.data.inventory.items
-      const inv2 = player.data.inventory.armor
+      
 			const id = i.values[0]
 
       if(inv.find(item => item.name == 'Shark Fin' && item.amount >= 100) && inv.find(item => item.name == 'Lilypad' && item.amount >= 100) && !inv2.find(armor => armor.name == 'Shark Scale Armor')) {
@@ -96,10 +115,10 @@ module.exports = {
 						{ upsert: true }
 					);
         
-      } else if(id == 'next item') {
+      } else if(id == 'new item') {
         
       } else {
-        embed.setDescription("Insufficient Amount of Items can't craft desired Item.");
+        embed.setDescription("Insufficient Amount of Items can't craft desired Item or you already own the Armor/Sword.");
         embed.fields = [];
         embed.setColor('RED');
       }
