@@ -1,3 +1,4 @@
+'use strict';
 const Discord = require('discord.js');
 const config = require('../constants/Bot/config.json');
 
@@ -6,14 +7,14 @@ module.exports = {
 	/**
 	 *
 	 * @param {Discord.Interaction} interaction
-	 * @param {*} mclient
+	 * @param {*} mClient
 	 * @returns
 	 */
-	async execute(interaction, mclient) {
+	async execute(interaction, mClient) {
 		if (interaction.isAutocomplete()) {
 			const focused = interaction.options.getFocused();
 
-			if (interaction.options.getSubcommand(false) == 'reforge') {
+			if (interaction.options.getSubcommand(false) === 'reforge') {
 				const stones = [
 					'Dragon Claw',
 					'Wither Blood',
@@ -36,7 +37,7 @@ module.exports = {
 						stone.includes(focused)
 				);
 
-				if (seen.length != 0) {
+				if (seen.length !== 0) {
 					const i = 0;
 					for (const stone of seen) {
 						if (i < 25) {
@@ -50,7 +51,7 @@ module.exports = {
 					}
 				}
 
-				if (found.length != 0) {
+				if (found.length !== 0) {
 					interaction.respond(found);
 				} else {
 					interaction.respond(found2);
@@ -107,7 +108,7 @@ module.exports = {
 						item.includes(focused)
 				);
 
-				if (seen.length != 0) {
+				if (seen.length !== 0) {
 					let i = 0;
 					for (const item of seen) {
 						if (i < 10) {
@@ -185,7 +186,7 @@ module.exports = {
 				interaction.options.getSubcommand(false);
 		}
 
-		const collection1 = mclient.db('Sky-Bot').collection('settings');
+		const collection1 = mClient.db('Sky-Bot').collection('settings');
 		const settings = await collection1.findOne({
 			_id: interaction.client.user.id,
 		});
@@ -203,22 +204,22 @@ module.exports = {
 			return interaction.reply({ embeds: [maintan] });
 		}
 
-		if (interaction.commandName == 'sb') {
-			const collection = mclient.db('SkyblockSim').collection('Players');
+		if (interaction.commandName === 'sb') {
+			const collection = mClient.db('SkyblockSim').collection('Players');
 			const player = await collection.findOne({ _id: interaction.user.id });
 
 			if (player != null) {
-				const time_now = Math.floor(Date.now() / 1000);
+				const currentTime = Math.floor(Date.now() / 1000);
 				if (
-					player.data.misc.booster_cookie.expires <= time_now &&
-					player.data.misc.booster_cookie.active == true
+					player.data.misc.booster_cookie.expires <= currentTime &&
+					player.data.misc.booster_cookie.active === true
 				) {
 					await collection.updateOne(
 						{ _id: interaction.user.id },
 						{
 							$set: {
 								'data.misc.booster_cookie.active': false,
-								'data.misc.booster_cookie.expires': time_now,
+								'data.misc.booster_cookie.expires': currentTime,
 							},
 						},
 						{ upsert: true }
@@ -226,7 +227,7 @@ module.exports = {
 				}
 			}
 
-			const collection2 = mclient
+			const collection2 = mClient
 				.db('SkyblockSim')
 				.collection('blockedchannels');
 			const channel = await collection2.findOne({
@@ -234,14 +235,14 @@ module.exports = {
 			});
 			if (channel) {
 				if (channel.user != interaction.user.id) {
-					if (channel.blocked == true) {
+					if (channel.blocked === true) {
 						const blockedembed = new Discord.MessageEmbed()
 							.setColor('ORANGE')
 							.setTitle('Channel occupied')
 							.setDescription(
-								'This channel is already being used by someone to play dungeons or to fish/mime.\n\nTo reduce lag for them please consider inviting me to your own Server or creating a Thread to play there.'
+								'This channel is already being used by someone to play dungeons or to fish/mine.\n\nTo reduce lag for them please consider inviting me to your own server or creating a thread to play there.'
 							)
-							.setFooter('Kind regards Sky Bot Developer');
+							.setFooter('Kind regards, Sky Bot Developer');
 						const row =
 							new Discord.MessageActionRow().addComponents(
 								new Discord.MessageButton()
@@ -336,7 +337,7 @@ module.exports = {
     console.log(cooldownAmount)*/
 
 		try {
-			const collection = mclient.db('Sky-Bot').collection('commanduses');
+			const collection = mClient.db('Sky-Bot').collection('commanduses');
 			collection.updateOne(
 				{ _id: interaction.commandName },
 				{ $inc: { uses: 1 } },
@@ -346,7 +347,7 @@ module.exports = {
 			await interaction.deferReply();
 			await interaction.client.slashcommands
 				.get(commandExecute)
-				.execute(interaction, mclient);
+				.execute(interaction, mClient);
 		} catch (error) {
 			console.error(error);
 			interaction.followUp({
