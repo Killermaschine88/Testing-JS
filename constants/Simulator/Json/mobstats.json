@@ -57,7 +57,7 @@
 	},
 	"Sea Leech": {
 		"name": "Sea Leech",
-		"hp": "60000",
+		"hp": "6000",
 		"dmg": 90,
 		"level": 16,
 		"xp": 675
