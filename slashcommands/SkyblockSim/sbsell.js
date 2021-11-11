@@ -275,9 +275,13 @@ function addItem(sellitem, amount, player) {
 }
 
 function getPrice(sellitem) {
+  if(sellitem == 'Coins' || sellitem == 'Potatoe') {
+    return 0
+  }
 	const itemprice = list.filter((item) => item.name == sellitem);
-	//console.log(itemprice)
-	price = itemprice[0].price;
+  
+	price = itemprice[0].price
+  
 	return price;
 }
 
