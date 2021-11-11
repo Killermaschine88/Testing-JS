@@ -25,14 +25,14 @@ function getLevelByXp(xp, extra = {}) {
 		};
 	}
 
-	let xpTotal = 0;
-	let level = 0;
-	let uncappedLevel = 0;
+	let xpTotal = 0,
+	 level = 0,
+	 uncappedLevel = 0,
 
-	let xpForNext = Infinity;
+	 xpForNext = Infinity,
 
-	let levelCap = 1;
-	let maxLevel = 1;
+	 levelCap = 1,
+	 maxLevel = 1;
 
 	if (extra.cap) {
 		levelCap = extra.cap;
@@ -49,7 +49,7 @@ function getLevelByXp(xp, extra = {}) {
 	} else {
 		levelCap = Object.keys(xp_table)
 			.sort((a, b) => Number(a) - Number(b))
-			.map((a) => Number(a))
+			.map(a => Number(a))
 			.pop();
 	}
 
@@ -69,15 +69,15 @@ function getLevelByXp(xp, extra = {}) {
 		}
 	}
 
-	let xpCurrent = Math.floor(xp - xpTotal);
+	const xpCurrent = Math.floor(xp - xpTotal);
 
 	if (level < levelCap) {
 		xpForNext = Math.ceil(xp_table[level + 1]);
 	}
 
-	let progress = Math.max(0, Math.min(xpCurrent / xpForNext, 1));
+	const progress = Math.max(0, Math.min(xpCurrent / xpForNext, 1));
 
-	let levelWithProgress = getLevelWithProgress(xp, maxLevel, Object.values(xp_table));
+	const levelWithProgress = getLevelWithProgress(xp, maxLevel, Object.values(xp_table));
 
 	return {
 		xp,
@@ -95,10 +95,10 @@ function getLevelByXp(xp, extra = {}) {
 function getLevelWithProgress(experience, maxLevel, experienceGroup) {
 	let level = 0;
 
-	for (let toRemove of experienceGroup) {
+	for (const toRemove of experienceGroup) {
 		experience -= toRemove;
 		if (experience < 0) {
-			return Math.min(level + (1 - (experience * -1) / toRemove), maxLevel);
+			return Math.min(level + (1 - experience * -1 / toRemove), maxLevel);
 		}
 		level++;
 	}

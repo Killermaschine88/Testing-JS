@@ -11,15 +11,13 @@ module.exports = {
 	async execute(client, message, args) {
 		if (!args[0]) {
 			var ign = message.member.displayName;
-		} else {
-			if (message.mentions.members.first()) {
-				var ign = message.mentions.members.first().displayName;
-			} else var ign = args[0];
-		} // Gets IGN
+		} else if (message.mentions.members.first()) {
+			var ign = message.mentions.members.first().displayName;
+		} else var ign = args[0]; // Gets IGN
 
 		ign = ign.replace(/\W/g, ''); // removes weird characters
 
-		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then((res) => {
+		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(res => {
 			if (res.status != 200) {
 				return message.channel.send({
 					embeds: [
@@ -47,15 +45,16 @@ module.exports = {
 
 		if (apiData.status != 200) {
 			return waitingembed.edit({
-				embeds: [new Discord.MessageEmbed().setDescription(apiData.reason).setColor('DC143C').setTimestamp()],
+				embeds: [new Discord.MessageEmbed().setDescription(apiData.reason).setColor('DC143C')
+					.setTimestamp()],
 			});
 		}
 
 		// IGN is valid and player has skyblock profiles
 		if (!apiData.apiEnabled === false) return message.channel.send('This players API is off.');
-		let bank = apiData.data.coins.bank;
+		let { bank } = apiData.data.coins;
 		if (!bank) bank = '0';
-		let purse = apiData.data.coins.purse;
+		let { purse } = apiData.data.coins;
 		if (!purse) purse = '0';
 		return message.channel.send({
 			embeds: [
@@ -67,7 +66,7 @@ module.exports = {
 						`https://cravatar.eu/helmavatar/${ign}/600.png`,
 						`http://sky.shiiyu.moe/stats/${ign}`
 					)
-					.setDescription(`General Stats Overview for the Player`)
+					.setDescription('General Stats Overview for the Player')
 					.addFields(
 						{
 							name: '💰 Coins',
@@ -128,6 +127,6 @@ async function getTrueIgn(ign) {
 }
 
 function toFixed(num) {
-	var re = new RegExp('^-?\\d+(?:.\\d{0,' + (2 || -1) + '})?');
+	const re = new RegExp(`^-?\\d+(?:.\\d{0,${2 || -1}})?`);
 	return num.toString().match(re)[0];
 }

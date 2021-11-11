@@ -10,20 +10,20 @@ module.exports = {
 	cooldown: 10,
 	async execute(interaction, mclient) {
 		const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: interaction.user.id });
+		const player = await collection.findOne({ _id: interaction.user.id });
 
-		let type = interaction.options.getString('type');
-		let number = interaction.options.getInteger('itemid');
+		const type = interaction.options.getString('type');
+		const number = interaction.options.getInteger('itemid');
 
-		let sword = player.data.inventory.sword;
-		let armor = player.data.inventory.armor;
+		const { sword } = player.data.inventory;
+		const { armor } = player.data.inventory;
 		let item = '';
 
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription('Create a Profile using `/sb start`');
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
@@ -31,7 +31,7 @@ module.exports = {
 		if (number < 0) {
 			const errembed = new Discord.MessageEmbed()
 				.setTitle('Negative Number')
-				.setDescription(`You can\'t enter an negative Number.'`)
+				.setDescription('You can\'t enter an negative Number.\'')
 				.setColor('RED')
 				.setFooter('Skyblock Simulator');
 
@@ -83,7 +83,7 @@ module.exports = {
 
 			let eqsword = '';
 			if (item.reforge != 'None') {
-				eqsword = item.reforge + ' ' + item.name;
+				eqsword = `${item.reforge} ${item.name}`;
 			} else {
 				eqsword = item.name;
 			}
@@ -118,7 +118,7 @@ module.exports = {
 
 			let eqarmor = '';
 			if (item.reforge != 'None') {
-				eqarmor = item.reforge + ' ' + item.name;
+				eqarmor = `${item.reforge} ${item.name}`;
 			} else {
 				eqarmor = item.name;
 			}

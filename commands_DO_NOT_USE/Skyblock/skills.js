@@ -11,18 +11,16 @@ module.exports = {
 	async execute(client, message, args) {
 		if (!args[0]) {
 			var ign = message.member.displayName;
-		} else {
-			if (message.mentions.members.first()) {
-				var ign = message.mentions.members.first().displayName;
-			} else var ign = args[0];
-		} // Gets IGN
+		} else if (message.mentions.members.first()) {
+			var ign = message.mentions.members.first().displayName;
+		} else var ign = args[0]; // Gets IGN
 
-		var method = 'save';
+		let method = 'save';
 		if (args[1]) method = args[1];
 
 		ign = ign.replace(/\W/g, ''); // removes weird characters
 
-		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then((res) => {
+		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(res => {
 			if (res.status != 200) {
 				return message.channel.send({
 					embeds: [
@@ -48,13 +46,14 @@ module.exports = {
 
 		if (apiData.status != 200) {
 			return waitingembed.edit({
-				embeds: [new Discord.MessageEmbed().setDescription(apiData.reason).setColor('DC143C').setTimestamp()],
+				embeds: [new Discord.MessageEmbed().setDescription(apiData.reason).setColor('DC143C')
+					.setTimestamp()],
 			});
 		}
 
 		// IGN is valid and player has skyblock profiles
 
-		if (apiData.data.skills.apiEnabled == false)
+		if (apiData.data.skills.apiEnabled == false) {
 			return message.channel.send({
 				embeds: [
 					new Discord.MessageEmbed()
@@ -70,10 +69,11 @@ module.exports = {
 						.setTimestamp(),
 				],
 			});
+		}
 
-		//calculations for the skills
+		// calculations for the skills
 
-		let totalxp =
+		const totalxp =
 			apiData.data.skills.mining.experience +
 			apiData.data.skills.foraging.experience +
 			apiData.data.skills.enchanting.experience +
@@ -85,77 +85,77 @@ module.exports = {
 
 		let ttotalxp = Math.floor(totalxp / 1000);
 		if (ttotalxp > 999999) {
-			ttotalxp = Math.floor(totalxp / 1000000000) + '.' + Math.floor((ttotalxp % 1000000000) / 100000) + 'B';
+			ttotalxp = `${Math.floor(totalxp / 1000000000)}.${Math.floor(ttotalxp % 1000000000 / 100000)}B`;
 		} else if (ttotalxp > 999) {
 			{
-				ttotalxp = Math.floor(totalxp / 1000000) + '.' + Math.floor((totalxp % 1000000) / 10000) + 'M';
+				ttotalxp = `${Math.floor(totalxp / 1000000)}.${Math.floor(totalxp % 1000000 / 10000)}M`;
 			}
 		} else {
-			ttotalxp = ttotalxp + 'K';
+			ttotalxp += 'K';
 		}
 
-		let mixp = apiData.data.skills.mining.experience;
+		const mixp = apiData.data.skills.mining.experience;
 		let tmixp = Math.floor(mixp / 1000);
 		if (tmixp > 999) {
-			tmixp = Math.floor(mixp / 1000000) + '.' + Math.floor((mixp % 1000000) / 10000) + 'M';
+			tmixp = `${Math.floor(mixp / 1000000)}.${Math.floor(mixp % 1000000 / 10000)}M`;
 		} else {
-			tmixp = tmixp + 'K';
+			tmixp += 'K';
 		}
 
-		let foxp = apiData.data.skills.foraging.experience;
+		const foxp = apiData.data.skills.foraging.experience;
 		let tfoxp = Math.floor(foxp / 1000);
 		if (tfoxp > 999) {
-			tfoxp = Math.floor(foxp / 1000000) + '.' + Math.floor((foxp % 1000000) / 10000) + 'M';
+			tfoxp = `${Math.floor(foxp / 1000000)}.${Math.floor(foxp % 1000000 / 10000)}M`;
 		} else {
-			tfoxp = tfoxp + 'K';
+			tfoxp += 'K';
 		}
 
-		let enxp = apiData.data.skills.enchanting.experience;
+		const enxp = apiData.data.skills.enchanting.experience;
 		let tenxp = Math.floor(enxp / 1000);
 		if (tenxp > 999) {
-			tenxp = Math.floor(enxp / 1000000) + '.' + Math.floor((enxp % 1000000) / 10000) + 'M';
+			tenxp = `${Math.floor(enxp / 1000000)}.${Math.floor(enxp % 1000000 / 10000)}M`;
 		} else {
-			tenxp = tenxp + 'K';
+			tenxp += 'K';
 		}
 
-		let faxp = apiData.data.skills.farming.experience;
+		const faxp = apiData.data.skills.farming.experience;
 		let tfaxp = Math.floor(faxp / 1000);
 		if (tfaxp > 999) {
-			tfaxp = Math.floor(faxp / 1000000) + '.' + Math.floor((faxp % 1000000) / 10000) + 'M';
+			tfaxp = `${Math.floor(faxp / 1000000)}.${Math.floor(faxp % 1000000 / 10000)}M`;
 		} else {
-			tfaxp = tfaxp + 'K';
+			tfaxp += 'K';
 		}
 
-		let coxp = apiData.data.skills.combat.experience;
+		const coxp = apiData.data.skills.combat.experience;
 		let tcoxp = Math.floor(coxp / 1000);
 		if (tcoxp > 999) {
-			tcoxp = Math.floor(coxp / 1000000) + '.' + Math.floor((coxp % 1000000) / 10000) + 'M';
+			tcoxp = `${Math.floor(coxp / 1000000)}.${Math.floor(coxp % 1000000 / 10000)}M`;
 		} else {
-			tcoxp = tcoxp + 'K';
+			tcoxp += 'K';
 		}
 
-		let fixp = apiData.data.skills.fishing.experience;
+		const fixp = apiData.data.skills.fishing.experience;
 		let tfixp = Math.floor(fixp / 1000);
 		if (tfixp > 999) {
-			tfixp = Math.floor(fixp / 1000000) + '.' + Math.floor((fixp % 1000000) / 10000) + 'M';
+			tfixp = `${Math.floor(fixp / 1000000)}.${Math.floor(fixp % 1000000 / 10000)}M`;
 		} else {
-			tfixp = tfixp + 'K';
+			tfixp += 'K';
 		}
 
-		let alxp = apiData.data.skills.alchemy.experience;
+		const alxp = apiData.data.skills.alchemy.experience;
 		let talxp = Math.floor(alxp / 1000);
 		if (talxp > 999) {
-			talxp = Math.floor(alxp / 1000000) + '.' + Math.floor((alxp % 1000000) / 10000) + 'M';
+			talxp = `${Math.floor(alxp / 1000000)}.${Math.floor(alxp % 1000000 / 10000)}M`;
 		} else {
-			talxp = talxp + 'K';
+			talxp += 'K';
 		}
 
-		let taxp = apiData.data.skills.taming.experience;
+		const taxp = apiData.data.skills.taming.experience;
 		let ttaxp = Math.floor(taxp / 1000);
 		if (ttaxp > 999) {
-			ttaxp = Math.floor(taxp / 1000000) + '.' + Math.floor((taxp % 1000000) / 10000) + 'M';
+			ttaxp = `${Math.floor(taxp / 1000000)}.${Math.floor(taxp % 1000000 / 10000)}M`;
 		} else {
-			ttaxp = ttaxp + 'K';
+			ttaxp += 'K';
 		}
 
 		return waitingembed.edit({
@@ -241,6 +241,6 @@ async function getTrueIgn(ign) {
 }
 
 function toFixed(num) {
-	var re = new RegExp('^-?\\d+(?:.\\d{0,' + (2 || -1) + '})?');
+	const re = new RegExp(`^-?\\d+(?:.\\d{0,${2 || -1}})?`);
 	return num.toString().match(re)[0];
 }

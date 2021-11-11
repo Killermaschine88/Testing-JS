@@ -12,8 +12,8 @@ module.exports = {
 		const embed = new Discord.MessageEmbed().setDescription('Pinging . . .');
 		await interaction.editReply({ embeds: [embed] });
 
-		interaction.fetchReply().then((m) => {
-			//Deciding Ping Emoji Shown
+		interaction.fetchReply().then(m => {
+			// Deciding Ping Emoji Shown
 			let ping = '';
 			if (m.createdTimestamp - interaction.createdTimestamp < 150) {
 				ping = '<:ping:847473419011620955>';

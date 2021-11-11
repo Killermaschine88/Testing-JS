@@ -11,16 +11,16 @@ module.exports = {
 	async execute(client, message, args, mclient) {
 		if (message.author.id !== config.ownerID) return message.channel.send("Can't use this!");
 
-		let id = args[0];
-		let path = args[1];
-		let value = args[2];
+		let id = args[0],
+		 path = args[1],
+		 value = args[2];
 
 		if (id == 0) {
 			id = message.author.id;
 		}
 
 		if (args[3] != undefined) {
-			value = args[2] + ' ' + args[3];
+			value = `${args[2]} ${args[3]}`;
 		}
 
 		if (!isNaN(value)) value = Number(value);

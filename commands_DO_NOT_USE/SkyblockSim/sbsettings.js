@@ -11,12 +11,12 @@ module.exports = {
 	aliases: ['sbse'],
 	cooldown: 10,
 	async execute(client, message, args, mclient) {
-		//Getting prefix
-		var gprefix = await prefixx.get(message.guild.id, { raw: false });
+		// Getting prefix
+		let gprefix = await prefixx.get(message.guild.id, { raw: false });
 		if (gprefix === null) gprefix = '.';
 
 		const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: message.author.id });
+		const player = await collection.findOne({ _id: message.author.id });
 
 		if (player.data.settings === null) {
 			const noprofile = new Discord.MessageEmbed()
@@ -48,7 +48,6 @@ module.exports = {
 				{ upsert: true }
 			);
 			message.channel.send('Disabled Area Image being shown at sbfarm');
-			return;
 		} else if (args[0] === 'img' && player.data.settings.imgshown === false) {
 			await collection.updateOne(
 				{ _id: message.author.id },
@@ -56,7 +55,6 @@ module.exports = {
 				{ upsert: true }
 			);
 			message.channel.send('Enabled Area Image being shown at sbfarm');
-			return;
 		}
 	},
 };

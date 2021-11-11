@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-//const axios = require('axios')
+// const axios = require('axios')
 const fetch = require('node-fetch');
 
 module.exports = {
@@ -16,12 +16,12 @@ module.exports = {
 		const config = require('../../constants/Bot/config.json');
 
 		// npm install axios
-		const axios = require(`axios`).default;
+		const axios = require('axios').default;
 		// npm install axios
 		try {
-			let uuid = await axios.get(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
+			const uuid = await axios.get(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
 
-			let hypixelapi = await axios.default.get(
+			const hypixelapi = await axios.default.get(
 				`https://api.hypixel.net/skyblock/profiles?key=${config.apikey}&uuid=${uuid.data.id}`
 			);
 			//  console.log(hypixelapi.data)
@@ -48,7 +48,7 @@ module.exports = {
 		// let net = await fetch(`http://db.superbonecraft.dk:8000/pages/${ign}?api_key=${config.apikey}`)
 		// nw = await net.json()
 
-		let errtext = '';
+		const errtext = '';
 		/* if (net.status == 404) {
       errtext = 'Status: 404\nReason: User not found within the Skyblock Playerbase'
     } else if (net.status == 500) {
@@ -70,7 +70,7 @@ module.exports = {
 
 		ign = await getTrueIgn(ign);
 
-		let total =
+		const total =
 			Math.floor(nw.purse.total) +
 			Math.floor(nw.banking.total) +
 			Math.floor(nw.inventory.total) +
@@ -82,27 +82,27 @@ module.exports = {
 			Math.floor(nw.storage.total) +
 			Math.floor(nw.pets.total);
 
-		let armor = nw.armor;
-		let wardrobe = nw.wardrobe;
-		let inventory = nw.inventory;
-		let ec = nw.ender_chest;
-		let storage = nw.storage;
-		let pets = nw.pets;
-		let talis = nw.accessories;
+		const { armor } = nw;
+		const { wardrobe } = nw;
+		const { inventory } = nw;
+		const ec = nw.ender_chest;
+		const { storage } = nw;
+		const { pets } = nw;
+		const talis = nw.accessories;
 
-		let armortext = '';
-		let wardrobetext = '';
-		let inventorytext = '';
-		let ectext = '';
-		let storagetext = '';
-		let petstext = '';
-		let talistext = '';
+		let armortext = '',
+		 arrow = '› ',
+		 ectext = '',
+		 i = 0,
+		 inventorytext = '',
+		 petstext = '',
+		 recomb = '<:recomb:881094744183275540>',
 
-		let i = 0;
-		let recomb = '<:recomb:881094744183275540>';
-		let arrow = '› '; //Alt arrow '→ '
+		 storagetext = '',
+		 talistext = '',
+		 wardrobetext = ''; // Alt arrow '→ '
 
-		//Armor Section
+		// Armor Section
 		if (armor.prices.length == 0) {
 			armortext = 'API Disabled or no Items';
 		} else {
@@ -125,7 +125,7 @@ module.exports = {
 			i = 0;
 		}
 
-		//Wardrobe Section
+		// Wardrobe Section
 		if (wardrobe.prices.length == 0) {
 			wardrobetext = 'API Disabled or no Items';
 		} else {
@@ -148,7 +148,7 @@ module.exports = {
 			i = 0;
 		}
 
-		//Inventory Section
+		// Inventory Section
 		if (inventory.prices.length == 0) {
 			inventorytext = 'API Disabled or no Items';
 		} else {
@@ -179,7 +179,7 @@ module.exports = {
 			i = 0;
 		}
 
-		//Enderchest Section
+		// Enderchest Section
 		if (ec.prices.length == 0) {
 			ectext = 'API Disabled or no Items';
 		} else {
@@ -210,7 +210,7 @@ module.exports = {
 			i = 0;
 		}
 
-		//Storage Section
+		// Storage Section
 		if (storage.prices.length == 0) {
 			storagetext = 'API Disabled or no Items';
 		} else {
@@ -241,7 +241,7 @@ module.exports = {
 			i = 0;
 		}
 
-		//Pets Section
+		// Pets Section
 		if (pets.prices.length == 0) {
 			petstext = 'API Disabled or no Items';
 		} else {
@@ -260,7 +260,7 @@ module.exports = {
 			i = 0;
 		}
 
-		//Talisman Section
+		// Talisman Section
 		if (talis.prices.length == 0) {
 			talistext = 'API Disabled or no Items';
 		} else {
@@ -287,8 +287,8 @@ module.exports = {
 			.setFooter('Calcs by Skezza')
 			.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `http://sky.shiiyu.moe/stats/${ign}`)
 			.setDescription(`${ign}'s Networth is ${total.toLocaleString()} (${num(total)})`)
-			.addField(`<:coins:861974605203636253> Purse`, `${num(nw.purse.total)}`)
-			.addField(`<:gold:869126927011708929> Bank`, `${num(nw.banking.total)}`)
+			.addField('<:coins:861974605203636253> Purse', `${num(nw.purse.total)}`)
+			.addField('<:gold:869126927011708929> Bank', `${num(nw.banking.total)}`)
 			.addField(`<:tank:852079613051666472> Armor (${num(armor.total)})`, `${armortext}`)
 			.addField(`<:armorstand:881177222440943657> Wardrobe (${num(wardrobe.total)})`, `${wardrobetext}`)
 			.addField(`<:chest:881176353444085820> Inventory (${num(inventory.total)})`, `${inventorytext}`)
@@ -302,10 +302,10 @@ module.exports = {
 	},
 };
 
-num = (num) => {
-	if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace(/.0$/, '') + 'B';
-	if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/.0$/, '') + 'M';
-	if (num >= 1000) return (num / 1000).toFixed(1).replace(/.0$/, '') + 'K';
+num = num => {
+	if (num >= 1000000000) return `${(num / 1000000000).toFixed(1).replace(/.0$/, '')}B`;
+	if (num >= 1000000) return `${(num / 1000000).toFixed(1).replace(/.0$/, '')}M`;
+	if (num >= 1000) return `${(num / 1000).toFixed(1).replace(/.0$/, '')}K`;
 	return num;
 };
 
@@ -317,7 +317,7 @@ async function getTrueIgn(ign) {
 
 function caps(words) {
 	words = words.replace('_', ' ');
-	let separateWord = words.toLowerCase().split(' ');
+	const separateWord = words.toLowerCase().split(' ');
 	for (let i = 0; i < separateWord.length; i++) {
 		separateWord[i] = separateWord[i].charAt(0).toUpperCase() + separateWord[i].substring(1);
 	}

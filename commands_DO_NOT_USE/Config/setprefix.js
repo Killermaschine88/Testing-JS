@@ -11,10 +11,11 @@ module.exports = {
 	folder: 'Config',
 	aliases: ['sp'],
 	async execute(client, message, args) {
-		if (!message.member.permissions.has('ADMINISTRATOR'))
+		if (!message.member.permissions.has('ADMINISTRATOR')) {
 			return message.channel.send('You are missing the Permission `ADMINISTRATOR`.');
+		}
 
-		const id = message.guild.id;
+		const { id } = message.guild;
 		let gprefix = await prefixx.get(id);
 		if (gprefix === null) {
 			gprefix = ',';
@@ -36,9 +37,9 @@ module.exports = {
 		if (args[0].length > 3) {
 			message.channel.send(`Please choose a Prefix Below \`3 Characters\`.\nYou entered: \`${args[0]}\``);
 			return;
-		} else {
-			await prefixx.set(id, args[0]);
 		}
+		await prefixx.set(id, args[0]);
+
 
 		message.channel.send(`Prefix has been set to \`${args[0]}\``);
 	},

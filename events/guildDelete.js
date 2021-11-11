@@ -29,6 +29,6 @@ function discordLog(client, embed) {
 
 	client.channels
 		.fetch(config.joinlog)
-		.then((channel) => channel.send({ embeds: [embed] }))
+		.then(channel => channel.send({ embeds: [embed] }))
 		.catch(console.error);
 }

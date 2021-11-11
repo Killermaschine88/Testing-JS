@@ -1,4 +1,4 @@
-const urii = process.env['uri'];
+const urii = process.env.uri;
 const Discord = require('discord.js');
 const config = require('../../constants/Bot/config.json');
 const axios = require('axios');
@@ -31,8 +31,8 @@ module.exports = {
 		}
 
 		// get uuid from mentioned ign here
-		axios.get(`https://some-random-api.ml/mc?username=${scammerIGN}`).then(async (res) => {
-			const uuid = res.data.uuid;
+		axios.get(`https://some-random-api.ml/mc?username=${scammerIGN}`).then(async res => {
+			const { uuid } = res.data;
 
 			const collection = mclient.db('Sky-Bot').collection('Scammers');
 
@@ -40,9 +40,9 @@ module.exports = {
 				{ _id: uuid },
 				{
 					$set: {
-						scammerIGN: scammerIGN,
-						scamPROOF: scamPROOF,
-						scamREASON: scamREASON,
+						scammerIGN,
+						scamPROOF,
+						scamREASON,
 					},
 				},
 				{ upsert: true }
@@ -57,7 +57,7 @@ module.exports = {
 			await message.channel.send({ embeds: [sucEmbed] });
 			await client.channels
 				.fetch(config.scamlog)
-				.then((channel) => channel.send({ embeds: sucEmbed }))
+				.then(channel => channel.send({ embeds: sucEmbed }))
 				.catch(console.error);
 		});
 	},

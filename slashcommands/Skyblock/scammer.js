@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const axios = require('axios');
 const sbz = require('../../constants/Skyblock/sbz.json');
-const urii = process.env['uri'];
+const urii = process.env.uri;
 
 module.exports = {
 	name: 'Scammer',
@@ -24,7 +24,7 @@ module.exports = {
 			embeds: [waitembed],
 		});
 
-		axios.get(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(async (res) => {
+		axios.get(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(async res => {
 			const uuid = res.data.id;
 
 			if (uuid === undefined) {
@@ -38,7 +38,7 @@ module.exports = {
 			if (res.status != 200) {
 				const apierror = new Discord.MessageEmbed()
 					.setDescription(
-						`An Error has occured this is usually due to the API being overloaded or something going wrong pls try again in a minute.`
+						'An Error has occured this is usually due to the API being overloaded or something going wrong pls try again in a minute.'
 					)
 					.setColor('ORANGE');
 				waitingembed.edit({ embeds: [apierror] });
@@ -46,7 +46,7 @@ module.exports = {
 			}
 
 			const collection = mclient.db('Sky-Bot').collection('Scammers');
-			let found = await collection.findOne({ _id: uuid });
+			const found = await collection.findOne({ _id: uuid });
 
 			if (found) {
 				const sbembed = new Discord.MessageEmbed()
@@ -62,7 +62,6 @@ module.exports = {
 					.setColor('RED')
 					.setFooter('Powered by the Sky Bot Scammer Database');
 				waitingembed.edit({ embeds: [sbembed] });
-				return;
 			} else if (sbz[uuid]) {
 				const sbzembed = new Discord.MessageEmbed()
 					.setAuthor(
@@ -72,12 +71,11 @@ module.exports = {
 					)
 					.setTitle('⚠️USER IS A SCAMMER⚠️')
 					.setDescription(
-						`**DON\'T TRADE WITH THAT USER**\n\n**IGN:** ${ign}\n**Reason:** ${sbz[uuid]['reason']}\n**UUID:** ${uuid}`
+						`**DON\'T TRADE WITH THAT USER**\n\n**IGN:** ${ign}\n**Reason:** ${sbz[uuid].reason}\n**UUID:** ${uuid}`
 					)
 					.setColor('RED')
 					.setFooter('Powered by the SkyblockZ Scammer Database');
 				waitingembed.edit({ embeds: [sbzembed] });
-				return;
 			} else {
 				const innocent = new Discord.MessageEmbed()
 					.setAuthor(
@@ -86,7 +84,7 @@ module.exports = {
 						`https://de.namemc.com/profile/${ign}`
 					)
 					.setTitle('<a:yes:847468695772987423> USER IS INNOCENT')
-					.setDescription(`Still be careful when trading with anyone!`)
+					.setDescription('Still be careful when trading with anyone!')
 					.setColor('GREEN');
 				waitingembed.edit({ embeds: [innocent] });
 			}

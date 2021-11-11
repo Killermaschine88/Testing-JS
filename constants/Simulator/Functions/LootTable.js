@@ -31,7 +31,7 @@ class LootTable {
 	 */
 	removeItem(itemName) {
 		for (const item of this.table) {
-			this.table = this.table.filter((item) => item.name !== itemName);
+			this.table = this.table.filter(item => item.name !== itemName);
 		}
 	}
 
@@ -42,12 +42,12 @@ class LootTable {
 	roll(magicFind = 0) {
 		if (this.table.length === 0) return null;
 
-		let totalWeight = 0;
-		let calcWeights = [];
+		let totalWeight = 0,
+		 calcWeights = [];
 		for (const item of this.table) {
 			let itemWeight = item.weight;
 			if (item.rare) {
-				itemWeight = itemWeight * (1 + magicFind / 100);
+				itemWeight *= 1 + magicFind / 100;
 			}
 
 			totalWeight += itemWeight;
@@ -55,8 +55,8 @@ class LootTable {
 		}
 
 		const randomNum = Math.floor(Math.random() * totalWeight + 1);
-		let weightCheck = totalWeight;
-		let choice;
+		let weightCheck = totalWeight,
+		 choice;
 
 		for (let i = 0; i < calcWeights.length; i++) {
 			weightCheck -= calcWeights[i];

@@ -10,23 +10,23 @@ module.exports = {
 	aliases: ['sbgrind', 'sbf', 'sbg'],
 	cooldown: 5,
 	async execute(interaction, mclient) {
-		//Getting Info from Database
+		// Getting Info from Database
 		const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: interaction.user.id });
+		const player = await collection.findOne({ _id: interaction.user.id });
 
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription('Create a Profile using `/sb start`');
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
-		//Shorts for some Values
-		let location = player.data.misc.location;
-		let mf = player.data.skills.magic_find;
-		let areas = [
+		// Shorts for some Values
+		const { location } = player.data.misc;
+		const mf = player.data.skills.magic_find;
+		const areas = [
 			'Graveyard',
 			'Ruins',
 			'Highlevel',
@@ -41,7 +41,7 @@ module.exports = {
 			'Void Supelture',
 		];
 
-		//Check if Player is at valid Combat Area
+		// Check if Player is at valid Combat Area
 		if (!areas.includes(location)) {
 			const badarea = new Discord.MessageEmbed()
 				.setTitle('Invalid Combat Area')
@@ -60,12 +60,12 @@ module.exports = {
 
 		const menu = await interaction.editReply({ embeds: [start] });
 
-		//Settings a small wait time for "find Mobs"
+		// Settings a small wait time for "find Mobs"
 		sleep(2000);
 
-		//Failing to Find Mobs
-		let findmobs = Math.floor(Math.random() * (15 - 1) + 1);
-		let rolledmobs = Math.floor(Math.random() * (15 - 1) + 1);
+		// Failing to Find Mobs
+		const findmobs = Math.floor(Math.random() * (15 - 1) + 1);
+		const rolledmobs = Math.floor(Math.random() * (15 - 1) + 1);
 
 		if (findmobs === rolledmobs) {
 			const nomobsfound = new Discord.MessageEmbed()
@@ -76,18 +76,18 @@ module.exports = {
 			return;
 		}
 
-		//Amount of Mobs being killed
-		let mobkills = Math.floor(Math.random() * (4 - 1) + 1);
+		// Amount of Mobs being killed
+		const mobkills = Math.floor(Math.random() * (4 - 1) + 1);
 
-		//Normal Drops
-		let amount = Math.floor(Math.random() * (3 - 1) + 1);
-		let mobdrop = '';
+		// Normal Drops
+		const amount = Math.floor(Math.random() * (3 - 1) + 1);
+		let img = '',
 
-		//Some Variables needed
-		let mob = '';
-		let img = '';
+			// Some Variables needed
+		 mob = '',
+		 mobdrop = '';
 
-		//Deciding Mob Name, Drops, Image
+		// Deciding Mob Name, Drops, Image
 		if (location === 'Graveyard') {
 			mob = ['Zombie', 'Zombie Villager', 'Crypt Ghoul'];
 			mobdrop = lt.zombie.roll(mf);
@@ -138,16 +138,16 @@ module.exports = {
 			img = 'https://cdn.discordapp.com/attachments/841757730887827497/865215776332185630/unknown.png';
 		}
 
-		//Add Normal Drops
+		// Add Normal Drops
 		if (mobdrop != undefined) {
 			const updatePlayer = addItems(mobdrop, amount, player);
 
 			await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
 		}
 
-		//Deciding Mob Name that gets killed
-		let mobname = mob[Math.floor(Math.random() * mob.length)];
-		let combatxp = Math.floor(Math.random() * (100 - 50) + 50);
+		// Deciding Mob Name that gets killed
+		const mobname = mob[Math.floor(Math.random() * mob.length)];
+		const combatxp = Math.floor(Math.random() * (100 - 50) + 50);
 
 		await collection.updateOne(
 			{ _id: interaction.user.id },
@@ -161,7 +161,7 @@ module.exports = {
 		}
 		endembed.setColor('90EE90');
 
-		let imgShown = player.data.settings.imgshown ? 'disable' : 'enable';
+		const imgShown = player.data.settings.imgshown ? 'disable' : 'enable';
 		endembed.setFooter(
 			`Skyblock Simulator\nIf you wish to ${imgShown} a picture of the area being shown, use /sb settings img`
 		);
@@ -193,7 +193,7 @@ function addItems(mobdrop, amount, player) {
 	if (player.data.inventory.items.length === 0) {
 		player.data.inventory.items.push({
 			name: mobdrop,
-			amount: amount,
+			amount,
 		});
 		return player;
 	}
@@ -207,7 +207,7 @@ function addItems(mobdrop, amount, player) {
 
 	player.data.inventory.items.push({
 		name: mobdrop,
-		amount: amount,
+		amount,
 	});
 	return player;
 }

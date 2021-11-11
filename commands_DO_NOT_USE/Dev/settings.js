@@ -12,11 +12,11 @@ module.exports = {
 		if (message.author.id !== config.ownerID) return message.channel.send("Can't use this!");
 
 		const collection = mclient.db('Sky-Bot').collection('settings');
-		let settings = await collection.find({ _id: client.user.id });
+		const settings = await collection.find({ _id: client.user.id });
 
-		let setting = args[0];
-		let state = args[1];
-		let reason = args.slice(2).join(' ');
+		const setting = args[0];
+		let state = args[1],
+		 reason = args.slice(2).join(' ');
 
 		if (!setting || !state) return message.channel.send('No input for setting or State.');
 
@@ -30,7 +30,7 @@ module.exports = {
 			reason = 'Important Bug Fixes';
 		}
 
-		/*await collection.updateOne(
+		/* await collection.updateOne(
       { _id: client.user.id },
       { $set: {
       maintanance: {

@@ -58,7 +58,7 @@ const TYPES = {
  * @param {*} type Leaderboard Type
  * @returns A specific leaderboard type
  */
-const GetType = (type) => {
+const GetType = type => {
 	switch (type) {
 		case TYPES.COINS.value: {
 			return TYPES.COINS;

@@ -14,7 +14,7 @@ module.exports = {
 		const collection = mclient.db('SkyblockSim').collection('Main');
 		const found1 = await collection.find({}).sort({ coins: -1 }).toArray();
 		const k = await collection.find({}).sort({ tkills: -1 }).toArray();
-		//Skill XP Leaderboard
+		// Skill XP Leaderboard
 		const mining1 = await collection.find({}).sort({ mining: -1 }).toArray();
 		const foraging1 = await collection.find({}).sort({ foraging: -1 }).toArray();
 		const enchanting1 = await collection.find({}).sort({ enchanting: -1 }).toArray();
@@ -41,7 +41,7 @@ module.exports = {
 			)
 			.addField('\u200b', '\u200b', true)
 
-			//Skill XP Leaderboard
+			// Skill XP Leaderboard
 			.addField(
 				'<:mining:852069714577719306> Mining XP',
 				`1st <@${mining1[0]._id}>: ${mining1[0].mining}\n2nd <@${mining1[1]._id}>: ${mining1[1].mining}\n3rd <@${mining1[2]._id}>: ${mining1[2].mining}\n4th <@${mining1[3]._id}>: ${mining1[3].mining}\n5th <@${mining1[4]._id}>: ${mining1[4].mining}`,

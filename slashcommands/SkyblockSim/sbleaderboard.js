@@ -19,7 +19,7 @@ module.exports = {
 			.setMaxValues(1)
 			.setMinValues(1);
 
-		let data = [];
+		const data = [];
 
 		// Fill the selectbox with types
 		for (const [key, value] of Object.entries(TYPES)) {
@@ -33,7 +33,7 @@ module.exports = {
 		leaderSelect.addOptions(data);
 		leaderRow.addComponents(leaderSelect);
 
-		let embed = new Discord.MessageEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setTitle('Leaderboard')
 			.setDescription('Choose the Leaderboard you want to see from the Select Menu.')
 			.setFooter('Skyblock Simulator');
@@ -45,24 +45,24 @@ module.exports = {
 
 		// Wait for a selectbox option to be chosen and then
 		// send a leaderboard of the selected type
-		const filter = (i) => i.customId === 'leaderSelect' && i.user.id === interaction.user.id;
+		const filter = i => i.customId === 'leaderSelect' && i.user.id === interaction.user.id;
 		const leaderCollector = await interaction.channel.createMessageComponentCollector({
 			filter,
 			componentType: 'SELECT_MENU',
 			time: 300000,
 		});
 
-		leaderCollector.on('collect', async (collectedTypeInteraction) => {
+		leaderCollector.on('collect', async collectedTypeInteraction => {
 			type = GetType(collectedTypeInteraction.values[0]);
 
 			// Get the collection values sorted by the selected type
-			let lbCol = await eval(`collection.find({}).sort({ "${type.data}": -1 }).toArray()`);
+			const lbCol = await eval(`collection.find({}).sort({ "${type.data}": -1 }).toArray()`);
 
-			let lbString = '';
-			let index = lbCol.findIndex((lb) => lb._id == interaction.user.id);
+			let lbString = '',
+			 index = lbCol.findIndex(lb => lb._id == interaction.user.id),
 
-			// Build a string showing the values of selected type
-			let i = 0;
+				// Build a string showing the values of selected type
+			 i = 0;
 			while (i < lbCol.length && i < 10) {
 				lbString += `#${i + 1} - <@!${lbCol[i]._id}>: ${eval(`lbCol[i].${type.data}.toLocaleString()`)}\n`;
 				i++;
@@ -75,7 +75,7 @@ module.exports = {
 			await collectedTypeInteraction.update({ embeds: [embed] });
 		});
 
-		leaderCollector.on('end', async (collected) => {
+		leaderCollector.on('end', async collected => {
 			const reply = await interaction.fetchReply();
 			reply.delete();
 		});

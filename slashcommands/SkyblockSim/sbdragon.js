@@ -12,13 +12,13 @@ module.exports = {
 		return interaction.editReply({ content: 'not added yet' });
 
 		const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: interaction.user.id });
+		const player = await collection.findOne({ _id: interaction.user.id });
 
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription('Create a Profile using `/sb start`');
 
 			interaction.editReply({ embeds: [noprofile] });
 			return;
@@ -37,15 +37,15 @@ module.exports = {
 			return;
 		}
 
-		let inv = player.data.inventory.items;
-		const eyes = inv.find((item) => item.name === 'Summoning Eye');
+		const inv = player.data.inventory.items;
+		const eyes = inv.find(item => item.name === 'Summoning Eye');
 
 		if (eyes === undefined || eyes.amount < 2) {
 			const noeyes = new Discord.MessageEmbed()
 				.setTitle('Not enough Summoning Eyes')
 				.setColor('RED')
 				.setDescription(
-					`You don\'t have enough Summoning Eyes to fight a Dragon.\nYou need at least **2 Summoning Eyes** to fight a Dragon\nTo get **Summoning Eyes** use /sb warp Area Dragon\'s Nest to farm them`
+					'You don\'t have enough Summoning Eyes to fight a Dragon.\nYou need at least **2 Summoning Eyes** to fight a Dragon\nTo get **Summoning Eyes** use /sb warp Area Dragon\'s Nest to farm them'
 				);
 
 			interaction.editReply({ embeds: [noeyes] });
@@ -61,18 +61,18 @@ module.exports = {
 
 		await sleep(3000);
 
-		//Drop Calculations
-		let rn = Math.floor(Math.random() * (15 - 1) + 1);
+		// Drop Calculations
+		const rn = Math.floor(Math.random() * (15 - 1) + 1);
 
-		let helmrn = Math.floor(Math.random() * (10 - 1) + 1);
-		let cprn = Math.floor(Math.random() * (15 - 1) + 1);
-		let legsrn = Math.floor(Math.random() * (10 - 1) + 1);
-		let bootsrn = Math.floor(Math.random() * (10 - 1) + 1);
-		let fragsamount = Math.floor(Math.random() * (15 - 3) + 3);
+		const helmrn = Math.floor(Math.random() * (10 - 1) + 1);
+		const cprn = Math.floor(Math.random() * (15 - 1) + 1);
+		const legsrn = Math.floor(Math.random() * (10 - 1) + 1);
+		const bootsrn = Math.floor(Math.random() * (10 - 1) + 1);
+		const fragsamount = Math.floor(Math.random() * (15 - 3) + 3);
 
-		//Dragon Name Decision
-		let dragonnames = ['Protector', 'Old', 'Wise', 'Unstable', 'Young', 'Strong', 'Superior'];
-		let dragname = dragonnames[Math.floor(Math.random() * dragonnames.length)];
+		// Dragon Name Decision
+		const dragonnames = ['Protector', 'Old', 'Wise', 'Unstable', 'Young', 'Strong', 'Superior'];
+		const dragname = dragonnames[Math.floor(Math.random() * dragonnames.length)];
 		let loot = '';
 
 		const spawned = new Discord.MessageEmbed()
@@ -84,9 +84,9 @@ module.exports = {
 
 		await sleep(5000);
 
-		//Drag Pet Drop
-		let dragonpetrn = Math.floor(Math.random() * (50000 - 1) + 1);
-		let dragrn = Math.floor(Math.random() * (50000 - 1) + 1);
+		// Drag Pet Drop
+		const dragonpetrn = Math.floor(Math.random() * (50000 - 1) + 1);
+		const dragrn = Math.floor(Math.random() * (50000 - 1) + 1);
 
 		if (helmrn === rn) loot = 'Helmet';
 		else if (cprn === rn) loot = 'Chestplate';
@@ -94,12 +94,12 @@ module.exports = {
 		else if (bootsrn === rn) loot = 'Boots';
 		else loot = 'Fragments';
 
-		//Dragon Earned Calc
-		let helm = 200000;
-		let chest = 500000;
-		let legs = 350000;
-		let boots = 200000;
-		let frags = 10000;
+		// Dragon Earned Calc
+		const helm = 200000;
+		const chest = 500000;
+		const legs = 350000;
+		const boots = 200000;
+		const frags = 10000;
 		let price = 0;
 
 		if (loot === 'Helmet') price = helm;
@@ -118,10 +118,10 @@ module.exports = {
 		else if (dragname === 'Strong') multi = 2.5;
 		else if (dragname === 'Superior') multi = 4;
 
-		let earned = price * multi;
+		const earned = price * multi;
 
-		let amount = 2;
-		let dropped = 'Summoning Eye';
+		const amount = 2;
+		const dropped = 'Summoning Eye';
 
 		const updatePlayer = addItem(dropped, amount, player);
 
@@ -159,7 +159,7 @@ module.exports = {
 };
 
 function sleep(ms) {
-	return new Promise((resolve) => setTimeout(() => resolve(), ms));
+	return new Promise(resolve => setTimeout(() => resolve(), ms));
 }
 
 function addItem(dropped, amount, player) {
@@ -168,7 +168,7 @@ function addItem(dropped, amount, player) {
 	if (player.data.inventory.items.length === 0) {
 		player.data.inventory.items.push({
 			name: dropped,
-			amount: amount,
+			amount,
 		});
 		return player;
 	}
@@ -182,7 +182,7 @@ function addItem(dropped, amount, player) {
 
 	player.data.inventory.items.push({
 		name: dropped,
-		amount: amount,
+		amount,
 	});
 	return player;
 }

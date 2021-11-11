@@ -12,13 +12,13 @@ module.exports = {
 	cooldown: 15,
 	async execute(interaction, mclient) {
 		const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: interaction.user.id });
+		const player = await collection.findOne({ _id: interaction.user.id });
 
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription('Create a Profile using `/sb start`');
 			return interaction.editReply({ embeds: [noprofile] });
 		}
 
@@ -31,17 +31,17 @@ module.exports = {
 			return interaction.editReply({ embeds: [nosell] });
 		}
 
-		let sellall = interaction.options.getString('sell-all');
-		let sellallcoins = 0;
-		let sellallitems = 0;
+		const sellall = interaction.options.getString('sell-all');
+		let sellallcoins = 0,
+		 sellallitems = 0,
 
-		let b4embed = new Discord.MessageEmbed()
-			.setTitle('Started Selling all Items')
-			.setColor('GREEN')
-			.setFooter('Skyblock Simulator');
+		 b4embed = new Discord.MessageEmbed()
+				.setTitle('Started Selling all Items')
+				.setColor('GREEN')
+				.setFooter('Skyblock Simulator');
 		interaction.editReply({ embeds: [b4embed] });
 
-		let date1 = Date.now();
+		const date1 = Date.now();
 
 		if (sellall == 'yes') {
 			await collection.updateOne({ _id: interaction.user.id }, { $set: { 'data.misc.is_massselling': true } });
@@ -60,12 +60,12 @@ module.exports = {
 							words[i] = words[i][0].toUpperCase() + words[i].substr(1);
 						}
 
-						let sellitem = words.join(' ');
-						let earned = price * item.amount;
+						const sellitem = words.join(' ');
+						const earned = price * item.amount;
 
 						await collection.updateOne(
 							{
-								_id: interaction.user.id,
+								'_id': interaction.user.id,
 								'data.inventory.items.name': sellitem,
 							},
 							{
@@ -88,16 +88,16 @@ module.exports = {
 							words[i] = words[i][0].toUpperCase() + words[i].substr(1);
 						}
 
-						let sellitem = words.join(' ');
+						const sellitem = words.join(' ');
 
 						price = getPrice(sellitem);
 						price = Number(price);
 
-						let earned = price * item.amount;
+						const earned = price * item.amount;
 
 						await collection.updateOne(
 							{
-								_id: interaction.user.id,
+								'_id': interaction.user.id,
 								'data.inventory.items.name': sellitem,
 							},
 							{
@@ -115,15 +115,15 @@ module.exports = {
 					}
 				}
 			}
-			let date2 = Date.now();
+			const date2 = Date.now();
 			let taken = date2 - date1;
 			if (taken < 1000) {
-				taken = taken + ' ms';
+				taken += ' ms';
 			} else if (taken < 10000) {
-				taken = taken / 1000 + ' s';
+				taken = `${taken / 1000} s`;
 			}
 			await collection.updateOne({ _id: interaction.user.id }, { $set: { 'data.misc.is_massselling': false } });
-			let embed = new Discord.MessageEmbed()
+			const embed = new Discord.MessageEmbed()
 				.setTitle('Sell All Finished')
 				.setColor('90EE90')
 				.setFooter('Skyblock Simulator')
@@ -131,14 +131,14 @@ module.exports = {
 			return interaction.editReply({ embeds: [embed] });
 		}
 
-		//Variables for Checks
-		let amount = interaction.options.getInteger('amount');
-		let price = '';
+		// Variables for Checks
+		const amount = interaction.options.getInteger('amount');
+		let price = '',
 
-		let bzname = interaction.options.getString('item').split(' ');
+		 bzname = interaction.options.getString('item').split(' ');
 		bzname = bzname.join('_').toUpperCase();
 
-		let input = interaction.options.getString('item');
+		const input = interaction.options.getString('item');
 		const words = input.split(' ');
 
 		for (let i = 0; i < words.length; i++) {
@@ -147,11 +147,11 @@ module.exports = {
 
 		let sellitem = words.join(' ');
 
-		const founditem = player.data.inventory.items.find((item) => item.name == sellitem);
-		const itemindex = player.data.inventory.items.findIndex((item) => item.name === sellitem);
+		const founditem = player.data.inventory.items.find(item => item.name == sellitem);
+		const itemindex = player.data.inventory.items.findIndex(item => item.name === sellitem);
 
 		if (founditem === undefined) {
-			let invaliditemembed = new Discord.MessageEmbed()
+			const invaliditemembed = new Discord.MessageEmbed()
 				.setTitle('Invalid Item Name')
 				.setColor('RED')
 				.setDescription(`\`${sellitem}\` isn't a valid item name.`)
@@ -169,17 +169,17 @@ module.exports = {
 			return interaction.editReply({ embeds: [embed] });
 		}
 
-		//Check if more than 1 of said item exists
+		// Check if more than 1 of said item exists
 		if (founditem === undefined || founditem.amount === 0) {
 			const noitems = new Discord.MessageEmbed()
 				.setFooter('Skyblock Simulator')
 				.setColor('RED')
-				.setDescription(`You don\'t have enough Items to be sold.`);
+				.setDescription('You don\'t have enough Items to be sold.');
 			interaction.editReply({ embeds: [noitems] });
 			return;
 		}
 
-		//Check if a Number higher than the owned Amount is enterd
+		// Check if a Number higher than the owned Amount is enterd
 		if (founditem.amount < amount) {
 			const littleitems = new Discord.MessageEmbed()
 				.setFooter('Skyblock Simulator')
@@ -191,8 +191,8 @@ module.exports = {
 			return;
 		}
 
-		//Get Price for the Item and Calculate earned coins
-		let data = await getPrice1(bzname);
+		// Get Price for the Item and Calculate earned coins
+		const data = await getPrice1(bzname);
 
 		if (data.error) {
 			price = await getPrice(sellitem);
@@ -200,16 +200,16 @@ module.exports = {
 			price = Math.floor(data.quick_status.sellPrice);
 			sellitem = data.name;
 		}
-		let earnedcoins = price * amount;
+		const earnedcoins = price * amount;
 
-		//Add Coins and remove Items
+		// Add Coins and remove Items
 		if (earnedcoins) {
 			//  const updatePlayer = addItem(sellitem, amount, player)
 			//  console.log(amount)
 
 			await collection.updateOne(
 				{
-					_id: interaction.user.id,
+					'_id': interaction.user.id,
 					'data.inventory.items.name': sellitem,
 				},
 				{ $inc: { 'data.inventory.items.$.amount': -amount } }
@@ -221,8 +221,8 @@ module.exports = {
         { upsert: true }
       )*/
 
-			//Remove Item if 0
-			/*if (founditem.amount == 0) {
+			// Remove Item if 0
+			/* if (founditem.amount == 0) {
         let removeItem = updateItem(player, itemindex)
 
         await collection.replaceOne(
@@ -244,7 +244,6 @@ module.exports = {
 					`Successfully sold **${amount}x ${sellitem}** for **${earnedcoins.toLocaleString()} Coins**`
 				);
 			interaction.editReply({ embeds: [sold] });
-			return;
 		}
 	},
 };
@@ -255,7 +254,7 @@ function addItem(sellitem, amount, player) {
 	if (player.data.inventory.items.length === 0) {
 		player.data.inventory.items.push({
 			name: sellitem,
-			amount: amount,
+			amount,
 		});
 		return player;
 	}
@@ -269,14 +268,14 @@ function addItem(sellitem, amount, player) {
 
 	player.data.inventory.items.push({
 		name: sellitem,
-		amount: amount,
+		amount,
 	});
 	return player;
 }
 
 function getPrice(sellitem) {
-	const itemprice = list.filter((item) => item.name == sellitem);
-	//console.log(itemprice)
+	const itemprice = list.filter(item => item.name == sellitem);
+	// console.log(itemprice)
 	price = itemprice[0].price;
 	return price;
 }

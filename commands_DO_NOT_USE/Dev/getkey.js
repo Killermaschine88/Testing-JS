@@ -3,8 +3,8 @@ const fs = require('fs');
 const old = require('../../constants/Bot/config.json');
 const over = require('../../launcher_accounts.json');
 const mineflayer = require('mineflayer');
-const email = process.env['email'];
-const pass = process.env['pass'];
+const { email } = process.env;
+const { pass } = process.env;
 
 module.exports = {
 	name: 'Getkey',
@@ -30,7 +30,7 @@ module.exports = {
 			bot.chat('/api new');
 		});
 
-		bot.on('message', async (message) => {
+		bot.on('message', async message => {
 			if (message.text === 'Your new API key is ') {
 				old.apikey = message.extra[0].text;
 				fs.writeFileSync('/home/runner/Testing-JS/constants/Bot/config.json', JSON.stringify(old));

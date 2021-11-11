@@ -10,10 +10,10 @@ module.exports = {
 	cooldown: 10,
 	async execute(interaction, mclient) {
 		const collection = mclient.db('SkyblockSim').collection('events');
-		let events = await collection.find({}).toArray();
+		const events = await collection.find({}).toArray();
 
-		let mf_event = events[0];
-		let shark_event = events[1];
+		const mf_event = events[0];
+		const shark_event = events[1];
 
 		const embed = new Discord.MessageEmbed()
 			.setTitle('Skyblock Simulator Wiki')
@@ -21,22 +21,28 @@ module.exports = {
 			.setFooter('Skyblock Simulator')
 			.setDescription('Press the corresponding Button to see the Information of the desired Item.');
 
-		const button1 = new Discord.MessageButton().setCustomId('general').setLabel('General Info').setStyle('PRIMARY');
-		const button2 = new Discord.MessageButton().setCustomId('symbols').setLabel('Symbols').setStyle('PRIMARY');
-		const button3 = new Discord.MessageButton().setCustomId('misc').setLabel('Misc').setStyle('PRIMARY');
-		const button4 = new Discord.MessageButton().setCustomId('events').setLabel('Events').setStyle('PRIMARY');
-		const button5 = new Discord.MessageButton().setCustomId('dungeons').setLabel('Dungeons').setStyle('PRIMARY');
-		const button6 = new Discord.MessageButton().setCustomId('reforges').setLabel('Reforges').setStyle('PRIMARY');
+		const button1 = new Discord.MessageButton().setCustomId('general').setLabel('General Info')
+			.setStyle('PRIMARY');
+		const button2 = new Discord.MessageButton().setCustomId('symbols').setLabel('Symbols')
+			.setStyle('PRIMARY');
+		const button3 = new Discord.MessageButton().setCustomId('misc').setLabel('Misc')
+			.setStyle('PRIMARY');
+		const button4 = new Discord.MessageButton().setCustomId('events').setLabel('Events')
+			.setStyle('PRIMARY');
+		const button5 = new Discord.MessageButton().setCustomId('dungeons').setLabel('Dungeons')
+			.setStyle('PRIMARY');
+		const button6 = new Discord.MessageButton().setCustomId('reforges').setLabel('Reforges')
+			.setStyle('PRIMARY');
 
 		const row1 = new Discord.MessageActionRow().addComponents(button1, button2, button4, button5);
 		const row2 = new Discord.MessageActionRow().addComponents(button6);
 
-		let menu = await interaction.editReply({
+		const menu = await interaction.editReply({
 			embeds: [embed],
 			components: [row1, row2],
 		});
 
-		const filter = (i) => {
+		const filter = i => {
 			i.deferUpdate();
 			return i.user.id === interaction.user.id;
 		};
@@ -47,7 +53,7 @@ module.exports = {
 			time: 858000,
 		});
 
-		collector.on('collect', async (i) => {
+		collector.on('collect', async i => {
 			if (i.customId == 'general') {
 				const generalembed = new Discord.MessageEmbed()
 					.setTitle('General Information')
@@ -69,39 +75,39 @@ module.exports = {
 
 				menu.edit({ embeds: [symbolembed] });
 			} else if (i.customId == 'events') {
-				let time = Date.now() / 1000;
+				const time = Date.now() / 1000;
 
-				let eventembed = new Discord.MessageEmbed();
+				const eventembed = new Discord.MessageEmbed();
 				eventembed.setTitle('Event Information');
 				eventembed.setColor('90EE90');
 				eventembed.setFooter('Skyblock Simulator');
 				if (mf_event.enabled == false) {
 					eventembed.addField(
-						`Magic Find`,
+						'Magic Find',
 						`Everyday from 6:00 - 8:00 (6 am - 8 am) and 16:00 - 18:00 (4:00 pm - 6:00 pm)\nEvent Active: ${mf_event.enabled}\nNext Event: <t:${mf_event.next_event}:R>`
 					);
 				} else {
 					eventembed.addField(
-						`Magic Find`,
+						'Magic Find',
 						`Everyday from 6:00 - 8:00 (6 am - 8 am) and 16:00 - 18:00 (4:00 pm - 6:00 pm)\nEvent Active: ${mf_event.enabled}\nEvent End: <t:${mf_event.end_event}:R>`
 					);
 				}
 
 				if (shark_event.enabled == false) {
 					eventembed.addField(
-						`Shark Fishing`,
+						'Shark Fishing',
 						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 19:00 - 21:00 (7:00 pm - 9:00 pm)\nEvent Active: ${shark_event.enabled}\nNext Event: <t:${shark_event.next_event}:R>`
 					);
 				} else {
 					eventembed.addField(
-						`Shark Fishing`,
+						'Shark Fishing',
 						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 19:00 - 21:00 (7:00 pm - 9:00 pm)\nEvent Active: ${shark_event.enabled}\nEvent End: <t:${shark_event.end_event}:R>`
 					);
 				}
 
 				menu.edit({ embeds: [eventembed] });
 			} else if (i.customId == 'dungeons') {
-				let dungeonsembed = new Discord.MessageEmbed()
+				const dungeonsembed = new Discord.MessageEmbed()
 					.setTitle('Dungeons Information')
 					.setColor('90EE90')
 					.setFooter('Skyblock Simulator')
@@ -129,7 +135,7 @@ module.exports = {
 
 				menu.edit({ embeds: [dungeonsembed] });
 			} else if (i.customId == 'reforges') {
-				let reforgeembed = new Discord.MessageEmbed()
+				const reforgeembed = new Discord.MessageEmbed()
 					.setTitle('Reforge Information')
 					.setColor('90EE90')
 					.setFooter('Skyblock Simulator')

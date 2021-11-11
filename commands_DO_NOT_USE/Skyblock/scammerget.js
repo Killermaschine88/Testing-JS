@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const axios = require('axios');
 const sbz = require('../../constants/Skyblock/sbz.json');
-const urii = process.env['uri'];
+const urii = process.env.uri;
 const config = require('../../constants/Bot/config.json');
 
 module.exports = {
@@ -28,22 +28,21 @@ module.exports = {
 			message.channel.send('Please enter a Username to check.');
 			return;
 		}
-		axios.get(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(async (res) => {
+		axios.get(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(async res => {
 			const uuid = res.data.id;
 
 			message.react('<a:wait:847471618272002059>');
 
 			const ign = args[0];
 			const collection = mclient.db('Sky-Bot').collection('Scammers');
-			let found = await collection.findOne({ _id: uuid });
+			const found = await collection.findOne({ _id: uuid });
 
 			if (found === null) {
 				const notfound = new Discord.MessageEmbed()
 					.setTitle('Nothing Found')
-					.setDescription(`No Data found for that User in Skybots Database.}`)
+					.setDescription('No Data found for that User in Skybots Database.}')
 					.setColor('GREY');
 				message.channel.send({ embeds: [notfound] });
-				return;
 			} else {
 				const sbembed = new Discord.MessageEmbed()
 					.setAuthor(
@@ -57,7 +56,6 @@ module.exports = {
 					)
 					.setColor('BLACK');
 				message.channel.send({ embeds: [sbembed] });
-				return;
 			}
 		});
 	},

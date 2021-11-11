@@ -2,10 +2,10 @@ const Discord = require('discord.js');
 const pms = require('pretty-ms');
 const prefix = require('@replit/database');
 const prefixx = new prefix();
-let osu = require('node-os-utils');
-let cpu = osu.cpu;
-let mem = osu.mem;
-let drive = osu.drive;
+const osu = require('node-os-utils');
+const { cpu } = osu;
+const { mem } = osu;
+const { drive } = osu;
 
 module.exports = {
 	name: 'Info',
@@ -15,14 +15,14 @@ module.exports = {
 	folder: 'Bot',
 	aliases: [],
 	async execute(client, message, args) {
-		//System Info
-		let usage = await cpu.usage();
-		let model = await cpu.model();
+		// System Info
+		const usage = await cpu.usage();
+		const model = await cpu.model();
 
-		let memory = await mem.info();
-		let cores = await cpu.count();
+		const memory = await mem.info();
+		const cores = await cpu.count();
 
-		let driver = await drive.info();
+		const driver = await drive.info();
 
 		const infoembed = new Discord.MessageEmbed()
 			.setTitle('Bot Info')

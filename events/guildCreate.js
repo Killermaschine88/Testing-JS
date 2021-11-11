@@ -4,19 +4,17 @@ const config = require('../constants/Bot/config.json');
 module.exports = {
 	name: 'guildCreate',
 	execute(guild, client) {
-		let targetguild = client.guilds.cache.get(guild.id);
-		let owner = guild
+		const targetguild = client.guilds.cache.get(guild.id);
+		const owner = guild
 			.fetchOwner()
-			.then((owner) => {
+			.then(owner => {
 				if (config.blacklistedservers.includes(guild.id)) {
 					targetguild.leave();
 					client.channels
 						.fetch(config.blacklistlog)
-						.then((channel) =>
-							channel.send(
-								`The Blacklisted Guild **${guild.name}** with the ID **${guild.id}** tried to add me, so i automatically left their Server.`
-							)
-						);
+						.then(channel => channel.send(
+							`The Blacklisted Guild **${guild.name}** with the ID **${guild.id}** tried to add me, so i automatically left their Server.`
+						));
 
 					return;
 				}
@@ -38,7 +36,7 @@ module.exports = {
 							},
 							{
 								name: 'Bot Count of the Server',
-								value: `${guild.members.cache.filter((u) => u.user.bot).size}`,
+								value: `${guild.members.cache.filter(u => u.user.bot).size}`,
 							},
 							{
 								name: 'Total Server Count Now',
@@ -61,6 +59,6 @@ function discordLog(client, embed) {
 
 	client.channels
 		.fetch(config.joinlog)
-		.then((channel) => channel.send({ embeds: [embed] }))
+		.then(channel => channel.send({ embeds: [embed] }))
 		.catch(console.error);
 }

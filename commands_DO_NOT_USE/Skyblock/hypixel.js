@@ -12,11 +12,9 @@ module.exports = {
 	async execute(client, message, args) {
 		if (!args[0]) {
 			var mcname = message.member.displayName;
-		} else {
-			if (message.mentions.members.first()) {
-				var mcname = message.mentions.members.first().displayName;
-			} else var mcname = args[0];
-		} // Gets IGN
+		} else if (message.mentions.members.first()) {
+			var mcname = message.mentions.members.first().displayName;
+		} else var mcname = args[0]; // Gets IGN
 
 		mcname = mcname.replace(/\W/g, ''); // removes weird characters
 
@@ -29,33 +27,33 @@ module.exports = {
 		});
 
 		axios
-			.get(`https://some-random-api.ml/mc?username=${mcname}`) //Minecraft UUID api
-			.then((res) => {
-				var UUID = res.data.uuid;
+			.get(`https://some-random-api.ml/mc?username=${mcname}`) // Minecraft UUID api
+			.then(res => {
+				const UUID = res.data.uuid;
 				delete require.cache[require.resolve('../../config.json')];
 				const config = require('../../config.json');
 				axios
-					.get(`https://api.hypixel.net/player?uuid=${UUID}&key=${config.apikey}`) //General api = network stats
-					.then((resp) => {
+					.get(`https://api.hypixel.net/player?uuid=${UUID}&key=${config.apikey}`) // General api = network stats
+					.then(resp => {
 						const unixFirstLogin = resp.data.player.firstLogin;
-						var firstLogin = new Date(unixFirstLogin).toDateString(); //Should make a date but im not sure LOL
+						const firstLogin = new Date(unixFirstLogin).toDateString(); // Should make a date but im not sure LOL
 						const unixLastLogin = resp.data.player.lastLogin;
-						var lastLogin = new Date(unixLastLogin).toDateString();
-						var displayName = resp.data.player.displayname;
-						let packRank = resp.data.player.newPackageRank;
-						let rank = resp.data.player.rank;
-						let color = resp.data.player.rankPlusColor;
+						const lastLogin = new Date(unixLastLogin).toDateString();
+						const displayName = resp.data.player.displayname;
+						const packRank = resp.data.player.newPackageRank;
+						let { rank } = resp.data.player,
+						 color = resp.data.player.rankPlusColor;
 						if (!color) color = 'RED';
 						if (!rank) rank = resp.data.player.newPackageRank;
 						if (!packRank) rank = 'Default';
-						var rankFixed = rank.replace('_', '').replace('PLUS', '+');
-						var networkExp = resp.data.player.networkExp;
-						var level = Math.sqrt(2 * networkExp + 30625) / 50 - 2.5;
-						var karma = resp.data.player.karma;
+						const rankFixed = rank.replace('_', '').replace('PLUS', '+');
+						const { networkExp } = resp.data.player;
+						const level = Math.sqrt(2 * networkExp + 30625) / 50 - 2.5;
+						const { karma } = resp.data.player;
 						axios
-							.get(`https://api.hypixel.net/status?uuid=${UUID}&key=${config.apikey}`) //Status api checks if player is online
-							.then((response) => {
-								let session = response.data.session.online;
+							.get(`https://api.hypixel.net/status?uuid=${UUID}&key=${config.apikey}`) // Status api checks if player is online
+							.then(response => {
+								const session = response.data.session.online;
 								let emoji = '';
 								if (session === false) emoji = ':red_circle:';
 								if (session === true) emoji = ':green_circle:';
@@ -65,11 +63,11 @@ module.exports = {
 								let gameo = '';
 								if (gametype) gameo = `\nPlaying: ${gametype}`;
 								axios
-									.get(`https://api.hypixel.net/guild?player=${UUID}&key=${config.apikey}`) //Guild api
-									.then((respo) => {
-										let guild = respo.data.guild;
+									.get(`https://api.hypixel.net/guild?player=${UUID}&key=${config.apikey}`) // Guild api
+									.then(respo => {
+										let { guild } = respo.data;
 										if (!guild) {
-											let embed = new Discord.MessageEmbed()
+											const embed = new Discord.MessageEmbed()
 												.setAuthor(
 													displayName,
 													`https://cravatar.eu/helmavatar/${displayName}/600.png`,
@@ -90,7 +88,7 @@ module.exports = {
 													},
 													{
 														name: '**Guild**',
-														value: `Player is not in a guild`,
+														value: 'Player is not in a guild',
 														inline: true,
 													},
 													{
@@ -113,11 +111,11 @@ module.exports = {
 												.setTimestamp();
 										} else if (guild) {
 											guild = '';
-											var guildName = respo.data.guild.name;
+											const guildName = respo.data.guild.name;
 											const unixGuildCreated = respo.data.guild.created;
-											var guildCreated = new Date(unixGuildCreated).toDateString();
+											const guildCreated = new Date(unixGuildCreated).toDateString();
 
-											//Now we have all data so we can make a embed
+											// Now we have all data so we can make a embed
 											var embed = new Discord.MessageEmbed()
 												.setAuthor(
 													displayName,

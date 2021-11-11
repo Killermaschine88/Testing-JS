@@ -11,7 +11,7 @@ module.exports = {
 	aliases: [],
 	cooldown: 10,
 	async execute(client, message, args) {
-		var gprefix = await prefixx.get(message.guild.id, { raw: false });
+		let gprefix = await prefixx.get(message.guild.id, { raw: false });
 		if (gprefix === null) gprefix = '.';
 
 		const guide = new Discord.MessageEmbed()

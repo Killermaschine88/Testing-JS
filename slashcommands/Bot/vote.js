@@ -7,7 +7,7 @@ module.exports = {
 	perms: 'None',
 	folder: 'Bot',
 	aliases: [],
-	execute: (interaction) => {
+	execute: interaction => {
 		const embed = new Discord.MessageEmbed()
 			.setTitle('Important Bot Links')
 			.setColor('fed8b1')

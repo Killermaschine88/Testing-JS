@@ -12,9 +12,9 @@ module.exports = {
 	cooldown: 60,
 	async execute(client, message, args, mclient) {
 		const collection = mclient.db('SkyblockSim').collection('Main');
-		let found = await collection.findOne({ _id: message.author.id });
+		const found = await collection.findOne({ _id: message.author.id });
 
-		var gprefix = await prefixx.get(message.guild.id, { raw: false });
+		let gprefix = await prefixx.get(message.guild.id, { raw: false });
 		if (gprefix === null) gprefix = '.';
 
 		if (found === null) {
@@ -26,7 +26,7 @@ module.exports = {
 			return;
 		}
 
-		let earnedxp = Math.floor(Math.random() * (100 - 1) + 1);
+		const earnedxp = Math.floor(Math.random() * (100 - 1) + 1);
 
 		await collection.updateOne({ _id: message.author.id }, { $inc: { alchemy: earnedxp } }, { upsert: true });
 

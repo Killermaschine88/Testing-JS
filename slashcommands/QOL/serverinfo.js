@@ -7,7 +7,7 @@ module.exports = {
 	perms: 'None',
 	folder: 'QOL',
 	aliases: ['si'],
-	execute: (interaction) => {
+	execute: interaction => {
 		interaction.editReply({
 			embeds: [
 				new Discord.MessageEmbed()

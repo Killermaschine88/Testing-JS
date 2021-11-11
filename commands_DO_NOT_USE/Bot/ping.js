@@ -10,8 +10,8 @@ module.exports = {
 	aliases: [],
 	async execute(client, message, args) {
 		const embed = new Discord.MessageEmbed().setDescription('Pinging . . .');
-		await message.channel.send({ embeds: [embed] }).then((m) => {
-			//Deciding Ping Emoji Shown
+		await message.channel.send({ embeds: [embed] }).then(m => {
+			// Deciding Ping Emoji Shown
 			let ping = '';
 			if (m.createdTimestamp - message.createdTimestamp < 150) {
 				ping = '<:ping:847473419011620955>';

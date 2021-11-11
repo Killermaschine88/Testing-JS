@@ -13,9 +13,9 @@ module.exports = {
 	folder: 'Skyblock',
 	aliases: ['bz'],
 	async execute(interaction) {
-		Object.keys(list).forEach((key) => (list[key].bazaar ? (list2[key] = list[key]) : ''));
+		Object.keys(list).forEach(key => (list[key].bazaar ? (list2[key] = list[key]) : ''));
 
-		var method = 'save';
+		const method = 'save';
 
 		let result = interaction.options.getString('item');
 
@@ -51,8 +51,8 @@ module.exports = {
 			wait.edit({ embeds: [notfound] });
 		}
 
-		//Related Items
-		var related = '';
+		// Related Items
+		let related = '';
 		if (apiData.related === undefined) {
 			related = 'None';
 		} else if (apiData.related.length === 0) {
@@ -73,37 +73,37 @@ module.exports = {
 					)
 					.addFields(
 						{
-							name: `Insta Sell Price`,
+							name: 'Insta Sell Price',
 							value: `${toFixed(apiData.quick_status.sellPrice).toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Sell Offers`,
+							name: 'Amount of Sell Offers',
 							value: `${toFixed(apiData.quick_status.sellOrders).toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Items in Sell Offers`,
+							name: 'Amount of Items in Sell Offers',
 							value: `${apiData.quick_status.sellVolume.toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Insta Buy Price`,
+							name: 'Insta Buy Price',
 							value: `${toFixed(apiData.quick_status.buyPrice).toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Buy Offers`,
+							name: 'Amount of Buy Offers',
 							value: `${toFixed(apiData.quick_status.buyOrders).toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Items in Buy Offers`,
+							name: 'Amount of Items in Buy Offers',
 							value: `${apiData.quick_status.buyVolume.toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Related Items`,
+							name: 'Related Items',
 							value: `${related}`,
 							inline: false,
 						}
@@ -122,6 +122,6 @@ async function getApiData(result) {
 }
 
 function toFixed(num) {
-	var re = new RegExp('^-?\\d+(?:.\\d{0,' + (2 || -1) + '})?');
+	const re = new RegExp(`^-?\\d+(?:.\\d{0,${2 || -1}})?`);
 	return num.toString().match(re)[0];
 }

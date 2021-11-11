@@ -13,9 +13,9 @@ module.exports = {
 	folder: 'Skyblock',
 	aliases: ['bz'],
 	async execute(client, message, args) {
-		Object.keys(list).forEach((key) => (list[key].bazaar ? (list2[key] = list[key]) : ''));
+		Object.keys(list).forEach(key => (list[key].bazaar ? (list2[key] = list[key]) : ''));
 
-		var method = 'save';
+		const method = 'save';
 
 		if (args[0] === undefined) {
 			message.channel.send('Please enter an Item to check.\n**Example:** enchanted gold');
@@ -23,10 +23,10 @@ module.exports = {
 		} else if (args[1] === undefined) {
 			var result = args[0].toUpperCase();
 		} else if (args[2] === undefined) {
-			var iteminput = args[0] + '_' + args[1];
+			const iteminput = `${args[0]}_${args[1]}`;
 			var result = iteminput.toUpperCase();
 		} else if (args[3] === undefined) {
-			var iteminput2 = args[0] + '_' + args[1] + '_' + args[2];
+			const iteminput2 = `${args[0]}_${args[1]}_${args[2]}`;
 			var result = iteminput2.toUpperCase();
 		}
 
@@ -62,8 +62,8 @@ module.exports = {
 			wait.edit({ embeds: [notfound] });
 		}
 
-		//Related Items
-		var related = '';
+		// Related Items
+		let related = '';
 		if (apiData.related === undefined) {
 			related = 'None';
 		} else if (apiData.related.length === 0) {
@@ -84,37 +84,37 @@ module.exports = {
 					)
 					.addFields(
 						{
-							name: `Insta Sell Price`,
+							name: 'Insta Sell Price',
 							value: `${toFixed(apiData.quick_status.sellPrice)}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Sell Offers`,
+							name: 'Amount of Sell Offers',
 							value: `${toFixed(apiData.quick_status.sellOrders)}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Items in Sell Offers`,
+							name: 'Amount of Items in Sell Offers',
 							value: `${apiData.quick_status.sellVolume}`,
 							inline: true,
 						},
 						{
-							name: `Insta Buy Price`,
+							name: 'Insta Buy Price',
 							value: `${toFixed(apiData.quick_status.buyPrice)}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Buy Offers`,
+							name: 'Amount of Buy Offers',
 							value: `${toFixed(apiData.quick_status.buyOrders)}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Items in Buy Offers`,
+							name: 'Amount of Items in Buy Offers',
 							value: `${apiData.quick_status.buyVolume}`,
 							inline: true,
 						},
 						{
-							name: `Related Items`,
+							name: 'Related Items',
 							value: `${related}`,
 							inline: false,
 						}
@@ -133,6 +133,6 @@ async function getApiData(result) {
 }
 
 function toFixed(num) {
-	var re = new RegExp('^-?\\d+(?:.\\d{0,' + (2 || -1) + '})?');
+	const re = new RegExp(`^-?\\d+(?:.\\d{0,${2 || -1}})?`);
 	return num.toString().match(re)[0];
 }

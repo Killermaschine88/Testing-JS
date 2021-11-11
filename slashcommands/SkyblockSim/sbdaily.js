@@ -10,20 +10,20 @@ module.exports = {
 	cooldown: 10,
 	async execute(interaction, mclient) {
 		const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: interaction.user.id });
+		const player = await collection.findOne({ _id: interaction.user.id });
 
-		let time_now = Math.floor(Date.now() / 1000);
-		let last_claim = player.data.misc.daily.last_claimed;
-		let next_claim = last_claim + 60 * 60 * 24;
-		let failed_claim = last_claim + 60 * 60 * 48;
-		let gems = 0;
-		let streak = player.data.misc.daily.streak + 1;
+		const time_now = Math.floor(Date.now() / 1000);
+		const last_claim = player.data.misc.daily.last_claimed;
+		const next_claim = last_claim + 60 * 60 * 24;
+		const failed_claim = last_claim + 60 * 60 * 48;
+		let gems = 0,
+		 streak = player.data.misc.daily.streak + 1;
 
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription('Create a Profile using `/sb start`');
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
@@ -59,18 +59,17 @@ module.exports = {
 				failedstreak.setTitle('Claimed Daily Reward');
 				if (gems == 0) {
 					failedstreak.setDescription(
-						`I have added <:coins:861974605203636253> **25k Coins** to your Profile but unfortunately, your Streak has reset. 😢\nYou will be able to claim it again in **24 Hours**`
+						'I have added <:coins:861974605203636253> **25k Coins** to your Profile but unfortunately, your Streak has reset. 😢\nYou will be able to claim it again in **24 Hours**'
 					);
 				} else {
 					failedstreak.setDescription(
 						`I have added <:coins:861974605203636253> **25k Coins** and <:gems:879264850348486696> **${gems} Gems** to your Profile but unfortunately, your Streak has reset. 😢\nYou will be able to claim it again in **24 Hours**`
 					);
 				}
-				failedstreak.setFooter(`Daily Streak: 1`);
+				failedstreak.setFooter('Daily Streak: 1');
 				failedstreak.setColor('GREEN');
 
 				interaction.editReply({ embeds: [failedstreak] });
-				return;
 			} else {
 				await collection.updateOne(
 					{ _id: interaction.user.id },
@@ -94,7 +93,7 @@ module.exports = {
 				claimed.setTitle('Claimed Daily Reward');
 				if (gems == 0) {
 					claimed.setDescription(
-						`I have added <:coins:861974605203636253> **25k Coins** to your Profile.\nYou will be able to claim it again in **24 Hours**`
+						'I have added <:coins:861974605203636253> **25k Coins** to your Profile.\nYou will be able to claim it again in **24 Hours**'
 					);
 				} else {
 					claimed.setDescription(
@@ -105,7 +104,6 @@ module.exports = {
 				claimed.setColor('GREEN');
 
 				interaction.editReply({ embeds: [claimed] });
-				return;
 			}
 		} else {
 			const toearly = new Discord.MessageEmbed()
@@ -114,7 +112,6 @@ module.exports = {
 				.setColor('RED');
 
 			interaction.editReply({ embeds: [toearly] });
-			return;
 		}
 	},
 };

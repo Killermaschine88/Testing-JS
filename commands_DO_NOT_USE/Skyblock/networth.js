@@ -10,7 +10,7 @@ module.exports = {
 	folder: 'Skyblock',
 	aliases: ['nw', 'net'],
 	async execute(client, message, args) {
-		let ign = args[0];
+		const ign = args[0];
 
 		if (ign == undefined) {
 			message.channel.send('Provide an IGN to Check');
@@ -21,7 +21,7 @@ module.exports = {
 
 		const wait = await message.channel.send({ embeds: [waiting] });
 
-		let net = await fetch(`http://db.superbonecraft.dk:8000/pages/${ign}`);
+		const net = await fetch(`http://db.superbonecraft.dk:8000/pages/${ign}`);
 		nw = await net.json();
 
 		let errtext = '';
@@ -42,7 +42,7 @@ module.exports = {
 			return;
 		}
 
-		let total =
+		const total =
 			Math.floor(nw.purse.total) +
 			Math.floor(nw.banking.total) +
 			Math.floor(nw.inventory.total) +
@@ -54,24 +54,24 @@ module.exports = {
 			Math.floor(nw.storage.total) +
 			Math.floor(nw.pets.total);
 
-		let armor = nw.armor;
-		let wardrobe = nw.wardrobe;
-		let inventory = nw.inventory;
-		let ec = nw.ender_chest;
-		let storage = nw.storage;
-		let pets = nw.pets;
-		let talis = nw.accessories;
+		const { armor } = nw;
+		const { wardrobe } = nw;
+		const { inventory } = nw;
+		const ec = nw.ender_chest;
+		const { storage } = nw;
+		const { pets } = nw;
+		const talis = nw.accessories;
 
-		let armortext = '';
-		let wardrobetext = '';
-		let inventorytext = '';
-		let ectext = '';
-		let storagetext = '';
-		let petstext = '';
-		let talistext = '';
+		let armortext = '',
+		 ectext = '',
+		 i = 0,
+		 inventorytext = '',
+		 petstext = '',
+		 recomb = '<:recomb:881094744183275540>',
+		 storagetext = '',
 
-		let i = 0;
-		let recomb = '<:recomb:881094744183275540>';
+		 talistext = '',
+		 wardrobetext = '';
 
 		if (armor.prices.length == 0) {
 			armortext = 'API Disabled or no Items';
@@ -79,10 +79,10 @@ module.exports = {
 			while (i < armor.prices.length) {
 				if (armor.prices[i].item.recombobulated) {
 					armortext +=
-						armor.prices[i].item.name + ` ${recomb}` + ` **(${num(armor.prices[i].total)})**` + '\n';
+						`${armor.prices[i].item.name} ${recomb}` + ` **(${num(armor.prices[i].total)})**` + '\n';
 					i += 1;
 				} else {
-					armortext += armor.prices[i].item.name + ` **(${num(armor.prices[i].total)})**` + '\n';
+					armortext += `${armor.prices[i].item.name} **(${num(armor.prices[i].total)})**` + '\n';
 					i += 1;
 				}
 			}
@@ -95,10 +95,10 @@ module.exports = {
 			while (i < wardrobe.prices.length) {
 				if (wardrobe.prices[i].item.recombobulated) {
 					wardrobetext +=
-						wardrobe.prices[i].item.name + ` ${recomb}` + ` **(${num(wardrobe.prices[i].total)})**` + '\n';
+						`${wardrobe.prices[i].item.name} ${recomb}` + ` **(${num(wardrobe.prices[i].total)})**` + '\n';
 					i += 1;
 				} else {
-					wardrobetext += wardrobe.prices[i].item.name + ` **(${num(wardrobe.prices[i].total)})**` + '\n';
+					wardrobetext += `${wardrobe.prices[i].item.name} **(${num(wardrobe.prices[i].total)})**` + '\n';
 					i += 1;
 				}
 			}
@@ -111,13 +111,13 @@ module.exports = {
 			while (i < inventory.prices.length) {
 				if (inventory.prices[i].item?.recombobulated) {
 					inventorytext +=
-						inventory.prices[i].item.name +
-						` ${recomb}` +
+						`${inventory.prices[i].item.name
+						} ${recomb}` +
 						` **(${num(inventory.prices[i].total)})**` +
 						'\n';
 					i += 1;
 				} else {
-					inventorytext += inventory.prices[i].item.name + ` **(${num(inventory.prices[i].total)})**` + '\n';
+					inventorytext += `${inventory.prices[i].item.name} **(${num(inventory.prices[i].total)})**` + '\n';
 					i += 1;
 				}
 			}
@@ -129,10 +129,10 @@ module.exports = {
 		} else {
 			while (i < ec.prices.length) {
 				if (ec.prices[i].item?.recombobulated) {
-					ectext += ec.prices[i].item.name + ` ${recomb}` + ` **(${num(ec.prices[i].total)})**` + '\n';
+					ectext += `${ec.prices[i].item.name} ${recomb}` + ` **(${num(ec.prices[i].total)})**` + '\n';
 					i += 1;
 				} else {
-					ectext += ec.prices[i].item.name + ` **(${num(ec.prices[i].total)})**` + '\n';
+					ectext += `${ec.prices[i].item.name} **(${num(ec.prices[i].total)})**` + '\n';
 					i += 1;
 				}
 			}
@@ -145,10 +145,10 @@ module.exports = {
 			while (i < storage.prices.length) {
 				if (storage.prices[i].item?.recombobulated) {
 					storagetext +=
-						storage.prices[i].item.name + ` ${recomb}` + ` **(${num(storage.prices[i].total)})**` + '\n';
+						`${storage.prices[i].item.name} ${recomb}` + ` **(${num(storage.prices[i].total)})**` + '\n';
 					i += 1;
 				} else {
-					storagetext += storage.prices[i].item.name + ` **(${num(storage.prices[i].total)})**` + '\n';
+					storagetext += `${storage.prices[i].item.name} **(${num(storage.prices[i].total)})**` + '\n';
 					i += 1;
 				}
 			}
@@ -161,19 +161,19 @@ module.exports = {
 			while (i < pets.prices.length) {
 				if (pets.prices[i].item?.recombobulated) {
 					petstext +=
-						pets.prices[i].item.tier +
-						' ' +
-						pets.prices[i].item.type +
-						` ${recomb}` +
+						`${pets.prices[i].item.tier
+						} ${
+							pets.prices[i].item.type
+						} ${recomb}` +
 						` **(${num(pets.prices[i].total)})**` +
 						'\n';
 					i += 1;
 				} else {
 					petstext +=
-						pets.prices[i].item.tier +
-						' ' +
-						pets.prices[i].item.type +
-						` **(${num(pets.prices[i].total)})**` +
+						`${pets.prices[i].item.tier
+						} ${
+							pets.prices[i].item.type
+						} **(${num(pets.prices[i].total)})**` +
 						'\n';
 					i += 1;
 				}
@@ -187,10 +187,10 @@ module.exports = {
 			while (i < talis.prices.length) {
 				if (talis.prices[i].item?.recombobulated) {
 					talistext +=
-						talis.prices[i].item.name + ` ${recomb}` + ` **(${num(talis.prices[i].total)})**` + '\n';
+						`${talis.prices[i].item.name} ${recomb}` + ` **(${num(talis.prices[i].total)})**` + '\n';
 					i += 1;
 				} else {
-					talistext += talis.prices[i].item.name + ` **(${num(talis.prices[i].total)})**` + '\n';
+					talistext += `${talis.prices[i].item.name} **(${num(talis.prices[i].total)})**` + '\n';
 					i += 1;
 				}
 			}
@@ -199,8 +199,8 @@ module.exports = {
 
 		const endembed = new Discord.MessageEmbed()
 			.setDescription(`${ign}'s Networth is ${total.toLocaleString()} (${num(total)})`)
-			.addField(`<:coins:861974605203636253> Purse`, `${num(nw.purse.total)}`)
-			.addField(`<:gold:869126927011708929> Bank`, `${num(nw.banking.total)}`)
+			.addField('<:coins:861974605203636253> Purse', `${num(nw.purse.total)}`)
+			.addField('<:gold:869126927011708929> Bank', `${num(nw.banking.total)}`)
 			.addField(`<:tank:852079613051666472> Armor (${num(armor.total)})`, `${armortext}`)
 			.addField(`<:armorstand:881177222440943657> Wardrobe (${num(wardrobe.total)})`, `${wardrobetext}`)
 			.addField(`<:chest:881176353444085820> Inventory (${num(inventory.total)})`, `${inventorytext}`)
@@ -214,9 +214,9 @@ module.exports = {
 	},
 };
 
-num = (num) => {
-	if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace(/.0$/, '') + 'B';
-	if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/.0$/, '') + 'M';
-	if (num >= 1000) return (num / 1000).toFixed(1).replace(/.0$/, '') + 'K';
+num = num => {
+	if (num >= 1000000000) return `${(num / 1000000000).toFixed(1).replace(/.0$/, '')}B`;
+	if (num >= 1000000) return `${(num / 1000000).toFixed(1).replace(/.0$/, '')}M`;
+	if (num >= 1000) return `${(num / 1000).toFixed(1).replace(/.0$/, '')}K`;
 	return num;
 };

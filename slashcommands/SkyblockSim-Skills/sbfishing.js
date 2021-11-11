@@ -22,7 +22,7 @@ module.exports = {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription('Create a Profile using `/sb start`');
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
@@ -36,34 +36,34 @@ module.exports = {
 			return;
 		}
 
-		//Values needed
-		let type = 'all';
-		let pstats = await playerStats(player, type);
-		let fishinglvl = getLevel(player.data.skills.fishing).level;
-		let rod = player.data.equipment.fishing.rod.name;
-		let rod_speed = player.data.equipment.fishing.rod.fishing_speed;
-		let sea_creature_chance = pstats.sea_creature_chance;
-		let isCreature = '';
-		let mob = '';
-		let rod_casted = false;
-		let creature_caught = false;
-		let foundmob = '';
-		let fishing_time = getFishingTime(rod_speed);
+		// Values needed
+		const type = 'all';
+		const pstats = await playerStats(player, type);
+		const fishinglvl = getLevel(player.data.skills.fishing).level;
+		const rod = player.data.equipment.fishing.rod.name;
+		const rod_speed = player.data.equipment.fishing.rod.fishing_speed;
+		const { sea_creature_chance } = pstats;
+		const isCreature = '';
+		const mob = '';
+		let rod_casted = false,
+		 creature_caught = false,
+		 foundmob = '',
+		 fishing_time = getFishingTime(rod_speed),
 
-		//Fight Values
-		let health = pstats.health;
-		let php = health;
-		let damage = pstats.damage;
-		let strength = pstats.strength;
-		let combatlvl = getLevel(player.data.skills.combat).level;
-		let critchance = pstats.crit_chance;
-		let critdmg = pstats.crit_damage;
-		let critted = '';
-		let pdmg = '';
-		let mhp = '';
-		let mdmg = '';
+			// Fight Values
+		 { health } = pstats,
+		 php = health,
+		 { damage } = pstats;
+		const { strength } = pstats;
+		const combatlvl = getLevel(player.data.skills.combat).level;
+		const critchance = pstats.crit_chance;
+		const critdmg = pstats.crit_damage;
+		const critted = '';
+		let mdmg = '',
+		 mhp = '',
+		 pdmg = '';
 
-		//Buttons for Catching Fish
+		// Buttons for Catching Fish
 		const bcatch = new Discord.MessageButton()
 			.setCustomId('cast')
 			.setEmoji('852069714359877643')
@@ -90,7 +90,7 @@ module.exports = {
 			.setStyle('PRIMARY')
 			.setDisabled(true);
 
-		//Buttons for Killing Sea Creatures
+		// Buttons for Killing Sea Creatures
 		const bkillsc = new Discord.MessageButton()
 			.setCustomId('killsc')
 			.setEmoji('852079613052059658')
@@ -104,17 +104,18 @@ module.exports = {
 			.setStyle('PRIMARY')
 			.setDisabled(true);
 
-		//Stop Button
-		const bcancel = new Discord.MessageButton().setCustomId('cancel').setLabel('Stop Fishing').setStyle('DANGER');
+		// Stop Button
+		const bcancel = new Discord.MessageButton().setCustomId('cancel').setLabel('Stop Fishing')
+			.setStyle('DANGER');
 
-		//Different Rows needed
+		// Different Rows needed
 		const row = new Discord.MessageActionRow().addComponents(bcatch, bkillscoff, bcancel);
 		const row1 = new Discord.MessageActionRow().addComponents(blure, bkillscoff, bcancel);
 		const row2 = new Discord.MessageActionRow().addComponents(bcatchoff, bkillsc, bcancel);
 		const row3 = new Discord.MessageActionRow().addComponents(blureoff, bkillscoff, bcancel);
 
-		//Pond Embed
-		let pond = new Discord.MessageEmbed()
+		// Pond Embed
+		const pond = new Discord.MessageEmbed()
 			.setTitle('Fishing Pond')
 			.setColor('BLUE')
 			.setFooter('Skyblock Simulator')
@@ -122,7 +123,7 @@ module.exports = {
 				`Rod: **${rod}**\nSea Creature Chance: **${sea_creature_chance}**\nFishing Speed: **${rod_speed}**%`
 			);
 		if (player.data.settings.imgshown == true) {
-			pond.setImage('https://cdn.discordapp.com/attachments/871669216703578152/905004300835631174/unknown.png'); //rod in hand
+			pond.setImage('https://cdn.discordapp.com/attachments/871669216703578152/905004300835631174/unknown.png'); // rod in hand
 		}
 
 		const menu = await interaction.editReply({
@@ -142,7 +143,7 @@ module.exports = {
 			{ upsert: true }
 		);
 
-		const filter = (i) => {
+		const filter = i => {
 			i.deferUpdate();
 			return i.user.id === interaction.user.id;
 		};
@@ -153,7 +154,7 @@ module.exports = {
 			time: 858000,
 		});
 
-		collector.on('collect', async (i) => {
+		collector.on('collect', async i => {
 			if (player.data.misc.is_mining == true) {
 				interaction.followUp({
 					content: 'You cheeky tried to multi grind Skills not with me :).',
@@ -169,7 +170,7 @@ module.exports = {
 				if (player.data.settings.imgshown == true) {
 					pond.setImage(
 						'https://cdn.discordapp.com/attachments/871669216703578152/905004413695983636/unknown.png'
-					); //rod in water
+					); // rod in water
 				}
 
 				menu.edit({ embeds: [pond], components: [row3] });
@@ -181,12 +182,12 @@ module.exports = {
 				if (player.data.settings.imgshown == true) {
 					pond.setImage(
 						'https://cdn.discordapp.com/attachments/871669216703578152/905004487725441064/unknown.png'
-					); //fish close to rod
+					); // fish close to rod
 				}
 
 				menu.edit({ embeds: [pond], components: [row1] });
 			} else if (i.customId === 'lure' && rod_casted === true) {
-				let creature = isSeaCreature(sea_creature_chance, isCreature);
+				const creature = isSeaCreature(sea_creature_chance, isCreature);
 				if (creature === 'yes') {
 					foundmob = await getSeaCreatureStats(mob, mobs, fishinglvl, mclient);
 					mhp = foundmob.hp;
@@ -197,10 +198,10 @@ module.exports = {
 					menu.edit({ embeds: [pond], components: [row2] });
 					rod_casted = false;
 				} else {
-					let raredrop = isRareDrop(fishinglvl);
+					const raredrop = isRareDrop(fishinglvl);
 					if (raredrop == 'yes') {
-						let coinamounts = [2500, 5000, 7500, 10000, 15000, 20000];
-						let coindrop = coinamounts[Math.floor(Math.random() * coinamounts.length)];
+						const coinamounts = [2500, 5000, 7500, 10000, 15000, 20000];
+						const coindrop = coinamounts[Math.floor(Math.random() * coinamounts.length)];
 
 						await collection.updateOne(
 							{ _id: interaction.user.id },
@@ -210,13 +211,13 @@ module.exports = {
 
 						rod_casted = false;
 						pond.fields = [];
-						pond.addField(`RARE CATCH!!!`, `earned **<:coins:861974605203636253> ${coindrop} Coins**`);
+						pond.addField('RARE CATCH!!!', `earned **<:coins:861974605203636253> ${coindrop} Coins**`);
 
 						menu.edit({ embeds: [pond], components: [row] });
 					} else {
-						let fishxp = Math.floor(Math.random() * (200 - 50) + 50);
-						let fishes = ['Raw Fish', 'Raw Salmon', 'Pufferfish', 'Clownfish'];
-						let fishname = fishes[Math.floor(Math.random() * fishes.length)];
+						const fishxp = Math.floor(Math.random() * (200 - 50) + 50);
+						const fishes = ['Raw Fish', 'Raw Salmon', 'Pufferfish', 'Clownfish'];
+						const fishname = fishes[Math.floor(Math.random() * fishes.length)];
 						let fishingcoins = 0;
 						if (fishname === 'Raw Fish') {
 							fishingcoins = 30;
@@ -237,7 +238,7 @@ module.exports = {
 						if (player.data.settings.imgshown == true) {
 							pond.setImage(
 								'https://cdn.discordapp.com/attachments/871669216703578152/905004300835631174/unknown.png'
-							); //rod in hand
+							); // rod in hand
 						}
 
 						await collection.updateOne(
@@ -255,7 +256,7 @@ module.exports = {
 					}
 				}
 			} else if (i.customId === 'killsc') {
-				let crit = isCrit(critchance, critted);
+				const crit = isCrit(critchance, critted);
 				if (crit === 'yes') {
 					pdmg =
 						Math.floor((5 + damage) * (1 + strength / 100) * (1 + combatlvl * 0.04)) * (1 + critdmg / 100);
@@ -269,26 +270,26 @@ module.exports = {
 				if (crit === 'yes') {
 					pond.fields = [];
 					pond.addField(
-						`Battle`,
+						'Battle',
 						`Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (-<:crit:870306942806020106> ${pdmg})`
 					);
 				} else {
 					pond.fields = [];
-					pond.addField(`Battle`, `Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (- ${pdmg})`);
+					pond.addField('Battle', `Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (- ${pdmg})`);
 				}
 				menu.edit({ embeds: [pond] });
 
 				if (i.customId === 'killsc' && mhp <= 0) {
-					let amount = Math.floor(Math.random() * (3 - 1) + 1);
-					let mobdrop = 'Lilypad';
-					let special_mobs = ['Nurse Shark', 'Blue Shark', 'Tiger Shark', 'Great White Shark'];
+					const amount = Math.floor(Math.random() * (3 - 1) + 1);
+					let mobdrop = 'Lilypad',
+					 special_mobs = ['Nurse Shark', 'Blue Shark', 'Tiger Shark', 'Great White Shark'];
 					if (special_mobs.includes(foundmob.name)) {
 						mobdrop = 'Shark Fin';
 					}
 					pond.fields = [];
 					pond.setColor('BLUE');
 					pond.addField(
-						`Result`,
+						'Result',
 						`Killed the Enemy, earned ${foundmob.xp} Fishing XP and ${amount} ${mobdrop}.`
 					);
 
@@ -311,7 +312,7 @@ module.exports = {
 				} else if (i.customId === 'killsc' && php <= 0) {
 					pond.fields = [];
 					pond.setColor('RED');
-					pond.addField(`Result`, `Died to the Enemy which had **❤️ ${mhp}** left.`);
+					pond.addField('Result', `Died to the Enemy which had **❤️ ${mhp}** left.`);
 					menu.edit({ embeds: [pond] });
 					collector.stop();
 				}
@@ -320,7 +321,7 @@ module.exports = {
 			}
 		});
 
-		collector.on('end', async (collected) => {
+		collector.on('end', async collected => {
 			pond.setColor('RED');
 			pond.fields = [];
 			pond.addField('\u200b', 'Stopped Fishing.');
@@ -338,25 +339,24 @@ module.exports = {
 };
 
 function isSeaCreature(sea_creature_chance, isCreature) {
-	let rn = Math.floor(Math.random() * 100) + 1;
+	const rn = Math.floor(Math.random() * 100) + 1;
 	if (rn < sea_creature_chance) {
 		isCreature = 'yes';
 		return isCreature;
-	} else {
-		isCreature = 'no';
-		return isCreature;
 	}
+	isCreature = 'no';
+	return isCreature;
 }
 
 async function getSeaCreatureStats(mob, mobs, fishinglvl, mclient) {
 	const collection = mmclient.db('SkyblockSim').collection('events');
-	let events = await collection.find({}).toArray();
-	let shark_event = events.find((event) => event._id == 'shark_fishing');
+	const events = await collection.find({}).toArray();
+	const shark_event = events.find(event => event._id == 'shark_fishing');
 
 	let seacreatures = '';
 	if (shark_event.enabled) {
 		seacreatures = Object.entries(mobs).filter(
-			([name, props]) => props.level <= fishinglvl || (props.level <= fishinglvl && props.shark_mob)
+			([name, props]) => props.level <= fishinglvl || props.level <= fishinglvl && props.shark_mob
 		);
 	} else {
 		seacreatures = Object.entries(mobs).filter(([name, props]) => props.level <= fishinglvl && !props.shark_mob);
@@ -367,16 +367,16 @@ async function getSeaCreatureStats(mob, mobs, fishinglvl, mclient) {
 		mob = 'None';
 		return mob;
 	}
-	let mobchoosen = seacreatures[Math.floor(Math.random() * seacreatures.length)];
+	const mobchoosen = seacreatures[Math.floor(Math.random() * seacreatures.length)];
 	mob = mobchoosen[1];
 	return mob;
 }
 
 function sleep(ms) {
-	return new Promise((resolve) => setTimeout(() => resolve(), ms));
+	return new Promise(resolve => setTimeout(() => resolve(), ms));
 }
 
-//Damage Calculations
+// Damage Calculations
 function dmgtaken(php, mdmg) {
 	php -= mdmg;
 	return php;
@@ -388,14 +388,13 @@ function dmgdealt(mhp, pdmg) {
 }
 
 function isCrit(critchance, critted) {
-	let hit = Math.floor(Math.random() * 100) + 1;
+	const hit = Math.floor(Math.random() * 100) + 1;
 	if (hit < critchance) {
 		critted = 'yes';
 		return critted;
-	} else {
-		critted = 'no';
-		return critted;
 	}
+	critted = 'no';
+	return critted;
 }
 
 function getFishingTime(rod_speed) {
@@ -417,7 +416,7 @@ function addItems(mobdrop, amount, player) {
 	if (player.data.inventory.items.length === 0) {
 		player.data.inventory.items.push({
 			name: mobdrop,
-			amount: amount,
+			amount,
 		});
 		return player;
 	}
@@ -431,16 +430,15 @@ function addItems(mobdrop, amount, player) {
 
 	player.data.inventory.items.push({
 		name: mobdrop,
-		amount: amount,
+		amount,
 	});
 	return player;
 }
 
 function isRareDrop(fishinglvl) {
-	let rn1 = Math.random() * (100 - 1) + 1;
+	const rn1 = Math.random() * (100 - 1) + 1;
 	if (rn1 <= fishinglvl * 0.1) {
 		return 'yes';
-	} else {
-		return 'no';
 	}
+	return 'no';
 }

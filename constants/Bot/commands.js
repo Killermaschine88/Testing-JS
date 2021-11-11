@@ -27,7 +27,7 @@ const data = [
 		name: 'vote',
 		description: 'Shows the Bots Vote Site',
 	},
-	/*{
+	/* {
     name: 'serverinfo',
     description: 'Shows Info about the server',
   },
@@ -43,7 +43,7 @@ const data = [
       },
     ],
   },*/
-	//Skyblock Features
+	// Skyblock Features
 	{
 		name: 'bazaar',
 		description: 'Gets Bazaar Data from an Item',
@@ -156,13 +156,13 @@ const data = [
 			},
 		],
 	},
-	//Skyblock Simulator Commands
+	// Skyblock Simulator Commands
 	{
 		name: 'sb',
 		description: 'Skyblock Simulator Commands',
 		type: 'SUB_COMMAND_GROUP',
 		options: [
-			/*{
+			/* {
 				name: 'dragon',
 				description: 'Lets you place Summoning Eye to fight Dragons',
 				type: 'SUB_COMMAND',

@@ -12,7 +12,7 @@ module.exports = {
 	cooldown: 10,
 	async execute(client, message, args, mclient, gprefix) {
 		const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: message.author.id });
+		const player = await collection.findOne({ _id: message.author.id });
 
 		const start = new Discord.MessageEmbed()
 			.setColor('90EE90')
@@ -23,7 +23,7 @@ module.exports = {
 		var gprefix = await prefixx.get(message.guild.id, { raw: false });
 		if (gprefix === null) gprefix = '.';
 
-		let profiles = [
+		const profiles = [
 			'🍎 Apple',
 			'🍌 Banana',
 			'🫐 Blueberry',
@@ -33,11 +33,11 @@ module.exports = {
 			'🥝 Kiwi',
 			'🍋 Lemon',
 		];
-		let profilename = profiles[Math.floor(Math.random() * profiles.length)];
+		const profilename = profiles[Math.floor(Math.random() * profiles.length)];
 
 		let starttime = message.createdTimestamp / 1000;
 		starttime = starttime.toFixed();
-		//if (player === null) {
+		// if (player === null) {
 		await collection.updateOne(
 			{ _id: message.author.id },
 			{
@@ -128,7 +128,7 @@ module.exports = {
 			.setFooter("Skyblock Simulator\nValues in () aren't needed");
 
 		menu.edit({ embeds: [created] });
-		return;
+
 
 		/* } else {
     const profilealready = new Discord.MessageEmbed()

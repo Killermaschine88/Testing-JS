@@ -19,16 +19,16 @@ ${color.blue('(_______/  (__|  \\__)|___/         (_______/  \\"_____/      \\__
                                                                      
 
 ${color.blue('[INFO]')}${color.blue(' ├─ Loaded')} ${color.green(client._eventsCount)} ${color.blue(
-				' Event Listeners'
-			)}  ${color.blue('[')}${color.green('+')}${color.blue('] Web Server')}
+	' Event Listeners'
+)}  ${color.blue('[')}${color.green('+')}${color.blue('] Web Server')}
 ${color.blue('[INFO]')}${color.blue(' ├─ Loaded')} ${color.green(sc)} ${color.blue('Slash Commands')}   ${color.blue(
-				'['
-			)}${color.green('+')}${color.blue('] Database')}
+	'['
+)}${color.green('+')}${color.blue('] Database')}
 ${color.blue('[INFO]')}${color.blue(' └─ Loaded')} ${color.green(c)} ${color.blue('Commands')}         ${color.blue(
-				'['
-			)}${color.green('+')}${color.blue(
-				'] Stress'
-			)}                                                                        
+	'['
+)}${color.green('+')}${color.blue(
+	'] Stress'
+)}                                                                        
 		`.trim()
 		);
 
@@ -36,12 +36,12 @@ ${color.blue('[INFO]')}${color.blue(' └─ Loaded')} ${color.green(c)} ${color
 			type: 'WATCHING',
 		});
 
-		//Msging Owner on Restart
-		client.users.fetch('570267487393021969').then(async (user) => {
-			await user.send(`Restarted`);
+		// Msging Owner on Restart
+		client.users.fetch('570267487393021969').then(async user => {
+			await user.send('Restarted');
 		});
 
-		//Startup Stuff from function
+		// Startup Stuff from function
 
 		start(client, mclient);
 	},

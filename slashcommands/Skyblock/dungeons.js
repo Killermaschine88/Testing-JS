@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
-const apikey = process.env['apikey'];
+const { apikey } = process.env;
 const pms = require('pretty-ms');
 
 module.exports = {
@@ -11,11 +11,11 @@ module.exports = {
 	perms: 'None',
 	aliases: ['d', 'cata'],
 	async execute(interaction) {
-		var ign = interaction.options.getString('ign');
+		let ign = interaction.options.getString('ign');
 
 		ign = ign.replace(/\W/g, ''); // removes weird characters
 
-		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then((res) => {
+		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(res => {
 			if (res.status != 200) {
 				const nomc = new Discord.MessageEmbed()
 					.setDescription(`No Minecraft account found for \`${ign}\``)
@@ -112,44 +112,44 @@ module.exports = {
 		let time1 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_1;
 		if (!time1) time1 = 0;
 		if (time1) time1 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_1.seconds;
-		let min1 = Math.floor(time1 / 60);
-		let sec1 = Math.floor(time1 % 60);
+		const min1 = Math.floor(time1 / 60);
+		const sec1 = Math.floor(time1 % 60);
 
 		let time2 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_2;
 		if (!time2) time2 = 0;
 		if (time2) time2 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_2.seconds;
-		let min2 = Math.floor(time2 / 60);
-		let sec2 = Math.floor(time2 % 60);
+		const min2 = Math.floor(time2 / 60);
+		const sec2 = Math.floor(time2 % 60);
 
 		let time3 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_3;
 		if (!time3) time3 = 0;
 		if (time3) time3 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_3.seconds;
-		let min3 = Math.floor(time3 / 60);
-		let sec3 = Math.floor(time3 % 60);
+		const min3 = Math.floor(time3 / 60);
+		const sec3 = Math.floor(time3 % 60);
 
 		let time4 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_4;
 		if (!time4) time4 = 0;
 		if (time4) time4 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_4.seconds;
-		let min4 = Math.floor(time4 / 60);
-		let sec4 = Math.floor(time4 % 60);
+		const min4 = Math.floor(time4 / 60);
+		const sec4 = Math.floor(time4 % 60);
 
 		let time5 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_5;
 		if (!time5) time5 = 0;
 		if (time5) time5 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_5.seconds;
-		let min5 = Math.floor(time5 / 60);
-		let sec5 = Math.floor(time5 % 60);
+		const min5 = Math.floor(time5 / 60);
+		const sec5 = Math.floor(time5 % 60);
 
 		let time6 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_6;
 		if (!time6) time6 = 0;
 		if (time6) time6 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_6.seconds;
-		let min6 = Math.floor(time6 / 60);
-		let sec6 = Math.floor(time6 % 60);
+		const min6 = Math.floor(time6 / 60);
+		const sec6 = Math.floor(time6 % 60);
 
 		let time7 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_7;
 		if (!time7) time7 = 0;
 		if (time7) time7 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_7.seconds;
-		let min7 = Math.floor(time7 / 60);
-		let sec7 = Math.floor(time7 % 60);
+		const min7 = Math.floor(time7 / 60);
+		const sec7 = Math.floor(time7 % 60);
 
 		let mtier7 = apiData.data.dungeons.types.catacombs.master_mode.tier_completions.tier_7;
 		if (!mtier7) mtier7 = 0;
@@ -203,47 +203,47 @@ module.exports = {
 		let mtime1 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_1;
 		if (!mtime1) mtime1 = 0;
 		if (mtime1) mtime1 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_1.seconds;
-		let mmin1 = Math.floor(mtime1 / 60);
-		let msec1 = Math.floor(mtime1 % 60);
+		const mmin1 = Math.floor(mtime1 / 60);
+		const msec1 = Math.floor(mtime1 % 60);
 
 		let mtime2 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_2;
 		if (!mtime2) mtime2 = 0;
 		if (mtime2) mtime2 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_2.seconds;
-		let mmin2 = Math.floor(mtime2 / 60);
-		let msec2 = Math.floor(mtime2 % 60);
+		const mmin2 = Math.floor(mtime2 / 60);
+		const msec2 = Math.floor(mtime2 % 60);
 
 		let mtime3 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_3;
 		if (!mtime3) mtime3 = 0;
 		if (mtime3) mtime3 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_3.seconds;
-		let mmin3 = Math.floor(mtime3 / 60);
-		let msec3 = Math.floor(mtime3 % 60);
+		const mmin3 = Math.floor(mtime3 / 60);
+		const msec3 = Math.floor(mtime3 % 60);
 
 		let mtime4 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_4;
 		if (!mtime4) mtime4 = 0;
 		if (mtime4) mtime4 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_4.seconds;
-		let mmin4 = Math.floor(mtime4 / 60);
-		let msec4 = Math.floor(mtime4 % 60);
+		const mmin4 = Math.floor(mtime4 / 60);
+		const msec4 = Math.floor(mtime4 % 60);
 
 		let mtime5 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_5;
 		if (!mtime5) mtime5 = 0;
 		if (mtime5) mtime5 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_5.seconds;
-		let mmin5 = Math.floor(mtime5 / 60);
-		let msec5 = Math.floor(mtime5 % 60);
+		const mmin5 = Math.floor(mtime5 / 60);
+		const msec5 = Math.floor(mtime5 % 60);
 
 		let mtime6 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_6;
 		if (!mtime6) mtime6 = 0;
 		if (mtime6) mtime6 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_6.seconds;
-		let mmin6 = Math.floor(mtime6 / 60);
-		let msec6 = Math.floor(mtime6 % 60);
+		const mmin6 = Math.floor(mtime6 / 60);
+		const msec6 = Math.floor(mtime6 % 60);
 
 		let mtime7 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_7;
 		if (!mtime7) mtime7 = 0;
 		if (mtime7) mtime7 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_7.seconds;
-		let mmin7 = Math.floor(mtime7 / 60);
-		let msec7 = Math.floor(mtime7 % 60);
+		const mmin7 = Math.floor(mtime7 / 60);
+		const msec7 = Math.floor(mtime7 % 60);
 
 		const foundresult = new Discord.MessageEmbed()
-			.setTitle(`Dungeons Stats`)
+			.setTitle('Dungeons Stats')
 			.setColor('7CFC00')
 			.setFooter(
 				"Click their Name to view their SkyShiiyu\n0m 0s means they haven't gotten an S+ on said Floor yet."
@@ -383,6 +383,6 @@ async function getTrueIgn(ign) {
 }
 
 function toFixed(num) {
-	var re = new RegExp('^-?\\d+(?:.\\d{0,' + (2 || -1) + '})?');
+	const re = new RegExp(`^-?\\d+(?:.\\d{0,${2 || -1}})?`);
 	return num.toString().match(re)[0];
 }

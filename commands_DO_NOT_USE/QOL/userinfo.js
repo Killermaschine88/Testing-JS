@@ -9,33 +9,33 @@ module.exports = {
 	folder: 'QOL',
 	aliases: ['ui', 'me', 'whois'],
 	async execute(client, message, args) {
-		let userArray = message.content.split(' ');
-		let userArgs = userArray.slice(1);
-		let member =
+		const userArray = message.content.split(' ');
+		const userArgs = userArray.slice(1);
+		const member =
 			message.mentions.members.first() ||
 			message.guild.members.cache.get(userArgs[0]) ||
 			message.guild.members.cache.find(
-				(x) => x.user.username.toLowerCase() === userArgs.slice(0).join(' ') || x.user.username === userArgs[0]
+				x => x.user.username.toLowerCase() === userArgs.slice(0).join(' ') || x.user.username === userArgs[0]
 			) ||
 			message.member;
 
-		/*if (member.presence.status === 'dnd') member.presence.status = 'Do Not Disturb';
+		/* if (member.presence.status === 'dnd') member.presence.status = 'Do Not Disturb';
     if (member.presence.status === 'online') member.presence.status = 'Online';
     if (member.presence.status === 'idle') member.presence.status = 'Idle';
     if (member.presence.status === 'offline') member.presence.status = 'offline';*/
 
 		const badges = member.user.flags.toArray();
-		let partner = '';
-		let empl = '';
-		let events = '';
-		let bughunter = '';
-		let bravery = '';
-		let brilliance = '';
-		let balance = '';
-		let earlysupporter = '';
-		let teamuser = '';
-		let bughunter2 = '';
-		let developer = '';
+		let balance = '',
+		 bravery = '',
+		 brilliance = '',
+		 bughunter = '',
+		 bughunter2 = '',
+		 developer = '',
+		 earlysupporter = '',
+		 empl = '',
+		 events = '',
+		 partner = '',
+		 teamuser = '';
 		if (badges.includes('DISCORD_PARTNER')) partner = '<:partner:855414536264876033>, ';
 		if (badges.includes('DISCORD_EMPLOYEE')) empl = '<:discord_staff:855414296975507487>, ';
 		if (badges.includes('HYPESQUAD_EVENTS')) events = '<:events:856514436847501313>, ';
@@ -51,28 +51,28 @@ module.exports = {
 
 		const perms = member.permissions.toArray();
 
-		//Special Permissions
-		let administrator = '';
-		let manage_server = '';
-		let manage_channels = '';
-		let manage_guild = '';
-		let kick_members = '';
-		let ban_members = '';
-		let view_audit_log = '';
-		let manage_messages = '';
-		let mention_everyone = '';
-		let manage_nicknames = '';
-		let manage_roles = '';
-		let manage_webhooks = '';
-		let manage_emojis = '';
+		// Special Permissions
+		let administrator = '',
+		 attach_files = '',
+		 ban_members = '',
+		 create_instant_invite = '',
+		 embed_links = '',
+		 kick_members = '',
+		 manage_channels = '',
+		 manage_emojis = '',
+		 manage_guild = '',
+		 manage_messages = '',
+		 manage_nicknames = '',
+		 manage_roles = '',
+		 manage_server = '',
 
-		//Normal Permissoins
-		let create_instant_invite = '';
-		let embed_links = '';
-		let attach_files = '';
-		let use_external_emojis = '';
+			// Normal Permissoins
+		 manage_webhooks = '',
+		 mention_everyone = '',
+		 use_external_emojis = '',
+		 view_audit_log = '';
 
-		//Special Permissons
+		// Special Permissons
 		if (perms.includes('ADMINISTRATOR')) administrator = 'Administrator, ';
 		if (perms.includes('MANAGE_SERVER')) manage_server = 'Manage Server, ';
 		if (perms.includes('MANAGE_CHANNELS')) manage_channels = 'Manage Channels, ';
@@ -87,7 +87,7 @@ module.exports = {
 		if (perms.includes('MANAGE_WEBHOOKS')) manage_webhooks = 'Manage Webhooks, ';
 		if (perms.includes('MANAGE_EMOJIS')) manage_emojis = 'Manage Emojis, ';
 
-		//Normal Permissons
+		// Normal Permissons
 		if (perms.includes('CREATE_INSTANT_INVITE')) create_instant_invite = 'Create Invite, ';
 		if (perms.includes('EMBED_LINKS')) embed_links = 'Embed Links, ';
 		if (perms.includes('ATTACH_FILES')) attach_files = 'Attach Files, ';
@@ -95,7 +95,7 @@ module.exports = {
 
 		const a = member.roles.cache;
 
-		/*let web = ''
+		/* let web = ''
     if (!member.user.presence.clientStatus) {
       web = 'Unknown'
     } else if (member.user.presence.clientStatus.desktop) {
@@ -106,12 +106,12 @@ module.exports = {
       web = 'Browser'
     }*/
 
-		let x = Date.now() - member.createdAt;
-		let y = Date.now() - message.guild.members.cache.get(member.id).joinedAt;
+		const x = Date.now() - member.createdAt;
+		const y = Date.now() - message.guild.members.cache.get(member.id).joinedAt;
 		const joined = Math.floor(y / 86400000);
 
 		const joineddate = moment.utc(member.joinedAt).format('dddd, MMMM Do YYYY, HH:mm:ss');
-		//let status = member.presence.status;
+		// let status = member.presence.status;
 
 		const userEmbed = new Discord.MessageEmbed()
 			.setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 512 }))
@@ -127,38 +127,38 @@ module.exports = {
 			.addField('Server Join Date', `${joineddate} \n${joined} Days ago`, true)
 			.addField(
 				'Badges',
-				'\u200b' +
-					empl +
-					events +
-					partner +
-					bughunter2 +
-					bughunter +
-					developer +
-					earlysupporter +
-					bravery +
-					brilliance +
-					balance
+				`\u200b${
+					empl
+				}${events
+				}${partner
+				}${bughunter2
+				}${bughunter
+				}${developer
+				}${earlysupporter
+				}${bravery
+				}${brilliance
+				}${balance}`
 			)
 			.addField(
 				'Moderation Permissions',
-				'\u200b' +
-					administrator +
-					manage_server +
-					manage_channels +
-					manage_guild +
-					kick_members +
-					ban_members +
-					view_audit_log +
-					manage_messages +
-					mention_everyone +
-					manage_nicknames +
-					manage_roles +
-					manage_webhooks +
-					manage_emojis
+				`\u200b${
+					administrator
+				}${manage_server
+				}${manage_channels
+				}${manage_guild
+				}${kick_members
+				}${ban_members
+				}${view_audit_log
+				}${manage_messages
+				}${mention_everyone
+				}${manage_nicknames
+				}${manage_roles
+				}${manage_webhooks
+				}${manage_emojis}`
 			)
 			.addField(
 				'Basic Permissions',
-				'\u200b' + create_instant_invite + embed_links + attach_files + use_external_emojis
+				`\u200b${create_instant_invite}${embed_links}${attach_files}${use_external_emojis}`
 			);
 
 		message.channel.send({ embeds: [userEmbed] });

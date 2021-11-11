@@ -19,11 +19,10 @@ module.exports = {
 
 			if (stdout.includes('Already up to date.')) {
 				message.channel.send("I'm up to date!");
-				return;
 			} else {
 				const pulled = new Discord.MessageEmbed()
 					.setTitle('Changes Pulled')
-					.setDescription('```diff\n' + stdout + '\n```\n```diff\n' + stderr + '\n```');
+					.setDescription(`\`\`\`diff\n${stdout}\n\`\`\`\n\`\`\`diff\n${stderr}\n\`\`\``);
 
 				message.channel.send({ embeds: [pulled] });
 			}

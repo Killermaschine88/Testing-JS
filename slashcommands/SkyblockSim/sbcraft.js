@@ -11,13 +11,13 @@ module.exports = {
 	cooldown: 10,
 	async execute(interaction, mclient) {
 		const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: interaction.user.id });
+		const player = await collection.findOne({ _id: interaction.user.id });
 
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription('Create a Profile using `/sb start`');
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
@@ -25,7 +25,7 @@ module.exports = {
 		const inv = player.data.inventory.items;
 		const inv2 = player.data.inventory.armor;
 
-		//Embed and Select Menu
+		// Embed and Select Menu
 		const embed = new Discord.MessageEmbed()
 			.setTitle('Crafting')
 			.setDescription('Available Items with their respective Stats and Item Cost\n')
@@ -33,9 +33,10 @@ module.exports = {
 
 		const row = new Discord.MessageActionRow();
 
-		const craftmenu = new Discord.MessageSelectMenu().setCustomId('craftmenu').setMaxValues(1).setMinValues(1);
+		const craftmenu = new Discord.MessageSelectMenu().setCustomId('craftmenu').setMaxValues(1)
+			.setMinValues(1);
 
-		if (!inv2.find((armor) => armor.name == 'Shark Scale Armor')) {
+		if (!inv2.find(armor => armor.name == 'Shark Scale Armor')) {
 			embed.addField(
 				'Shark Scale Armor',
 				'**Stats:** `200 ❤`, `120 ❈`, `75 ❁`, `25 ☣`, `90 ☠`, `20 α`\n\n**Cost:** 100 Shark Fin and 100 Lilypads',
@@ -60,20 +61,20 @@ module.exports = {
 
 		// Wait for a selectbox option to be chosen and then
 		// send a leaderboard of the selected type
-		const filter = (i) => i.customId === 'craftmenu' && i.user.id === interaction.user.id;
+		const filter = i => i.customId === 'craftmenu' && i.user.id === interaction.user.id;
 		const leaderCollector = await menu.createMessageComponentCollector({
 			filter,
 			componentType: 'SELECT_MENU',
 			time: 300000,
 		});
 
-		leaderCollector.on('collect', async (i) => {
+		leaderCollector.on('collect', async i => {
 			const id = i.values[0];
 
 			if (
-				inv.find((item) => item.name == 'Shark Fin' && item.amount >= 100) &&
-				inv.find((item) => item.name == 'Lilypad' && item.amount >= 100) &&
-				!inv2.find((armor) => armor.name == 'Shark Scale Armor')
+				inv.find(item => item.name == 'Shark Fin' && item.amount >= 100) &&
+				inv.find(item => item.name == 'Lilypad' && item.amount >= 100) &&
+				!inv2.find(armor => armor.name == 'Shark Scale Armor')
 			) {
 				const item = sets['Shark Scale Armor'];
 				embed.setDescription('Crafted **Shark Scale Armor**');
@@ -101,12 +102,12 @@ module.exports = {
 					{ upsert: true }
 				);
 				await collection.updateOne(
-					{ _id: interaction.user.id, 'data.inventory.items.name': 'Shark Fin' },
+					{ '_id': interaction.user.id, 'data.inventory.items.name': 'Shark Fin' },
 					{ $inc: { 'data.inventory.items.$.amount': -100 } },
 					{ upsert: true }
 				);
 				await collection.updateOne(
-					{ _id: interaction.user.id, 'data.inventory.items.name': 'Lilypad' },
+					{ '_id': interaction.user.id, 'data.inventory.items.name': 'Lilypad' },
 					{ $inc: { 'data.inventory.items.$.amount': -100 } },
 					{ upsert: true }
 				);
@@ -122,7 +123,7 @@ module.exports = {
 			await i.update({ embeds: [embed], components: [] });
 		});
 
-		leaderCollector.on('end', async (collected) => {
+		leaderCollector.on('end', async collected => {
 			/*	const reply = await interaction.fetchReply();
 			reply.delete();*/
 		});

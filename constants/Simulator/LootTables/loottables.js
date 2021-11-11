@@ -21,7 +21,7 @@ module.exports = {
 
 	endvoid: require('./endvoid.js'),
 
-	//Dungeons
+	// Dungeons
 	wood: require('./wood.js'),
 	gold: require('./gold.js'),
 	diamond: require('./diamond.js'),

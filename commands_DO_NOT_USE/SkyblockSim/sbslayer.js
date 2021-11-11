@@ -14,7 +14,7 @@ module.exports = {
 		const collection = mclient.db('SkyblockSim').collection('Players');
 		const player = await collection.findOne({ _id: message.author.id });
 
-		var gprefix = await prefixx.get(message.guild.id, { raw: false });
+		let gprefix = await prefixx.get(message.guild.id, { raw: false });
 		if (gprefix === null) gprefix = '.';
 
 		if (player === null) {
@@ -54,21 +54,22 @@ module.exports = {
 				.setCustomId('enderman')
 				.setLabel('Voidgloom')
 				.setStyle('PRIMARY'),
-			new Discord.MessageButton().setCustomId('end').setLabel('Cancel').setStyle('DANGER')
+			new Discord.MessageButton().setCustomId('end').setLabel('Cancel')
+				.setStyle('DANGER')
 		);
 		const menu = await message.channel.send({
 			embeds: [start],
 			components: [row],
 		});
 
-		let coins = player.data.profile.coins;
-		let choosen = '';
-		let tier = '';
-		let slayercost = '';
-		let slayerxp = '';
-		let color = '';
+		const { coins } = player.data.profile;
+		let choosen = '',
+		 color = '',
+		 slayercost = '',
+		 slayerxp = '',
+		 tier = '';
 
-		const filter = (i) => {
+		const filter = i => {
 			i.deferUpdate();
 			return i.user.id === message.author.id;
 		};
@@ -79,7 +80,7 @@ module.exports = {
 				componentType: 'BUTTON',
 				time: 30000,
 			})
-			.then((i) => {
+			.then(i => {
 				if (i.customId === 'zombie') {
 					choosen = 'Revenant';
 				} else if (i.customId === 'spider') {
@@ -95,7 +96,7 @@ module.exports = {
 				}
 				menu.edit({ components: [] });
 			})
-			.catch((err) => menu.edit({ components: [] }));
+			.catch(err => menu.edit({ components: [] }));
 
 		if (choosen) {
 			const tembed = new Discord.MessageEmbed()
@@ -106,11 +107,16 @@ module.exports = {
 					`Decide the Tier of ${choosen} Slayer you want to fight.\n\n**Cost per Slayer**\nT1: **2.5k Coins**\nT2: **7.5k Coins**\nT3: **10kCoins**\nT4: **50k Coins**`
 				);
 			const trow = new Discord.MessageActionRow().addComponents(
-				new Discord.MessageButton().setCustomId('t1').setLabel('Tier 1').setStyle('PRIMARY'),
-				new Discord.MessageButton().setCustomId('t2').setLabel('Tier 2').setStyle('PRIMARY'),
-				new Discord.MessageButton().setCustomId('t3').setLabel('Tier 3').setStyle('PRIMARY'),
-				new Discord.MessageButton().setCustomId('t4').setLabel('Tier 4').setStyle('PRIMARY'),
-				new Discord.MessageButton().setCustomId('end').setLabel('Cancel').setStyle('DANGER')
+				new Discord.MessageButton().setCustomId('t1').setLabel('Tier 1')
+					.setStyle('PRIMARY'),
+				new Discord.MessageButton().setCustomId('t2').setLabel('Tier 2')
+					.setStyle('PRIMARY'),
+				new Discord.MessageButton().setCustomId('t3').setLabel('Tier 3')
+					.setStyle('PRIMARY'),
+				new Discord.MessageButton().setCustomId('t4').setLabel('Tier 4')
+					.setStyle('PRIMARY'),
+				new Discord.MessageButton().setCustomId('end').setLabel('Cancel')
+					.setStyle('DANGER')
 			);
 			menu.edit({ embeds: [tembed], components: [trow] });
 		}
@@ -121,7 +127,7 @@ module.exports = {
 				componentType: 'BUTTON',
 				time: 30000,
 			})
-			.then((i) => {
+			.then(i => {
 				if (i.customId === 't1') {
 					tier = 'T1';
 				} else if (i.customId === 't2') {
@@ -137,7 +143,7 @@ module.exports = {
 				}
 				menu.edit({ components: [] });
 			})
-			.catch((err) => menu.edit({ components: [] }));
+			.catch(err => menu.edit({ components: [] }));
 
 		if (tier === 'T1') {
 			slayercost = 2500;
@@ -213,5 +219,5 @@ module.exports = {
 };
 
 function sleep(ms) {
-	return new Promise((resolve) => setTimeout(() => resolve(), ms));
+	return new Promise(resolve => setTimeout(() => resolve(), ms));
 }

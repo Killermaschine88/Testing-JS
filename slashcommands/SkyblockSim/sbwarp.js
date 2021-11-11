@@ -10,23 +10,23 @@ module.exports = {
 	cooldown: 10,
 	async execute(interaction, mclient) {
 		const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: interaction.user.id });
+		const player = await collection.findOne({ _id: interaction.user.id });
 
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription('Create a Profile using `/sb start`');
 			return interaction.editReply({ embeds: [noprofile] });
 		}
 
-		let activity = player.data.misc.is_fishing
+		const activity = player.data.misc.is_fishing
 			? 'fishing'
 			: player.data.misc.is_mining
-			? 'mining'
-			: player.data.misc.in_dungeon
-			? 'in a dungeon'
-			: '';
+				? 'mining'
+				: player.data.misc.in_dungeon
+					? 'in a dungeon'
+					: '';
 		if (activity) {
 			const activityEmbed = new Discord.MessageEmbed()
 				.setColor('RED')
@@ -36,14 +36,14 @@ module.exports = {
 			return interaction.editReply({ embeds: [activityEmbed] });
 		}
 
-		//Some Values
-		let type = '';
-		let island = '';
-		let location = '';
-		let combatxp = player.data.skills.combat;
-		let miningxp = player.data.skills.mining;
-		let foragingxp = player.data.skills.foraging;
-		let combatareas = ['Hub', "Spider's Den", 'Blazing Fortress', 'The End'];
+		// Some Values
+		let type = '',
+		 island = '',
+		 location = '',
+		 combatxp = player.data.skills.combat,
+		 miningxp = player.data.skills.mining,
+		 foragingxp = player.data.skills.foraging,
+		 combatareas = ['Hub', "Spider's Den", 'Blazing Fortress', 'The End'];
 
 		const start = new Discord.MessageEmbed()
 			.setTitle('Skyblock Simulator Warps')
@@ -62,7 +62,7 @@ module.exports = {
 				.setCustomId('mining')
 				.setLabel('Mining')
 				.setStyle('PRIMARY'),
-			/*new Discord.MessageButton()
+			/* new Discord.MessageButton()
           .setEmoji('852069714451759114')
           .setCustomId('farming')
           .setLabel('Farming')
@@ -72,7 +72,8 @@ module.exports = {
           .setCustomId('foraging')
           .setLabel('Foraging')
           .setStyle('PRIMARY'),*/
-			new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel').setStyle('DANGER')
+			new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel')
+				.setStyle('DANGER')
 		);
 
 		const menu = await interaction.editReply({
@@ -80,19 +81,19 @@ module.exports = {
 			components: [row],
 		});
 
-		const filter = (i) => {
+		const filter = i => {
 			i.deferUpdate();
 			return i.user.id === interaction.user.id;
 		};
 
-		//Decide what Skill the Area is
+		// Decide what Skill the Area is
 		await menu
 			.awaitMessageComponent({
 				filter,
 				componentType: 'BUTTON',
 				time: 60000,
 			})
-			.then((i) => {
+			.then(i => {
 				if (i.customId === 'combat') {
 					type = 'combat';
 				} else if (i.customId === 'mining') {
@@ -104,12 +105,11 @@ module.exports = {
 				} else {
 					const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
 					menu.edit({ embeds: [cancelled], components: [] });
-					return;
 				}
 			})
-			.catch((err) => menu.edit({ components: [] }));
+			.catch(err => menu.edit({ components: [] }));
 
-		//Main Menu for each of the Skills
+		// Main Menu for each of the Skills
 		if (type === 'combat') {
 			const combatembed = new Discord.MessageEmbed()
 				.setTitle('Skyblock Simulator Combat Islands')
@@ -118,22 +118,22 @@ module.exports = {
 				.setDescription('**Available Islands (Combat Level)**\nand found drops on the Islands')
 				.addField(
 					'Hub (0)',
-					`<:rotten_flesh:869900884409221191><:potatoe:869900884593762304><:carrot:869900884300165230>\n<:bone:869900884405002270><:arrow:869900884379832320>`,
+					'<:rotten_flesh:869900884409221191><:potatoe:869900884593762304><:carrot:869900884300165230>\n<:bone:869900884405002270><:arrow:869900884379832320>',
 					true
 				)
 				.addField(
 					'Spiders Den (1)',
-					`<:string:869908281215299635><:spider_eye:869908281341132830><:slimeball:869900884308549653>`,
+					'<:string:869908281215299635><:spider_eye:869908281341132830><:slimeball:869900884308549653>',
 					true
 				)
 				.addField(
 					'Blazing Fortress (5)',
-					`<:gold_nugget:869900883977183244><:gold:869126927011708929><:magma_cream:869900884144947201>\n<:ghast_tear:869900884337905684><:blaze_rod:869900884358860820><:bone:869900884405002270>\n<:coal:869126927062028298>`,
+					'<:gold_nugget:869900883977183244><:gold:869126927011708929><:magma_cream:869900884144947201>\n<:ghast_tear:869900884337905684><:blaze_rod:869900884358860820><:bone:869900884405002270>\n<:coal:869126927062028298>',
 					true
 				)
 				.addField(
 					'The End (12)',
-					`<:ender_pearl:869900884337913896><:eye_of_ender:869900884367257650><:arrow:869900884379832320>\n<:obsidian:869490639769853992><:bone:869900884405002270><:summoning_eye:869900884396638238>`,
+					'<:ender_pearl:869900884337913896><:eye_of_ender:869900884367257650><:arrow:869900884379832320>\n<:obsidian:869490639769853992><:bone:869900884405002270><:summoning_eye:869900884396638238>',
 					true
 				);
 
@@ -157,7 +157,8 @@ module.exports = {
 				.setCustomId('theend')
 				.setLabel('The End')
 				.setStyle('PRIMARY');
-			const b5 = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel').setStyle('DANGER');
+			const b5 = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel')
+				.setStyle('DANGER');
 
 			if (combatxp < 50) {
 				b2.setDisabled(true);
@@ -225,7 +226,8 @@ module.exports = {
 				.setCustomId('crystalhollows')
 				.setLabel('Crystal Hollows')
 				.setStyle('PRIMARY');
-			const b5 = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel').setStyle('DANGER');
+			const b5 = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel')
+				.setStyle('DANGER');
 
 			if (miningxp < 50) {
 				b1.setDisabled(true);
@@ -261,7 +263,7 @@ module.exports = {
 					componentType: 'BUTTON',
 					time: 60000,
 				})
-				.then((i) => {
+				.then(i => {
 					if (i.customId === 'hub') {
 						island = 'Hub';
 					} else if (i.customId === 'spidersden') {
@@ -273,10 +275,9 @@ module.exports = {
 					} else if (i.customId === 'cancel') {
 						const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
 						menu.edit({ embeds: [cancelled], components: [] });
-						return;
 					}
 				})
-				.catch((err) => menu.edit({ components: [] }));
+				.catch(err => menu.edit({ components: [] }));
 		} else if (type === 'mining') {
 			await menu
 				.awaitMessageComponent({
@@ -284,7 +285,7 @@ module.exports = {
 					componentType: 'BUTTON',
 					time: 60000,
 				})
-				.then((i) => {
+				.then(i => {
 					if (i.customId === 'coalmine') {
 						location = 'Coal Mine';
 					} else if (i.customId === 'goldmine') {
@@ -298,15 +299,14 @@ module.exports = {
 					} else if (i.customId === 'cancel') {
 						const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
 						menu.edit({ embeds: [cancelled], components: [] });
-						return;
 					}
 				})
-				.catch((err) => menu.edit({ components: [] }));
+				.catch(err => menu.edit({ components: [] }));
 		} else if (type === 'farming') {
 		} else if (type === 'foraging') {
 		}
 
-		//Different Area for Combat Islands
+		// Different Area for Combat Islands
 		if (combatareas.includes(island)) {
 			if (island === 'Hub') {
 				const hubwarp = new Discord.MessageEmbed()
@@ -332,7 +332,8 @@ module.exports = {
 					.setCustomId('highlevel')
 					.setLabel('Highlevel')
 					.setStyle('PRIMARY');
-				const b4 = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel').setStyle('DANGER');
+				const b4 = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel')
+					.setStyle('DANGER');
 
 				if (combatxp < 50) {
 					b2.setDisabled(true);
@@ -351,7 +352,7 @@ module.exports = {
 						componentType: 'BUTTON',
 						time: 60000,
 					})
-					.then((i) => {
+					.then(i => {
 						if (i.customId === 'graveyard') {
 							location = 'Graveyard';
 						} else if (i.customId === 'ruins') {
@@ -361,10 +362,9 @@ module.exports = {
 						} else {
 							const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
 							menu.edit({ embeds: [cancelled], components: [] });
-							return;
 						}
 					})
-					.catch((err) => menu.edit({ components: [] }));
+					.catch(err => menu.edit({ components: [] }));
 			} else if (island === "Spider's Den") {
 				const spiderwarp = new Discord.MessageEmbed()
 					.setTitle('Skyblock Simulator Hub Areas')
@@ -389,7 +389,8 @@ module.exports = {
 					.setCustomId('spidercave')
 					.setLabel('Spider Cave')
 					.setStyle('PRIMARY');
-				const b4 = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel').setStyle('DANGER');
+				const b4 = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel')
+					.setStyle('DANGER');
 
 				if (combatxp < 375) {
 					b2.setDisabled(true);
@@ -408,7 +409,7 @@ module.exports = {
 						componentType: 'BUTTON',
 						time: 60000,
 					})
-					.then((i) => {
+					.then(i => {
 						if (i.customId === 'lowerhill') {
 							location = 'Lower Spiders Hill';
 						} else if (i.customId === 'upperhill') {
@@ -418,10 +419,9 @@ module.exports = {
 						} else {
 							const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
 							menu.edit({ embeds: [cancelled], components: [] });
-							return;
 						}
 					})
-					.catch((err) => menu.edit({ components: [] }));
+					.catch(err => menu.edit({ components: [] }));
 			} else if (island === 'Blazing Fortress') {
 				const blazingwarp = new Discord.MessageEmbed()
 					.setTitle('Skyblock Simulator Blazing Fortress Areas')
@@ -446,7 +446,8 @@ module.exports = {
 					.setCustomId('lavafield')
 					.setLabel('Lava Field')
 					.setStyle('PRIMARY');
-				const b4 = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel').setStyle('DANGER');
+				const b4 = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel')
+					.setStyle('DANGER');
 
 				if (combatxp < 4425) {
 					b2.setDisabled(true);
@@ -465,7 +466,7 @@ module.exports = {
 						componentType: 'BUTTON',
 						time: 60000,
 					})
-					.then((i) => {
+					.then(i => {
 						if (i.customId === 'moltencastle') {
 							location = 'Molten Castle';
 						} else if (i.customId === 'moltenbridge') {
@@ -475,15 +476,14 @@ module.exports = {
 						} else {
 							const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
 							menu.edit({ embeds: [cancelled], components: [] });
-							return;
 						}
 					})
-					.catch((err) => menu.edit({ components: [] }));
+					.catch(err => menu.edit({ components: [] }));
 			} else if (island === 'The End') {
-				//Fix The End
+				// Fix The End
 			}
 		} else if (island === 'Deep Caverns') {
-			//Different Areas at the Deep Caverns
+			// Different Areas at the Deep Caverns
 			const cavernswarp = new Discord.MessageEmbed()
 				.setTitle('Skyblock Simulator Deep Caverns Areas')
 				.setFooter('Skyblock Simulator')
@@ -522,7 +522,8 @@ module.exports = {
 				.setCustomId('obsidiansanctuary')
 				.setLabel('Obsidian Sanctuary')
 				.setStyle('PRIMARY');
-			const b7 = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel').setStyle('DANGER');
+			const b7 = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel')
+				.setStyle('DANGER');
 
 			if (miningxp < 1925) {
 				b2.setDisabled(true);
@@ -557,7 +558,7 @@ module.exports = {
 					componentType: 'BUTTON',
 					time: 60000,
 				})
-				.then((i) => {
+				.then(i => {
 					if (i.customId === 'gunpowdermines') {
 						location = 'Gunpowder Mines';
 					} else if (i.customId === 'lapisquarry') {
@@ -573,13 +574,12 @@ module.exports = {
 					} else {
 						const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
 						menu.edit({ embeds: [cancelled], components: [] });
-						return;
 					}
 				})
-				.catch((err) => menu.edit({ components: [] }));
+				.catch(err => menu.edit({ components: [] }));
 		}
 
-		//Warping User to Location
+		// Warping User to Location
 		if (location) {
 			const confirm = new Discord.MessageEmbed()
 				.setTitle(`Travel to ${location}`)
@@ -587,8 +587,10 @@ module.exports = {
 				.setFooter('Skyblock Simulator')
 				.setDescription(`Are you sure you want to Travel to the **${location}**`);
 			const row = new Discord.MessageActionRow().addComponents(
-				new Discord.MessageButton().setCustomId('confirm').setLabel('Confirm').setStyle('SUCCESS'),
-				new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel').setStyle('DANGER')
+				new Discord.MessageButton().setCustomId('confirm').setLabel('Confirm')
+					.setStyle('SUCCESS'),
+				new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel')
+					.setStyle('DANGER')
 			);
 			// menu.edit({ embeds: [confirm], components: [row] })
 
@@ -601,7 +603,7 @@ module.exports = {
 						componentType: 'BUTTON',
 						time: 60000,
 					})
-					.then(async (i) => {
+					.then(async i => {
 						if (i.customId === 'confirm') {
 							await collection.updateOne(
 								{ _id: interaction.user.id },
@@ -619,10 +621,9 @@ module.exports = {
 								.setTitle('Cancelled Traveling')
 								.setColor('RED');
 							menu.edit({ embeds: [cancelled], components: [] });
-							return;
 						}
 					})
-					.catch((err) => menu.edit({ components: [] }));
+					.catch(err => menu.edit({ components: [] }));
 			} else {
 				await collection.updateOne(
 					{ _id: interaction.user.id },

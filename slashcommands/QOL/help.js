@@ -33,8 +33,7 @@ module.exports = {
 					.then(() => menu.react('👍'))
 					.then(() => menu.react('⚠️'));
 
-				const filter = (reaction, user) =>
-					['🤖', '🔧', '🎲', '🔨', '❓', '🏝️', '😎', '👍', '⚠️'].includes(reaction.emoji.name) &&
+				const filter = (reaction, user) => ['🤖', '🔧', '🎲', '🔨', '❓', '🏝️', '😎', '👍', '⚠️'].includes(reaction.emoji.name) &&
 					user.id === message.author.id;
 
 				const collector = menu.createReactionCollector({
@@ -42,14 +41,14 @@ module.exports = {
 					time: 60000,
 				});
 
-				collector.on('collect', (collected) => {
+				collector.on('collect', collected => {
 					const reaction = collected;
-					let embed = getEmbed(reaction.emoji);
+					const embed = getEmbed(reaction.emoji);
 					if (embed.valid) menu.edit({ embeds: [embed.embed] });
 				});
 
 				collector.on('end', () => {
-					//menu.reactions.removeAll()
+					// menu.reactions.removeAll()
 				});
 			}
 		} catch (error) {
@@ -71,7 +70,7 @@ module.exports = {
 				});
 			}
 
-			let embed = new Discord.MessageEmbed()
+			const embed = new Discord.MessageEmbed()
 				.setAuthor(`Help -> ${command.folder} -> ${command.name}`)
 				.setColor('616060');
 
@@ -93,7 +92,7 @@ module.exports = {
 };
 
 function getEmbed(emoji) {
-	let tempEmbed = new Discord.MessageEmbed();
+	const tempEmbed = new Discord.MessageEmbed();
 	tempEmbed.setFooter('help <Command Name> for a more detailed Command Info');
 	let type = '';
 
@@ -139,12 +138,12 @@ function getEmbed(emoji) {
 	}
 
 	if (type.length > 2) {
-		const commandFiles = fs.readdirSync(`./commands/${type}`).filter((file) => file.endsWith('.js'));
+		const commandFiles = fs.readdirSync(`./commands/${type}`).filter(file => file.endsWith('.js'));
 		const descriptions = [];
 
-		commandFiles.forEach((file) => {
+		commandFiles.forEach(file => {
 			const command = require(`../${type}/${file}`);
-			let currentCommand = [];
+			const currentCommand = [];
 			currentCommand.push(`\`${command.name.charAt(0).toUpperCase() + command.name.slice(1)}\``);
 			currentCommand.push('-');
 			currentCommand.push(command.description);
@@ -157,9 +156,8 @@ function getEmbed(emoji) {
 			embed: tempEmbed,
 			valid: true,
 		};
-	} else {
-		return {
-			valid: false,
-		};
 	}
+	return {
+		valid: false,
+	};
 }

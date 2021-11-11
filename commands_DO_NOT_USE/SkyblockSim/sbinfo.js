@@ -12,15 +12,13 @@ module.exports = {
 	cooldown: 10,
 	async execute(client, message, args, mclient) {
 		if (!args[0]) {
-			var id = message.member.id;
-		} else {
-			if (message.mentions.members.first()) {
-				var id = message.mentions.members.first().id;
-			} else var id = args[0];
-		}
+			var { id } = message.member;
+		} else if (message.mentions.members.first()) {
+			var { id } = message.mentions.members.first();
+		} else var id = args[0];
 
 		const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: id });
+		const player = await collection.findOne({ _id: id });
 
 		if (player === null) {
 			const nodata = new Discord.MessageEmbed().setColor('RED').setDescription(`No Profile found for <@${id}>`);
@@ -28,14 +26,14 @@ module.exports = {
 			return;
 		}
 
-		let mining = player.data.skills.mining;
-		let foraging = player.data.skills.foraging;
-		let enchanting = player.data.skills.enchanting;
-		let farming = player.data.skills.farming;
-		let combat = player.data.skills.combat;
-		let fishing = player.data.skills.fishing;
-		let alchemy = player.data.skills.alchemy;
-		let taming = player.data.skills.taming;
+		let { mining } = player.data.skills,
+		 { foraging } = player.data.skills,
+		 { enchanting } = player.data.skills,
+		 { farming } = player.data.skills,
+		 { combat } = player.data.skills,
+		 { fishing } = player.data.skills,
+		 { alchemy } = player.data.skills,
+		 { taming } = player.data.skills;
 
 		mining = getLevelByXp(mining);
 		foraging = getLevelByXp(foraging);
@@ -55,31 +53,31 @@ module.exports = {
 			fishing.level +
 			alchemy.level +
 			taming.level;
-		salevel = salevel / 7;
-		let sa = salevel.toFixed(2);
+		salevel /= 7;
+		const sa = salevel.toFixed(2);
 
 		let str = '';
 		if (player.data.inventory.combat.items === undefined) {
 			str = 'Empty';
 		} else {
 			for (item of player.data.inventory.combat.items) {
-				str += item.name + ': ' + item.amount + '\n';
+				str += `${item.name}: ${item.amount}\n`;
 			}
 		}
 
-		//Various Stats
-		let playerhealth = player.data.stats.health;
-		let playerdefense = player.data.stats.defense;
-		let playerdamage = player.data.stats.damage;
-		let playerstrength = player.data.stats.strength;
-		let playercritchance = player.data.stats.crit_chance;
-		let playercritdamage = player.data.stats.crit_damage;
-		let playermagicfind = player.data.stats.magic_find;
-		let playerseacreaturechance =
+		// Various Stats
+		const playerhealth = player.data.stats.health;
+		const playerdefense = player.data.stats.defense;
+		const playerdamage = player.data.stats.damage;
+		const playerstrength = player.data.stats.strength;
+		const playercritchance = player.data.stats.crit_chance;
+		const playercritdamage = player.data.stats.crit_damage;
+		const playermagicfind = player.data.stats.magic_find;
+		const playerseacreaturechance =
 			player.data.stats.sea_creature_chance +
 			player.data.equipment.fishing.armor.sea_creature_chance +
 			player.data.equipment.fishing.rod.sea_creature_chance;
-		let playerfishingspeed = player.data.equipment.fishing.rod.fishing_speed;
+		const playerfishingspeed = player.data.equipment.fishing.rod.fishing_speed;
 
 		const foundinfo = new Discord.MessageEmbed()
 			.setFooter('Skyblock Simulator')
@@ -100,10 +98,14 @@ module.exports = {
 			.addField('Location', `${player.data.misc.location}`, true);
 
 		const row = new Discord.MessageActionRow().addComponents(
-			new Discord.MessageButton().setCustomId('main').setLabel('Main').setStyle('PRIMARY'),
-			new Discord.MessageButton().setCustomId('inv').setLabel('Inventory').setStyle('PRIMARY'),
-			new Discord.MessageButton().setCustomId('slayer').setLabel('Slayer').setStyle('PRIMARY'),
-			new Discord.MessageButton().setCustomId('dungeons').setLabel('Dungeons').setStyle('PRIMARY')
+			new Discord.MessageButton().setCustomId('main').setLabel('Main')
+				.setStyle('PRIMARY'),
+			new Discord.MessageButton().setCustomId('inv').setLabel('Inventory')
+				.setStyle('PRIMARY'),
+			new Discord.MessageButton().setCustomId('slayer').setLabel('Slayer')
+				.setStyle('PRIMARY'),
+			new Discord.MessageButton().setCustomId('dungeons').setLabel('Dungeons')
+				.setStyle('PRIMARY')
 		);
 
 		const menu = await message.channel.send({
@@ -116,7 +118,7 @@ module.exports = {
 			time: 60000,
 		});
 
-		collector.on('collect', async (i) => {
+		collector.on('collect', async i => {
 			if (i.user.id === message.author.id) {
 				if (i.customId === 'main') {
 					await i.deferUpdate();
@@ -185,7 +187,7 @@ module.exports = {
 			}
 		});
 
-		collector.on('end', (collected) => {
+		collector.on('end', collected => {
 			menu.edit({ components: [] });
 		});
 	},
@@ -216,14 +218,14 @@ function getLevelByXp(xp, extra = {}) {
 		};
 	}
 
-	let xpTotal = 0;
-	let level = 0;
-	let uncappedLevel = 0;
+	let xpTotal = 0,
+	 level = 0,
+	 uncappedLevel = 0,
 
-	let xpForNext = Infinity;
+	 xpForNext = Infinity,
 
-	let levelCap = 1;
-	let maxLevel = 1;
+	 levelCap = 1,
+	 maxLevel = 1;
 
 	if (extra.cap) {
 		levelCap = extra.cap;
@@ -240,7 +242,7 @@ function getLevelByXp(xp, extra = {}) {
 	} else {
 		levelCap = Object.keys(xp_table)
 			.sort((a, b) => Number(a) - Number(b))
-			.map((a) => Number(a))
+			.map(a => Number(a))
 			.pop();
 	}
 
@@ -260,15 +262,15 @@ function getLevelByXp(xp, extra = {}) {
 		}
 	}
 
-	let xpCurrent = Math.floor(xp - xpTotal);
+	const xpCurrent = Math.floor(xp - xpTotal);
 
 	if (level < levelCap) {
 		xpForNext = Math.ceil(xp_table[level + 1]);
 	}
 
-	let progress = Math.max(0, Math.min(xpCurrent / xpForNext, 1));
+	const progress = Math.max(0, Math.min(xpCurrent / xpForNext, 1));
 
-	let levelWithProgress = getLevelWithProgress(xp, maxLevel, Object.values(xp_table));
+	const levelWithProgress = getLevelWithProgress(xp, maxLevel, Object.values(xp_table));
 
 	return {
 		xp,
@@ -286,10 +288,10 @@ function getLevelByXp(xp, extra = {}) {
 function getLevelWithProgress(experience, maxLevel, experienceGroup) {
 	let level = 0;
 
-	for (let toRemove of experienceGroup) {
+	for (const toRemove of experienceGroup) {
 		experience -= toRemove;
 		if (experience < 0) {
-			return Math.min(level + (1 - (experience * -1) / toRemove), maxLevel);
+			return Math.min(level + (1 - experience * -1 / toRemove), maxLevel);
 		}
 		level++;
 	}

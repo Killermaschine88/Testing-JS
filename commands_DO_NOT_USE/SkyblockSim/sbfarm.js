@@ -11,12 +11,12 @@ module.exports = {
 	aliases: ['sbgrind', 'sbf', 'sbg'],
 	cooldown: 5,
 	async execute(client, message, args, mclient) {
-		//Getting Info from Database
+		// Getting Info from Database
 		const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: message.author.id });
+		const player = await collection.findOne({ _id: message.author.id });
 
-		//Getting prefix
-		var gprefix = await prefixx.get(message.guild.id, { raw: false });
+		// Getting prefix
+		let gprefix = await prefixx.get(message.guild.id, { raw: false });
 		if (gprefix === null) gprefix = '.';
 
 		if (player === null) {
@@ -28,9 +28,9 @@ module.exports = {
 			return;
 		}
 
-		//Shorts for some Values
-		let location = player.data.misc.location;
-		let mf = player.data.skills.magic_find;
+		// Shorts for some Values
+		const { location } = player.data.misc;
+		const mf = player.data.skills.magic_find;
 
 		const start = new Discord.MessageEmbed()
 			.setColor('90EE90')
@@ -39,12 +39,12 @@ module.exports = {
 
 		const menu = await message.channel.send({ embeds: [start] });
 
-		//Settings a small wait time for "find Mobs"
-		//sleep(2000)
+		// Settings a small wait time for "find Mobs"
+		// sleep(2000)
 
-		//Failing to Find Mobs
-		let findmobs = Math.floor(Math.random() * (15 - 1) + 1);
-		let rolledmobs = Math.floor(Math.random() * (15 - 1) + 1);
+		// Failing to Find Mobs
+		const findmobs = Math.floor(Math.random() * (15 - 1) + 1);
+		const rolledmobs = Math.floor(Math.random() * (15 - 1) + 1);
 
 		if (findmobs === rolledmobs) {
 			const nomobsfound = new Discord.MessageEmbed()
@@ -55,18 +55,18 @@ module.exports = {
 			return;
 		}
 
-		//Amount of Mobs being killed
-		let mobkills = Math.floor(Math.random() * (4 - 1) + 1);
+		// Amount of Mobs being killed
+		const mobkills = Math.floor(Math.random() * (4 - 1) + 1);
 
-		//Normal Drops
-		let amount = Math.floor(Math.random() * (3 - 1) + 1);
-		let mobdrop = '';
+		// Normal Drops
+		const amount = Math.floor(Math.random() * (3 - 1) + 1);
+		let img = '',
 
-		//Some Variables needed
-		let mob = '';
-		let img = '';
+			// Some Variables needed
+		 mob = '',
+		 mobdrop = '';
 
-		//Deciding Mob Name, Drops, Image
+		// Deciding Mob Name, Drops, Image
 		if (location === 'Graveyard') {
 			mob = ['Zombie', 'Zombie Villager', 'Crypt Ghoul'];
 			mobdrop = lt.zombie.roll(mf);
@@ -117,22 +117,22 @@ module.exports = {
 			img = 'https://cdn.discordapp.com/attachments/841757730887827497/865215776332185630/unknown.png';
 		}
 
-		//Editing Database Values
+		// Editing Database Values
 		await collection.updateOne(
 			{ _id: message.author.id },
 			{ $inc: { 'data.misc.tkills': mobkills } },
 			{ upsert: true }
 		);
 
-		//Add Normal Drops
+		// Add Normal Drops
 		if (mobdrop != undefined) {
 			const updatePlayer = addItems(mobdrop, amount, player);
 
 			await collection.replaceOne({ _id: message.author.id }, updatePlayer);
 		}
 
-		//Deciding Mob Name that gets killed
-		let mobname = mob[Math.floor(Math.random() * mob.length)];
+		// Deciding Mob Name that gets killed
+		const mobname = mob[Math.floor(Math.random() * mob.length)];
 
 		const endembed = new Discord.MessageEmbed();
 		if (player.data.settings.imgshown === true) {
@@ -140,7 +140,7 @@ module.exports = {
 		}
 		endembed.setColor('90EE90');
 
-		let imgShown = player.data.settings.imgshown ? 'disable' : 'enable';
+		const imgShown = player.data.settings.imgshown ? 'disable' : 'enable';
 		endembed.setFooter(
 			`Skyblock Simulator\nIf you wish to ${imgShown} a picture of the area being shown, use ${gprefix}sbsettings img`
 		);
@@ -172,7 +172,7 @@ function addItems(mobdrop, amount, player) {
 	if (player.data.inventory.items.length === 0) {
 		player.data.inventory.items.push({
 			name: mobdrop,
-			amount: amount,
+			amount,
 		});
 		return player;
 	}
@@ -186,7 +186,7 @@ function addItems(mobdrop, amount, player) {
 
 	player.data.inventory.items.push({
 		name: mobdrop,
-		amount: amount,
+		amount,
 	});
 	return player;
 }

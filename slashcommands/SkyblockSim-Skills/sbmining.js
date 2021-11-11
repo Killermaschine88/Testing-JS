@@ -22,7 +22,7 @@ module.exports = {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription('Create a Profile using `/sb start`');
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
@@ -36,7 +36,7 @@ module.exports = {
 			return;
 		}
 
-		var validlocations = [
+		const validlocations = [
 			'Coal Mine',
 			'Gold Mine',
 			'Gunpowder Mines',
@@ -57,16 +57,16 @@ module.exports = {
 			return interaction.editReply({ embeds: [invalidarea] });
 		}
 
-		let ps = await playerStats(player);
+		const ps = await playerStats(player);
 
-		let cd = await getCooldown(ps);
-		let location = player.data.misc.location;
-		let ore = {
+		const cd = await getCooldown(ps);
+		const { location } = player.data.misc;
+		const ore = {
 			name: 'Cobblestone',
 			img: 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/a/a2/Bruchstein.png',
 		};
 
-		let embed = new Discord.MessageEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setTitle('Mine')
 			.setDescription(
 				`Pickaxe: **${player.data.equipment.mining.pickaxe.name}**\nMining Speed: **${ps.mining_speed}**\nMining Fortune: **${ps.mining_fortune}**`
@@ -75,7 +75,8 @@ module.exports = {
 			.setFooter('Skyblock Simulator')
 			.setColor('GREY');
 
-		const cancel = new Discord.MessageButton().setCustomId('cancel').setLabel('Stop Mining').setStyle('DANGER');
+		const cancel = new Discord.MessageButton().setCustomId('cancel').setLabel('Stop Mining')
+			.setStyle('DANGER');
 
 		const mine = new Discord.MessageButton()
 			.setCustomId('mine')
@@ -93,12 +94,12 @@ module.exports = {
 		const row = new Discord.MessageActionRow().addComponents(mine, cancel);
 		const row1 = new Discord.MessageActionRow().addComponents(mineoff, cancel);
 
-		let menu = await interaction.editReply({
+		const menu = await interaction.editReply({
 			embeds: [embed],
 			components: [row],
 		});
 
-		const filter = (i) => {
+		const filter = i => {
 			i.deferUpdate();
 			return i.user.id === interaction.user.id;
 		};
@@ -122,8 +123,8 @@ module.exports = {
 			{ upsert: true }
 		);
 
-		//Collector
-		collector.on('collect', async (i) => {
+		// Collector
+		collector.on('collect', async i => {
 			if (!validlocations.includes(player.data.misc.location) || player.data.misc.is_fishing == true) {
 				interaction.followUp({
 					content: 'You cheeky tried to multi grind Skills not with me :).',
@@ -133,7 +134,7 @@ module.exports = {
 			}
 
 			if (i.customId == 'mine') {
-				let ore = getOre(player, ps);
+				const ore = getOre(player, ps);
 				if (player.data.settings.imgshown == true) {
 					embed.setImage(ore.img);
 				}
@@ -162,8 +163,8 @@ module.exports = {
 			}
 		});
 
-		//Collector End
-		collector.on('end', async (collected) => {
+		// Collector End
+		collector.on('end', async collected => {
 			embed.setColor('RED');
 			embed.fields = [];
 			embed.addField('\u200b', 'Stopped Mining.');
@@ -180,7 +181,7 @@ module.exports = {
 };
 
 function sleep(ms) {
-	return new Promise((resolve) => setTimeout(() => resolve(), ms));
+	return new Promise(resolve => setTimeout(() => resolve(), ms));
 }
 
 function addItems(ore, player) {
@@ -209,13 +210,13 @@ function addItems(ore, player) {
 }
 
 function getOre(player, ps) {
-	let location = player.data.misc.location;
-	let ores = '';
-	let name = '';
-	let img = '';
-	let amount = '';
+	const { location } = player.data.misc;
+	let amount = '',
+	 img = '',
+	 name = '',
+	 ores = '';
 
-	//Get valid ores for area
+	// Get valid ores for area
 	if (location == 'Coal Mine') {
 		ores = ['Cobblestone', 'Coal'];
 	} else if (location == 'Gold Mine') {
@@ -260,10 +261,10 @@ function getOre(player, ps) {
 		];
 	}
 
-	//Generate Random Ore
-	let randore = ores[Math.floor(Math.random() * ores.length)];
+	// Generate Random Ore
+	const randore = ores[Math.floor(Math.random() * ores.length)];
 
-	//Decide whats choosen
+	// Decide whats choosen
 	if (randore == 'Cobblestone') {
 		name = 'Cobblestone';
 		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/a/a2/Bruchstein.png';
@@ -328,12 +329,12 @@ function getOre(player, ps) {
 		amount = 4;
 	}
 
-	//return data
+	// return data
 	return {
-		name: name,
-		img: img,
-		amount: amount,
-		xp: xp,
+		name,
+		img,
+		amount,
+		xp,
 	};
 }
 

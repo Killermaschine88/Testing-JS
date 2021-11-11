@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
 
-const loading = `847471618272002059`;
+const loading = '847471618272002059';
 
 module.exports = {
 	name: 'Weight',
@@ -12,9 +12,9 @@ module.exports = {
 	folder: 'Skyblock',
 	aliases: ['we'],
 	async execute(interaction) {
-		var ign = interaction.options.getString('ign');
+		let ign = interaction.options.getString('ign'),
 
-		var method = 'save';
+		 method = 'save';
 
 		ign = ign.replace(/\W/g, ''); // removes weird characters
 
@@ -26,14 +26,13 @@ module.exports = {
 			embeds: [waitembed],
 		});
 
-		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then((res) => {
+		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(res => {
 			if (res.status != 200) {
 				const nomcacc = new Discord.MessageEmbed()
 					.setDescription(`No Minecraft account found for \`${ign}\``)
 					.setColor('DC143C')
 					.setTimestamp();
 				waitingembed.edit({ embeds: [nomcacc] });
-				return;
 			}
 		}); // Test if IGN esists
 
@@ -64,7 +63,7 @@ module.exports = {
 			return;
 		}
 
-		//fix this shit
+		// fix this shit
 		if (apiData.data.dungeons == null) {
 			const nodungeonsfound = new Discord.MessageEmbed()
 				.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `https://sky.shiiyu.moe/stats/${ign}`)
@@ -89,14 +88,14 @@ module.exports = {
 				{
 					name: 'Skills',
 					value: [
-						`<:mining:852069714577719306> Mining`,
-						`<:foraging:852069714447695872> Foraging`,
-						`<:enchanting:852069714511659058> Enchanting`,
-						`<:farming:852069714451759114> Farming`,
-						`<:combat:852069714527911956> Combat`,
-						`<:fishing:852069714359877643> Fishing`,
-						`<:alchemy:852069714480988180> Alchemy`,
-						`<:taming:852069714493833227> Taming`,
+						'<:mining:852069714577719306> Mining',
+						'<:foraging:852069714447695872> Foraging',
+						'<:enchanting:852069714511659058> Enchanting',
+						'<:farming:852069714451759114> Farming',
+						'<:combat:852069714527911956> Combat',
+						'<:fishing:852069714359877643> Fishing',
+						'<:alchemy:852069714480988180> Alchemy',
+						'<:taming:852069714493833227> Taming',
 					].join('\n'),
 					inline: true,
 				},
@@ -164,10 +163,10 @@ module.exports = {
 				{
 					name: 'Slayer',
 					value: [
-						`<:rev:852892164559732806> Revenant Horror`,
-						`<:tara:852892164392222740> Tarantula Broodfather`,
-						`<:sven:852892164299423754> Sven Packmaster`,
-						`<:eman:854253314747924511> Voidgloom Seraph`,
+						'<:rev:852892164559732806> Revenant Horror',
+						'<:tara:852892164392222740> Tarantula Broodfather',
+						'<:sven:852892164299423754> Sven Packmaster',
+						'<:eman:854253314747924511> Voidgloom Seraph',
 					].join('\n'),
 					inline: true,
 				},
@@ -220,12 +219,12 @@ module.exports = {
 				{
 					name: 'Dungeons',
 					value: [
-						`<:catacombs:854399510951624775> Catacombs`,
-						`<:healer:852079613001990175> Healer`,
-						`<:mage:852079612699607072> Mage`,
-						`<:berserker:852079613052059658> Berserker`,
-						`<:archer:852079613042491402> Archer`,
-						`<:tank:852079613051666472> Tank`,
+						'<:catacombs:854399510951624775> Catacombs',
+						'<:healer:852079613001990175> Healer',
+						'<:mage:852079612699607072> Mage',
+						'<:berserker:852079613052059658> Berserker',
+						'<:archer:852079613042491402> Archer',
+						'<:tank:852079613051666472> Tank',
 					].join('\n'),
 					inline: true,
 				},
@@ -312,6 +311,6 @@ async function getTrueIgn(ign) {
 }
 
 function toFixed(num) {
-	var re = new RegExp('^-?\\d+(?:.\\d{0,' + (2 || -1) + '})?');
+	const re = new RegExp(`^-?\\d+(?:.\\d{0,${2 || -1}})?`);
 	return num.toString().match(re)[0];
 }

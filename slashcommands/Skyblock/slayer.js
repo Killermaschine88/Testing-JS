@@ -9,9 +9,9 @@ module.exports = {
 	folder: 'Skyblock',
 	aliases: ['sl'],
 	async execute(interaction) {
-		var ign = interaction.options.getString('ign');
+		let ign = interaction.options.getString('ign'),
 
-		var method = 'save';
+		 method = 'save';
 
 		ign = ign.replace(/\W/g, ''); // removes weird characters
 
@@ -23,14 +23,13 @@ module.exports = {
 			embeds: [waitembed],
 		});
 
-		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then((res) => {
+		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(res => {
 			if (res.status != 200) {
 				const nomcacc = new Discord.MessageEmbed()
 					.setDescription(`No Minecraft account found for \`${ign}\``)
 					.setColor('DC143C')
 					.setTimestamp();
 				waitingembed.edit({ embeds: [nomcacc] });
-				return;
 			}
 		}); // Test if IGN esists
 
@@ -41,49 +40,50 @@ module.exports = {
 
 		if (apiData.status != 200) {
 			return waitingembed.edit({
-				embeds: [new Discord.MessageEmbed().setDescription(apiData.reason).setColor('DC143C').setTimestamp()],
+				embeds: [new Discord.MessageEmbed().setDescription(apiData.reason).setColor('DC143C')
+					.setTimestamp()],
 			});
 		}
 
-		//all needed calculations
+		// all needed calculations
 		const rxp = apiData.data.slayers.bosses.revenant.experience;
 		let rrxp = Math.floor(rxp / 1000);
 		if (rrxp > 999) {
-			rrxp = Math.floor(rxp / 1000000) + '.' + Math.floor((rxp % 1000000) / 1000) + 'M';
+			rrxp = `${Math.floor(rxp / 1000000)}.${Math.floor(rxp % 1000000 / 1000)}M`;
 		} else {
-			rrxp = rrxp + 'K';
+			rrxp += 'K';
 		}
 
 		const txp = apiData.data.slayers.bosses.tarantula.experience;
 		let ttxp = Math.floor(txp / 1000);
 		if (ttxp > 999) {
-			ttxp = Math.floor(txp / 1000000) + '.' + Math.floor((txp % 1000000) / 1000) + 'M';
+			ttxp = `${Math.floor(txp / 1000000)}.${Math.floor(txp % 1000000 / 1000)}M`;
 		} else {
-			ttxp = ttxp + 'K';
+			ttxp += 'K';
 		}
 
 		const sxp = apiData.data.slayers.bosses.sven.experience;
 		let ssxp = Math.floor(sxp / 1000);
 		if (ssxp > 999) {
-			ssxp = Math.floor(sxp / 1000000) + '.' + Math.floor((sxp % 1000000) / 1000) + 'M';
+			ssxp = `${Math.floor(sxp / 1000000)}.${Math.floor(sxp % 1000000 / 1000)}M`;
 		} else {
-			ssxp = ssxp + 'K';
+			ssxp += 'K';
 		}
 
 		const exp = apiData.data.slayers.bosses.enderman.experience;
 		let eexp = Math.floor(exp / 1000);
 		if (eexp > 999) {
-			eexp = Math.floor(exp / 1000000) + '.' + Math.floor((exp % 1000000) / 1000) + 'M';
+			eexp = `${Math.floor(exp / 1000000)}.${Math.floor(exp % 1000000 / 1000)}M`;
 		} else {
-			eexp = eexp + 'K';
+			eexp += 'K';
 		}
 
 		const totalxp = apiData.data.slayers.total_experience;
 		let ttotalxp = Math.floor(totalxp / 1000);
 		if (ttotalxp > 999) {
-			ttotalxp = Math.floor(totalxp / 1000000) + '.' + Math.floor((totalxp % 1000000) / 1000) + 'M';
+			ttotalxp = `${Math.floor(totalxp / 1000000)}.${Math.floor(totalxp % 1000000 / 1000)}M`;
 		} else {
-			ttotalxp = ttotalxp + 'K';
+			ttotalxp += 'K';
 		}
 
 		const rlevel = apiData.data.slayers.bosses.revenant.level;
@@ -174,7 +174,6 @@ module.exports = {
 			);
 
 		waitingembed.edit({ embeds: [slayerembed] });
-		return;
 	},
 };
 
@@ -239,6 +238,6 @@ async function getTrueIgn(ign) {
 }
 
 function toFixed(num) {
-	var re = new RegExp('^-?\\d+(?:.\\d{0,' + (2 || -1) + '})?');
+	const re = new RegExp(`^-?\\d+(?:.\\d{0,${2 || -1}})?`);
 	return num.toString().match(re)[0];
 }

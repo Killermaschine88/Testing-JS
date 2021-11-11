@@ -10,7 +10,7 @@ module.exports = {
 	cooldown: 10,
 	async execute(interaction, mclient) {
 		const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: interaction.user.id });
+		const player = await collection.findOne({ _id: interaction.user.id });
 
 		const start = new Discord.MessageEmbed()
 			.setColor('90EE90')
@@ -18,7 +18,7 @@ module.exports = {
 
 		const menu = await interaction.editReply({ embeds: [start] });
 
-		let profiles = [
+		const profiles = [
 			'🍎 Apple',
 			'🍌 Banana',
 			'🫐 Blueberry',
@@ -28,7 +28,7 @@ module.exports = {
 			'🥝 Kiwi',
 			'🍋 Lemon',
 		];
-		let profilename = profiles[Math.floor(Math.random() * profiles.length)];
+		const profilename = profiles[Math.floor(Math.random() * profiles.length)];
 
 		let starttime = interaction.createdTimestamp / 1000;
 		starttime = starttime.toFixed();
@@ -67,7 +67,7 @@ module.exports = {
 							},
 							inventory: {
 								items: [
-									//Empty cause dropped Items go here
+									// Empty cause dropped Items go here
 								],
 								armor: [
 									{
@@ -95,7 +95,7 @@ module.exports = {
 									},
 								],
 								talisman: [
-									//Empty as talismans arent set to come yet
+									// Empty as talismans arent set to come yet
 								],
 							},
 							slayer: {
@@ -108,7 +108,7 @@ module.exports = {
 								wolfkills: 0,
 								endermankills: 0,
 							},
-							/*slayer: {
+							/* slayer: {
               zombie: {
 xp: 0, kills: 0
               },
@@ -209,19 +209,18 @@ xp: 0, kills: 0
 				.setColor('90EE90')
 				.setTitle('<a:yes:847468695772987423> Profile Created')
 				.setDescription(
-					`To start Grinding Coins use \`/sb grind\`\nTo view your Profile or someone else's Profile use \`/sb info (@User)\`\n**For a Wiki including most Info check \`/sb wiki\`**`
+					'To start Grinding Coins use `/sb grind`\nTo view your Profile or someone else\'s Profile use `/sb info (@User)`\n**For a Wiki including most Info check `/sb wiki`**'
 				)
 				.setFooter("Skyblock Simulator\nValues in () aren't needed");
 
 			menu.edit({ embeds: [created] });
-			return;
 		} else {
 			const profilealready = new Discord.MessageEmbed()
 				.setFooter("Values in () aren't needed")
 				.setColor('ORANGE')
 				.setTitle('You already have a Profile')
 				.setDescription(
-					`Use \`/sb info\` to see your Stats, \`/sb grind\` to earn Money and \`/sb wiki\` for Info about the Simulator.`
+					'Use `/sb info` to see your Stats, `/sb grind` to earn Money and `/sb wiki` for Info about the Simulator.'
 				)
 				.setFooter('Skyblock Simulator');
 			menu.edit({ embeds: [profilealready] });
