@@ -1,14 +1,14 @@
-"use strict";
-const Discord = require("discord.js");
-const fs = require("fs");
+'use strict';
+const Discord = require('discord.js');
+const fs = require('fs');
 const { token } = process.env;
-const keepAlive = require("./constants/Bot/keepAlive.js");
+const keepAlive = require('./constants/Bot/keepAlive.js');
 
 const client = new Discord.Client({
-	intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS"],
+	intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'],
 });
 
-const { MongoClient } = require("mongodb");
+const { MongoClient } = require('mongodb');
 const mClient = new MongoClient(process.env.uri, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
@@ -79,12 +79,12 @@ client.cooldowns = new Discord.Collection();
 client.slashcommands = new Discord.Collection();
 
 // Slash Command Loader
-const slashcommandFolders = fs.readdirSync("./slashcommands");
+const slashcommandFolders = fs.readdirSync('./slashcommands');
 
 for (const folder of slashcommandFolders) {
 	const commandFiles = fs
 		.readdirSync(`./slashcommands/${folder}`)
-		.filter(file => file.endsWith(".js"));
+		.filter(file => file.endsWith('.js'));
 
 	for (const file of commandFiles) {
 		const command = require(`./slashcommands/${folder}/${file}`);
@@ -92,12 +92,12 @@ for (const folder of slashcommandFolders) {
 	}
 }
 
-const commandFolders = fs.readdirSync("./commands_DO_NOT_USE");
+const commandFolders = fs.readdirSync('./commands_DO_NOT_USE');
 
 for (const folder of commandFolders) {
 	const commandFiles = fs
 		.readdirSync(`./commands_DO_NOT_USE/${folder}`)
-		.filter(file => file.endsWith(".js"));
+		.filter(file => file.endsWith('.js'));
 
 	for (const file of commandFiles) {
 		const command = require(`./commands_DO_NOT_USE/${folder}/${file}`);
@@ -107,8 +107,8 @@ for (const folder of commandFolders) {
 
 // Event Handler
 const eventFiles = fs
-	.readdirSync("./events")
-	.filter(file => file.endsWith(".js"));
+	.readdirSync('./events')
+	.filter(file => file.endsWith('.js'));
 
 for (const file of eventFiles) {
 	const event = require(`./events/${file}`);

@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const fetch = require("node-fetch");
+const Discord = require('discord.js');
+const fetch = require('node-fetch');
 
 module.exports = {
-	name: "Skills",
-	description: "Shows the Users Skills.",
-	usage: "skills (IGN)",
-	perms: "None",
-	folder: "Skyblock",
-	aliases: ["s"],
+	name: 'Skills',
+	description: 'Shows the Users Skills.',
+	usage: 'skills (IGN)',
+	perms: 'None',
+	folder: 'Skyblock',
+	aliases: ['s'],
 	async execute(client, message, args) {
 		if (!args[0]) {
 			var ign = message.member.displayName;
@@ -15,10 +15,10 @@ module.exports = {
 			var ign = message.mentions.members.first().displayName;
 		} else var ign = args[0]; // Gets IGN
 
-		let method = "save";
+		let method = 'save';
 		if (args[1]) method = args[1];
 
-		ign = ign.replace(/\W/g, ""); // removes weird characters
+		ign = ign.replace(/\W/g, ''); // removes weird characters
 
 		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(
 			res => {
@@ -29,7 +29,7 @@ module.exports = {
 								.setDescription(
 									`No Minecraft account found for \`${ign}\``
 								)
-								.setColor("DC143C")
+								.setColor('DC143C')
 								.setTimestamp(),
 						],
 					});
@@ -38,8 +38,8 @@ module.exports = {
 		); // Test if IGN esists
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription("Checking for Player Data . . .")
-			.setColor("ORANGE");
+			.setDescription('Checking for Player Data . . .')
+			.setColor('ORANGE');
 
 		const waitingembed = await message.channel.send({
 			embeds: [waitembed],
@@ -53,7 +53,7 @@ module.exports = {
 				embeds: [
 					new Discord.MessageEmbed()
 						.setDescription(apiData.reason)
-						.setColor("DC143C")
+						.setColor('DC143C')
 						.setTimestamp(),
 				],
 			});
@@ -71,9 +71,9 @@ module.exports = {
 							`https://sky.shiiyu.moe/stats/${ign}`
 						)
 						.setDescription(
-							"You currently have skills API disabled, please enable it in the skyblock menu and try again"
+							'You currently have skills API disabled, please enable it in the skyblock menu and try again'
 						)
-						.setColor("DC143C")
+						.setColor('DC143C')
 						.setTimestamp(),
 				],
 			});
@@ -107,7 +107,7 @@ module.exports = {
 					}M`;
 			}
 		} else {
-			ttotalxp += "K";
+			ttotalxp += 'K';
 		}
 
 		const mixp = apiData.data.skills.mining.experience;
@@ -119,7 +119,7 @@ module.exports = {
 					Math.floor(mixp % 1000000 / 10000)
 				}M`;
 		} else {
-			tmixp += "K";
+			tmixp += 'K';
 		}
 
 		const foxp = apiData.data.skills.foraging.experience;
@@ -131,7 +131,7 @@ module.exports = {
 					Math.floor(foxp % 1000000 / 10000)
 				}M`;
 		} else {
-			tfoxp += "K";
+			tfoxp += 'K';
 		}
 
 		const enxp = apiData.data.skills.enchanting.experience;
@@ -143,7 +143,7 @@ module.exports = {
 					Math.floor(enxp % 1000000 / 10000)
 				}M`;
 		} else {
-			tenxp += "K";
+			tenxp += 'K';
 		}
 
 		const faxp = apiData.data.skills.farming.experience;
@@ -155,7 +155,7 @@ module.exports = {
 					Math.floor(faxp % 1000000 / 10000)
 				}M`;
 		} else {
-			tfaxp += "K";
+			tfaxp += 'K';
 		}
 
 		const coxp = apiData.data.skills.combat.experience;
@@ -167,7 +167,7 @@ module.exports = {
 					Math.floor(coxp % 1000000 / 10000)
 				}M`;
 		} else {
-			tcoxp += "K";
+			tcoxp += 'K';
 		}
 
 		const fixp = apiData.data.skills.fishing.experience;
@@ -179,7 +179,7 @@ module.exports = {
 					Math.floor(fixp % 1000000 / 10000)
 				}M`;
 		} else {
-			tfixp += "K";
+			tfixp += 'K';
 		}
 
 		const alxp = apiData.data.skills.alchemy.experience;
@@ -191,7 +191,7 @@ module.exports = {
 					Math.floor(alxp % 1000000 / 10000)
 				}M`;
 		} else {
-			talxp += "K";
+			talxp += 'K';
 		}
 
 		const taxp = apiData.data.skills.taming.experience;
@@ -203,14 +203,14 @@ module.exports = {
 					Math.floor(taxp % 1000000 / 10000)
 				}M`;
 		} else {
-			ttaxp += "K";
+			ttaxp += 'K';
 		}
 
 		return waitingembed.edit({
 			embeds: [
 				new Discord.MessageEmbed()
 					.setTitle(`Skill Data for ${ign}`)
-					.setColor("7CFC00")
+					.setColor('7CFC00')
 					.setAuthor(
 						ign,
 						`https://cravatar.eu/helmavatar/${ign}/600.png`,
@@ -224,56 +224,56 @@ module.exports = {
 					)
 					.addFields(
 						{
-							name: "<:mining:852069714577719306> Mining",
+							name: '<:mining:852069714577719306> Mining',
 							value: `Level: **${toFixed(
 								apiData.data.skills.mining.level
 							)}**\nTotal XP: **${tmixp}**`,
 							inline: true,
 						},
 						{
-							name: "<:foraging:852069714447695872> Foraging",
+							name: '<:foraging:852069714447695872> Foraging',
 							value: `Level: **${toFixed(
 								apiData.data.skills.foraging.level
 							)}**\nTotal XP: **${tfoxp}**`,
 							inline: true,
 						},
 						{
-							name: "<:enchanting:852069714511659058> Enchanting",
+							name: '<:enchanting:852069714511659058> Enchanting',
 							value: `Level: **${toFixed(
 								apiData.data.skills.enchanting.level
 							)}**\nTotal XP: **${tenxp}**`,
 							inline: true,
 						},
 						{
-							name: "<:farming:852069714451759114> Farming",
+							name: '<:farming:852069714451759114> Farming',
 							value: `Level: **${toFixed(
 								apiData.data.skills.farming.level
 							)}**\nTotal XP: **${tfaxp}**`,
 							inline: true,
 						},
 						{
-							name: "<:combat:852069714527911956> Combat",
+							name: '<:combat:852069714527911956> Combat',
 							value: `Level: **${toFixed(
 								apiData.data.skills.combat.level
 							)}**\nTotal XP: **${tcoxp}**`,
 							inline: true,
 						},
 						{
-							name: "<:fishing:852069714359877643> Fishing",
+							name: '<:fishing:852069714359877643> Fishing',
 							value: `Level: **${toFixed(
 								apiData.data.skills.fishing.level
 							)}**\nTotal XP: **${tfixp}**`,
 							inline: true,
 						},
 						{
-							name: "<:alchemy:852069714480988180> Alchemy",
+							name: '<:alchemy:852069714480988180> Alchemy',
 							value: `Level: **${toFixed(
 								apiData.data.skills.alchemy.level
 							)}**\nTotal XP: **${talxp}**`,
 							inline: true,
 						},
 						{
-							name: "<:taming:852069714493833227> Taming",
+							name: '<:taming:852069714493833227> Taming',
 							value: `Level: **${toFixed(
 								apiData.data.skills.taming.level
 							)}**\nTotal XP: **${ttaxp}**`,
@@ -294,8 +294,8 @@ async function getUUID(ign) {
 }
 
 async function getApiData(ign, method) {
-	delete require.cache[require.resolve("../../config.json")];
-	const config = require("../../config.json");
+	delete require.cache[require.resolve('../../config.json')];
+	const config = require('../../config.json');
 
 	const UUID = await getUUID(ign);
 	const response = await fetch(

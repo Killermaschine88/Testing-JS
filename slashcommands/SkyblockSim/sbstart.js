@@ -1,32 +1,32 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 
 module.exports = {
-	name: "sbstart",
-	description: "Creates your Profile for Skyblock Simulator",
-	usage: "sbstart",
-	perms: "None",
-	folder: "SkyblockSim",
-	aliases: ["sbcreate"],
+	name: 'sbstart',
+	description: 'Creates your Profile for Skyblock Simulator',
+	usage: 'sbstart',
+	perms: 'None',
+	folder: 'SkyblockSim',
+	aliases: ['sbcreate'],
 	cooldown: 10,
 	async execute(interaction, mclient) {
-		const collection = mclient.db("SkyblockSim").collection("Players");
+		const collection = mclient.db('SkyblockSim').collection('Players');
 		const player = await collection.findOne({ _id: interaction.user.id });
 
 		const start = new Discord.MessageEmbed()
-			.setColor("90EE90")
-			.setDescription("<a:wait:847471618272002059> Creating Profile");
+			.setColor('90EE90')
+			.setDescription('<a:wait:847471618272002059> Creating Profile');
 
 		const menu = await interaction.editReply({ embeds: [start] });
 
 		const profiles = [
-			"🍎 Apple",
-			"🍌 Banana",
-			"🫐 Blueberry",
-			"🥥 Coconut",
-			"🥒 Cucumber",
-			"🍇 Grapes",
-			"🥝 Kiwi",
-			"🍋 Lemon",
+			'🍎 Apple',
+			'🍌 Banana',
+			'🫐 Blueberry',
+			'🥥 Coconut',
+			'🥒 Cucumber',
+			'🍇 Grapes',
+			'🥝 Kiwi',
+			'🍋 Lemon',
 		];
 		const profilename = profiles[Math.floor(Math.random() * profiles.length)];
 
@@ -71,7 +71,7 @@ module.exports = {
 								],
 								armor: [
 									{
-										name: "Naked",
+										name: 'Naked',
 										recombobulated: false,
 										health: 0,
 										defense: 0,
@@ -80,18 +80,18 @@ module.exports = {
 										crit_damage: 0,
 										magic_find: 0,
 										sea_creature_chance: 0,
-										reforge: "None",
+										reforge: 'None',
 									},
 								],
 								sword: [
 									{
-										name: "Fist",
+										name: 'Fist',
 										recombobulated: false,
 										damage: 0,
 										strength: 0,
 										crit_chance: 0,
 										crit_damage: 0,
-										reforge: "None",
+										reforge: 'None',
 									},
 								],
 								talisman: [
@@ -126,11 +126,11 @@ xp: 0, kills: 0
 								xp: 0,
 								total_runs: 0,
 								class: {
-									selected: { name: "Assassin", xp: 0 },
+									selected: { name: 'Assassin', xp: 0 },
 									available: {
-										assassin: { name: "Assassin", xp: 0 },
-										berserker: { name: "Berserker", xp: 0 },
-										tank: { name: "Tank", xp: 0 },
+										assassin: { name: 'Assassin', xp: 0 },
+										berserker: { name: 'Berserker', xp: 0 },
+										tank: { name: 'Tank', xp: 0 },
 									},
 								},
 							},
@@ -141,16 +141,16 @@ xp: 0, kills: 0
 							equipment: {
 								combat: {
 									sword: {
-										name: "Fist",
+										name: 'Fist',
 										damage: 0,
 										strength: 0,
 										crit_chance: 0,
 										crit_damage: 0,
 										recombobulated: false,
-										reforge: "None",
+										reforge: 'None',
 									},
 									armor: {
-										name: "Naked",
+										name: 'Naked',
 										health: 0,
 										defense: 0,
 										strength: 0,
@@ -159,30 +159,30 @@ xp: 0, kills: 0
 										magic_find: 0,
 										sea_creature_chance: 0,
 										recombobulated: false,
-										reforge: "None",
+										reforge: 'None',
 									},
 								},
 								fishing: {
 									rod: {
-										name: "Fishing Rod",
+										name: 'Fishing Rod',
 										sea_creature_chance: 0,
 										fishing_speed: 0,
-										reforge: "None",
+										reforge: 'None',
 										recombobulated: false,
 									},
 								},
 								mining: {
 									pickaxe: {
-										name: "Wood Pickaxe",
+										name: 'Wood Pickaxe',
 										mining_speed: 0,
 										mining_fortune: 0,
-										reforge: "None",
+										reforge: 'None',
 										recombobulated: false,
 									},
 								},
 							},
 							misc: {
-								location: "Graveyard",
+								location: 'Graveyard',
 								is_fishing: false,
 								is_mining: false,
 								in_dungeon: false,
@@ -204,10 +204,10 @@ xp: 0, kills: 0
 
 			const created = new Discord.MessageEmbed()
 				.setImage(
-					"https://cdn.discordapp.com/attachments/860131688385478666/865211353491570708/maxresdefault.png"
+					'https://cdn.discordapp.com/attachments/860131688385478666/865211353491570708/maxresdefault.png'
 				)
-				.setColor("90EE90")
-				.setTitle("<a:yes:847468695772987423> Profile Created")
+				.setColor('90EE90')
+				.setTitle('<a:yes:847468695772987423> Profile Created')
 				.setDescription(
 					"To start Grinding Coins use `/sb grind`\nTo view your Profile or someone else's Profile use `/sb info (@User)`\n**For a Wiki including most Info check `/sb wiki`**"
 				)
@@ -217,12 +217,12 @@ xp: 0, kills: 0
 		} else {
 			const profilealready = new Discord.MessageEmbed()
 				.setFooter("Values in () aren't needed")
-				.setColor("ORANGE")
-				.setTitle("You already have a Profile")
+				.setColor('ORANGE')
+				.setTitle('You already have a Profile')
 				.setDescription(
-					"Use `/sb info` to see your Stats, `/sb grind` to earn Money and `/sb wiki` for Info about the Simulator."
+					'Use `/sb info` to see your Stats, `/sb grind` to earn Money and `/sb wiki` for Info about the Simulator.'
 				)
-				.setFooter("Skyblock Simulator");
+				.setFooter('Skyblock Simulator');
 			menu.edit({ embeds: [profilealready] });
 		}
 	},

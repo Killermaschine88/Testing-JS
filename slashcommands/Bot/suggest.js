@@ -1,21 +1,21 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 
 module.exports = {
-	name: "suggest",
-	description: "Sends the Bots Invite Link",
-	usage: "invite",
-	perms: "None",
-	folder: "Bot",
+	name: 'suggest',
+	description: 'Sends the Bots Invite Link',
+	usage: 'invite',
+	perms: 'None',
+	folder: 'Bot',
 	aliases: [],
 	cooldown: 60,
 	execute: interaction => {
-		const input = interaction.options.getString("suggestion");
+		const input = interaction.options.getString('suggestion');
 
 		const suggested = new Discord.MessageEmbed()
-			.setTitle("Suggestion sent")
-			.setColor("GREEN")
+			.setTitle('Suggestion sent')
+			.setColor('GREEN')
 			.setDescription(
-				"To see your suggestion join my [Support Server](https://discord.gg/Ca6XpTRQaR) and check (input channel)"
+				'To see your suggestion join my [Support Server](https://discord.gg/Ca6XpTRQaR) and check (input channel)'
 			);
 
 		interaction.editReply({ embeds: [suggested] });
@@ -26,12 +26,12 @@ module.exports = {
 			.setFooter(`${interaction.user.id}`);
 
 		interaction.client.channels
-			.fetch("906928690640879716")
+			.fetch('906928690640879716')
 			.then(channel => channel.send({ embeds: [suggestembed] }).then(
-				msg => msg.react("👍") &&
-						msg.react("👎") &&
+				msg => msg.react('👍') &&
+						msg.react('👎') &&
 						msg.startThread({
-							name: "Suggestion",
+							name: 'Suggestion',
 							// autoArchiveDuration: 60,
 							// reason: 'Needed a separate thread f',
 						})

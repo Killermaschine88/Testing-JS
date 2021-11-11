@@ -1,32 +1,32 @@
-const { MessageButton, MessageActionRow, MessageEmbed } = require("discord.js");
-const playerStats = require("../../constants/Simulator/Functions/playerStats.js");
-const classLevel = require("../../constants/Simulator/Functions/dungeonlevel.js");
-const skillLevel = require("../../constants/Simulator/Functions/skilllvl.js");
-const lt = require("../../constants/Simulator/LootTables/loottables.js");
-const dungloot = require("../../constants/Simulator/Json/dungeonloot.json");
+const { MessageButton, MessageActionRow, MessageEmbed } = require('discord.js');
+const playerStats = require('../../constants/Simulator/Functions/playerStats.js');
+const classLevel = require('../../constants/Simulator/Functions/dungeonlevel.js');
+const skillLevel = require('../../constants/Simulator/Functions/skilllvl.js');
+const lt = require('../../constants/Simulator/LootTables/loottables.js');
+const dungloot = require('../../constants/Simulator/Json/dungeonloot.json');
 
 module.exports = {
-	name: "sbdungeons",
-	description: "Settings for SkyblockSim",
-	usage: "sbsettings (Setting Name)",
-	perms: "None",
-	folder: "SkyblockSim",
+	name: 'sbdungeons',
+	description: 'Settings for SkyblockSim',
+	usage: 'sbsettings (Setting Name)',
+	perms: 'None',
+	folder: 'SkyblockSim',
 	aliases: [],
 	cooldown: 10,
 	async execute(interaction, mclient) {
 		const movePlayer = (movement, ignoreEvent) => {
 			const [x, y] = location;
 
-			if (movement === "up") {
+			if (movement === 'up') {
 				var a = x - 1;
 				var b = y;
-			} else if (movement === "left") {
+			} else if (movement === 'left') {
 				var a = x;
 				var b = y - 1;
-			} else if (movement === "right") {
+			} else if (movement === 'right') {
 				var a = x;
 				var b = y + 1;
-			} else if (movement === "down") {
+			} else if (movement === 'down') {
 				var a = x + 1;
 				var b = y;
 			}
@@ -36,10 +36,10 @@ module.exports = {
 				const noButtonedit = true;
 				const crashembed = new MessageEmbed()
 					.addField(
-						"Dungeon Run Crashed",
+						'Dungeon Run Crashed',
 						"**Reason:**\nUser spammed Button.\nIn order to prevent this don't spam Buttons so the Bot has time to respond."
 					)
-					.setColor("RED");
+					.setColor('RED');
 				return interaction.followUp({
 					embeds: [crashembed],
 					ephemeral: true,
@@ -63,7 +63,7 @@ module.exports = {
 		};
 		const mapArray = () => {
 			let index = 0,
-			 string = "";
+			 string = '';
 			for (const row of map) {
 				for (const item of row) {
 					index++;
@@ -76,7 +76,7 @@ module.exports = {
 					else if (item == 4) string += enemy;
 					else if (item == 6) string += door;
 					// reset the row
-					if (index == map[0].length) index = 0, string += "\n";
+					if (index == map[0].length) index = 0, string += '\n';
 				}
 			}
 			return string;
@@ -89,10 +89,10 @@ module.exports = {
 				const noButtonedit = true;
 				const crashembed = new MessageEmbed()
 					.addField(
-						"Dungeon Run Crashed",
+						'Dungeon Run Crashed',
 						"**Reason:**\nUser spammed Button.\nIn order to prevent this don't spam Buttons so the Bot has time to respond."
 					)
-					.setColor("RED");
+					.setColor('RED');
 				return interaction.followUp({
 					embeds: [crashembed],
 					ephemeral: true,
@@ -107,13 +107,13 @@ module.exports = {
 			if (!oldX || !upX || !downX) return false;
 
 			// Check if enemy is on the right
-			if (oldX[y + 1] == 4) return [true, "right"];
+			if (oldX[y + 1] == 4) return [true, 'right'];
 			// Check if enemy is on the left
-			if (oldX[y - 1] == 4) return [true, "left"];
+			if (oldX[y - 1] == 4) return [true, 'left'];
 			// Check if enemy is below
-			if (downX[y] == 4) return [true, "down"];
+			if (downX[y] == 4) return [true, 'down'];
 			// Check if enemy is above
-			if (upX[y] == 4) return [true, "up"];
+			if (upX[y] == 4) return [true, 'up'];
 			return false;
 		};
 		const nearPuzzle = () => {
@@ -123,10 +123,10 @@ module.exports = {
 				const noButtonedit = true;
 				const crashembed = new MessageEmbed()
 					.addField(
-						"Dungeon Run Crashed",
+						'Dungeon Run Crashed',
 						"**Reason:**\nUser spammed Button.\nIn order to prevent this don't spam Buttons so the Bot has time to respond."
 					)
-					.setColor("RED");
+					.setColor('RED');
 				return interaction.followUp({
 					embeds: [crashembed],
 					ephemeral: true,
@@ -141,13 +141,13 @@ module.exports = {
 			if (!oldX || !upX || !downX) return false;
 
 			// Check if puzzle is on the right
-			if (oldX[y + 1] == 3) return [true, "right"];
+			if (oldX[y + 1] == 3) return [true, 'right'];
 			// Check if puzzle is on the left
-			if (oldX[y - 1] == 3) return [true, "left"];
+			if (oldX[y - 1] == 3) return [true, 'left'];
 			// Check if puzzle is below
-			if (downX[y] == 3) return [true, "down"];
+			if (downX[y] == 3) return [true, 'down'];
 			// Check if puzzle is above
-			if (upX[y] == 3) return [true, "up"];
+			if (upX[y] == 3) return [true, 'up'];
 			return false;
 		};
 		const nearDoor = () => {
@@ -160,13 +160,13 @@ module.exports = {
 			if (!oldX || !upX || !downX) return false;
 
 			// Check if door is on the right
-			if (oldX[y + 1] == 6) return [true, "right"];
+			if (oldX[y + 1] == 6) return [true, 'right'];
 			// Check if door is on the left
-			if (oldX[y - 1] == 6) return [true, "left"];
+			if (oldX[y - 1] == 6) return [true, 'left'];
 			// Check if door is below
-			if (downX[y] == 6) return [true, "down"];
+			if (downX[y] == 6) return [true, 'down'];
 			// Check if door is above
-			if (upX[y] == 6) return [true, "up"];
+			if (upX[y] == 6) return [true, 'up'];
 			return false;
 		};
 		const dmgtaken = (php, mdmg) => {
@@ -182,16 +182,16 @@ module.exports = {
 		});
 		const isCrit = critchance => (Math.random() * 100 < critchance ? true : false);
 		const updateTTT = (x, y, user) => {
-			const emoji = user ? "🟩" : "🟥";
+			const emoji = user ? '🟩' : '🟥';
 			let index = 0,
-				txt = "";
+				txt = '';
 			table[x][y] = emoji;
 
 			for (const row of table) {
 				for (const column of row) {
 					index++;
 					txt += ` **|** ${column}`;
-					if (index % 3 == 0) txt += " **|**\n";
+					if (index % 3 == 0) txt += ' **|**\n';
 				}
 			}
 			return txt;
@@ -273,30 +273,30 @@ module.exports = {
 			return array;
 		};
 
-		const collection = mclient.db("SkyblockSim").collection("Players");
+		const collection = mclient.db('SkyblockSim').collection('Players');
 		let player = await collection.findOne({ _id: interaction.user.id });
 
 		const collection1 = mclient
-			.db("SkyblockSim")
-			.collection("blockedchannels");
+			.db('SkyblockSim')
+			.collection('blockedchannels');
 
 		if (!player) {
 			const noprofile = new MessageEmbed()
-				.setColor("RED")
-				.setTitle("No Profile found")
-				.setDescription("Create a Profile using `/sb start`");
+				.setColor('RED')
+				.setTitle('No Profile found')
+				.setDescription('Create a Profile using `/sb start`');
 			return interaction.editReply({ embeds: [noprofile] });
 		}
 
 		// Checks if the Player already has an open Dungeon Run
 		if (player.data.misc.in_dungeon) {
 			const runopen = new MessageEmbed()
-				.setTitle("Another Dungeon is already open somewhere.")
+				.setTitle('Another Dungeon is already open somewhere.')
 				.setDescription(
-					"The Dungeon automatically closes after 1 minute of inactivity"
+					'The Dungeon automatically closes after 1 minute of inactivity'
 				)
-				.setColor("RED")
-				.setFooter("Skyblock Simulator");
+				.setColor('RED')
+				.setFooter('Skyblock Simulator');
 			return interaction.editReply({ embeds: [runopen] });
 		}
 
@@ -310,28 +310,28 @@ module.exports = {
 		).level;
 		const catalevel = classLevel(player.data.dungeons.xp).level;
 
-		if (player.data.dungeons.class.selected.name == "Assassin") {
+		if (player.data.dungeons.class.selected.name == 'Assassin') {
 			pstats.strength += 2 * classlevel;
-		} else if (player.data.dungeons.class.selected.name == "Berserker") {
+		} else if (player.data.dungeons.class.selected.name == 'Berserker') {
 			pstats.strength += Number(classlevel);
 			pstats.defense += Number(classlevel);
-		} else if (player.data.dungeons.class.selected.name == "Tank") {
+		} else if (player.data.dungeons.class.selected.name == 'Tank') {
 			pstats.health += 2 * classlevel;
 			pstats.defense += Number(classlevel);
 		}
 
 		// Variables needed for the Map
-		let map = "",
+		let map = '',
 		 location = [1, 1],
 		 score = 100,
 		 floor = null,
 
 			// Vars needed for Chests
-		 wood_loot = "",
-		 gold_loot = "",
-		 diamond_loot = "",
-		 emerald_loot = "";
-		const obsidian_loot = "";
+		 wood_loot = '',
+		 gold_loot = '',
+		 diamond_loot = '',
+		 emerald_loot = '';
+		const obsidian_loot = '';
 
 		const f1_map_1 = [
 			[0, 0, 6, 6, 0, 0, 0],
@@ -369,28 +369,28 @@ module.exports = {
 		// Floor Selection
 		const floors = new MessageActionRow().addComponents(
 			new MessageButton()
-				.setCustomId("f1")
-				.setEmoji("852111493859115019")
-				.setLabel("Floor 1")
-				.setStyle("PRIMARY"),
+				.setCustomId('f1')
+				.setEmoji('852111493859115019')
+				.setLabel('Floor 1')
+				.setStyle('PRIMARY'),
 			new MessageButton()
-				.setCustomId("f2")
-				.setEmoji("852111493909446686")
-				.setLabel("Floor 2")
-				.setStyle("PRIMARY"),
+				.setCustomId('f2')
+				.setEmoji('852111493909446686')
+				.setLabel('Floor 2')
+				.setStyle('PRIMARY'),
 			new MessageButton()
-				.setCustomId("f3")
-				.setEmoji("852111493952176148")
-				.setLabel("Floor 3")
-				.setStyle("PRIMARY")
+				.setCustomId('f3')
+				.setEmoji('852111493952176148')
+				.setLabel('Floor 3')
+				.setStyle('PRIMARY')
 		);
 
 		const floorSelect = new MessageEmbed()
-			.setTitle("Dungeons Floor Selection")
-			.setFooter("Skyblock Simulator")
-			.setColor("GREY")
+			.setTitle('Dungeons Floor Selection')
+			.setFooter('Skyblock Simulator')
+			.setColor('GREY')
 			.setDescription(
-				"**<:bonzo:852111493859115019> Floor 1 (Combat 8)**\n**<:scarff:852111493909446686> Floor 2 (Cata 4)**\n**<:professor:852111493952176148> Floor 3 (Cata 8)**"
+				'**<:bonzo:852111493859115019> Floor 1 (Combat 8)**\n**<:scarff:852111493909446686> Floor 2 (Cata 4)**\n**<:professor:852111493952176148> Floor 3 (Cata 8)**'
 			);
 
 		const menu = await interaction.editReply({
@@ -406,19 +406,19 @@ module.exports = {
 		await menu
 			.awaitMessageComponent({
 				filter,
-				componentType: "BUTTON",
+				componentType: 'BUTTON',
 				time: 60000,
 			})
 			.then(i => {
 				const { customId: id } = i;
 
-				if (id == "f1") floor = 1;
-				else if (id == "f2") floor = 2;
-				else if (id === "f3") floor = 3;
+				if (id == 'f1') floor = 1;
+				else if (id == 'f2') floor = 2;
+				else if (id === 'f3') floor = 3;
 				else {
 					const cancelled = new MessageEmbed()
-						.setTitle("Menu Cancelled")
-						.setColor("RED");
+						.setTitle('Menu Cancelled')
+						.setColor('RED');
 					menu.edit({ embeds: [cancelled], components: [] });
 				}
 			})
@@ -431,11 +431,11 @@ module.exports = {
 		}
 
 		const invalidreqs = new MessageEmbed()
-			.setTitle("Requirements not met.")
+			.setTitle('Requirements not met.')
 			.setDescription(
 				`**Needed Requirements**\nFloor 1 -> Combat 8\nFloor 2 -> Catacombs 4\nFloor 3 -> Catacombs 8\n\n**Your Stats**\nCombat: ${combatlvl}\nCatacombs: ${catalevel}\n`
 			)
-			.setColor("RED");
+			.setColor('RED');
 
 		if (floor == 1 && combatlvl <= 7) {
 			menu.edit({ embeds: [invalidreqs], components: [] });
@@ -451,7 +451,7 @@ module.exports = {
 		// Sets the Player into the Dungeon so they cant open another run.
 		await collection.updateOne(
 			{ _id: interaction.user.id },
-			{ $set: { "data.misc.in_dungeon": true } },
+			{ $set: { 'data.misc.in_dungeon': true } },
 			{ upsert: true }
 		);
 		await collection1.updateOne(
@@ -462,67 +462,67 @@ module.exports = {
 
 		// Variables needed for movement
 		const up = new MessageButton()
-			.setCustomId("up")
-			.setLabel("⬆️")
-			.setStyle("PRIMARY");
+			.setCustomId('up')
+			.setLabel('⬆️')
+			.setStyle('PRIMARY');
 
 		const down = new MessageButton()
-			.setCustomId("down")
-			.setLabel("⬇️")
-			.setStyle("PRIMARY");
+			.setCustomId('down')
+			.setLabel('⬇️')
+			.setStyle('PRIMARY');
 
 		const left = new MessageButton()
-			.setCustomId("left")
-			.setLabel("⬅️")
-			.setStyle("PRIMARY");
+			.setCustomId('left')
+			.setLabel('⬅️')
+			.setStyle('PRIMARY');
 
 		const right = new MessageButton()
-			.setCustomId("right")
-			.setLabel("➡️")
-			.setStyle("PRIMARY");
+			.setCustomId('right')
+			.setLabel('➡️')
+			.setStyle('PRIMARY');
 
 		const attack = new MessageButton()
-			.setCustomId("attack")
-			.setLabel("⚔️")
-			.setStyle("PRIMARY")
+			.setCustomId('attack')
+			.setLabel('⚔️')
+			.setStyle('PRIMARY')
 			.setDisabled(true);
 
 		const interact = new MessageButton()
-			.setCustomId("interact")
-			.setLabel("🖐️")
-			.setStyle("PRIMARY")
+			.setCustomId('interact')
+			.setLabel('🖐️')
+			.setStyle('PRIMARY')
 			.setDisabled(true);
 
 		const cancel = new MessageButton()
-			.setCustomId("cancel")
-			.setLabel("️C️a️n️c️e️l️")
-			.setStyle("DANGER");
+			.setCustomId('cancel')
+			.setLabel('️C️a️n️c️e️l️')
+			.setStyle('DANGER');
 		// Buttons for Loot
 		const wood_button = new MessageButton()
-			.setCustomId("wood")
-			.setEmoji("882624301503754350")
-			.setLabel("Chest")
-			.setStyle("PRIMARY");
+			.setCustomId('wood')
+			.setEmoji('882624301503754350')
+			.setLabel('Chest')
+			.setStyle('PRIMARY');
 		const gold_button = new MessageButton()
-			.setCustomId("gold")
-			.setEmoji("869126927011708929")
-			.setLabel("Chest")
-			.setStyle("PRIMARY");
+			.setCustomId('gold')
+			.setEmoji('869126927011708929')
+			.setLabel('Chest')
+			.setStyle('PRIMARY');
 		const diamond_button = new MessageButton()
-			.setCustomId("diamond")
-			.setEmoji("869126926646788097")
-			.setLabel("Chest")
-			.setStyle("PRIMARY");
+			.setCustomId('diamond')
+			.setEmoji('869126926646788097')
+			.setLabel('Chest')
+			.setStyle('PRIMARY');
 		const emerald_button = new MessageButton()
-			.setCustomId("emerald")
-			.setEmoji("869126927380779008")
-			.setLabel("Chest")
-			.setStyle("PRIMARY");
+			.setCustomId('emerald')
+			.setEmoji('869126927380779008')
+			.setLabel('Chest')
+			.setStyle('PRIMARY');
 		const obsidian_button = new MessageButton()
-			.setCustomId("obsidian")
-			.setEmoji("869490639769853992")
-			.setLabel("Chest")
-			.setStyle("PRIMARY");
+			.setCustomId('obsidian')
+			.setEmoji('869490639769853992')
+			.setLabel('Chest')
+			.setStyle('PRIMARY');
 
 		const row1 = new MessageActionRow().addComponents(
 			attack,
@@ -542,17 +542,17 @@ module.exports = {
 		);
 
 		var test = new MessageEmbed();
-		test.setFooter("Skyblock Simulator");
-		test.setColor("GREY");
+		test.setFooter('Skyblock Simulator');
+		test.setColor('GREY');
 
-		const Player = "🟩";
-		const wall = "<:wall:876211886746636288>";
-		const air = "<:air:876209923875303424>";
-		const puzzle = "🟪";
-		const enemy = "🧟";
-		const door = "<:wooddoor:882163369174503435>";
+		const Player = '🟩';
+		const wall = '<:wall:876211886746636288>';
+		const air = '<:air:876209923875303424>';
+		const puzzle = '🟪';
+		const enemy = '🧟';
+		const door = '<:wooddoor:882163369174503435>';
 
-		const puzzles = ["ttt", "quiz"];
+		const puzzles = ['ttt', 'quiz'];
 
 		const critchance = pstats.crit_chance;
 		let php = pstats.health,
@@ -571,68 +571,68 @@ module.exports = {
 
 		const collector = menu.createMessageComponentCollector({
 			filter,
-			componentType: "BUTTON",
+			componentType: 'BUTTON',
 			time: 1000 * 60 * 5,
 		});
 
 		const row3 = new MessageActionRow().addComponents(
 			new MessageButton()
-				.setCustomId("1")
-				.setLabel("X")
-				.setStyle("SECONDARY"),
+				.setCustomId('1')
+				.setLabel('X')
+				.setStyle('SECONDARY'),
 			new MessageButton()
-				.setCustomId("2")
-				.setLabel("X")
-				.setStyle("SECONDARY"),
+				.setCustomId('2')
+				.setLabel('X')
+				.setStyle('SECONDARY'),
 			new MessageButton()
-				.setCustomId("3")
-				.setLabel("X")
-				.setStyle("SECONDARY")
+				.setCustomId('3')
+				.setLabel('X')
+				.setStyle('SECONDARY')
 		);
 		const row4 = new MessageActionRow().addComponents(
 			new MessageButton()
-				.setCustomId("4")
-				.setLabel("X")
-				.setStyle("SECONDARY"),
+				.setCustomId('4')
+				.setLabel('X')
+				.setStyle('SECONDARY'),
 			new MessageButton()
-				.setCustomId("5")
-				.setLabel("X")
-				.setStyle("SECONDARY"),
+				.setCustomId('5')
+				.setLabel('X')
+				.setStyle('SECONDARY'),
 			new MessageButton()
-				.setCustomId("6")
-				.setLabel("X")
-				.setStyle("SECONDARY")
+				.setCustomId('6')
+				.setLabel('X')
+				.setStyle('SECONDARY')
 		);
 		const row5 = new MessageActionRow().addComponents(
 			new MessageButton()
-				.setCustomId("7")
-				.setLabel("X")
-				.setStyle("SECONDARY"),
+				.setCustomId('7')
+				.setLabel('X')
+				.setStyle('SECONDARY'),
 			new MessageButton()
-				.setCustomId("8")
-				.setLabel("X")
-				.setStyle("SECONDARY"),
+				.setCustomId('8')
+				.setLabel('X')
+				.setStyle('SECONDARY'),
 			new MessageButton()
-				.setCustomId("9")
-				.setLabel("X")
-				.setStyle("SECONDARY")
+				.setCustomId('9')
+				.setLabel('X')
+				.setStyle('SECONDARY')
 		);
 		const row6 = new MessageActionRow().addComponents(
 			new MessageButton()
-				.setCustomId("A")
-				.setLabel("A")
-				.setStyle("SECONDARY"),
+				.setCustomId('A')
+				.setLabel('A')
+				.setStyle('SECONDARY'),
 			new MessageButton()
-				.setCustomId("B")
-				.setLabel("B")
-				.setStyle("SECONDARY"),
+				.setCustomId('B')
+				.setLabel('B')
+				.setStyle('SECONDARY'),
 			new MessageButton()
-				.setCustomId("C")
-				.setLabel("C")
-				.setStyle("SECONDARY")
+				.setCustomId('C')
+				.setLabel('C')
+				.setStyle('SECONDARY')
 		);
 
-		const fog = "🌫️";
+		const fog = '🌫️';
 		let table = [
 			[fog, fog, fog],
 			[fog, fog, fog],
@@ -641,59 +641,59 @@ module.exports = {
 
 		const quizzes = [
 			{
-				question: "How many Skills are there in Hypixel Skyblock? (All Skills Included)",
+				question: 'How many Skills are there in Hypixel Skyblock? (All Skills Included)',
 				options: [
-					["10", false],
-					["11", false],
-					["12", true],
+					['10', false],
+					['11', false],
+					['12', true],
 				],
 			},
 			{
-				question: "How much Catacombs XP do you need for Level 50", // Did u ever learn english grammar bro? "much" if the value is too big to count, "many" if you can count it.
+				question: 'How much Catacombs XP do you need for Level 50', // Did u ever learn english grammar bro? "much" if the value is too big to count, "many" if you can count it.
 				options: [
-					["569 Mil", true],
-					["560 Mil", false],
-					["575 Mil", false],
+					['569 Mil', true],
+					['560 Mil', false],
+					['575 Mil', false],
 				],
 			},
 			{
-				question: "How many Pets are there?",
+				question: 'How many Pets are there?',
 				options: [
-					["50", false],
-					["54", false],
-					["51", true],
+					['50', false],
+					['54', false],
+					['51', true],
 				],
 			},
 			{
-				question: "Who is the Owner of Hypixel?",
+				question: 'Who is the Owner of Hypixel?',
 				options: [
-					["hypxel", false],
-					["hpixel", false],
-					["hypixel", true],
+					['hypxel', false],
+					['hpixel', false],
+					['hypixel', true],
 				],
 			},
 			{
-				question: "How many Talismans are there?", // bruh, plural for talisman  is talismans
+				question: 'How many Talismans are there?', // bruh, plural for talisman  is talismans
 				options: [
-					["77", true],
-					["70", false],
-					["73", false],
+					['77', true],
+					['70', false],
+					['73', false],
 				],
 			},
 			{
-				question: "Which non Boss and non Slayer Mini-Boss Mob has the highest HP?",
+				question: 'Which non Boss and non Slayer Mini-Boss Mob has the highest HP?',
 				options: [
-					["Voidling Extremist", true],
-					["Voidling Fanatic", false],
-					["Voidling Fnatic", false],
+					['Voidling Extremist', true],
+					['Voidling Fanatic', false],
+					['Voidling Fnatic', false],
 				],
 			},
 			{
-				question: "How many Areas are there? (Excluding Sub Areas)",
+				question: 'How many Areas are there? (Excluding Sub Areas)',
 				options: [
-					["20", false],
-					["22", true],
-					["24", false],
+					['20', false],
+					['22', true],
+					['24', false],
 				],
 			},
 		];
@@ -721,19 +721,19 @@ module.exports = {
 		}
 
 		let finishedGenerating = false,
-		 mapx = "",
-		 mapxarray = "",
-		 mapy = "",
-		 mapyarray = "",
+		 mapx = '',
+		 mapxarray = '',
+		 mapy = '',
+		 mapyarray = '',
 
-		 mobamount = "",
+		 mobamount = '',
 		 mobplaced = 0,
-		 puzzleamount = "",
+		 puzzleamount = '',
 		 puzzleplaced = 0,
 
-		 secretamount = "",
+		 secretamount = '',
 		 secretplaced = 0,
-		 wallamount = "",
+		 wallamount = '',
 		 wallplaced = 0;
 
 		if (floor == 1) {
@@ -805,7 +805,7 @@ module.exports = {
 		test.setDescription(`🎯 Score: **${score}**\n\n${mapArray(map)}`);
 		interaction.editReply({ embeds: [test], components: [row1, row2] });
 
-		collector.on("collect", async i => {
+		collector.on('collect', async i => {
 			const { customId: id } = i;
 
 			if (inTTT) {
@@ -876,19 +876,19 @@ module.exports = {
 
 				if (W) {
 					const txt =
-						E == "🟩"
-							? "You Won!!"
+						E == '🟩'
+							? 'You Won!!'
 							: E
-								? "You Lost ..."
-								: "You Tied";
-					if (E == "🟩" || !E) {
+								? 'You Lost ...'
+								: 'You Tied';
+					if (E == '🟩' || !E) {
 						inTTT = false;
 						score += 30;
 						// await menu.edit({ embeds: [test], components: [row1, row2] })
 						// await sleep(1000)
 						test.description =
 							`${`🎯 Score: **${score}** (+30)` +
-							"\n\n"}${
+							'\n\n'}${
 								mapArray()}`;
 
 						table = [
@@ -916,7 +916,7 @@ module.exports = {
 					score -= 30;
 					test.description =
 							`${`🎯 Score: **${score}** (-30)` +
-							"\n\n"}${
+							'\n\n'}${
 								mapArray()}`;
 					table = [
 						[fog, fog, fog],
@@ -945,18 +945,18 @@ module.exports = {
 
 				if (w) {
 					const txt =
-						e == "🟩"
-							? "You Won!!"
+						e == '🟩'
+							? 'You Won!!'
 							: e
-								? "You Lost ..."
-								: "You Tied";
-					if (e == "🟩" || !e) {
+								? 'You Lost ...'
+								: 'You Tied';
+					if (e == '🟩' || !e) {
 						inTTT = false;
 						test.description += `\n${txt}`;
 						// await menu.edit({ embeds: [test], components: [row1, row2] })
 						// await sleep(1000)
 						test.description =
-							`${`🎯 Score: **${score}**` + "\n\n"}${mapArray()}`;
+							`${`🎯 Score: **${score}**` + '\n\n'}${mapArray()}`;
 
 						table = [
 							[fog, fog, fog],
@@ -983,7 +983,7 @@ module.exports = {
 					score -= 30;
 					test.description =
 							`${`🎯 Score: **${score}** (-30)` +
-							"\n\n"}${
+							'\n\n'}${
 								mapArray()}`;
 					table = [
 						[fog, fog, fog],
@@ -1019,16 +1019,16 @@ module.exports = {
 				test.fields = [];
 
 				let i = 0,
-					rightChoise = "";
+					rightChoise = '';
 
 				for (const option of randomOptions) {
 					i++;
 					if (option[1]) rightChoise = i;
 				}
 
-				if (rightChoise == 1) rightChoise = "A";
-				else if (rightChoise == 2) rightChoise = "B";
-				else if (rightChoise == 3) rightChoise = "C";
+				if (rightChoise == 1) rightChoise = 'A';
+				else if (rightChoise == 2) rightChoise = 'B';
+				else if (rightChoise == 3) rightChoise = 'C';
 
 				if (id == rightChoise) {
 					inQuiz = false;
@@ -1041,7 +1041,7 @@ module.exports = {
 					await sleep(1000);
 					score += 30;
 					test.description =
-						`${`🎯 Score: **${score}** (+30)` + "\n\n"}${mapArray()}`;
+						`${`🎯 Score: **${score}** (+30)` + '\n\n'}${mapArray()}`;
 
 					return await menu.edit({
 						embeds: [test],
@@ -1052,7 +1052,7 @@ module.exports = {
 				inQuiz = false;
 				score -= 30;
 				test.description =
-						`${`🎯 Score: **${score}** (-30)` + "\n\n"}${mapArray()}`;
+						`${`🎯 Score: **${score}** (-30)` + '\n\n'}${mapArray()}`;
 				//    if(noButtonedit == false) {
 				await menu.edit({
 					embeds: [test],
@@ -1060,18 +1060,18 @@ module.exports = {
 				});
 				//    }
 			} else if (
-				id == "up" ||
-				id == "left" ||
-				id == "right" ||
-				id == "down"
+				id == 'up' ||
+				id == 'left' ||
+				id == 'right' ||
+				id == 'down'
 			) {
 				const locationAndPuzzleCheck = movePlayer(id, false);
 				location = locationAndPuzzleCheck[0];
 				var puzzleOrNot = locationAndPuzzleCheck[1];
 				test.fields = [];
 				test.description =
-					`${`🎯 Score: **${score}**` + "\n\n"}${mapArray()}`;
-			} else if (id == "attack") {
+					`${`🎯 Score: **${score}**` + '\n\n'}${mapArray()}`;
+			} else if (id == 'attack') {
 				const direction = nearEnemy()[1];
 				let fightEnded = false;
 
@@ -1097,10 +1097,10 @@ module.exports = {
 
 					test.fields = [];
 					test.addField(
-						"Battle",
+						'Battle',
 						`Player Health: ❤️ ${php} (- ${mdmg})
                 Boss Health: ❤️ ${mhp} (-${
-	crit ? "<:crit:870306942806020106>" : ""
+	crit ? '<:crit:870306942806020106>' : ''
 } ${pdmg})`
 					);
 
@@ -1112,15 +1112,15 @@ module.exports = {
 					if (mhp <= 0) {
 						fightEnded = true;
 						test.fields = [];
-						test.setColor("ORANGE");
+						test.setColor('ORANGE');
 						test.addField(
-							"\u200B",
+							'\u200B',
 							`Killed the Boss with **❤️ ${php}** left and earned Combat XP`
 						); // Add combat xp var
 						await collection.updateOne(
 							// Add Combat XP from enemy Kill (do once mobs decided)
 							{ _id: interaction.user.id },
-							{ $inc: { "data.skills.combat": 500 } },
+							{ $inc: { 'data.skills.combat': 500 } },
 							{ upsert: true }
 						);
 
@@ -1132,9 +1132,9 @@ module.exports = {
 						await sleep(1000); // waiting a second so you can actually read the message
 					} else if (php <= 0) {
 						test.fields = [];
-						test.setColor("RED");
+						test.setColor('RED');
 						test.addField(
-							"\u200B",
+							'\u200B',
 							`Died to the Boss which had **❤️ ${mhp}** left.`
 						);
 						runFailed = true;
@@ -1146,7 +1146,7 @@ module.exports = {
 						wood_loot = lt.wood.roll(pstats.magic_find);
 						gold_loot = lt.gold.roll(pstats.magic_find);
 						test.fields = [];
-						test.description = "\n";
+						test.description = '\n';
 						if (isNaN(wood_loot)) {
 							test.description += `<:oak_wood:882624301503754350> Wood Chest: **${wood_loot}\n**`;
 						} else {
@@ -1191,7 +1191,7 @@ module.exports = {
 
 							lootrow.addComponents(diamond_button);
 						}
-						test.setColor("FFD700");
+						test.setColor('FFD700');
 						atLoot = true;
 						//    if(noButtonedit == false) {
 
@@ -1221,10 +1221,10 @@ module.exports = {
 
 					test.fields = [];
 					test.addField(
-						"Battle",
+						'Battle',
 						`Player Health: ❤️ ${php} (- ${mdmg})
                 Mob Health: ❤️ ${mhp} (-${
-	crit ? "<:crit:870306942806020106>" : ""
+	crit ? '<:crit:870306942806020106>' : ''
 } ${pdmg})`
 					);
 
@@ -1240,15 +1240,15 @@ module.exports = {
 						fightEnded = true;
 						score += 20;
 						test.fields = [];
-						test.setColor("ORANGE");
+						test.setColor('ORANGE');
 						test.addField(
-							"\u200B",
+							'\u200B',
 							`Killed the Enemy with **❤️ ${php}** left and earned Combat XP`
 						); // Add combat xp var
 						await collection.updateOne(
 							// Add Combat XP from enemy Kill (do once mobs decided)
 							{ _id: interaction.user.id },
-							{ $inc: { "data.skills.combat": 50 } },
+							{ $inc: { 'data.skills.combat': 50 } },
 							{ upsert: true }
 						);
 
@@ -1267,9 +1267,9 @@ module.exports = {
 						await sleep(1000); // waiting a second so you can actually read the message
 					} else if (php <= 0) {
 						test.fields = [];
-						test.setColor("RED");
+						test.setColor('RED');
 						test.addField(
-							"\u200B",
+							'\u200B',
 							`Died to the Enemy which had **❤️ ${mhp}** left.`
 						);
 						runFailed = true;
@@ -1284,10 +1284,10 @@ module.exports = {
 							const noButtonedit = true;
 							const crashembed = new MessageEmbed()
 								.addField(
-									"Dungeon Run Crashed",
+									'Dungeon Run Crashed',
 									"**Reason:**\nUser spammed Button.\nIn order to prevent this don't spam Buttons so the Bot has time to respond."
 								)
-								.setColor("RED");
+								.setColor('RED');
 							return interaction.followUp({
 								embeds: [crashembed],
 								ephemeral: true,
@@ -1297,14 +1297,14 @@ module.exports = {
 						location = movePlayer(direction, true)[0]; // replace the mob emoji only after mob is killed
 						test.description =
 							`${`🎯 Score: **${score}** (+20)` +
-							"\n\n"}${
+							'\n\n'}${
 								mapArray()}`;
 					}
 					test.description =
-						`${`🎯 Score: **${score}**` + "\n\n"}${mapArray()}`;
+						`${`🎯 Score: **${score}**` + '\n\n'}${mapArray()}`;
 					menu.edit({ embeds: [test], components: [row1, row2] }); // Components need to get adjusted might be wrong
 				}
-			} else if (id == "interact") {
+			} else if (id == 'interact') {
 				// console.log('bing')
 				if (nearDoor()[0]) {
 					// Lock arrows
@@ -1315,7 +1315,7 @@ module.exports = {
 					else if (floor == 3) mhp = 2500, mdmg = 350;
 					test.fields = [];
 					test.addField(
-						"Battle",
+						'Battle',
 						`Player Health: ❤️ ${php}
                 Mob Health: ❤️ ${mhp}`
 					);
@@ -1331,7 +1331,7 @@ module.exports = {
 						puzzles[Math.floor(Math.random() * puzzles.length)]; // get random puzzle
 					//  console.log(puzzle)
 
-					if (puzzle == "ttt") {
+					if (puzzle == 'ttt') {
 						inTTT = true;
 						const randomPick = [
 							[0, 1, 2][Math.floor(Math.random() * 3)],
@@ -1375,7 +1375,7 @@ module.exports = {
 							components: [row3, row4, row5],
 						});
 						//     }
-					} else if (puzzle == "quiz") {
+					} else if (puzzle == 'quiz') {
 						inQuiz = true;
 
 						quiz =
@@ -1383,7 +1383,7 @@ module.exports = {
 						console.log(quiz);
 						randomOptions = shuffle(quiz.options); // Shuffle the asnwers
 
-						let answers = "",
+						let answers = '',
 							index = 0;
 
 						for (const option of randomOptions) {
@@ -1404,10 +1404,10 @@ module.exports = {
 					location = movePlayer(direction, true)[0]; // replace the mob emoji only after mob is killed
 					if (!inTTT && !inQuiz) {
 						test.description =
-							`${`🎯 Score: **${score}**` + "\n\n"}${mapArray()}`;
+							`${`🎯 Score: **${score}**` + '\n\n'}${mapArray()}`;
 					}
 				}
-			} else if (id == "cancel") {
+			} else if (id == 'cancel') {
 				runCancelled = true;
 				return collector.stop();
 			}
@@ -1421,26 +1421,26 @@ module.exports = {
 			// Adding the USER the loot
 			if (atLoot) {
 				let choosen = false,
-				 loot = "";
-				if (id == "wood") {
+				 loot = '';
+				if (id == 'wood') {
 					loot = wood_loot;
 					choosen = true;
-				} else if (id == "gold") {
+				} else if (id == 'gold') {
 					loot = gold_loot;
 					choosen = true;
-				} else if (id == "diamond") {
+				} else if (id == 'diamond') {
 					loot = diamond_loot;
 					choosen = true;
-				} else if (id == "emerald") {
+				} else if (id == 'emerald') {
 					loot = emerald_loot;
 					choosen = true;
-				} else if (id == "obsidian") {
+				} else if (id == 'obsidian') {
 				}
 				if (!isNaN(loot) && choosen == true) {
 					loot = Number(loot);
 					await collection.updateOne(
 						{ _id: interaction.user.id },
-						{ $inc: { "data.profile.coins": loot } },
+						{ $inc: { 'data.profile.coins': loot } },
 						{ upsert: true }
 					);
 
@@ -1449,14 +1449,14 @@ module.exports = {
 						.setDescription(
 							`<:coins:861974605203636253> **${loot}** Coins added to your Profile.`
 						)
-						.setColor("GREEN")
-						.setFooter("Skyblock Simulator");
+						.setColor('GREEN')
+						.setFooter('Skyblock Simulator');
 					// if(noButtonedit == false) {
 					menu.edit({ embeds: [lootembed], components: [] });
 					//  }
 					runFinished = true;
 					collector.stop();
-				} else if (loot == "Recombobulator 3000" && choosen == true) {
+				} else if (loot == 'Recombobulator 3000' && choosen == true) {
 					const sellitem = loot;
 					const amount = 1;
 					player = await collection.findOne({
@@ -1475,14 +1475,14 @@ module.exports = {
 						.setDescription(
 							`<:recomb:881094744183275540> **${loot}** added to your Profile.`
 						)
-						.setColor("GREEN")
-						.setFooter("Skyblock Simulator");
+						.setColor('GREEN')
+						.setFooter('Skyblock Simulator');
 					// if(noButtonedit == false) {
 					menu.edit({ embeds: [lootembed], components: [] });
 					//   }
 					runFinished = true;
 					collector.stop();
-				} else if (loot.includes("Armor") && choosen == true) {
+				} else if (loot.includes('Armor') && choosen == true) {
 					// handle armor here
 					const item = dungloot[loot];
 					const item2 = player.data.inventory.armor.find(
@@ -1492,7 +1492,7 @@ module.exports = {
 					if (item2 && item2.name == loot) {
 						await collection.updateOne(
 							{ _id: interaction.user.id },
-							{ $inc: { "data.profile.coins": item.coins } },
+							{ $inc: { 'data.profile.coins': item.coins } },
 							{ upsert: true }
 						);
 						const lootembed = new MessageEmbed()
@@ -1502,8 +1502,8 @@ module.exports = {
 									item.coins
 								)}** Coins to your Profile.`
 							)
-							.setColor("GREEN")
-							.setFooter("Skyblock Simulator");
+							.setColor('GREEN')
+							.setFooter('Skyblock Simulator');
 							// if(noButtonedit == false) {
 						menu.edit({ embeds: [lootembed], components: [] });
 						//  }
@@ -1514,7 +1514,7 @@ module.exports = {
 							{ _id: interaction.user.id },
 							{
 								$push: {
-									"data.inventory.armor": {
+									'data.inventory.armor': {
 										name: loot,
 										health: item.health,
 										defense: item.defense,
@@ -1537,8 +1537,8 @@ module.exports = {
 							.setDescription(
 								`<:tank:852079613051666472> **${loot}** added to your Profile.`
 							)
-							.setColor("GREEN")
-							.setFooter("Skyblock Simulator");
+							.setColor('GREEN')
+							.setFooter('Skyblock Simulator');
 							//   if(noButtonedit == false) {
 						menu.edit({ embeds: [lootembed], components: [] });
 						//   }
@@ -1546,10 +1546,10 @@ module.exports = {
 						collector.stop();
 					}
 				} else if (
-					(loot.includes("Sword") ||
-							loot.includes("Death") ||
-							loot.includes("Blade") ||
-							loot.includes("Dagger")) &&
+					(loot.includes('Sword') ||
+							loot.includes('Death') ||
+							loot.includes('Blade') ||
+							loot.includes('Dagger')) &&
 						choosen == true
 				) {
 					// handle sword here
@@ -1561,7 +1561,7 @@ module.exports = {
 					if (item2 && item2.name == loot) {
 						await collection.updateOne(
 							{ _id: interaction.user.id },
-							{ $inc: { "data.profile.coins": item.coins } },
+							{ $inc: { 'data.profile.coins': item.coins } },
 							{ upsert: true }
 						);
 						const lootembed = new MessageEmbed()
@@ -1571,8 +1571,8 @@ module.exports = {
 									item.coins
 								)}** Coins to your Profile.`
 							)
-							.setColor("GREEN")
-							.setFooter("Skyblock Simulator");
+							.setColor('GREEN')
+							.setFooter('Skyblock Simulator');
 							//      if(noButtonedit == false) {
 						menu.edit({ embeds: [lootembed], components: [] });
 						//  }
@@ -1583,7 +1583,7 @@ module.exports = {
 							{ _id: interaction.user.id },
 							{
 								$push: {
-									"data.inventory.sword": {
+									'data.inventory.sword': {
 										name: loot,
 										damage: item.damage,
 										strength: item.strength,
@@ -1602,8 +1602,8 @@ module.exports = {
 							.setDescription(
 								`<:berserker:852079613052059658> **${loot}** added to your Profile.`
 							)
-							.setColor("GREEN")
-							.setFooter("Skyblock Simulator");
+							.setColor('GREEN')
+							.setFooter('Skyblock Simulator');
 							//  if(noButtonedit == false) {
 						menu.edit({ embeds: [lootembed], components: [] });
 						//   }
@@ -1615,28 +1615,28 @@ module.exports = {
 
 			// check if on a secret
 			if (puzzleOrNot) {
-				test.addField("Secret Found", "\u200B");
+				test.addField('Secret Found', '\u200B');
 				score += 20;
 				test.description =
-					`${`🎯 Score: **${score}** (+20)` + "\n\n"}${mapArray()}`;
+					`${`🎯 Score: **${score}** (+20)` + '\n\n'}${mapArray()}`;
 			}
 			if (!inTTT && !inQuiz && !bossFight) {
 				return (
-					test.setColor("GREY"),
+					test.setColor('GREY'),
 					menu.edit({ embeds: [test], components: [row1, row2] })
 				);
 			}
 		});
-		collector.on("end", async collected => {
+		collector.on('end', async collected => {
 			try {
 				await collection.updateOne(
 					{ _id: interaction.user.id },
-					{ $set: { "data.misc.in_dungeon": false } },
+					{ $set: { 'data.misc.in_dungeon': false } },
 					{ upsert: true }
 				);
 
-				let xpearned = "";
-				const classselect = "";
+				let xpearned = '';
+				const classselect = '';
 
 				if (floor == 1) {
 					xpearned = 50;
@@ -1656,42 +1656,42 @@ module.exports = {
 
 				if (runFinished) {
 					if (
-						player.data.dungeons.class.selected.name == "Assassin"
+						player.data.dungeons.class.selected.name == 'Assassin'
 					) {
 						await collection.updateOne(
 							{ _id: interaction.user.id },
 							{
 								$inc: {
-									"data.dungeons.class.selected.xp": xpearned,
-									"data.dungeons.class.available.assassin.xp":
+									'data.dungeons.class.selected.xp': xpearned,
+									'data.dungeons.class.available.assassin.xp':
 										xpearned,
 								},
 							},
 							{ upsert: true }
 						);
 					} else if (
-						player.data.dungeons.class.selected.xp == "Tank"
+						player.data.dungeons.class.selected.xp == 'Tank'
 					) {
 						await collection.updateOne(
 							{ _id: interaction.user.id },
 							{
 								$inc: {
-									"data.dungeons.class.selected.xp": xpearned,
-									"data.dungeons.class.available.tank.xp":
+									'data.dungeons.class.selected.xp': xpearned,
+									'data.dungeons.class.available.tank.xp':
 										xpearned,
 								},
 							},
 							{ upsert: true }
 						);
 					} else if (
-						player.data.dungeons.class.selected.xp == "Berserker"
+						player.data.dungeons.class.selected.xp == 'Berserker'
 					) {
 						await collection.updateOne(
 							{ _id: interaction.user.id },
 							{
 								$inc: {
-									"data.dungeons.class.selected.xp": xpearned,
-									"data.dungeons.class.available.berserker.xp":
+									'data.dungeons.class.selected.xp': xpearned,
+									'data.dungeons.class.available.berserker.xp':
 										xpearned,
 								},
 							},
@@ -1703,8 +1703,8 @@ module.exports = {
 						{ _id: interaction.user.id },
 						{
 							$inc: {
-								"data.dungeons.xp": xpearned,
-								"data.dungeons.total_runs": 1,
+								'data.dungeons.xp': xpearned,
+								'data.dungeons.total_runs': 1,
 							},
 						},
 						{ upsert: true }
@@ -1719,23 +1719,23 @@ module.exports = {
 				test.fields = [];
 				if (runFailed) {
 					test.addField(
-						"Dungeon Run Over",
-						"**Reason**\n* Died to Mob/Boss"
+						'Dungeon Run Over',
+						'**Reason**\n* Died to Mob/Boss'
 					);
 				} else if (runCancelled) {
 					test.addField(
-						"Dungeon Run Over",
-						"**Reason**\n* Timed out\n* Cancelled"
+						'Dungeon Run Over',
+						'**Reason**\n* Timed out\n* Cancelled'
 					);
 				} else if (runFinished) {
 					return;
 				} else if (runiscrashed) {
 					test.addField(
-						"Dungeon Run Crashed",
-						"**Reason**\n* User spammed Button"
+						'Dungeon Run Crashed',
+						'**Reason**\n* User spammed Button'
 					);
 				}
-				test.setColor("RED");
+				test.setColor('RED');
 				await menu.edit({ embeds: [test], components: [] });
 			} catch (e) {}
 		});
@@ -1775,11 +1775,11 @@ function addItem(sellitem, amount, player) {
 
 num = num => {
 	if (num >= 1000000000) {
-		return `${(num / 1000000000).toFixed(1).replace(/.0$/, "")}B`;
+		return `${(num / 1000000000).toFixed(1).replace(/.0$/, '')}B`;
 	}
 	if (num >= 1000000) {
-		return `${(num / 1000000).toFixed(1).replace(/.0$/, "")}M`;
+		return `${(num / 1000000).toFixed(1).replace(/.0$/, '')}M`;
 	}
-	if (num >= 1000) return `${(num / 1000).toFixed(1).replace(/.0$/, "")}K`;
+	if (num >= 1000) return `${(num / 1000).toFixed(1).replace(/.0$/, '')}K`;
 	return num;
 };

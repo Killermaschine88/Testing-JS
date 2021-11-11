@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const axios = require("axios");
-const config = require("../../constants/Bot/config.json");
+const Discord = require('discord.js');
+const axios = require('axios');
+const config = require('../../constants/Bot/config.json');
 
 module.exports = {
-	name: "Hypixel",
-	description: "Shows Info about the Hypixel profile of the user",
-	usage: "!hypixel (IGN)",
-	perms: "None",
-	folder: "Skyblock",
+	name: 'Hypixel',
+	description: 'Shows Info about the Hypixel profile of the user',
+	usage: '!hypixel (IGN)',
+	perms: 'None',
+	folder: 'Skyblock',
 	aliases: [],
 	async execute(client, message, args) {
 		if (!args[0]) {
@@ -16,11 +16,11 @@ module.exports = {
 			var mcname = message.mentions.members.first().displayName;
 		} else var mcname = args[0]; // Gets IGN
 
-		mcname = mcname.replace(/\W/g, ""); // removes weird characters
+		mcname = mcname.replace(/\W/g, ''); // removes weird characters
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription("Checking for Player Data . . .")
-			.setColor("ORANGE");
+			.setDescription('Checking for Player Data . . .')
+			.setColor('ORANGE');
 
 		const waitingembed = await message.channel.send({
 			embeds: [waitembed],
@@ -30,8 +30,8 @@ module.exports = {
 			.get(`https://some-random-api.ml/mc?username=${mcname}`) // Minecraft UUID api
 			.then(res => {
 				const UUID = res.data.uuid;
-				delete require.cache[require.resolve("../../config.json")];
-				const config = require("../../config.json");
+				delete require.cache[require.resolve('../../config.json')];
+				const config = require('../../config.json');
 				axios
 					.get(
 						`https://api.hypixel.net/player?uuid=${UUID}&key=${config.apikey}`
@@ -47,12 +47,12 @@ module.exports = {
 						const packRank = resp.data.player.newPackageRank;
 						let { rank } = resp.data.player,
 						 color = resp.data.player.rankPlusColor;
-						if (!color) color = "RED";
+						if (!color) color = 'RED';
 						if (!rank) rank = resp.data.player.newPackageRank;
-						if (!packRank) rank = "Default";
+						if (!packRank) rank = 'Default';
 						const rankFixed = rank
-							.replace("_", "")
-							.replace("PLUS", "+");
+							.replace('_', '')
+							.replace('PLUS', '+');
 						const { networkExp } = resp.data.player;
 						const level =
 							Math.sqrt(2 * networkExp + 30625) / 50 - 2.5;
@@ -63,14 +63,14 @@ module.exports = {
 							) // Status api checks if player is online
 							.then(response => {
 								const session = response.data.session.online;
-								let emoji = "";
-								if (session === false) emoji = ":red_circle:";
-								if (session === true) emoji = ":green_circle:";
+								let emoji = '';
+								if (session === false) emoji = ':red_circle:';
+								if (session === true) emoji = ':green_circle:';
 								if (session === true) {
 									var gametype =
 										response.data.session.gameType;
 								}
-								let gameo = "";
+								let gameo = '';
 								if (gametype) gameo = `\nPlaying: ${gametype}`;
 								axios
 									.get(
@@ -88,34 +88,34 @@ module.exports = {
 													)
 													.addFields(
 														{
-															name: "**Level**",
+															name: '**Level**',
 															value: `**Network Level**: ${Math.floor(
 																level
 															)}\n**Total Exp**: ${networkExp}\n**Total Karma**: ${karma}`,
 															inline: true,
 														},
 														{
-															name: "**Rank**",
+															name: '**Rank**',
 															value: `${rankFixed}`,
 															inline: true,
 														},
 														{
-															name: "**Guild**",
-															value: "Player is not in a guild",
+															name: '**Guild**',
+															value: 'Player is not in a guild',
 															inline: true,
 														},
 														{
-															name: "**First Login**",
+															name: '**First Login**',
 															value: firstLogin,
 															inline: true,
 														},
 														{
-															name: "**Last Login**",
+															name: '**Last Login**',
 															value: lastLogin,
 															inline: true,
 														},
 														{
-															name: "**Status**",
+															name: '**Status**',
 															value: `${emoji}${gameo}`,
 															inline: true,
 														}
@@ -123,7 +123,7 @@ module.exports = {
 													.setColor(color)
 													.setTimestamp();
 										} else if (guild) {
-											guild = "";
+											guild = '';
 											const guildName =
 												respo.data.guild.name;
 											const unixGuildCreated =
@@ -142,38 +142,38 @@ module.exports = {
 													)
 													.addFields(
 														{
-															name: "**Level**",
+															name: '**Level**',
 															value: `**Network Level**: ${Math.floor(
 																level
 															)}\n**Total Exp**: ${networkExp.toLocaleString(
-																"en-US"
+																'en-US'
 															)}\n**Total Karma**: ${karma.toLocaleString(
-																"en-US"
+																'en-US'
 															)}`,
 															inline: true,
 														},
 														{
-															name: "**Rank**",
+															name: '**Rank**',
 															value: `${rankFixed}`,
 															inline: true,
 														},
 														{
-															name: "**Guild**",
+															name: '**Guild**',
 															value: `**Guild Name**: ${guildName}\n**Created At**: ${guildCreated}`,
 															inline: true,
 														},
 														{
-															name: "**First Login**",
+															name: '**First Login**',
 															value: firstLogin,
 															inline: true,
 														},
 														{
-															name: "**Last Login**",
+															name: '**Last Login**',
 															value: lastLogin,
 															inline: true,
 														},
 														{
-															name: "**Status**",
+															name: '**Status**',
 															value: `${emoji}${gameo}`,
 															inline: true,
 														}

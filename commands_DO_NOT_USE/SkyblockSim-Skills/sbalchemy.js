@@ -1,26 +1,26 @@
-const Discord = require("discord.js");
-const prefix = require("@replit/database");
+const Discord = require('discord.js');
+const prefix = require('@replit/database');
 const prefixx = new prefix();
 
 module.exports = {
-	name: "Sbalchemy",
-	description: "Earn Alchemy XP",
-	usage: "sbalchemy",
-	perms: "None",
-	folder: "SkyblockSim",
-	aliases: ["alchemy"],
+	name: 'Sbalchemy',
+	description: 'Earn Alchemy XP',
+	usage: 'sbalchemy',
+	perms: 'None',
+	folder: 'SkyblockSim',
+	aliases: ['alchemy'],
 	cooldown: 60,
 	async execute(client, message, args, mclient) {
-		const collection = mclient.db("SkyblockSim").collection("Main");
+		const collection = mclient.db('SkyblockSim').collection('Main');
 		const found = await collection.findOne({ _id: message.author.id });
 
 		let gprefix = await prefixx.get(message.guild.id, { raw: false });
-		if (gprefix === null) gprefix = ".";
+		if (gprefix === null) gprefix = '.';
 
 		if (found === null) {
 			const noprofile = new Discord.MessageEmbed()
-				.setColor("RED")
-				.setTitle("No Profile found")
+				.setColor('RED')
+				.setTitle('No Profile found')
 				.setDescription(
 					`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``
 				);
@@ -37,7 +37,7 @@ module.exports = {
 		);
 
 		const finished = new Discord.MessageEmbed()
-			.setColor("90EE90")
+			.setColor('90EE90')
 			.setDescription(
 				`Finished brewing Potions and earned <:alchemy:852069714480988180> ${earnedxp} Alchemy XP.`
 			);

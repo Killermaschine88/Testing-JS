@@ -1,26 +1,26 @@
-const Discord = require("discord.js");
-const prefix = require("@replit/database");
+const Discord = require('discord.js');
+const prefix = require('@replit/database');
 const prefixx = new prefix();
 
 module.exports = {
-	name: "Sbdragon",
-	description: "Slay Dragons",
-	usage: "sbdragon",
-	perms: "None",
-	folder: "SkyblockSim",
-	aliases: ["sbd"],
+	name: 'Sbdragon',
+	description: 'Slay Dragons',
+	usage: 'sbdragon',
+	perms: 'None',
+	folder: 'SkyblockSim',
+	aliases: ['sbd'],
 	cooldown: 30,
 	async execute(client, message, args, mclient) {
-		const collection = mclient.db("SkyblockSim").collection("Players");
+		const collection = mclient.db('SkyblockSim').collection('Players');
 		const player = await collection.findOne({ _id: message.author.id });
 
 		let gprefix = await prefixx.get(message.guild.id, { raw: false });
-		if (gprefix === null) gprefix = ".";
+		if (gprefix === null) gprefix = '.';
 
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
-				.setColor("RED")
-				.setTitle("No Profile found")
+				.setColor('RED')
+				.setTitle('No Profile found')
 				.setDescription(
 					`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``
 				);
@@ -31,8 +31,8 @@ module.exports = {
 
 		if (player.data.skills.combat < 15000) {
 			const noentry = new Discord.MessageEmbed()
-				.setTitle("Missing Requirements")
-				.setColor("RED")
+				.setTitle('Missing Requirements')
+				.setColor('RED')
 				.setDescription(
 					`You don\'t fit the Requirements needed to enter **The End**.\n\nCombat XP needed: **15000**\nYour Combat XP: **${
 						player.data.skills.combat
@@ -45,12 +45,12 @@ module.exports = {
 		}
 
 		const inv = player.data.inventory.items;
-		const eyes = inv.find(item => item.name === "Summoning Eye");
+		const eyes = inv.find(item => item.name === 'Summoning Eye');
 
 		if (eyes === undefined || eyes.amount < 2) {
 			const noeyes = new Discord.MessageEmbed()
-				.setTitle("Not enough Summoning Eyes")
-				.setColor("RED")
+				.setTitle('Not enough Summoning Eyes')
+				.setColor('RED')
 				.setDescription(
 					`You don\'t have enough Summoning Eyes to fight a Dragon.\nYou need atleast **2 Summoning Eyes** to fight a Dragon\nTo get **Summoning Eyes** use ${gprefix}sbwarp Area Dragon\'s Nest to farm them`
 				);
@@ -61,10 +61,10 @@ module.exports = {
 
 		const start = new Discord.MessageEmbed()
 			.setDescription(
-				"<a:wait:847471618272002059> Placing Eyes to Summon the Dragon"
+				'<a:wait:847471618272002059> Placing Eyes to Summon the Dragon'
 			)
-			.setColor("PURPLE")
-			.setFooter("Skyblock Simulator");
+			.setColor('PURPLE')
+			.setFooter('Skyblock Simulator');
 
 		const menu = await message.channel.send({ embeds: [start] });
 
@@ -81,24 +81,24 @@ module.exports = {
 
 		// Dragon Name Decision
 		const dragonnames = [
-			"Protector",
-			"Old",
-			"Wise",
-			"Unstable",
-			"Young",
-			"Strong",
-			"Superior",
+			'Protector',
+			'Old',
+			'Wise',
+			'Unstable',
+			'Young',
+			'Strong',
+			'Superior',
 		];
 		const dragname =
 			dragonnames[Math.floor(Math.random() * dragonnames.length)];
-		let loot = "";
+		let loot = '';
 
 		const spawned = new Discord.MessageEmbed()
 			.setDescription(
 				`<:berserker:852079613052059658> **${dragname} Dragon** has spawned!`
 			)
-			.setColor("PURPLE")
-			.setFooter("Skyblock Simulator");
+			.setColor('PURPLE')
+			.setFooter('Skyblock Simulator');
 
 		menu.edit({ embeds: [spawned] });
 
@@ -108,11 +108,11 @@ module.exports = {
 		const dragonpetrn = Math.floor(Math.random() * (50000 - 1) + 1);
 		const dragrn = Math.floor(Math.random() * (50000 - 1) + 1);
 
-		if (helmrn === rn) loot = "Helmet";
-		else if (cprn === rn) loot = "Chestplate";
-		else if (legsrn === rn) loot = "Leggings";
-		else if (bootsrn === rn) loot = "Boots";
-		else loot = "Fragments";
+		if (helmrn === rn) loot = 'Helmet';
+		else if (cprn === rn) loot = 'Chestplate';
+		else if (legsrn === rn) loot = 'Leggings';
+		else if (bootsrn === rn) loot = 'Boots';
+		else loot = 'Fragments';
 
 		// Dragon Earned Calc
 		const helm = 200000;
@@ -122,26 +122,26 @@ module.exports = {
 		const frags = 10000;
 		let price = 0;
 
-		if (loot === "Helmet") price = helm;
-		else if (loot === "Chestplate") price = chest;
-		else if (loot === "Leggings") price = legs;
-		else if (loot === "Boots") price = boots;
+		if (loot === 'Helmet') price = helm;
+		else if (loot === 'Chestplate') price = chest;
+		else if (loot === 'Leggings') price = legs;
+		else if (loot === 'Boots') price = boots;
 		else price = frags * fragsamount;
 
 		let multi = 1;
 
-		if (dragname === "Protector") multi = 1;
-		else if (dragname === "Old") multi = 1;
-		else if (dragname === "Wise") multi = 2;
-		else if (dragname === "Unstable") multi = 1.5;
-		else if (dragname === "Young") multi = 1.5;
-		else if (dragname === "Strong") multi = 2.5;
-		else if (dragname === "Superior") multi = 4;
+		if (dragname === 'Protector') multi = 1;
+		else if (dragname === 'Old') multi = 1;
+		else if (dragname === 'Wise') multi = 2;
+		else if (dragname === 'Unstable') multi = 1.5;
+		else if (dragname === 'Young') multi = 1.5;
+		else if (dragname === 'Strong') multi = 2.5;
+		else if (dragname === 'Superior') multi = 4;
 
 		const earned = price * multi;
 
 		const amount = 2;
-		const dropped = "Summoning Eye";
+		const dropped = 'Summoning Eye';
 
 		const updatePlayer = addItem(dropped, amount, player);
 
@@ -149,22 +149,22 @@ module.exports = {
 
 		await collection.updateOne(
 			{ _id: message.author.id },
-			{ $inc: { "data.profile.coins": earned } },
+			{ $inc: { 'data.profile.coins': earned } },
 			{ upsert: true }
 		);
 
 		const end = new Discord.MessageEmbed();
 		if (player.data.settings.imgshown === true) {
 			end.setImage(
-				"https://cdn.discordapp.com/attachments/850847486826643516/866566391125508106/latest.webp"
+				'https://cdn.discordapp.com/attachments/850847486826643516/866566391125508106/latest.webp'
 			);
 		}
-		end.setTitle("Dragon Loot")
-			.setColor("PURPLE")
+		end.setTitle('Dragon Loot')
+			.setColor('PURPLE')
 			.setFooter(
-				"Skyblock Simulator\nThis is purely cosmetic as of now will change in the Future"
+				'Skyblock Simulator\nThis is purely cosmetic as of now will change in the Future'
 			);
-		if (loot === "Fragments") {
+		if (loot === 'Fragments') {
 			end.setDescription(
 				`You killed an **${dragname} Dragon** which dropped you **${fragsamount}x ${loot}** earning you **<:coins:861974605203636253> ${earned} Coins**`
 			);
@@ -175,7 +175,7 @@ module.exports = {
 		}
 
 		if (dragonpetrn === dragrn) {
-			end.addField("\u200b", "**DRAGON PET DROP**");
+			end.addField('\u200b', '**DRAGON PET DROP**');
 		}
 
 		menu.edit({ embeds: [end] });

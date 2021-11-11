@@ -1,32 +1,32 @@
-const Discord = require("discord.js");
-const axios = require("axios");
+const Discord = require('discord.js');
+const axios = require('axios');
 
 module.exports = {
-	name: "Verify",
-	usage: "verify (IGN)",
-	description: "Sets the Users Nick to [Cata Level] IGN",
-	perms: "None",
-	folder: "Skyblock",
+	name: 'Verify',
+	usage: 'verify (IGN)',
+	description: 'Sets the Users Nick to [Cata Level] IGN',
+	perms: 'None',
+	folder: 'Skyblock',
 	aliases: [],
 	execute(client, message, args) {
-		if (!message.guild.roles.cache.find(role => role.name === "Linked")) {
+		if (!message.guild.roles.cache.find(role => role.name === 'Linked')) {
 			return message.channel.send("Can't find a Role named `Linked`.");
 		}
 
-		if (!message.guild.me.permissions.has("MANAGE_ROLES")) {
+		if (!message.guild.me.permissions.has('MANAGE_ROLES')) {
 			return message.channel.send(
 				"I don't have `MANAGE_ROLES` Permission."
 			);
 		}
 
-		if (!message.guild.me.permissions.has("MANAGE_NICKNAMES")) {
+		if (!message.guild.me.permissions.has('MANAGE_NICKNAMES')) {
 			return message.channel.send(
 				"I don't have `MANAGE_NICKNAMES` Permission."
 			);
 		}
 
 		const verifyrole = message.guild.roles.cache.find(
-			role => role.name === "Linked"
+			role => role.name === 'Linked'
 		);
 
 		const target = message.author;
@@ -39,15 +39,15 @@ module.exports = {
 			if (ign === undefined) {
 				message.channel
 					.send(
-						"<a:no:847468672380829707> Please use the proper Format: `!verify IGN`"
+						'<a:no:847468672380829707> Please use the proper Format: `!verify IGN`'
 					)
 					.then(msg => setTimeout(() => {
 						msg.delete();
 					}, 10000));
 				return;
 			}
-			delete require.cache[require.resolve("../../config.json")];
-			const config = require("../../config.json");
+			delete require.cache[require.resolve('../../config.json')];
+			const config = require('../../config.json');
 			axios
 				.get(`https://some-random-api.ml/mc?username=${ign}`)
 				.then(res => {
@@ -88,12 +88,12 @@ module.exports = {
 										const vembed =
 											new Discord.MessageEmbed()
 												.setTitle(
-													"<a:yes:847468695772987423> User successfully verified."
+													'<a:yes:847468695772987423> User successfully verified.'
 												)
 												.setDescription(
 													`${message.author} has successfully linked and their Nickname has been updated.`
 												)
-												.setColor("GREEN");
+												.setColor('GREEN');
 										message.channel
 											.send({ embeds: [vembed] })
 											.then(msg => setTimeout(() => {
@@ -106,7 +106,7 @@ module.exports = {
 		} catch (error) {
 			console.error(error);
 			message.channel.send(
-				"Error. Please try again later or Message Baltraz#4874."
+				'Error. Please try again later or Message Baltraz#4874.'
 			);
 		}
 	},

@@ -1,29 +1,29 @@
-const Discord = require("discord.js");
-const config = require("../../constants/Bot/config.json");
-const prefix = require("@replit/database");
+const Discord = require('discord.js');
+const config = require('../../constants/Bot/config.json');
+const prefix = require('@replit/database');
 const prefixx = new prefix();
 
 module.exports = {
-	name: "Setprefix",
-	description: "Set the Server Prefix",
-	usage: "setprefix (New Prefix)",
-	perms: "Admin",
-	folder: "Config",
-	aliases: ["sp"],
+	name: 'Setprefix',
+	description: 'Set the Server Prefix',
+	usage: 'setprefix (New Prefix)',
+	perms: 'Admin',
+	folder: 'Config',
+	aliases: ['sp'],
 	async execute(client, message, args) {
-		if (!message.member.permissions.has("ADMINISTRATOR")) {
+		if (!message.member.permissions.has('ADMINISTRATOR')) {
 			return message.channel.send(
-				"You are missing the Permission `ADMINISTRATOR`."
+				'You are missing the Permission `ADMINISTRATOR`.'
 			);
 		}
 
 		const { id } = message.guild;
 		let gprefix = await prefixx.get(id);
 		if (gprefix === null) {
-			gprefix = ",";
+			gprefix = ',';
 		}
-		if (args[0] === "getpp") {
-			if (message.author.id != "570267487393021969") return;
+		if (args[0] === 'getpp') {
+			if (message.author.id != '570267487393021969') return;
 			const pp = await prefixx.getAll();
 			message.channel.send(`${Object.entries(pp)}`);
 			return;

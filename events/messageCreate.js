@@ -1,63 +1,63 @@
-"use strict";
-const Discord = require("discord.js");
-const config = require("./constants/Bot/config.json");
-const Prefix = require("@replit/database");
+'use strict';
+const Discord = require('discord.js');
+const config = require('./constants/Bot/config.json');
+const Prefix = require('@replit/database');
 const prefix = new Prefix();
 
 const noScopeReply = {
 	embeds: [
 		new Discord.MessageEmbed()
-			.setTitle("Slash Command Changes")
-			.setColor("RED")
+			.setTitle('Slash Command Changes')
+			.setColor('RED')
 			.setDescription(
 				// eslint-disable-next-line max-len
 				"Please notify the server owner, an admin, a moderator or someone with the 'Manage Server' permission to re-authorize the Bot using the attached button. There is **NO NEED TO KICK THE BOT**, you can just re-authorize it and it will work using slash commands.\n\nThis is to ensure slash commands will be usable in this server as Discord will remove access to messages in the future.\n\nOnce the bot is re-authorized you're all set and this message won't appear again."
 			)
-			.setFooter("Greetings Sky Bot Dev")
+			.setFooter('Greetings Sky Bot Dev')
 	],
 	components: [
 		new Discord.MessageActionRow().addComponents(
 			new Discord.MessageButton()
-				.setLabel("Bot Invite")
+				.setLabel('Bot Invite')
 				.setURL(
-					"https://discord.com/api/oauth2/authorize?client_id=839835292785704980&permissions=139653925953&scope=applications.commands%20bot"
+					'https://discord.com/api/oauth2/authorize?client_id=839835292785704980&permissions=139653925953&scope=applications.commands%20bot'
 				)
-				.setStyle("LINK")
+				.setStyle('LINK')
 		)
 	]
 };
 const msgCmdRemovedReply = {
 	embeds: [
 		new Discord.MessageEmbed()
-			.setTitle("Message commands have been removed")
-			.setColor("ORANGE")
+			.setTitle('Message commands have been removed')
+			.setColor('ORANGE')
 			.setDescription(
-				"Message commands have been removed from Sky Bot due to Discord removing access to messages in the future.\n\nClick the attached button below for an article explaining those changes."
+				'Message commands have been removed from Sky Bot due to Discord removing access to messages in the future.\n\nClick the attached button below for an article explaining those changes.'
 			)
-			.setFooter("Greetings Sky Bot Dev")
+			.setFooter('Greetings Sky Bot Dev')
 	],
 	components: [
 		new Discord.MessageActionRow().addComponents(
 			new Discord.MessageButton()
-				.setLabel("Discord Article")
+				.setLabel('Discord Article')
 				.setURL(
-					"https://support-dev.discord.com/hc/en-us/articles/4404772028055-Message-Content-Access-Deprecation-for-Verified-Bots"
+					'https://support-dev.discord.com/hc/en-us/articles/4404772028055-Message-Content-Access-Deprecation-for-Verified-Bots'
 				)
-				.setStyle("LINK")
+				.setStyle('LINK')
 		)
 	]
 };
 module.exports = {
-	name: "messageCreate",
+	name: 'messageCreate',
 	async execute(message, mClient, client) {
 		if (message.author.bot) return;
 
-		if (message.channel.type === "DM") {
+		if (message.channel.type === 'DM') {
 			return message.reply("Sorry, I don't work in DMs.");
 		}
 
 		let gPrefix = await prefix.get(message.guild.id, { raw: false });
-		if (gPrefix === null) gPrefix = ".";
+		if (gPrefix === null) gPrefix = '.';
 
 		if (!message.content.startsWith(gPrefix) || message.author.bot) return;
 
@@ -74,7 +74,7 @@ module.exports = {
 
 		if (config.blacklistedusers.includes(message.author.id)) {
 			return message.reply(
-				"You are blacklisted from using this bot. If you believe this is unfair/you were mistakenly blacklisted, message **Baltraz#4874**."
+				'You are blacklisted from using this bot. If you believe this is unfair/you were mistakenly blacklisted, message **Baltraz#4874**.'
 			);
 		}
 
@@ -89,7 +89,7 @@ module.exports = {
 		let cooldownAmount = (command.cooldown || 3) * 1000;
 
 		// Owner Cooldown Bypass
-		if (message.author.id === "570267487393021969") {
+		if (message.author.id === '570267487393021969') {
 			cooldownAmount = 0;
 		}
 
@@ -110,10 +110,10 @@ module.exports = {
 		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
 		// Once i add to main bot
-		const servercoll = mClient.db("Sky-Bot").collection("Servers");
+		const servercoll = mClient.db('Sky-Bot').collection('Servers');
 		const found = await servercoll.findOne({ _id: message.guild.id });
 
-		if (message.author.id !== "570267487393021969") {
+		if (message.author.id !== '570267487393021969') {
 			// idk if === will work so i'm not changing this
 			if (found == null || found.scopeadded == false) {
 				try {
@@ -144,7 +144,7 @@ module.exports = {
 			await command.execute(client, message, args, mClient);
 		} catch (error) {
 			console.error(error);
-			message.reply("There was an error while trying to execute that command!");
+			message.reply('There was an error while trying to execute that command!');
 		}
 	}
 };

@@ -1,35 +1,35 @@
-const Discord = require("discord.js");
-const prefix = require("@replit/database");
+const Discord = require('discord.js');
+const prefix = require('@replit/database');
 const prefixx = new prefix();
-const fetch = require("node-fetch");
+const fetch = require('node-fetch');
 
 module.exports = {
-	name: "Sbsell",
-	description: "Sells Items for Skyblock Simulator",
-	usage: "sbsell (Itemname) (Amount)",
-	perms: "None",
-	folder: "SkyblockSim",
-	aliases: ["sell"],
+	name: 'Sbsell',
+	description: 'Sells Items for Skyblock Simulator',
+	usage: 'sbsell (Itemname) (Amount)',
+	perms: 'None',
+	folder: 'SkyblockSim',
+	aliases: ['sell'],
 	cooldown: 10,
 	async execute(client, message, args, mclient) {
-		const collection = mclient.db("SkyblockSim").collection("Players");
+		const collection = mclient.db('SkyblockSim').collection('Players');
 		const player = await collection.findOne({ _id: message.author.id });
 
 		let gprefix = await prefixx.get(message.guild.id, { raw: false });
-		if (gprefix === null) gprefix = ".";
+		if (gprefix === null) gprefix = '.';
 
 		if (player === null) {
 			const nodata = new Discord.MessageEmbed()
-				.setColor("RED")
+				.setColor('RED')
 				.setDescription(`No Profile found for <@!${id}>`);
 			message.channel.send({ embeds: [nodata] });
 			return;
 		}
 
 		// Creating the String for the Inventory
-		let str = "";
+		let str = '';
 		if (player.data.inventory.items === undefined) {
-			str = "Empty";
+			str = 'Empty';
 		} else {
 			for (item of player.data.inventory.items) {
 				str += `${item.name}: ${item.amount}\n`;
@@ -39,9 +39,9 @@ module.exports = {
 		// Embed to show Usage and Inventory
 		if (args[0] === undefined) {
 			const sellmenu = new Discord.MessageEmbed()
-				.setTitle("Skyblock Simulator Sell")
-				.setFooter("Skyblock Simulator")
-				.setColor("90EE90")
+				.setTitle('Skyblock Simulator Sell')
+				.setFooter('Skyblock Simulator')
+				.setColor('90EE90')
 				.setDescription(
 					`**Usage:** ${gprefix}sbsell (Amount/All*) (Itemname)\nItem and Amount are needed to sell an Item\n*Sells all Items from said Item you own\n\n**Inventory:**\n${str}`
 				);
@@ -51,18 +51,18 @@ module.exports = {
 
 		// Variables for Checks
 		let amount = args[0].toLowerCase(),
-		 price = "";
+		 price = '';
 
-		const bzname = args.slice(1).join("_").toUpperCase();
+		const bzname = args.slice(1).join('_').toUpperCase();
 
-		const input = args.slice(1).join(" ").toLowerCase();
-		const words = input.split(" ");
+		const input = args.slice(1).join(' ').toLowerCase();
+		const words = input.split(' ');
 
 		for (let i = 0; i < words.length; i++) {
 			words[i] = words[i][0].toUpperCase() + words[i].substr(1);
 		}
 
-		let sellitem = words.join(" ");
+		let sellitem = words.join(' ');
 
 		const founditem = player.data.inventory.items.find(
 			item => item.name === sellitem
@@ -71,8 +71,8 @@ module.exports = {
 		// Check if Input exists
 		if (args[0] === undefined || args[1] === undefined) {
 			const notset = new Discord.MessageEmbed()
-				.setFooter("Skyblock Simulator")
-				.setColor("RED")
+				.setFooter('Skyblock Simulator')
+				.setColor('RED')
 				.setDescription(
 					"You didn\'t specify the **Amount of Items** to be Sold or the **Item** to be sold please do so."
 				);
@@ -81,12 +81,12 @@ module.exports = {
 		}
 
 		if (founditem === undefined) {
-			message.channel.send("Invalid Item entered");
+			message.channel.send('Invalid Item entered');
 			return;
 		}
 
 		// Take Amount of Item as Amount
-		if (amount === "all") {
+		if (amount === 'all') {
 			amount = founditem.amount;
 		}
 
@@ -101,8 +101,8 @@ module.exports = {
 		// Check if more than 1 of said item exists
 		if (founditem === undefined || founditem.amount === 0) {
 			const noitems = new Discord.MessageEmbed()
-				.setFooter("Skyblock Simulator")
-				.setColor("RED")
+				.setFooter('Skyblock Simulator')
+				.setColor('RED')
 				.setDescription("You don\'t have enough Items to be sold.");
 			message.channel.send({ embeds: [noitems] });
 			return;
@@ -111,8 +111,8 @@ module.exports = {
 		// Check if a Number higher than the owned Amount is enterd
 		if (founditem.amount < amount) {
 			const littleitems = new Discord.MessageEmbed()
-				.setFooter("Skyblock Simulator")
-				.setColor("RED")
+				.setFooter('Skyblock Simulator')
+				.setColor('RED')
 				.setDescription(
 					`You entered a Number higher than the Amount of ${sellitem} than you own.\nEntered: **${amount}**\nOwned: **${founditem.amount}**`
 				);
@@ -142,13 +142,13 @@ module.exports = {
 
 			await collection.updateOne(
 				{ _id: message.author.id },
-				{ $inc: { "data.profile.coins": earnedcoins } },
+				{ $inc: { 'data.profile.coins': earnedcoins } },
 				{ upsert: true }
 			);
 
 			const sold = new Discord.MessageEmbed()
-				.setFooter("Skyblock Simulator")
-				.setColor("90EE90")
+				.setFooter('Skyblock Simulator')
+				.setColor('90EE90')
 				.setDescription(
 					`Successfully sold **${amount}x ${sellitem}** for **${earnedcoins} Coins**`
 				);

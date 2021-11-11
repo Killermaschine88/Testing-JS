@@ -1,18 +1,18 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 
 module.exports = {
-	name: "sbprogress",
-	description: "a",
-	usage: "sbsettings (Setting Name)",
-	perms: "None",
-	folder: "SkyblockSim",
+	name: 'sbprogress',
+	description: 'a',
+	usage: 'sbsettings (Setting Name)',
+	perms: 'None',
+	folder: 'SkyblockSim',
 	aliases: [],
 	cooldown: 10,
 	async execute(interaction, mclient) {
-		const collection = mclient.db("SkyblockSim").collection("Players");
+		const collection = mclient.db('SkyblockSim').collection('Players');
 
-		if (interaction.options.getUser("user") != null) {
-			var { id } = interaction.options.getUser("user");
+		if (interaction.options.getUser('user') != null) {
+			var { id } = interaction.options.getUser('user');
 		} else {
 			var { id } = interaction.user;
 		}
@@ -21,8 +21,8 @@ module.exports = {
 
 		if (player == null) {
 			const noprofile = new Discord.MessageEmbed()
-				.setColor("RED")
-				.setTitle("No Profile found")
+				.setColor('RED')
+				.setTitle('No Profile found')
 				.setDescription(
 					"The specified User hasn\'t played Skyblock Simulator yet."
 				);
@@ -32,8 +32,8 @@ module.exports = {
 
 		const embed = new Discord.MessageEmbed()
 			.setDescription(`**Skyblock Simulator Progress for <@!${id}>**`)
-			.setColor("90EE90")
-			.setFooter("Skyblock Simulator");
+			.setColor('90EE90')
+			.setFooter('Skyblock Simulator');
 
 		// Skills Completion
 		const lvl50xp = 55172425;
@@ -54,7 +54,7 @@ module.exports = {
 		}
 
 		embed.addField(
-			"Skills",
+			'Skills',
 			`<:mining:852069714577719306> Mining: ${miningxp}%\n<:combat:852069714527911956> Combat: ${combatxp}%\n<:fishing:852069714359877643> Fishing: ${fishingxp}%`,
 			true
 		);
@@ -65,7 +65,7 @@ module.exports = {
 		rodnum = (rodnum / 9 * 100).toFixed(2);
 
 		embed.addField(
-			"<:fishing:852069714359877643> Fishing Rod",
+			'<:fishing:852069714359877643> Fishing Rod',
 			`${rodnum}%`,
 			true
 		);
@@ -76,7 +76,7 @@ module.exports = {
 		pickaxenum = (pickaxenum / 7 * 100).toFixed(2);
 
 		embed.addField(
-			"<:mining:852069714577719306> Pickaxe",
+			'<:mining:852069714577719306> Pickaxe',
 			`${pickaxenum}%`,
 			true
 		);
@@ -86,7 +86,7 @@ module.exports = {
 		armornum = (armornum / 11 * 100).toFixed(2);
 
 		embed.addField(
-			"<:tank:852079613051666472> Armor",
+			'<:tank:852079613051666472> Armor',
 			`${armornum}%`,
 			true
 		);
@@ -96,7 +96,7 @@ module.exports = {
 		swordnum = (swordnum / 10 * 100).toFixed(2);
 
 		embed.addField(
-			"<:berserker:852079613052059658> Sword",
+			'<:berserker:852079613052059658> Sword',
 			`${swordnum}%`,
 			true
 		);
@@ -114,7 +114,7 @@ module.exports = {
 		tankxp = (tankxp / catamaxxp * 100).toFixed(2);
 
 		embed.addField(
-			"Dungeons",
+			'Dungeons',
 			`<:catacombs:854399510951624775> Dungeons: ${cataxp}%\n<:combat:852069714527911956> Assassin: ${assassinxp}%\n<:berserker:852079613052059658> Berserker: ${berserkerxp}%\n<:tank:852079613051666472> Tank: ${tankxp}%`,
 			true
 		);
@@ -124,52 +124,52 @@ module.exports = {
 };
 
 function getRodProgress(rodname) {
-	if (rodname == "Fishing Rod") return 1;
-	else if (rodname == "Prismarine Rod") return 2;
-	else if (rodname == "Sponge Rod") return 3;
-	else if (rodname == "Speedster Rod") return 4;
+	if (rodname == 'Fishing Rod') return 1;
+	else if (rodname == 'Prismarine Rod') return 2;
+	else if (rodname == 'Sponge Rod') return 3;
+	else if (rodname == 'Speedster Rod') return 4;
 	else if (rodname == "Farmer's Rod") return 5;
-	else if (rodname == "Challenging Rod") return 6;
-	else if (rodname == "Rod of Champions") return 7;
-	else if (rodname == "Rod of Legends") return 8;
-	else if (rodname == "Rod of the Sea") return 9;
+	else if (rodname == 'Challenging Rod') return 6;
+	else if (rodname == 'Rod of Champions') return 7;
+	else if (rodname == 'Rod of Legends') return 8;
+	else if (rodname == 'Rod of the Sea') return 9;
 }
 
 function getPickaxeProgress(pickaxename) {
-	if (pickaxename == "Wood Pickaxe") return 1;
-	else if (pickaxename == "Stone Pickaxe") return 2;
-	else if (pickaxename == "Iron Pickaxe") return 3;
-	else if (pickaxename == "Mithril Pickaxe") return 4;
-	else if (pickaxename == "Titanium Pickaxe") return 5;
-	else if (pickaxename == "Stonk") return 6;
-	else if (pickaxename == "Gemstone Gauntlet") return 7;
+	if (pickaxename == 'Wood Pickaxe') return 1;
+	else if (pickaxename == 'Stone Pickaxe') return 2;
+	else if (pickaxename == 'Iron Pickaxe') return 3;
+	else if (pickaxename == 'Mithril Pickaxe') return 4;
+	else if (pickaxename == 'Titanium Pickaxe') return 5;
+	else if (pickaxename == 'Stonk') return 6;
+	else if (pickaxename == 'Gemstone Gauntlet') return 7;
 }
 
 function getArmorProgress(player) {
 	const inv = player.data.inventory.armor;
 	let num = 0;
 
-	if (inv.find(item => item.name == "Leaflet Armor")) {
+	if (inv.find(item => item.name == 'Leaflet Armor')) {
 		num++;
-	} else if (inv.find(item => item.name == "Golem Armor")) {
+	} else if (inv.find(item => item.name == 'Golem Armor')) {
 		num++;
-	} else if (inv.find(item => item.name == "Monster Hunter Armor")) {
+	} else if (inv.find(item => item.name == 'Monster Hunter Armor')) {
 		num++;
-	} else if (inv.find(item => item.name == "Tarantula Armor")) {
+	} else if (inv.find(item => item.name == 'Tarantula Armor')) {
 		num++;
-	} else if (inv.find(item => item.name == "Frozen Blaze Armor")) {
+	} else if (inv.find(item => item.name == 'Frozen Blaze Armor')) {
 		num++;
-	} else if (inv.find(item => item.name == "Superior Dragon Armor")) {
+	} else if (inv.find(item => item.name == 'Superior Dragon Armor')) {
 		num++;
-	} else if (inv.find(item => item.name == "Rotten Armor")) {
+	} else if (inv.find(item => item.name == 'Rotten Armor')) {
 		num++;
-	} else if (inv.find(item => item.name == "Skeleton Master Armor")) {
+	} else if (inv.find(item => item.name == 'Skeleton Master Armor')) {
 		num++;
-	} else if (inv.find(item => item.name == "Skeletor Armor")) {
+	} else if (inv.find(item => item.name == 'Skeletor Armor')) {
 		num++;
-	} else if (inv.find(item => item.name == "Adaptive Armor")) {
+	} else if (inv.find(item => item.name == 'Adaptive Armor')) {
 		num++;
-	} else if (inv.find(item => item.name == "Shadow Assassin Armor")) {
+	} else if (inv.find(item => item.name == 'Shadow Assassin Armor')) {
 		num++;
 	}
 
@@ -180,25 +180,25 @@ function getSwordProgress(player) {
 	const inv = player.data.inventory.sword;
 	let num = 0;
 
-	if (inv.find(item => item.name == "Undead Sword")) {
+	if (inv.find(item => item.name == 'Undead Sword')) {
 		num++;
-	} else if (inv.find(item => item.name == "Golem Sword")) {
+	} else if (inv.find(item => item.name == 'Golem Sword')) {
 		num++;
-	} else if (inv.find(item => item.name == "Zombie Sword")) {
+	} else if (inv.find(item => item.name == 'Zombie Sword')) {
 		num++;
 	} else if (inv.find(item => item.name == "Tactician's Sword")) {
 		num++;
-	} else if (inv.find(item => item.name == "Leaping Sword")) {
+	} else if (inv.find(item => item.name == 'Leaping Sword')) {
 		num++;
-	} else if (inv.find(item => item.name == "Dreadlord Sword")) {
+	} else if (inv.find(item => item.name == 'Dreadlord Sword')) {
 		num++;
-	} else if (inv.find(item => item.name == "Silent Death")) {
+	} else if (inv.find(item => item.name == 'Silent Death')) {
 		num++;
-	} else if (inv.find(item => item.name == "Zombie Knight Sword")) {
+	} else if (inv.find(item => item.name == 'Zombie Knight Sword')) {
 		num++;
-	} else if (inv.find(item => item.name == "Adaptive Blade")) {
+	} else if (inv.find(item => item.name == 'Adaptive Blade')) {
 		num++;
-	} else if (inv.find(item => item.name == "Livid Dagger")) {
+	} else if (inv.find(item => item.name == 'Livid Dagger')) {
 		num++;
 	}
 

@@ -1,21 +1,21 @@
-const Discord = require("discord.js");
-const { TYPES, GetType } = require("../../constants/Simulator/leaderboard");
+const Discord = require('discord.js');
+const { TYPES, GetType } = require('../../constants/Simulator/leaderboard');
 
 module.exports = {
-	name: "sbleaderboard",
-	description: "Shows a skyblock leaderboard",
-	usage: "sbleaderboard (Leaderboard name)",
-	perms: "None",
-	folder: "SkyblockSim",
+	name: 'sbleaderboard',
+	description: 'Shows a skyblock leaderboard',
+	usage: 'sbleaderboard (Leaderboard name)',
+	perms: 'None',
+	folder: 'SkyblockSim',
 	aliases: [],
 	cooldown: 10,
 	async execute(interaction, mclient) {
-		const collection = mclient.db("SkyblockSim").collection("Players");
+		const collection = mclient.db('SkyblockSim').collection('Players');
 
 		// Build the select box for the leaderboard
 		const leaderRow = new Discord.MessageActionRow();
 		const leaderSelect = new Discord.MessageSelectMenu()
-			.setCustomId("leaderSelect")
+			.setCustomId('leaderSelect')
 			.setMaxValues(1)
 			.setMinValues(1);
 
@@ -34,11 +34,11 @@ module.exports = {
 		leaderRow.addComponents(leaderSelect);
 
 		const embed = new Discord.MessageEmbed()
-			.setTitle("Leaderboard")
+			.setTitle('Leaderboard')
 			.setDescription(
-				"Choose the Leaderboard you want to see from the Select Menu."
+				'Choose the Leaderboard you want to see from the Select Menu.'
 			)
-			.setFooter("Skyblock Simulator");
+			.setFooter('Skyblock Simulator');
 
 		await interaction.editReply({
 			embeds: [embed],
@@ -47,15 +47,15 @@ module.exports = {
 
 		// Wait for a selectbox option to be chosen and then
 		// send a leaderboard of the selected type
-		const filter = i => i.customId === "leaderSelect" && i.user.id === interaction.user.id;
+		const filter = i => i.customId === 'leaderSelect' && i.user.id === interaction.user.id;
 		const leaderCollector =
 			await interaction.channel.createMessageComponentCollector({
 				filter,
-				componentType: "SELECT_MENU",
+				componentType: 'SELECT_MENU',
 				time: 300000,
 			});
 
-		leaderCollector.on("collect", async collectedTypeInteraction => {
+		leaderCollector.on('collect', async collectedTypeInteraction => {
 			type = GetType(collectedTypeInteraction.values[0]);
 
 			// Get the collection values sorted by the selected type
@@ -63,7 +63,7 @@ module.exports = {
 				`collection.find({}).sort({ "${type.data}": -1 }).toArray()`
 			);
 
-			let lbString = "";
+			let lbString = '';
 			const index = lbCol.findIndex(lb => lb._id == interaction.user.id);
 
 			// Build a string showing the values of selected type
@@ -82,7 +82,7 @@ module.exports = {
 			await collectedTypeInteraction.update({ embeds: [embed] });
 		});
 
-		leaderCollector.on("end", async collected => {
+		leaderCollector.on('end', async collected => {
 			const reply = await interaction.fetchReply();
 			reply.delete();
 		});

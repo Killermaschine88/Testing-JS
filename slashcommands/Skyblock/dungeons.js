@@ -1,19 +1,19 @@
-const Discord = require("discord.js");
-const fetch = require("node-fetch");
+const Discord = require('discord.js');
+const fetch = require('node-fetch');
 const { apikey } = process.env;
-const pms = require("pretty-ms");
+const pms = require('pretty-ms');
 
 module.exports = {
-	name: "Dungeons",
-	usage: "dungeons (IGN)",
-	description: "Show Dungeons Stats for the mentioned User",
-	folder: "Skyblock",
-	perms: "None",
-	aliases: ["d", "cata"],
+	name: 'Dungeons',
+	usage: 'dungeons (IGN)',
+	description: 'Show Dungeons Stats for the mentioned User',
+	folder: 'Skyblock',
+	perms: 'None',
+	aliases: ['d', 'cata'],
 	async execute(interaction) {
-		let ign = interaction.options.getString("ign");
+		let ign = interaction.options.getString('ign');
 
-		ign = ign.replace(/\W/g, ""); // removes weird characters
+		ign = ign.replace(/\W/g, ''); // removes weird characters
 
 		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(
 			res => {
@@ -22,7 +22,7 @@ module.exports = {
 						.setDescription(
 							`No Minecraft account found for \`${ign}\``
 						)
-						.setColor("DC143C")
+						.setColor('DC143C')
 						.setTimestamp();
 					interaction.editReply({ embeds: [nomc] });
 				}
@@ -34,8 +34,8 @@ module.exports = {
 		// At this point we know its a valid IGN, but not if it has skyblock profiles
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription("Checking for Player Data . . .")
-			.setColor("ORANGE");
+			.setDescription('Checking for Player Data . . .')
+			.setColor('ORANGE');
 
 		const waitingembed = await interaction.editReply({
 			embeds: [waitembed],
@@ -46,7 +46,7 @@ module.exports = {
 		if (apiData.status != 200) {
 			const errorembed = new Discord.MessageEmbed()
 				.setDescription(apiData.reason)
-				.setColor("DC143C")
+				.setColor('DC143C')
 				.setTimestamp();
 
 			waitingembed.edit({ embeds: [errorembed] });
@@ -56,7 +56,7 @@ module.exports = {
 		if (!apiData.data.dungeons) {
 			const nodungembed = new Discord.MessageEmbed()
 				.setDescription("This player hasn't played dungeons yet!")
-				.setColor("ORANGE")
+				.setColor('ORANGE')
 				.setTimestamp();
 			waitingembed.edit({ embeds: [nodungembed] });
 			return;
@@ -400,8 +400,8 @@ module.exports = {
 		const msec7 = Math.floor(mtime7 % 60);
 
 		const foundresult = new Discord.MessageEmbed()
-			.setTitle("Dungeons Stats")
-			.setColor("7CFC00")
+			.setTitle('Dungeons Stats')
+			.setColor('7CFC00')
 			.setFooter(
 				"Click their Name to view their SkyShiiyu\n0m 0s means they haven't gotten an S+ on said Floor yet."
 			)
@@ -419,105 +419,105 @@ module.exports = {
 			)
 			.addFields(
 				{
-					name: "<:healer:852079613001990175> Healer Level",
+					name: '<:healer:852079613001990175> Healer Level',
 					value: toFixed(apiData.data.dungeons.classes.healer.level),
 					inline: true,
 				},
 				{
-					name: "<:mage:852079612699607072> Mage Level",
+					name: '<:mage:852079612699607072> Mage Level',
 					value: toFixed(apiData.data.dungeons.classes.mage.level),
 					inline: true,
 				},
 				{
-					name: "<:berserker:852079613052059658> Berserker Level",
+					name: '<:berserker:852079613052059658> Berserker Level',
 					value: toFixed(
 						apiData.data.dungeons.classes.berserker.level
 					),
 					inline: true,
 				},
 				{
-					name: "<:archer:852079613042491402> Archer Level",
+					name: '<:archer:852079613042491402> Archer Level',
 					value: toFixed(apiData.data.dungeons.classes.archer.level),
 					inline: true,
 				},
 				{
-					name: "<:tank:852079613051666472> Tank Level",
+					name: '<:tank:852079613051666472> Tank Level',
 					value: toFixed(apiData.data.dungeons.classes.tank.level),
 					inline: true,
 				},
 
-				{ name: "\u200b", value: "**Catacombs**" },
+				{ name: '\u200b', value: '**Catacombs**' },
 
 				{
-					name: "<:bonzo:852111493859115019> Floor 1",
+					name: '<:bonzo:852111493859115019> Floor 1',
 					value: `Completions: **${tier1}**\nFastest S+: **${min1}m ${sec1}s**\nBest Score: **${value1}**`,
 					inline: true,
 				},
 				{
-					name: "<:scarff:852111493909446686> Floor 2",
+					name: '<:scarff:852111493909446686> Floor 2',
 					value: `Completions: **${tier2}**\nFastest S+: **${min2}m ${sec2}s**\nBest Score: **${value2}**`,
 					inline: true,
 				},
 				{
-					name: "<:professor:852111493952176148> Floor 3",
+					name: '<:professor:852111493952176148> Floor 3',
 					value: `Completions: **${tier3}**\nFastest S+: **${min3}m ${sec3}s**\nBest Score: **${value3}**`,
 					inline: true,
 				},
 				{
-					name: "<:thorn:852111493990580284> Floor 4",
+					name: '<:thorn:852111493990580284> Floor 4',
 					value: `Completions: **${tier4}**\nFastest S+: **${min4}m ${sec4}s**\nBest Score: **${value4}**`,
 					inline: true,
 				},
 				{
-					name: "<:livid:852111493784666123> Floor 5",
+					name: '<:livid:852111493784666123> Floor 5',
 					value: `Completions: **${tier5}**\nFastest S+: **${min5}m ${sec5}s**\nBest Score: **${value5}**`,
 					inline: true,
 				},
 				{
-					name: "<:sadan:852111495466582017> Floor 6",
+					name: '<:sadan:852111495466582017> Floor 6',
 					value: `Completions: **${tier6}**\nFastest S+: **${min6}m ${sec6}s**\nBest Score: **${value6}**`,
 					inline: true,
 				},
 				{
-					name: "<:necron:852111495575765012> Floor 7",
+					name: '<:necron:852111495575765012> Floor 7',
 					value: `Completions: **${tier7}**\nFastest S+: **${min7}m ${sec7}s**\nBest Score: **${value7}**`,
 					inline: true,
 				},
 
-				{ name: "\u200b", value: "**Master Catacombs**" },
+				{ name: '\u200b', value: '**Master Catacombs**' },
 
 				{
-					name: "<:bonzo:852111493859115019> Floor 1",
+					name: '<:bonzo:852111493859115019> Floor 1',
 					value: `Completions: **${mtier1}**\nFastest S+: **${mmin1}m ${msec1}s**\nBest Score: **${mvalue1}**`,
 					inline: true,
 				},
 				{
-					name: "<:scarff:852111493909446686> Floor 2",
+					name: '<:scarff:852111493909446686> Floor 2',
 					value: `Completions: **${mtier2}**\nFastest S+: **${mmin2}m ${msec2}s**\nBest Score: **${mvalue2}**`,
 					inline: true,
 				},
 				{
-					name: "<:professor:852111493952176148> Floor 3",
+					name: '<:professor:852111493952176148> Floor 3',
 					value: `Completions: **${mtier3}**\nFastest S+: **${mmin3}m ${msec3}s**\nBest Score: **${mvalue3}**`,
 					inline: true,
 				},
 				{
-					name: "<:thorn:852111493990580284> Floor 4",
+					name: '<:thorn:852111493990580284> Floor 4',
 					value: `Completions: **${mtier4}**\nFastest S+: **${mmin4}m ${msec4}s**\nBest Score: **${mvalue4}**`,
 					inline: true,
 				},
 				{
-					name: "<:livid:852111493784666123> Floor 5",
+					name: '<:livid:852111493784666123> Floor 5',
 					value: `Completions: **${mtier5}**\nFastest S+: **${mmin5}m ${msec5}s**\nBest Score: **${mvalue5}**`,
 					inline: true,
 				},
 				{
-					name: "<:sadan:852111495466582017> Floor 6",
+					name: '<:sadan:852111495466582017> Floor 6',
 					value: `Completions: **${mtier6}**\nFastest S+: **${mmin6}m ${msec6}s**\nBest Score: **${mvalue6}**`,
 					inline: true,
 				},
 				{
-					name: "<:necron:852111495575765012> Floor 7",
+					name: '<:necron:852111495575765012> Floor 7',
 					value: `Completions: **${mtier7}**\nFastest S+: **${mmin7}m ${msec7}s**\nBest Score: **${mvalue7}**`,
 					inline: true,
 				}
@@ -535,8 +535,8 @@ async function getUUID(ign) {
 }
 
 async function getApiData(ign) {
-	delete require.cache[require.resolve("../../constants/Bot/config.json")];
-	const config = require("../../constants/Bot/config.json");
+	delete require.cache[require.resolve('../../constants/Bot/config.json')];
+	const config = require('../../constants/Bot/config.json');
 
 	const UUID = await getUUID(ign);
 	const response = await fetch(

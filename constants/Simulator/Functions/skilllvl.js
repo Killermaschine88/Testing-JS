@@ -1,12 +1,12 @@
-const leveling = require("./leveling.js");
+const leveling = require('./leveling.js');
 
 function getLevelByXp(xp, extra = {}) {
 	let xp_table;
 	switch (extra.type) {
-		case "runecrafting":
+		case 'runecrafting':
 			xp_table = leveling.runecrafting_xp;
 			break;
-		case "dungeoneering":
+		case 'dungeoneering':
 			xp_table = leveling.dungeoneering_xp;
 			break;
 		default:

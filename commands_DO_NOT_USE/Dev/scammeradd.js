@@ -1,33 +1,33 @@
 const urii = process.env.uri;
-const Discord = require("discord.js");
-const config = require("../../constants/Bot/config.json");
-const axios = require("axios");
+const Discord = require('discord.js');
+const config = require('../../constants/Bot/config.json');
+const axios = require('axios');
 
 module.exports = {
-	name: "scammeradd",
-	description: "Adds a Scammer to the Database (Dev Only)",
-	usage: "scammeradd (Scammer IGN) (Scammer Reason)",
-	perms: "Scam Managers Only",
-	folder: "Dev",
-	aliases: ["sa"],
+	name: 'scammeradd',
+	description: 'Adds a Scammer to the Database (Dev Only)',
+	usage: 'scammeradd (Scammer IGN) (Scammer Reason)',
+	perms: 'Scam Managers Only',
+	folder: 'Dev',
+	aliases: ['sa'],
 	execute: (client, message, args, mcleint) => {
 		if (!config.scammanagers.includes(message.author.id)) {
 			const noperms = new Discord.MessageEmbed()
 				.setDescription(
-					"You tried using a Scam Manager Only Command.\nIf you want to report a Scammer join https://discord.gg/Ca6XpTRQaR and report them there."
+					'You tried using a Scam Manager Only Command.\nIf you want to report a Scammer join https://discord.gg/Ca6XpTRQaR and report them there.'
 				)
-				.setColor("ORANGE");
+				.setColor('ORANGE');
 			message.channel.send({ embeds: [noperms] });
 			return;
 		}
 
 		const scammerIGN = args[0];
 		const scamPROOF = args[1];
-		const scamREASON = args.slice(2).join(" ");
+		const scamREASON = args.slice(2).join(' ');
 
 		if (args[0] === undefined || args[1] === undefined) {
 			message.channel.send(
-				"scammeradd (Scammer IGN) (Scam Proof[IMGUR Link]) (Scam Reason)"
+				'scammeradd (Scammer IGN) (Scam Proof[IMGUR Link]) (Scam Reason)'
 			);
 			return;
 		}
@@ -38,7 +38,7 @@ module.exports = {
 			.then(async res => {
 				const { uuid } = res.data;
 
-				const collection = mclient.db("Sky-Bot").collection("Scammers");
+				const collection = mclient.db('Sky-Bot').collection('Scammers');
 
 				await collection.updateOne(
 					{ _id: uuid },
@@ -53,8 +53,8 @@ module.exports = {
 				);
 
 				const sucEmbed = new Discord.MessageEmbed()
-					.setTitle("Scammer Added")
-					.setColor("GREEN")
+					.setTitle('Scammer Added')
+					.setColor('GREEN')
 					.setDescription(
 						`Successfully added **${scammerIGN}** to the Scammer list for: **${scamREASON}**`
 					)

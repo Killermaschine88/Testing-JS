@@ -1,17 +1,17 @@
-const Discord = require("discord.js");
-const fs = require("fs");
-const old = require("../../constants/Bot/config.json");
-const over = require("../../launcher_accounts.json");
-const mineflayer = require("mineflayer");
+const Discord = require('discord.js');
+const fs = require('fs');
+const old = require('../../constants/Bot/config.json');
+const over = require('../../launcher_accounts.json');
+const mineflayer = require('mineflayer');
 const { email } = process.env;
 const { pass } = process.env;
 
 module.exports = {
-	name: "Getkey",
-	description: "Gets a new apikey",
-	usage: "getkey",
-	perms: "Be the Dev lmao",
-	folder: "Dev",
+	name: 'Getkey',
+	description: 'Gets a new apikey',
+	usage: 'getkey',
+	perms: 'Be the Dev lmao',
+	folder: 'Dev',
 	aliases: [],
 	async execute(client, message, args) {
 		if (message.author.id != old.ownerID) {
@@ -19,37 +19,37 @@ module.exports = {
 		}
 
 		const bot = mineflayer.createBot({
-			host: "hypixel.net",
+			host: 'hypixel.net',
 			username: email,
 			password: pass,
 		});
 
-		bot.on("login", () => {
-			console.log("Logged in to Hypixel");
+		bot.on('login', () => {
+			console.log('Logged in to Hypixel');
 		});
 
-		bot.on("spawn", () => {
-			bot.chat("/api new");
+		bot.on('spawn', () => {
+			bot.chat('/api new');
 		});
 
-		bot.on("message", async message => {
-			if (message.text === "Your new API key is ") {
+		bot.on('message', async message => {
+			if (message.text === 'Your new API key is ') {
 				old.apikey = message.extra[0].text;
 				fs.writeFileSync(
-					"/home/runner/Testing-JS/constants/Bot/config.json",
+					'/home/runner/Testing-JS/constants/Bot/config.json',
 					JSON.stringify(old)
 				);
 
-				over.mojangClientToken = "reset";
+				over.mojangClientToken = 'reset';
 				fs.writeFileSync(
-					"/home/runner/Testing-JS/launcher_accounts.json",
+					'/home/runner/Testing-JS/launcher_accounts.json',
 					JSON.stringify(over)
 				);
 
 				bot.end();
-				console.log("Logged out of Hypixel");
+				console.log('Logged out of Hypixel');
 			}
 		});
-		message.channel.send("Hypixel API-Key reset.");
+		message.channel.send('Hypixel API-Key reset.');
 	},
 };

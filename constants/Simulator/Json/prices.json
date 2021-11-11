@@ -1,54 +1,54 @@
 [
 	{
-		name: "Carrot",
+		name: 'Carrot',
 		price: 5
 	},
 	{
-		name: "Potatoe",
+		name: 'Potatoe',
 		price: 5
 	},
 	{
-		name: "Cobweb",
+		name: 'Cobweb',
 		price: 7
 	},
 	{
-		name: "Arrow",
+		name: 'Arrow',
 		price: 5
 	},
 	{
-		name: "Slimeball",
+		name: 'Slimeball',
 		price: 8
 	},
 	{
-		name: "Gold Nugget",
+		name: 'Gold Nugget',
 		price: 2
 	},
 	{
-		name: "Eye of Ender",
+		name: 'Eye of Ender',
 		price: 20
 	},
 	{
-		name: "Lilypad",
+		name: 'Lilypad',
 		price: 115
 	},
 	{
-		name: "Gemstone",
+		name: 'Gemstone',
 		price: 20
 	},
 	{
-		name: "Hardstone",
+		name: 'Hardstone',
 		price: 5
 	},
 	{
-		name: "Lapis Lazuli",
+		name: 'Lapis Lazuli',
 		price: 8
 	},
 	{
-		name: "Mithril",
+		name: 'Mithril',
 		price: 11
 	},
 	{
-		name: "Titanium",
+		name: 'Titanium',
 		price: 60
 	}
 ];

@@ -1,13 +1,13 @@
-const config = require("../../constants/Bot/config.json");
-const Discord = require("discord.js");
+const config = require('../../constants/Bot/config.json');
+const Discord = require('discord.js');
 
 module.exports = {
-	name: "setdb",
-	description: "Set db entry",
-	usage: "dp",
-	perms: "Dev",
-	folder: "Dev",
-	aliases: ["db"],
+	name: 'setdb',
+	description: 'Set db entry',
+	usage: 'dp',
+	perms: 'Dev',
+	folder: 'Dev',
+	aliases: ['db'],
 	async execute(client, message, args, mclient) {
 		if (message.author.id !== config.ownerID) {
 			return message.channel.send("Can't use this!");
@@ -27,10 +27,10 @@ module.exports = {
 
 		if (!isNaN(value)) value = Number(value);
 
-		if (value == "true") value = true;
-		else if (value == "false") value = false;
+		if (value == 'true') value = true;
+		else if (value == 'false') value = false;
 
-		const collection = mclient.db("SkyblockSim").collection("Players");
+		const collection = mclient.db('SkyblockSim').collection('Players');
 
 		await collection.updateOne(
 			{ _id: id },
@@ -42,7 +42,7 @@ module.exports = {
 			.setDescription(
 				`Document for <@!${id}> updated.\n\nPath: **${path}**\nNew Value: **${value}**`
 			)
-			.setColor("GREEN");
+			.setColor('GREEN');
 
 		message.channel.send({ embeds: [done] });
 	},

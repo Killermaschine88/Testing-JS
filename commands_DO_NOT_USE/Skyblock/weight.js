@@ -1,16 +1,16 @@
-const Discord = require("discord.js");
-const fetch = require("node-fetch");
+const Discord = require('discord.js');
+const fetch = require('node-fetch');
 
-const loading = "847471618272002059";
+const loading = '847471618272002059';
 
 module.exports = {
-	name: "Weight",
-	usage: "weight (IGN) <Profile>",
+	name: 'Weight',
+	usage: 'weight (IGN) <Profile>',
 	description:
 		"Gets the weight of a player's profile. This is a number generated from your Skills, Slayers and Dungeons levels.",
-	perms: "None",
-	folder: "Skyblock",
-	aliases: ["we"],
+	perms: 'None',
+	folder: 'Skyblock',
+	aliases: ['we'],
 	async execute(client, message, args) {
 		if (!args[0]) {
 			var ign = message.member.displayName;
@@ -18,14 +18,14 @@ module.exports = {
 			var ign = message.mentions.members.first().displayName;
 		} else var ign = args[0]; // Gets IGN
 
-		let method = "save";
+		let method = 'save';
 		if (args[1]) method = args[1];
 
-		ign = ign.replace(/\W/g, ""); // removes weird characters
+		ign = ign.replace(/\W/g, ''); // removes weird characters
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription("Checking for Player Data . . .")
-			.setColor("ORANGE");
+			.setDescription('Checking for Player Data . . .')
+			.setColor('ORANGE');
 
 		const waitingembed = await message.channel.send({
 			embeds: [waitembed],
@@ -38,7 +38,7 @@ module.exports = {
 						.setDescription(
 							`No Minecraft account found for \`${ign}\``
 						)
-						.setColor("DC143C")
+						.setColor('DC143C')
 						.setTimestamp();
 					waitingembed.edit({ embeds: [nomcacc] });
 				}
@@ -53,7 +53,7 @@ module.exports = {
 		if (apiData.status != 200) {
 			const apierrorembed = new Discord.MessageEmbed()
 				.setDescription(apiData.reason)
-				.setColor("DC143C")
+				.setColor('DC143C')
 				.setTimestamp();
 			waitingembed.edit({ embeds: [apierrorembed] });
 			return;
@@ -68,9 +68,9 @@ module.exports = {
 					`https://sky.shiiyu.moe/stats/${ign}`
 				)
 				.setDescription(
-					"This Player current has the Skills API disabled, tell them to enable it in the Skyblock Menu and then try again"
+					'This Player current has the Skills API disabled, tell them to enable it in the Skyblock Menu and then try again'
 				)
-				.setColor("DC143C")
+				.setColor('DC143C')
 				.setTimestamp();
 			waitingembed.edit({ embeds: [apioff] });
 			return;
@@ -85,7 +85,7 @@ module.exports = {
 					`https://sky.shiiyu.moe/stats/${ign}`
 				)
 				.setDescription(`${ign} has not entered the catacombs`)
-				.setColor("DC143C")
+				.setColor('DC143C')
 				.setTimestamp();
 			waitingembed.edit({ embeds: [nodungeonsfound] });
 			return;
@@ -97,7 +97,7 @@ module.exports = {
 				`https://cravatar.eu/helmavatar/${ign}/600.png`,
 				`https://sky.shiiyu.moe/stats/${ign}`
 			)
-			.setColor("7CFC00")
+			.setColor('7CFC00')
 			.setDescription(
 				`${ign}'s total Weight for their **${
 					apiData.data.name
@@ -109,21 +109,21 @@ module.exports = {
 			)
 			.addFields(
 				{
-					name: "Skills",
+					name: 'Skills',
 					value: [
-						"<:mining:852069714577719306> Mining",
-						"<:foraging:852069714447695872> Foraging",
-						"<:enchanting:852069714511659058> Enchanting",
-						"<:farming:852069714451759114> Farming",
-						"<:combat:852069714527911956> Combat",
-						"<:fishing:852069714359877643> Fishing",
-						"<:alchemy:852069714480988180> Alchemy",
-						"<:taming:852069714493833227> Taming",
-					].join("\n"),
+						'<:mining:852069714577719306> Mining',
+						'<:foraging:852069714447695872> Foraging',
+						'<:enchanting:852069714511659058> Enchanting',
+						'<:farming:852069714451759114> Farming',
+						'<:combat:852069714527911956> Combat',
+						'<:fishing:852069714359877643> Fishing',
+						'<:alchemy:852069714480988180> Alchemy',
+						'<:taming:852069714493833227> Taming',
+					].join('\n'),
 					inline: true,
 				},
 				{
-					name: "Level",
+					name: 'Level',
 					value: [
 						toFixed(apiData.data.skills.mining.level),
 						toFixed(apiData.data.skills.foraging.level),
@@ -133,11 +133,11 @@ module.exports = {
 						toFixed(apiData.data.skills.fishing.level),
 						toFixed(apiData.data.skills.alchemy.level),
 						toFixed(apiData.data.skills.taming.level),
-					].join("\n"),
+					].join('\n'),
 					inline: true,
 				},
 				{
-					name: "Weight",
+					name: 'Weight',
 					value: [
 						`**${toFixed(
 							apiData.data.skills.mining.weight
@@ -203,40 +203,40 @@ module.exports = {
 							apiData.data.skills.taming.weight +
 								apiData.data.skills.taming.weight_overflow
 						)})*`,
-					].join("\n"),
+					].join('\n'),
 					inline: true,
 				},
 
 				{
-					name: "Slayer",
+					name: 'Slayer',
 					value: [
-						"<:rev:852892164559732806> Revenant Horror",
-						"<:tara:852892164392222740> Tarantula Broodfather",
-						"<:sven:852892164299423754> Sven Packmaster",
-						"<:eman:854253314747924511> Voidgloom Seraph",
-					].join("\n"),
+						'<:rev:852892164559732806> Revenant Horror',
+						'<:tara:852892164392222740> Tarantula Broodfather',
+						'<:sven:852892164299423754> Sven Packmaster',
+						'<:eman:854253314747924511> Voidgloom Seraph',
+					].join('\n'),
 					inline: true,
 				},
 				{
-					name: "Experience",
+					name: 'Experience',
 					value: [
 						apiData.data.slayers.bosses.revenant.experience
 							.toString()
-							.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+							.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 						apiData.data.slayers.bosses.tarantula.experience
 							.toString()
-							.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+							.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 						apiData.data.slayers.bosses.sven.experience
 							.toString()
-							.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+							.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 						apiData.data.slayers.bosses.enderman.experience
 							.toString()
-							.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-					].join("\n"),
+							.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+					].join('\n'),
 					inline: true,
 				},
 				{
-					name: "Weight",
+					name: 'Weight',
 					value: [
 						`**${toFixed(
 							apiData.data.slayers.bosses.revenant.weight
@@ -274,24 +274,24 @@ module.exports = {
 								apiData.data.slayers.bosses.enderman
 									.weight_overflow
 						)})*`,
-					].join("\n"),
+					].join('\n'),
 					inline: true,
 				},
 
 				{
-					name: "Dungeons",
+					name: 'Dungeons',
 					value: [
-						"<:catacombs:854399510951624775> Catacombs",
-						"<:healer:852079613001990175> Healer",
-						"<:mage:852079612699607072> Mage",
-						"<:berserker:852079613052059658> Berserker",
-						"<:archer:852079613042491402> Archer",
-						"<:tank:852079613051666472> Tank",
-					].join("\n"),
+						'<:catacombs:854399510951624775> Catacombs',
+						'<:healer:852079613001990175> Healer',
+						'<:mage:852079612699607072> Mage',
+						'<:berserker:852079613052059658> Berserker',
+						'<:archer:852079613042491402> Archer',
+						'<:tank:852079613051666472> Tank',
+					].join('\n'),
 					inline: true,
 				},
 				{
-					name: "Level",
+					name: 'Level',
 					value: [
 						toFixed(apiData.data.dungeons.types.catacombs.level),
 						toFixed(apiData.data.dungeons.classes.healer.level),
@@ -299,11 +299,11 @@ module.exports = {
 						toFixed(apiData.data.dungeons.classes.berserker.level),
 						toFixed(apiData.data.dungeons.classes.archer.level),
 						toFixed(apiData.data.dungeons.classes.tank.level),
-					].join("\n"),
+					].join('\n'),
 					inline: true,
 				},
 				{
-					name: "Weight",
+					name: 'Weight',
 					value: [
 						`**${toFixed(
 							apiData.data.dungeons.types.catacombs.weight
@@ -361,7 +361,7 @@ module.exports = {
 								apiData.data.dungeons.classes.tank
 									.weight_overflow
 						)})*`,
-					].join("\n"),
+					].join('\n'),
 					inline: true,
 				}
 			)
@@ -380,8 +380,8 @@ async function getUUID(ign) {
 }
 
 async function getApiData(ign, method) {
-	delete require.cache[require.resolve("../../config.json")];
-	const config = require("../../config.json");
+	delete require.cache[require.resolve('../../config.json')];
+	const config = require('../../config.json');
 
 	const UUID = await getUUID(ign);
 	const response = await fetch(

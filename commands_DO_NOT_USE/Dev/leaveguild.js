@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const config = require("../../constants/Bot/config.json");
+const Discord = require('discord.js');
+const config = require('../../constants/Bot/config.json');
 
 module.exports = {
-	name: "Leaveguild",
-	description: "Leaves said Guild (Dev Only)",
-	usage: "guildleave (Guild ID)",
-	perms: "Dev",
-	folder: "Dev",
-	aliases: ["lg"],
+	name: 'Leaveguild',
+	description: 'Leaves said Guild (Dev Only)',
+	usage: 'guildleave (Guild ID)',
+	perms: 'Dev',
+	folder: 'Dev',
+	aliases: ['lg'],
 	execute: (client, message, args) => {
 		if (message.author.id !== config.ownerID) {
 			return message.channel.send("Can't use this!");
@@ -16,10 +16,10 @@ module.exports = {
 		const arg = args[0];
 		const targetguild = client.guilds.cache.get(arg);
 		if (!targetguild) {
-			return message.channel.send("Enter a valid guild ID");
+			return message.channel.send('Enter a valid guild ID');
 		}
 		targetguild
 			.leave()
-			.then(message.channel.send("Successfully left the Guild."));
+			.then(message.channel.send('Successfully left the Guild.'));
 	},
 };

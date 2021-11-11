@@ -1,51 +1,51 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 
 module.exports = {
-	name: "sbtrade",
-	description: "a",
-	usage: "sbsettings (Setting Name)",
-	perms: "None",
-	folder: "SkyblockSim",
+	name: 'sbtrade',
+	description: 'a',
+	usage: 'sbsettings (Setting Name)',
+	perms: 'None',
+	folder: 'SkyblockSim',
 	aliases: [],
 	cooldown: 10,
 	async execute(interaction, mclient) {
-		const action = interaction.options.getString("action");
-		const user = interaction.options.getUser("user");
-		let tradeitem = interaction.options.getString("trade-item");
+		const action = interaction.options.getString('action');
+		const user = interaction.options.getUser('user');
+		let tradeitem = interaction.options.getString('trade-item');
 		if (tradeitem) {
 			tradeitem = tradeitem.toLowerCase();
 		}
-		const amount = interaction.options.getInteger("amount");
+		const amount = interaction.options.getInteger('amount');
 
-		const collection = mclient.db("SkyblockSim").collection("Players");
+		const collection = mclient.db('SkyblockSim').collection('Players');
 		const player = await collection.findOne({ _id: interaction.user.id });
 
-		const collection1 = mclient.db("SkyblockSim").collection("trades");
+		const collection1 = mclient.db('SkyblockSim').collection('trades');
 		const trades = await collection1.findOne({ _id: interaction.user.id });
 
 		if (
 			trades != null &&
-			(action == "send-offer" || action == "reply-offer")
+			(action == 'send-offer' || action == 'reply-offer')
 		) {
 			const ongoingtrade = new Discord.MessageEmbed()
-				.setTitle("Ongoing Trade")
+				.setTitle('Ongoing Trade')
 				.setDescription(
 					`You already have an ongoing trade to <@!${trades.reciever.id}> (${trades.reciever.id}) ask them to accept or deny it so you can send trades again`
 				)
-				.setColor("RED")
-				.setFooter("Skyblock Simulator");
+				.setColor('RED')
+				.setFooter('Skyblock Simulator');
 
 			return interaction.editReply({ embeds: [ongoingtrade] });
 		}
 
-		if (action == "send-offer") {
+		if (action == 'send-offer') {
 			if (!user.id || user.id == interaction.user.id || user.bot) {
 				const nouserembed = new Discord.MessageEmbed()
 					.setDescription(
-						"You cant send trades to yourself a Bot or an invalid User."
+						'You cant send trades to yourself a Bot or an invalid User.'
 					)
-					.setColor("RED")
-					.setFooter("Skyblock Simulator");
+					.setColor('RED')
+					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [nouserembed] });
 			}
@@ -53,25 +53,25 @@ module.exports = {
 			if (tradeitem == null || amount == null) {
 				const invalid = new Discord.MessageEmbed()
 					.setTitle(
-						"Trade Item and Amount are required for this action."
+						'Trade Item and Amount are required for this action.'
 					)
-					.setColor("RED")
-					.setFooter("Skyblock Simulator");
+					.setColor('RED')
+					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [invalid] });
 			}
 
-			if (tradeitem.includes("coin")) {
-				tradeitem = "Coins";
+			if (tradeitem.includes('coin')) {
+				tradeitem = 'Coins';
 
 				if (amount > player.data.profile.coins) {
 					const lowitemsembed = new Discord.MessageEmbed()
-						.setTitle("Too few Items")
+						.setTitle('Too few Items')
 						.setDescription(
 							`You only have ${player.data.profile.coins} ${tradeitem}, but tried to trade ${amount} ${tradeitem}.`
 						)
-						.setColor("RED")
-						.setFooter("Skyblock Simulator");
+						.setColor('RED')
+						.setFooter('Skyblock Simulator');
 
 					return interaction.editReply({ embeds: [lowitemsembed] });
 				}
@@ -88,7 +88,7 @@ module.exports = {
 							},
 							reciever: {
 								id: user.id,
-								item: "None",
+								item: 'None',
 								amount: 0,
 								accepted: false,
 							},
@@ -101,11 +101,11 @@ module.exports = {
 					{
 						_id: interaction.user.id,
 					},
-					{ $inc: { "data.profile.coins": -amount } },
+					{ $inc: { 'data.profile.coins': -amount } },
 					{ upsert: true }
 				);
 
-				let dmed = "yes";
+				let dmed = 'yes';
 				try {
 					const tradereq = new Discord.MessageEmbed()
 						.setTitle(`Trade Offer from ${interaction.user.tag}`)
@@ -115,18 +115,18 @@ module.exports = {
 					const fetched = await interaction.client.users.fetch(user.id);
 					await fetched.send({ embeds: [tradereq] });
 				} catch (e) {
-					dmed = "no";
+					dmed = 'no';
 				}
 
 				const sentembed = new Discord.MessageEmbed()
-					.setTitle("Trade sent")
+					.setTitle('Trade sent')
 					.setDescription(
 						`Sent a trade to the User offering them **${amount} ${caps(
 							tradeitem
 						)}**.\nWait for the User to reply you with an offer which u then can accept or deny (you get dmed when they reply an offer)\n\nUser dmed: ${dmed}`
 					)
-					.setColor("GREEN")
-					.setFooter("Skyblock Simulator");
+					.setColor('GREEN')
+					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [sentembed] });
 			}
@@ -137,26 +137,26 @@ module.exports = {
 
 			if (finditem == undefined || finditem.amount == 0 && amount < 0) {
 				const noitemembed = new Discord.MessageEmbed()
-					.setTitle("No Item found.")
+					.setTitle('No Item found.')
 					.setDescription(
 						`Couldn\'t find any Items matching \`${caps(
 							tradeitem
 						)}\` or Amount being above 0, make sure you spelled it corrrectly.`
 					)
-					.setFooter("Skyblock Simulator")
-					.setColor("RED");
+					.setFooter('Skyblock Simulator')
+					.setColor('RED');
 
 				return interaction.editReply({ embeds: [noitemembed] });
 			}
 
 			if (amount > finditem.amount) {
 				const lowitemsembed = new Discord.MessageEmbed()
-					.setTitle("Too few Items")
+					.setTitle('Too few Items')
 					.setDescription(
 						`You only have ${finditem.amount} ${tradeitem}, but tried to trade ${amount} ${tradeitem}.`
 					)
-					.setColor("RED")
-					.setFooter("Skyblock Simulator");
+					.setColor('RED')
+					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [lowitemsembed] });
 			}
@@ -173,7 +173,7 @@ module.exports = {
 						},
 						reciever: {
 							id: user.id,
-							item: "None",
+							item: 'None',
 							amount: 0,
 							accepted: false,
 						},
@@ -184,14 +184,14 @@ module.exports = {
 
 			await collection.updateOne(
 				{
-					"_id": interaction.user.id,
-					"data.inventory.items.name": caps(tradeitem),
+					'_id': interaction.user.id,
+					'data.inventory.items.name': caps(tradeitem),
 				},
-				{ $inc: { "data.inventory.items.$.amount": -amount } },
+				{ $inc: { 'data.inventory.items.$.amount': -amount } },
 				{ upsert: true }
 			);
 
-			let dmed = "yes";
+			let dmed = 'yes';
 			try {
 				const tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade Offer from ${interaction.user.tag}`)
@@ -201,37 +201,37 @@ module.exports = {
 				const fetched = await interaction.client.users.fetch(user.id);
 				await fetched.send({ embeds: [tradereq] });
 			} catch (e) {
-				dmed = "no";
+				dmed = 'no';
 			}
 
 			const sentembed = new Discord.MessageEmbed()
-				.setTitle("Trade sent")
+				.setTitle('Trade sent')
 				.setDescription(
 					`Sent a trade to the User offering them **${amount} ${caps(
 						tradeitem
 					)}**.\nWait for the User to reply you with an offer which u then can accept or deny (you get dmed when they reply an offer)\n\nUser dmed: ${dmed}`
 				)
-				.setColor("GREEN")
-				.setFooter("Skyblock Simulator");
+				.setColor('GREEN')
+				.setFooter('Skyblock Simulator');
 
 			return interaction.editReply({ embeds: [sentembed] });
-		} else if (action == "reply-offer") {
+		} else if (action == 'reply-offer') {
 			if (!user.id || user.id == interaction.user.id || user.bot) {
 				const nouserembed = new Discord.MessageEmbed()
 					.setDescription(
-						"You cant send trades to yourself a Bot or an invalid User."
+						'You cant send trades to yourself a Bot or an invalid User.'
 					)
-					.setColor("RED")
-					.setFooter("Skyblock Simulator");
+					.setColor('RED')
+					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [nouserembed] });
 			}
 			const existingsent = await collection1.findOne({ _id: user.id });
 			if (existingsent == null) {
 				const embed = new Discord.MessageEmbed()
-					.setTitle("THis user hasnt sent you a trade")
-					.setColor("RED")
-					.setFooter("Skyblock Simulator");
+					.setTitle('THis user hasnt sent you a trade')
+					.setColor('RED')
+					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [embed] });
 			}
@@ -239,25 +239,25 @@ module.exports = {
 			if (tradeitem == null || amount == null) {
 				const invalid = new Discord.MessageEmbed()
 					.setTitle(
-						"Trade Item and Amount are required for this action."
+						'Trade Item and Amount are required for this action.'
 					)
-					.setColor("RED")
-					.setFooter("Skyblock Simulator");
+					.setColor('RED')
+					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [invalid] });
 			}
 
-			if (tradeitem.includes("coin")) {
-				tradeitem = "Coins";
+			if (tradeitem.includes('coin')) {
+				tradeitem = 'Coins';
 
 				if (amount > player.data.profile.coins) {
 					const lowitemsembed = new Discord.MessageEmbed()
-						.setTitle("Too few Items")
+						.setTitle('Too few Items')
 						.setDescription(
 							`You only have ${player.data.profile.coins} ${tradeitem}, but tried to trade ${amount} ${tradeitem}.`
 						)
-						.setColor("RED")
-						.setFooter("Skyblock Simulator");
+						.setColor('RED')
+						.setFooter('Skyblock Simulator');
 
 					return interaction.editReply({ embeds: [lowitemsembed] });
 				}
@@ -282,11 +282,11 @@ module.exports = {
 					{
 						_id: interaction.user.id,
 					},
-					{ $inc: { "data.profile.coins": -amount } },
+					{ $inc: { 'data.profile.coins': -amount } },
 					{ upsert: true }
 				);
 
-				let dmed = "yes";
+				let dmed = 'yes';
 				try {
 					const tradereq = new Discord.MessageEmbed()
 						.setTitle(`Trade Offer from ${interaction.user.tag}`)
@@ -296,18 +296,18 @@ module.exports = {
 					const fetched = await interaction.client.users.fetch(user.id);
 					await fetched.send({ embeds: [tradereq] });
 				} catch (e) {
-					dmed = "no";
+					dmed = 'no';
 				}
 
 				const sentembed = new Discord.MessageEmbed()
-					.setTitle("Trade sent")
+					.setTitle('Trade sent')
 					.setDescription(
 						`Sent a trade to the User offering them **${amount} ${caps(
 							tradeitem
 						)}** for their Items.\nWait for the User to accept or deny your offer if they accept the trade gets completed else the items get returned.\nUser dmed: ${dmed}`
 					)
-					.setColor("GREEN")
-					.setFooter("Skyblock Simulator");
+					.setColor('GREEN')
+					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [sentembed] });
 			}
@@ -318,26 +318,26 @@ module.exports = {
 
 			if (finditem == undefined && finditem.amount == 0 && amount < 0) {
 				const noitemembed = new Discord.MessageEmbed()
-					.setTitle("No Item found.")
+					.setTitle('No Item found.')
 					.setDescription(
 						`Couldn\'t find any Items matching \`${caps(
 							tradeitem
 						)}\`, make sure you spelled it corrrectly.`
 					)
-					.setFooter("Skyblock Simulator")
-					.setColor("RED");
+					.setFooter('Skyblock Simulator')
+					.setColor('RED');
 
 				return interaction.editReply({ embeds: [noitemembed] });
 			}
 
 			if (amount > finditem.amount) {
 				const lowitemsembed = new Discord.MessageEmbed()
-					.setTitle("Too few Items")
+					.setTitle('Too few Items')
 					.setDescription(
 						`You only have ${finditem.amount} ${tradeitem}, but tried to trade ${amount} ${tradeitem}.`
 					)
-					.setColor("RED")
-					.setFooter("Skyblock Simulator");
+					.setColor('RED')
+					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [lowitemsembed] });
 			}
@@ -359,14 +359,14 @@ module.exports = {
 
 			await collection.updateOne(
 				{
-					"_id": interaction.user.id,
-					"data.inventory.items.name": caps(tradeitem),
+					'_id': interaction.user.id,
+					'data.inventory.items.name': caps(tradeitem),
 				},
-				{ $inc: { "data.inventory.items.$.amount": -amount } },
+				{ $inc: { 'data.inventory.items.$.amount': -amount } },
 				{ upsert: true }
 			);
 
-			let dmed = "yes";
+			let dmed = 'yes';
 			try {
 				const tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade Offer from ${interaction.user.tag}`)
@@ -376,27 +376,27 @@ module.exports = {
 				const fetched = await interaction.client.users.fetch(user.id);
 				await fetched.send({ embeds: [tradereq] });
 			} catch (e) {
-				dmed = "no";
+				dmed = 'no';
 			}
 
 			const sentembed = new Discord.MessageEmbed()
-				.setTitle("Trade sent")
+				.setTitle('Trade sent')
 				.setDescription(
 					`Sent a trade to the User offering them **${amount} ${caps(
 						tradeitem
 					)}** for their Items.\nWait for the User to accept or deny your offer if they accept the trade gets completed else the items get returned.\nUser dmed: ${dmed}`
 				)
-				.setColor("GREEN")
-				.setFooter("Skyblock Simulator");
+				.setColor('GREEN')
+				.setFooter('Skyblock Simulator');
 
 			return interaction.editReply({ embeds: [sentembed] });
-		} else if (action == "accept-offer") {
+		} else if (action == 'accept-offer') {
 			const offer = await collection1.findOne({ _id: interaction.user.id });
 			if (offer == null) {
 				const embed = new Discord.MessageEmbed()
-					.setTitle("No outgoing trades to that user.")
-					.setColor("RED")
-					.setFooter("Skyblock Simulator");
+					.setTitle('No outgoing trades to that user.')
+					.setColor('RED')
+					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [embed] });
 			}
@@ -405,12 +405,12 @@ module.exports = {
 				_id: offer.sender.id,
 			});
 
-			if (offer.sender.item == "Coins") {
+			if (offer.sender.item == 'Coins') {
 				await collection.updateOne(
 					{ _id: offer.reciever.id },
 					{
 						$inc: {
-							"data.profile.coins": offer.sender.amount,
+							'data.profile.coins': offer.sender.amount,
 						},
 					},
 					{ upsert: true }
@@ -428,12 +428,12 @@ module.exports = {
 				);
 			}
 
-			if (offer.reciever.item == "Coins") {
+			if (offer.reciever.item == 'Coins') {
 				await collection.updateOne(
 					{ _id: offer.sender.id },
 					{
 						$inc: {
-							"data.profile.coins": offer.reciever.amount,
+							'data.profile.coins': offer.reciever.amount,
 						},
 					},
 					{ upsert: true }
@@ -453,7 +453,7 @@ module.exports = {
 
 			try {
 				const tradereq = new Discord.MessageEmbed()
-					.setTitle("Trade accepted")
+					.setTitle('Trade accepted')
 					.setDescription(
 						`Trade accepted you got the ${offer.reciever.amount} ${offer.reciever.item}`
 					);
@@ -464,7 +464,7 @@ module.exports = {
 			} catch (e) {}
 			try {
 				const tradereq = new Discord.MessageEmbed()
-					.setTitle("Trade accepted")
+					.setTitle('Trade accepted')
 					.setDescription(
 						`Trade accepted you got the ${offer.sender.amount} ${offer.sender.item}`
 					);
@@ -479,18 +479,18 @@ module.exports = {
 			} catch (e) {}
 
 			const tradedone = new Discord.MessageEmbed()
-				.setTitle("Trade accepted and complete")
-				.setColor("GREEN")
-				.setFooter("Skyblock Simulator");
+				.setTitle('Trade accepted and complete')
+				.setColor('GREEN')
+				.setFooter('Skyblock Simulator');
 
 			interaction.editReply({ embeds: [tradedone] });
-		} else if (action == "deny-offer") {
+		} else if (action == 'deny-offer') {
 			const offer = await collection1.findOne({ _id: interaction.user.id });
 			if (offer == null) {
 				const embed = new Discord.MessageEmbed()
-					.setTitle("No outgoing trades to that user.")
-					.setColor("RED")
-					.setFooter("Skyblock Simulator");
+					.setTitle('No outgoing trades to that user.')
+					.setColor('RED')
+					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [embed] });
 			}
@@ -499,12 +499,12 @@ module.exports = {
 				_id: offer.sender.id,
 			});
 
-			if (offer.reciever.item == "Coins") {
+			if (offer.reciever.item == 'Coins') {
 				await collection.updateOne(
 					{ _id: offer.reciever.id },
 					{
 						$inc: {
-							"data.profile.coins": offer.reciever.amount,
+							'data.profile.coins': offer.reciever.amount,
 						},
 					},
 					{ upsert: true }
@@ -522,12 +522,12 @@ module.exports = {
 				);
 			}
 
-			if (offer.sender.item == "Coins") {
+			if (offer.sender.item == 'Coins') {
 				await collection.updateOne(
 					{ _id: offer.sender.id },
 					{
 						$inc: {
-							"data.profile.coins": offer.sender.amount,
+							'data.profile.coins': offer.sender.amount,
 						},
 					},
 					{ upsert: true }
@@ -547,7 +547,7 @@ module.exports = {
 
 			try {
 				const tradereq = new Discord.MessageEmbed()
-					.setTitle("Trade denied")
+					.setTitle('Trade denied')
 					.setDescription(
 						`Trade denied you got the ${offer.reciever.amount} ${offer.reciever.item} back.`
 					);
@@ -558,7 +558,7 @@ module.exports = {
 			} catch (e) {}
 			try {
 				const tradereq = new Discord.MessageEmbed()
-					.setTitle("Trade denied")
+					.setTitle('Trade denied')
 					.setDescription(
 						`Trade denied you got the ${offer.sender.amount} ${offer.sender.item} back.`
 					);
@@ -573,9 +573,9 @@ module.exports = {
 			} catch (e) {}
 
 			const tradedone = new Discord.MessageEmbed()
-				.setTitle("Trade denied and Items returned.")
-				.setColor("GREEN")
-				.setFooter("Skyblock Simulator");
+				.setTitle('Trade denied and Items returned.')
+				.setColor('GREEN')
+				.setFooter('Skyblock Simulator');
 
 			interaction.editReply({ embeds: [tradedone] });
 		}
@@ -583,13 +583,13 @@ module.exports = {
 };
 
 function caps(words) {
-	const separateWord = words.toLowerCase().split(" ");
+	const separateWord = words.toLowerCase().split(' ');
 	for (let i = 0; i < separateWord.length; i++) {
 		separateWord[i] =
 			separateWord[i].charAt(0).toUpperCase() +
 			separateWord[i].substring(1);
 	}
-	return separateWord.join(" ");
+	return separateWord.join(' ');
 }
 
 async function addItems(mobdrop, amount, player) {

@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const fetch = require("node-fetch");
+const Discord = require('discord.js');
+const fetch = require('node-fetch');
 
 module.exports = {
-	name: "Slayer",
-	description: "Shows the Users Slayer Data.",
-	usage: "slayer (IGN)",
-	perms: "None",
-	folder: "Skyblock",
-	aliases: ["sl"],
+	name: 'Slayer',
+	description: 'Shows the Users Slayer Data.',
+	usage: 'slayer (IGN)',
+	perms: 'None',
+	folder: 'Skyblock',
+	aliases: ['sl'],
 	async execute(client, message, args) {
 		if (!args[0]) {
 			var ign = message.member.displayName;
@@ -15,14 +15,14 @@ module.exports = {
 			var ign = message.mentions.members.first().displayName;
 		} else var ign = args[0]; // Gets IGN
 
-		let method = "save";
+		let method = 'save';
 		if (args[1]) method = args[1];
 
-		ign = ign.replace(/\W/g, ""); // removes weird characters
+		ign = ign.replace(/\W/g, ''); // removes weird characters
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription("Checking for Player Data . . .")
-			.setColor("ORANGE");
+			.setDescription('Checking for Player Data . . .')
+			.setColor('ORANGE');
 
 		const waitingembed = await message.channel.send({
 			embeds: [waitembed],
@@ -35,7 +35,7 @@ module.exports = {
 						.setDescription(
 							`No Minecraft account found for \`${ign}\``
 						)
-						.setColor("DC143C")
+						.setColor('DC143C')
 						.setTimestamp();
 					waitingembed.edit({ embeds: [nomcacc] });
 				}
@@ -52,7 +52,7 @@ module.exports = {
 				embeds: [
 					new Discord.MessageEmbed()
 						.setDescription(apiData.reason)
-						.setColor("DC143C")
+						.setColor('DC143C')
 						.setTimestamp(),
 				],
 			});
@@ -68,7 +68,7 @@ module.exports = {
 					Math.floor(rxp % 1000000 / 1000)
 				}M`;
 		} else {
-			rrxp += "K";
+			rrxp += 'K';
 		}
 
 		const txp = apiData.data.slayers.bosses.tarantula.experience;
@@ -80,7 +80,7 @@ module.exports = {
 					Math.floor(txp % 1000000 / 1000)
 				}M`;
 		} else {
-			ttxp += "K";
+			ttxp += 'K';
 		}
 
 		const sxp = apiData.data.slayers.bosses.sven.experience;
@@ -92,7 +92,7 @@ module.exports = {
 					Math.floor(sxp % 1000000 / 1000)
 				}M`;
 		} else {
-			ssxp += "K";
+			ssxp += 'K';
 		}
 
 		const exp = apiData.data.slayers.bosses.enderman.experience;
@@ -104,7 +104,7 @@ module.exports = {
 					Math.floor(exp % 1000000 / 1000)
 				}M`;
 		} else {
-			eexp += "K";
+			eexp += 'K';
 		}
 
 		const totalxp = apiData.data.slayers.total_experience;
@@ -116,7 +116,7 @@ module.exports = {
 					Math.floor(totalxp % 1000000 / 1000)
 				}M`;
 		} else {
-			ttotalxp += "K";
+			ttotalxp += 'K';
 		}
 
 		const rlevel = apiData.data.slayers.bosses.revenant.level;
@@ -155,7 +155,7 @@ module.exports = {
 		if (apiData.status != 200) {
 			const apierror = new Discord.MessageEmbed()
 				.setDescription(apiData.reason)
-				.setColor("DC143C")
+				.setColor('DC143C')
 				.setTimestamp();
 			waitingembed.edit({ embeds: [apierror] });
 			return;
@@ -171,16 +171,16 @@ module.exports = {
 					`https://sky.shiiyu.moe/stats/${ign}`
 				)
 				.setDescription(
-					"You currently have skills API disabled, please enable it in the skyblock menu and try again"
+					'You currently have skills API disabled, please enable it in the skyblock menu and try again'
 				)
-				.setColor("DC143C")
+				.setColor('DC143C')
 				.setTimestamp();
 			waitingembed.edit({ embeds: [noapion] });
 			return;
 		}
 
 		const slayerembed = new Discord.MessageEmbed()
-			.setColor("7CFC00")
+			.setColor('7CFC00')
 			.setAuthor(
 				ign,
 				`https://cravatar.eu/helmavatar/${ign}/600.png`,
@@ -254,7 +254,7 @@ function getSlayers(apiData) {
 		`Experience: **${sxp}**\n\n **Slayer Kills:** \n\`\`\`T1: ${s1}\nT2: ${s2}\nT3: ${s3}\nT4: ${s4}\`\`\``,
 		`<:eman:854253314747924511> **Enderman [${elevel}]**`,
 		`Experience: **${exp}**\n\n **Slayer Kills:** \n\`\`\`T1: ${e1}\nT2: ${e2}\nT3: ${e3}\nT4: ${e4}\`\`\``,
-	].join("\n");
+	].join('\n');
 }
 
 async function getUUID(ign) {
@@ -266,8 +266,8 @@ async function getUUID(ign) {
 }
 
 async function getApiData(ign, method) {
-	delete require.cache[require.resolve("../../config.json")];
-	const config = require("../../config.json");
+	delete require.cache[require.resolve('../../config.json')];
+	const config = require('../../config.json');
 
 	const UUID = await getUUID(ign);
 	const response = await fetch(

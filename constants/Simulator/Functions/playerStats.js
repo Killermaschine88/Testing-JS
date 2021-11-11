@@ -1,17 +1,17 @@
-const level = require("./skilllvl.js");
+const level = require('./skilllvl.js');
 
 async function playerStats(player) {
 	// Events
-	const collection = mmclient.db("SkyblockSim").collection("events");
+	const collection = mmclient.db('SkyblockSim').collection('events');
 	const events = await collection.find({}).toArray();
-	const mf_event = events.find(event => event._id == "magic_find");
+	const mf_event = events.find(event => event._id == 'magic_find');
 
 	// Base Variables
 	const { stats } = player.data;
 	const cookie = player.data.misc.booster_cookie.active;
-	let inv = "",
-	 inv2 = "",
-	 inv3 = "";
+	let inv = '',
+	 inv2 = '',
+	 inv3 = '';
 
 	// Skill Levels
 	const farminglvl = level(player.data.skills.farming).level;

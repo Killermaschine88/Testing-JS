@@ -1,37 +1,37 @@
-const Discord = require("discord.js");
-const prefix = require("@replit/database");
+const Discord = require('discord.js');
+const prefix = require('@replit/database');
 const prefixx = new prefix();
 
 module.exports = {
-	name: "Sbstart",
-	description: "Creates your Profile for Skyblock Simulator",
-	usage: "sbstart",
-	perms: "None",
-	folder: "SkyblockSim",
-	aliases: ["sbcreate"],
+	name: 'Sbstart',
+	description: 'Creates your Profile for Skyblock Simulator',
+	usage: 'sbstart',
+	perms: 'None',
+	folder: 'SkyblockSim',
+	aliases: ['sbcreate'],
 	cooldown: 10,
 	async execute(client, message, args, mclient, gprefix) {
-		const collection = mclient.db("SkyblockSim").collection("Players");
+		const collection = mclient.db('SkyblockSim').collection('Players');
 		const player = await collection.findOne({ _id: message.author.id });
 
 		const start = new Discord.MessageEmbed()
-			.setColor("90EE90")
-			.setDescription("<a:wait:847471618272002059> Creating Profile");
+			.setColor('90EE90')
+			.setDescription('<a:wait:847471618272002059> Creating Profile');
 
 		const menu = await message.channel.send({ embeds: [start] });
 
 		var gprefix = await prefixx.get(message.guild.id, { raw: false });
-		if (gprefix === null) gprefix = ".";
+		if (gprefix === null) gprefix = '.';
 
 		const profiles = [
-			"🍎 Apple",
-			"🍌 Banana",
-			"🫐 Blueberry",
-			"🥥 Coconut",
-			"🥒 Cucumber",
-			"🍇 Grapes",
-			"🥝 Kiwi",
-			"🍋 Lemon",
+			'🍎 Apple',
+			'🍌 Banana',
+			'🫐 Blueberry',
+			'🥥 Coconut',
+			'🥒 Cucumber',
+			'🍇 Grapes',
+			'🥝 Kiwi',
+			'🍋 Lemon',
 		];
 		const profilename = profiles[Math.floor(Math.random() * profiles.length)];
 
@@ -87,7 +87,7 @@ module.exports = {
 						},
 						dungeons: {
 							xp: 0,
-							class: "None",
+							class: 'None',
 							secrets: 0,
 						},
 						settings: {
@@ -95,13 +95,13 @@ module.exports = {
 						},
 						equipment: {
 							combat: {
-								weapon: { name: "Fist" },
-								armor: { name: "None" },
+								weapon: { name: 'Fist' },
+								armor: { name: 'None' },
 							},
 							fishing: {
-								armor: { name: "None", sea_creature_chance: 0 },
+								armor: { name: 'None', sea_creature_chance: 0 },
 								rod: {
-									name: "Fishing Rod",
+									name: 'Fishing Rod',
 									sea_creature_chance: 0,
 									fishing_speed: 0,
 								},
@@ -109,7 +109,7 @@ module.exports = {
 						},
 						misc: {
 							voted: 0,
-							location: "Graveyard",
+							location: 'Graveyard',
 							is_fishing: false,
 						},
 					},
@@ -120,10 +120,10 @@ module.exports = {
 
 		const created = new Discord.MessageEmbed()
 			.setImage(
-				"https://cdn.discordapp.com/attachments/860131688385478666/865211353491570708/maxresdefault.png"
+				'https://cdn.discordapp.com/attachments/860131688385478666/865211353491570708/maxresdefault.png'
 			)
-			.setColor("90EE90")
-			.setTitle("<a:yes:847468695772987423> Profile Created")
+			.setColor('90EE90')
+			.setTitle('<a:yes:847468695772987423> Profile Created')
 			.setDescription(
 				`To start Grinding Coins use \`${gprefix}sbgrind\` or \`${gprefix}sbfarm\`\nTo view your Profile or another Persons Profile use \`${gprefix}sbinfo (ID/@User)\`\n**FOR A GUIDE ON HOW TO PLAY USE \`${gprefix}sbguide\`**`
 			)

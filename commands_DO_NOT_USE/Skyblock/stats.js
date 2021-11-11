@@ -1,12 +1,12 @@
-const Discord = require("discord.js");
-const fetch = require("node-fetch");
+const Discord = require('discord.js');
+const fetch = require('node-fetch');
 
 module.exports = {
-	name: "Stats",
-	usage: "stats (IGN)",
-	description: "Show Overall Stats for the mentioned User",
-	perms: "None",
-	folder: "Skyblock",
+	name: 'Stats',
+	usage: 'stats (IGN)',
+	description: 'Show Overall Stats for the mentioned User',
+	perms: 'None',
+	folder: 'Skyblock',
 	aliases: [],
 	async execute(client, message, args) {
 		if (!args[0]) {
@@ -15,7 +15,7 @@ module.exports = {
 			var ign = message.mentions.members.first().displayName;
 		} else var ign = args[0]; // Gets IGN
 
-		ign = ign.replace(/\W/g, ""); // removes weird characters
+		ign = ign.replace(/\W/g, ''); // removes weird characters
 
 		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(
 			res => {
@@ -26,7 +26,7 @@ module.exports = {
 								.setDescription(
 									`No Minecraft account found for \`${ign}\``
 								)
-								.setColor("DC143C")
+								.setColor('DC143C')
 								.setTimestamp(),
 						],
 					});
@@ -40,8 +40,8 @@ module.exports = {
 		const apiData = await getApiData(ign); // Gets all skyblock player data from Senither's Hypixel API Facade
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription("Checking for Player Data . . .")
-			.setColor("ORANGE");
+			.setDescription('Checking for Player Data . . .')
+			.setColor('ORANGE');
 
 		const waitingembed = await message.channel.send({
 			embeds: [waitembed],
@@ -52,7 +52,7 @@ module.exports = {
 				embeds: [
 					new Discord.MessageEmbed()
 						.setDescription(apiData.reason)
-						.setColor("DC143C")
+						.setColor('DC143C')
 						.setTimestamp(),
 				],
 			});
@@ -60,28 +60,28 @@ module.exports = {
 
 		// IGN is valid and player has skyblock profiles
 		if (!apiData.apiEnabled === false) {
-			return message.channel.send("This players API is off.");
+			return message.channel.send('This players API is off.');
 		}
 		let { bank } = apiData.data.coins;
-		if (!bank) bank = "0";
+		if (!bank) bank = '0';
 		let { purse } = apiData.data.coins;
-		if (!purse) purse = "0";
+		if (!purse) purse = '0';
 		return message.channel.send({
 			embeds: [
 				new Discord.MessageEmbed()
 					.setTitle(
 						`Stats for ${ign} on Profile: ${apiData.data.name}`
 					)
-					.setColor("7CFC00")
+					.setColor('7CFC00')
 					.setAuthor(
 						ign,
 						`https://cravatar.eu/helmavatar/${ign}/600.png`,
 						`http://sky.shiiyu.moe/stats/${ign}`
 					)
-					.setDescription("General Stats Overview for the Player")
+					.setDescription('General Stats Overview for the Player')
 					.addFields(
 						{
-							name: "💰 Coins",
+							name: '💰 Coins',
 							value: `Total: ${toFixed(
 								apiData.data.coins.total
 							)}\nBank: ${toFixed(bank)}\nPurse: ${toFixed(
@@ -91,7 +91,7 @@ module.exports = {
 						},
 
 						{
-							name: "<:rev:852892164559732806> Slayers",
+							name: '<:rev:852892164559732806> Slayers',
 							value: `Zombie: ${toFixed(
 								apiData.data.slayers.bosses.revenant.level
 							)}\nSpider: ${toFixed(
@@ -103,7 +103,7 @@ module.exports = {
 						},
 
 						{
-							name: "Weight",
+							name: 'Weight',
 							value: `Total: ${toFixed(
 								apiData.data.weight
 							)}\nOverflow: ${toFixed(
@@ -119,7 +119,7 @@ module.exports = {
 						},
 
 						{
-							name: "<:combat:852069714527911956> Skill Average",
+							name: '<:combat:852069714527911956> Skill Average',
 							value: toFixed(apiData.data.skills.average_skills),
 							inline: true,
 						}
@@ -138,8 +138,8 @@ async function getUUID(ign) {
 }
 
 async function getApiData(ign) {
-	delete require.cache[require.resolve("../../config.json")];
-	const config = require("../../config.json");
+	delete require.cache[require.resolve('../../config.json')];
+	const config = require('../../config.json');
 
 	const UUID = await getUUID(ign);
 	const response = await fetch(

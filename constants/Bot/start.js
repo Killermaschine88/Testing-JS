@@ -1,25 +1,25 @@
-const { CronJob } = require("cron");
-const Discord = require("discord.js");
+const { CronJob } = require('cron');
+const Discord = require('discord.js');
 
 async function start(client, mclient) {
 	// Player Collection
-	const collection = mclient.db("SkyblockSim").collection("Players");
+	const collection = mclient.db('SkyblockSim').collection('Players');
 
 	// Blocked Channel Collection
-	const collection1 = mclient.db("SkyblockSim").collection("blockedchannels");
+	const collection1 = mclient.db('SkyblockSim').collection('blockedchannels');
 
 	// Event Collection
-	const collection2 = mclient.db("SkyblockSim").collection("events");
+	const collection2 = mclient.db('SkyblockSim').collection('events');
 
 	// Updating the Fishing/Mining/Dungeon
 	collection.updateMany(
 		{},
 		{
 			$set: {
-				"data.misc.is_fishing": false,
-				"data.misc.is_mining": false,
-				"data.misc.in_dungeon": false,
-				"data.misc.is_massselling": false,
+				'data.misc.is_fishing': false,
+				'data.misc.is_mining': false,
+				'data.misc.in_dungeon': false,
+				'data.misc.is_massselling': false,
 			},
 		}
 	);
@@ -29,29 +29,29 @@ async function start(client, mclient) {
 
 	// Event Embeds
 	const mfoffembed = new Discord.MessageEmbed()
-		.setTitle("🍀 Magic Find Event Disabled")
-		.setDescription("The extra Magic Find has been disabled again.")
-		.setFooter("Skyblock Simulator Events")
-		.setColor("RED");
+		.setTitle('🍀 Magic Find Event Disabled')
+		.setDescription('The extra Magic Find has been disabled again.')
+		.setFooter('Skyblock Simulator Events')
+		.setColor('RED');
 
 	const sharkoffembed = new Discord.MessageEmbed()
-		.setTitle("🦈 Shark Fishing Event Disabled")
-		.setDescription("The Shark Fishing has been disabled again.")
-		.setFooter("Skyblock Simulator Events")
-		.setColor("RED");
+		.setTitle('🦈 Shark Fishing Event Disabled')
+		.setDescription('The Shark Fishing has been disabled again.')
+		.setFooter('Skyblock Simulator Events')
+		.setColor('RED');
 
 	// Event Jobs
 	const mfon = new CronJob(
-		"0 16 * * *",
+		'0 16 * * *',
 		async () => {
 			const timeleft = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			const mfonembed = new Discord.MessageEmbed()
-				.setTitle("🍀 Magic Find Event Enabled")
+				.setTitle('🍀 Magic Find Event Enabled')
 				.setDescription(
 					`All Users now have **+15 Magic Find** for the **next 2 Hours** (Ends <t:${timeleft}:R>)`
 				)
-				.setColor("GREEN")
-				.setFooter("Skyblock Simulator Events");
+				.setColor('GREEN')
+				.setFooter('Skyblock Simulator Events');
 
 			let next_eventtime =
 				Number((Date.now() / 1000).toFixed(0)) + 15 * 60 * 60;
@@ -60,7 +60,7 @@ async function start(client, mclient) {
 				Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			event_endtime = Number(event_endtime);
 			collection2.updateOne(
-				{ _id: "magic_find" },
+				{ _id: 'magic_find' },
 				{
 					$set: {
 						enabled: true,
@@ -72,26 +72,26 @@ async function start(client, mclient) {
 			);
 
 			client.channels
-				.fetch("908000544868691990")
+				.fetch('908000544868691990')
 				.then(channel => channel.send({ embeds: [mfonembed] }))
 				.catch(console.error);
 		},
 		null,
 		true,
-		"Europe/Rome"
+		'Europe/Rome'
 	);
 
 	const mfon2 = new CronJob(
-		"0 6 * * *",
+		'0 6 * * *',
 		async () => {
 			const timeleft = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			const mfonembed = new Discord.MessageEmbed()
-				.setTitle("🍀 Magic Find Event Enabled")
+				.setTitle('🍀 Magic Find Event Enabled')
 				.setDescription(
 					`All Users now have **+15 Magic Find** for the **next 2 Hours** (Ends <t:${timeleft}:R>)`
 				)
-				.setColor("GREEN")
-				.setFooter("Skyblock Simulator Events");
+				.setColor('GREEN')
+				.setFooter('Skyblock Simulator Events');
 
 			let next_eventtime =
 				Number((Date.now() / 1000).toFixed(0)) + 10 * 60 * 60;
@@ -100,7 +100,7 @@ async function start(client, mclient) {
 				Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			event_endtime = Number(event_endtime);
 			collection2.updateOne(
-				{ _id: "magic_find" },
+				{ _id: 'magic_find' },
 				{
 					$set: {
 						enabled: true,
@@ -112,63 +112,63 @@ async function start(client, mclient) {
 			);
 
 			client.channels
-				.fetch("908000544868691990")
+				.fetch('908000544868691990')
 				.then(channel => channel.send({ embeds: [mfonembed] }))
 				.catch(console.error);
 		},
 		null,
 		true,
-		"Europe/Rome"
+		'Europe/Rome'
 	);
 
 	const mfoff = new CronJob(
-		"0 18 * * *",
+		'0 18 * * *',
 		async () => {
 			collection2.updateOne(
-				{ _id: "magic_find" },
+				{ _id: 'magic_find' },
 				{ $set: { enabled: false } },
 				{ upsert: true }
 			);
 
 			client.channels
-				.fetch("908000544868691990")
+				.fetch('908000544868691990')
 				.then(channel => channel.send({ embeds: [mfoffembed] }))
 				.catch(console.error);
 		},
 		null,
 		true,
-		"Europe/Rome"
+		'Europe/Rome'
 	);
 
 	const mfoff2 = new CronJob(
-		"0 8 * * *",
+		'0 8 * * *',
 		async () => {
 			collection2.updateOne(
-				{ _id: "magic_find" },
+				{ _id: 'magic_find' },
 				{ $set: { enabled: false } }
 			);
 
 			client.channels
-				.fetch("908000544868691990")
+				.fetch('908000544868691990')
 				.then(channel => channel.send({ embeds: [mfoffembed] }))
 				.catch(console.error);
 		},
 		null,
 		true,
-		"Europe/Rome"
+		'Europe/Rome'
 	);
 
 	const sharkon1 = new CronJob(
-		"0 19 * * *",
+		'0 19 * * *',
 		async () => {
 			const timeleft = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			const mfonembed = new Discord.MessageEmbed()
-				.setTitle("🦈 Shark Fishing Event Enabled")
+				.setTitle('🦈 Shark Fishing Event Enabled')
 				.setDescription(
 					`You can now rarely fish up Sharks whilst fishing for the **next 2 Hours** (Ends <t:${timeleft}:R>)`
 				)
-				.setColor("GREEN")
-				.setFooter("Skyblock Simulator Events");
+				.setColor('GREEN')
+				.setFooter('Skyblock Simulator Events');
 
 			let next_eventtime =
 				Number((Date.now() / 1000).toFixed(0)) + 15 * 60 * 60;
@@ -177,7 +177,7 @@ async function start(client, mclient) {
 				Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			event_endtime = Number(event_endtime);
 			collection2.updateOne(
-				{ _id: "shark_fishing" },
+				{ _id: 'shark_fishing' },
 				{
 					$set: {
 						enabled: true,
@@ -189,26 +189,26 @@ async function start(client, mclient) {
 			);
 
 			client.channels
-				.fetch("908000544868691990")
+				.fetch('908000544868691990')
 				.then(channel => channel.send({ embeds: [mfonembed] }))
 				.catch(console.error);
 		},
 		null,
 		true,
-		"Europe/Rome"
+		'Europe/Rome'
 	);
 
 	const sharkon2 = new CronJob(
-		"0 9 * * *",
+		'0 9 * * *',
 		async () => {
 			const timeleft = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			const mfonembed = new Discord.MessageEmbed()
-				.setTitle("🦈 Shark Fishing Event Enabled")
+				.setTitle('🦈 Shark Fishing Event Enabled')
 				.setDescription(
 					`You can now rarely fish up Sharks whilst fishing for the **next 2 Hours** (Ends <t:${timeleft}:R>)`
 				)
-				.setColor("GREEN")
-				.setFooter("Skyblock Simulator Events");
+				.setColor('GREEN')
+				.setFooter('Skyblock Simulator Events');
 
 			let next_eventtime =
 				Number((Date.now() / 1000).toFixed(0)) + 15 * 60 * 60;
@@ -217,7 +217,7 @@ async function start(client, mclient) {
 				Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			event_endtime = Number(event_endtime);
 			collection2.updateOne(
-				{ _id: "shark_fishing" },
+				{ _id: 'shark_fishing' },
 				{
 					$set: {
 						enabled: true,
@@ -229,51 +229,51 @@ async function start(client, mclient) {
 			);
 
 			client.channels
-				.fetch("908000544868691990")
+				.fetch('908000544868691990')
 				.then(channel => channel.send({ embeds: [mfonembed] }))
 				.catch(console.error);
 		},
 		null,
 		true,
-		"Europe/Rome"
+		'Europe/Rome'
 	);
 
 	const sharkoff1 = new CronJob(
-		"0 11 * * *",
+		'0 11 * * *',
 		async () => {
 			collection2.updateOne(
-				{ _id: "shark_fishing" },
+				{ _id: 'shark_fishing' },
 				{ $set: { enabled: false } },
 				{ upsert: true }
 			);
 
 			client.channels
-				.fetch("908000544868691990")
+				.fetch('908000544868691990')
 				.then(channel => channel.send({ embeds: [sharkoffembed] }))
 				.catch(console.error);
 		},
 		null,
 		true,
-		"Europe/Rome"
+		'Europe/Rome'
 	);
 
 	const sharkoff2 = new CronJob(
-		"0 21 * * *",
+		'0 21 * * *',
 		async () => {
 			collection2.updateOne(
-				{ _id: "shark_fishing" },
+				{ _id: 'shark_fishing' },
 				{ $set: { enabled: false } },
 				{ upsert: true }
 			);
 
 			client.channels
-				.fetch("908000544868691990")
+				.fetch('908000544868691990')
 				.then(channel => channel.send({ embeds: [sharkoffembed] }))
 				.catch(console.error);
 		},
 		null,
 		true,
-		"Europe/Rome"
+		'Europe/Rome'
 	);
 
 	// Starting Events
