@@ -94,7 +94,7 @@ module.exports = {
 					'Enchanted Spider Eye',
 					'Rotten Flesh',
 					'Carrot',
-					'Potatoe',
+					'Potato',
 					'Shark Fin',
 				];
 				let found = [];
