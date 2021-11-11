@@ -9,9 +9,7 @@ module.exports = {
 	folder: 'Bot',
 	aliases: [],
 	async execute(client, message, args) {
-		const embed = new Discord.MessageEmbed().setDescription(
-			'Pinging . . .'
-		);
+		const embed = new Discord.MessageEmbed().setDescription('Pinging . . .');
 		await message.channel.send({ embeds: [embed] }).then((m) => {
 			//Deciding Ping Emoji Shown
 			let ping = '';
@@ -40,10 +38,7 @@ module.exports = {
 						.addFields(
 							{
 								name: `${ping} BOT Latency`,
-								value: `${
-									m.createdTimestamp -
-									message.createdTimestamp
-								}ms.`,
+								value: `${m.createdTimestamp - message.createdTimestamp}ms.`,
 								inline: false,
 							},
 							{

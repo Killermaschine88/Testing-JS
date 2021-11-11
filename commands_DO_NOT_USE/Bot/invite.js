@@ -8,9 +8,7 @@ module.exports = {
 	folder: 'Bot',
 	aliases: [],
 	execute: (client, message, args) => {
-		const embed = new Discord.MessageEmbed()
-			.setTitle('Important Bot Links')
-			.setColor('fed8b1');
+		const embed = new Discord.MessageEmbed().setTitle('Important Bot Links').setColor('fed8b1');
 		const buttons = new Discord.MessageActionRow().addComponents(
 			new Discord.MessageButton()
 				.setLabel('Support Server')

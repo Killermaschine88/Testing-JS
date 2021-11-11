@@ -30,20 +30,16 @@ module.exports = {
 			embeds: [waitembed],
 		});
 
-		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(
-			(res) => {
-				if (res.status != 200) {
-					const nomcacc = new Discord.MessageEmbed()
-						.setDescription(
-							`No Minecraft account found for \`${ign}\``
-						)
-						.setColor('DC143C')
-						.setTimestamp();
-					waitingembed.edit({ embeds: [nomcacc] });
-					return;
-				}
+		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then((res) => {
+			if (res.status != 200) {
+				const nomcacc = new Discord.MessageEmbed()
+					.setDescription(`No Minecraft account found for \`${ign}\``)
+					.setColor('DC143C')
+					.setTimestamp();
+				waitingembed.edit({ embeds: [nomcacc] });
+				return;
 			}
-		); // Test if IGN esists
+		}); // Test if IGN esists
 
 		// ign = await getTrueIgn(ign);
 
@@ -52,12 +48,7 @@ module.exports = {
 
 		if (apiData.status != 200) {
 			return waitingembed.edit({
-				embeds: [
-					new Discord.MessageEmbed()
-						.setDescription(apiData.reason)
-						.setColor('DC143C')
-						.setTimestamp(),
-				],
+				embeds: [new Discord.MessageEmbed().setDescription(apiData.reason).setColor('DC143C').setTimestamp()],
 			});
 		}
 
@@ -65,11 +56,7 @@ module.exports = {
 		const rxp = apiData.data.slayers.bosses.revenant.experience;
 		let rrxp = Math.floor(rxp / 1000);
 		if (rrxp > 999) {
-			rrxp =
-				Math.floor(rxp / 1000000) +
-				'.' +
-				Math.floor((rxp % 1000000) / 1000) +
-				'M';
+			rrxp = Math.floor(rxp / 1000000) + '.' + Math.floor((rxp % 1000000) / 1000) + 'M';
 		} else {
 			rrxp = rrxp + 'K';
 		}
@@ -77,11 +64,7 @@ module.exports = {
 		const txp = apiData.data.slayers.bosses.tarantula.experience;
 		let ttxp = Math.floor(txp / 1000);
 		if (ttxp > 999) {
-			ttxp =
-				Math.floor(txp / 1000000) +
-				'.' +
-				Math.floor((txp % 1000000) / 1000) +
-				'M';
+			ttxp = Math.floor(txp / 1000000) + '.' + Math.floor((txp % 1000000) / 1000) + 'M';
 		} else {
 			ttxp = ttxp + 'K';
 		}
@@ -89,11 +72,7 @@ module.exports = {
 		const sxp = apiData.data.slayers.bosses.sven.experience;
 		let ssxp = Math.floor(sxp / 1000);
 		if (ssxp > 999) {
-			ssxp =
-				Math.floor(sxp / 1000000) +
-				'.' +
-				Math.floor((sxp % 1000000) / 1000) +
-				'M';
+			ssxp = Math.floor(sxp / 1000000) + '.' + Math.floor((sxp % 1000000) / 1000) + 'M';
 		} else {
 			ssxp = ssxp + 'K';
 		}
@@ -101,11 +80,7 @@ module.exports = {
 		const exp = apiData.data.slayers.bosses.enderman.experience;
 		let eexp = Math.floor(exp / 1000);
 		if (eexp > 999) {
-			eexp =
-				Math.floor(exp / 1000000) +
-				'.' +
-				Math.floor((exp % 1000000) / 1000) +
-				'M';
+			eexp = Math.floor(exp / 1000000) + '.' + Math.floor((exp % 1000000) / 1000) + 'M';
 		} else {
 			eexp = eexp + 'K';
 		}
@@ -113,11 +88,7 @@ module.exports = {
 		const totalxp = apiData.data.slayers.total_experience;
 		let ttotalxp = Math.floor(totalxp / 1000);
 		if (ttotalxp > 999) {
-			ttotalxp =
-				Math.floor(totalxp / 1000000) +
-				'.' +
-				Math.floor((totalxp % 1000000) / 1000) +
-				'M';
+			ttotalxp = Math.floor(totalxp / 1000000) + '.' + Math.floor((totalxp % 1000000) / 1000) + 'M';
 		} else {
 			ttotalxp = ttotalxp + 'K';
 		}
@@ -168,11 +139,7 @@ module.exports = {
 
 		if (apiData.data.skills.apiEnabled == false) {
 			const noapion = new Discord.MessageEmbed()
-				.setAuthor(
-					ign,
-					`https://cravatar.eu/helmavatar/${ign}/600.png`,
-					`https://sky.shiiyu.moe/stats/${ign}`
-				)
+				.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `https://sky.shiiyu.moe/stats/${ign}`)
 				.setDescription(
 					'You currently have skills API disabled, please enable it in the skyblock menu and try again'
 				)
@@ -184,11 +151,7 @@ module.exports = {
 
 		const slayerembed = new Discord.MessageEmbed()
 			.setColor('7CFC00')
-			.setAuthor(
-				ign,
-				`https://cravatar.eu/helmavatar/${ign}/600.png`,
-				`http://sky.shiiyu.moe/stats/${ign}`
-			)
+			.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `http://sky.shiiyu.moe/stats/${ign}`)
 			.setFooter(`${ign}'s Total Slayer EXP: ` + `${ttotalxp}`)
 			/* .addFields(
            {name: `Slayer Data for ${ign}`, value: getSlayers(apiData), inline: true},
@@ -262,9 +225,7 @@ function getSlayers(apiData) {
 }
 
 async function getUUID(ign) {
-	const response = await fetch(
-		`https://api.mojang.com/users/profiles/minecraft/${ign}`
-	);
+	const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
 	const result = await response.json();
 	return result.id;
 }
@@ -274,16 +235,12 @@ async function getApiData(ign, method) {
 	const config = require('../../config.json');
 
 	const UUID = await getUUID(ign);
-	const response = await fetch(
-		`https://baltrazz.repl.co/v1/profiles/${UUID}/${method}?key=${config.apikey}`
-	);
+	const response = await fetch(`https://baltrazz.repl.co/v1/profiles/${UUID}/${method}?key=${config.apikey}`);
 	return await response.json();
 }
 
 async function getTrueIgn(ign) {
-	const response = await fetch(
-		`https://api.mojang.com/users/profiles/minecraft/${ign}`
-	);
+	const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
 	const result = await response.json();
 	return result.name;
 }

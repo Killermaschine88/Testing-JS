@@ -14,8 +14,7 @@ module.exports = {
 	folder: 'Dev',
 	aliases: [],
 	async execute(client, message, args) {
-		if (message.author.id != old.ownerID)
-			return message.channel.send("Can't use this.");
+		if (message.author.id != old.ownerID) return message.channel.send("Can't use this.");
 
 		const bot = mineflayer.createBot({
 			host: 'hypixel.net',
@@ -34,16 +33,10 @@ module.exports = {
 		bot.on('message', async (message) => {
 			if (message.text === 'Your new API key is ') {
 				old.apikey = message.extra[0].text;
-				fs.writeFileSync(
-					'/home/runner/Testing-JS/constants/Bot/config.json',
-					JSON.stringify(old)
-				);
+				fs.writeFileSync('/home/runner/Testing-JS/constants/Bot/config.json', JSON.stringify(old));
 
 				over.mojangClientToken = 'reset';
-				fs.writeFileSync(
-					'/home/runner/Testing-JS/launcher_accounts.json',
-					JSON.stringify(over)
-				);
+				fs.writeFileSync('/home/runner/Testing-JS/launcher_accounts.json', JSON.stringify(over));
 
 				bot.end();
 				console.log('Logged out of Hypixel');

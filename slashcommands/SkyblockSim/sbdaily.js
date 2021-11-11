@@ -101,9 +101,7 @@ module.exports = {
 						`I have added <:coins:861974605203636253> **25k Coins** and <:gems:879264850348486696> **${gems} Gems** to your Profile.\nYou will be able to claim it again in **24 Hours**`
 					);
 				}
-				claimed.setFooter(
-					`Daily Streak: ${player.data.misc.daily.streak + 1}`
-				);
+				claimed.setFooter(`Daily Streak: ${player.data.misc.daily.streak + 1}`);
 				claimed.setColor('GREEN');
 
 				interaction.editReply({ embeds: [claimed] });
@@ -112,9 +110,7 @@ module.exports = {
 		} else {
 			const toearly = new Discord.MessageEmbed()
 				.setTitle("Can't claim Daily Reward yet")
-				.setDescription(
-					`You can claim your Daily Reward again on <t:${next_claim}:f>`
-				)
+				.setDescription(`You can claim your Daily Reward again on <t:${next_claim}:f>`)
 				.setColor('RED');
 
 			interaction.editReply({ embeds: [toearly] });

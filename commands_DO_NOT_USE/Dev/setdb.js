@@ -9,8 +9,7 @@ module.exports = {
 	folder: 'Dev',
 	aliases: ['db'],
 	async execute(client, message, args, mclient) {
-		if (message.author.id !== config.ownerID)
-			return message.channel.send("Can't use this!");
+		if (message.author.id !== config.ownerID) return message.channel.send("Can't use this!");
 
 		let id = args[0];
 		let path = args[1];
@@ -31,16 +30,10 @@ module.exports = {
 
 		const collection = mclient.db('SkyblockSim').collection('Players');
 
-		await collection.updateOne(
-			{ _id: id },
-			{ $set: { [path]: value } },
-			{ upsert: true }
-		);
+		await collection.updateOne({ _id: id }, { $set: { [path]: value } }, { upsert: true });
 
 		const done = new Discord.MessageEmbed()
-			.setDescription(
-				`Document for <@!${id}> updated.\n\nPath: **${path}**\nNew Value: **${value}**`
-			)
+			.setDescription(`Document for <@!${id}> updated.\n\nPath: **${path}**\nNew Value: **${value}**`)
 			.setColor('GREEN');
 
 		message.channel.send({ embeds: [done] });

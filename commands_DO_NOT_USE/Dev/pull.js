@@ -10,8 +10,7 @@ module.exports = {
 	folder: 'Dev',
 	aliases: ['pl'],
 	async execute(client, message, args) {
-		if (message.author.id !== config.ownerID)
-			return message.channel.send("Can't use this!");
+		if (message.author.id !== config.ownerID) return message.channel.send("Can't use this!");
 
 		//  exec('git stash')
 
@@ -24,13 +23,7 @@ module.exports = {
 			} else {
 				const pulled = new Discord.MessageEmbed()
 					.setTitle('Changes Pulled')
-					.setDescription(
-						'```diff\n' +
-							stdout +
-							'\n```\n```diff\n' +
-							stderr +
-							'\n```'
-					);
+					.setDescription('```diff\n' + stdout + '\n```\n```diff\n' + stderr + '\n```');
 
 				message.channel.send({ embeds: [pulled] });
 			}

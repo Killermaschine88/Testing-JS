@@ -27,10 +27,7 @@ module.exports = {
 			.setColor('90EE90')
 			.setDescription(`Dmg Testing`);
 		const row = new Discord.MessageActionRow().addComponents(
-			new Discord.MessageButton()
-				.setCustomId('dmg')
-				.setLabel('Attack')
-				.setStyle('PRIMARY')
+			new Discord.MessageButton().setCustomId('dmg').setLabel('Attack').setStyle('PRIMARY')
 		);
 
 		const menu = await message.channel.send({
@@ -69,34 +66,21 @@ module.exports = {
 				let pdmg = '';
 				if (crit === 'yes') {
 					pdmg =
-						Math.floor(
-							(5 + damage) *
-								(1 + strength / 100) *
-								(1 + combatlvl * 0.04)
-						) *
-						(1 + critdmg / 100);
+						Math.floor((5 + damage) * (1 + strength / 100) * (1 + combatlvl * 0.04)) * (1 + critdmg / 100);
 				} else {
-					pdmg = Math.floor(
-						(5 + damage) *
-							(1 + strength / 100) *
-							(1 + combatlvl * 0.04)
-					);
+					pdmg = Math.floor((5 + damage) * (1 + strength / 100) * (1 + combatlvl * 0.04));
 				}
 
 				php = dmgtaken(php, mdmg);
 				mhp = dmgdealt(mhp, pdmg);
 
-				const mobembed = new Discord.MessageEmbed()
-					.setFooter('Skyblock Simulator')
-					.setColor('90EE90');
+				const mobembed = new Discord.MessageEmbed().setFooter('Skyblock Simulator').setColor('90EE90');
 				if (crit === 'yes') {
 					mobembed.setDescription(
 						`Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (-<:crit:870306942806020106> ${pdmg})`
 					);
 				} else {
-					mobembed.setDescription(
-						`Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (- ${pdmg})`
-					);
+					mobembed.setDescription(`Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (- ${pdmg})`);
 				}
 				menu.edit({ embeds: [mobembed] });
 
@@ -104,18 +88,14 @@ module.exports = {
 					const killed = new Discord.MessageEmbed()
 						.setFooter('Skyblock Simulator')
 						.setColor('90EE90')
-						.setDescription(
-							`Killed the Enemy with **❤️ ${php}** left.`
-						);
+						.setDescription(`Killed the Enemy with **❤️ ${php}** left.`);
 
 					menu.edit({ embeds: [killed], components: [] });
 				} else if (i.customId === 'dmg' && php <= 0) {
 					const died = new Discord.MessageEmbed()
 						.setFooter('Skyblock Simulator')
 						.setColor('90EE90')
-						.setDescription(
-							`Died to the Enemy which had **❤️ ${mhp}** left.`
-						);
+						.setDescription(`Died to the Enemy which had **❤️ ${mhp}** left.`);
 
 					menu.edit({ embeds: [died], components: [] });
 				}

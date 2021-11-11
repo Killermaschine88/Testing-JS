@@ -12,8 +12,7 @@ module.exports = {
 	folder: 'Dev',
 	aliases: ['ev', 'e'],
 	async execute(client, message, args) {
-		if (message.author.id !== config.ownerID)
-			return message.channel.send("Can't use this!");
+		if (message.author.id !== config.ownerID) return message.channel.send("Can't use this!");
 		try {
 			var result = args.join(' ');
 			let noResultArg = new Discord.MessageEmbed()
@@ -25,32 +24,16 @@ module.exports = {
 			let resultSuccess = new Discord.MessageEmbed()
 				.setColor('GREEN')
 				.setTitle('Eval Success')
-				.addField(
-					`<:input:849565147331559424> Input:\n`,
-					'```js\n' + `${args.join(' ')}` + '```',
-					false
-				)
-				.addField(
-					`<:output:849565147348336650> Output:\n`,
-					'```js\n' + evaled + '```',
-					true
-				);
+				.addField(`<:input:849565147331559424> Input:\n`, '```js\n' + `${args.join(' ')}` + '```', false)
+				.addField(`<:output:849565147348336650> Output:\n`, '```js\n' + evaled + '```', true);
 
 			message.channel.send({ embeds: [resultSuccess] });
 		} catch (error) {
 			let resultError = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('An error has occured')
-				.addField(
-					`<:input:849565147331559424> Input:\n`,
-					'```js\n' + `${result}` + '```',
-					false
-				)
-				.addField(
-					`<:output:849565147348336650>Output:\n`,
-					'```js\n' + `${error.message}` + '```',
-					true
-				)
+				.addField(`<:input:849565147331559424> Input:\n`, '```js\n' + `${result}` + '```', false)
+				.addField(`<:output:849565147348336650>Output:\n`, '```js\n' + `${error.message}` + '```', true)
 				.setDescription(`Error:\n\`\`\`${error}\`\`\``);
 			return message.channel.send({ embeds: [resultError] });
 		}

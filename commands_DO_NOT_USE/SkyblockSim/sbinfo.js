@@ -23,9 +23,7 @@ module.exports = {
 		let player = await collection.findOne({ _id: id });
 
 		if (player === null) {
-			const nodata = new Discord.MessageEmbed()
-				.setColor('RED')
-				.setDescription(`No Profile found for <@${id}>`);
+			const nodata = new Discord.MessageEmbed().setColor('RED').setDescription(`No Profile found for <@${id}>`);
 			message.channel.send({ embeds: [nodata] });
 			return;
 		}
@@ -81,8 +79,7 @@ module.exports = {
 			player.data.stats.sea_creature_chance +
 			player.data.equipment.fishing.armor.sea_creature_chance +
 			player.data.equipment.fishing.rod.sea_creature_chance;
-		let playerfishingspeed =
-			player.data.equipment.fishing.rod.fishing_speed;
+		let playerfishingspeed = player.data.equipment.fishing.rod.fishing_speed;
 
 		const foundinfo = new Discord.MessageEmbed()
 			.setFooter('Skyblock Simulator')
@@ -103,22 +100,10 @@ module.exports = {
 			.addField('Location', `${player.data.misc.location}`, true);
 
 		const row = new Discord.MessageActionRow().addComponents(
-			new Discord.MessageButton()
-				.setCustomId('main')
-				.setLabel('Main')
-				.setStyle('PRIMARY'),
-			new Discord.MessageButton()
-				.setCustomId('inv')
-				.setLabel('Inventory')
-				.setStyle('PRIMARY'),
-			new Discord.MessageButton()
-				.setCustomId('slayer')
-				.setLabel('Slayer')
-				.setStyle('PRIMARY'),
-			new Discord.MessageButton()
-				.setCustomId('dungeons')
-				.setLabel('Dungeons')
-				.setStyle('PRIMARY')
+			new Discord.MessageButton().setCustomId('main').setLabel('Main').setStyle('PRIMARY'),
+			new Discord.MessageButton().setCustomId('inv').setLabel('Inventory').setStyle('PRIMARY'),
+			new Discord.MessageButton().setCustomId('slayer').setLabel('Slayer').setStyle('PRIMARY'),
+			new Discord.MessageButton().setCustomId('dungeons').setLabel('Dungeons').setStyle('PRIMARY')
 		);
 
 		const menu = await message.channel.send({
@@ -151,11 +136,7 @@ module.exports = {
 							`Health: **${player.data.stats.health}**\nDefense: **${player.data.stats.defense}**\nDamage: **${player.data.stats.damage}**\nStrength: **${player.data.stats.strength}**\nCrit Chance: **${player.data.stats.crit_chance}**\nCrit Damage: **${player.data.stats.crit_damage}**\nMagic Find: **${player.data.stats.magic_find}**\nSea Creature Chance: **${player.data.stats.sea_creature_chance}**`,
 							true
 						)
-						.addField(
-							'Location',
-							`${player.data.misc.location}`,
-							true
-						);
+						.addField('Location', `${player.data.misc.location}`, true);
 					menu.edit({ embeds: [main] });
 				} else if (i.customId === 'inv') {
 					await i.deferUpdate();
@@ -249,10 +230,7 @@ function getLevelByXp(xp, extra = {}) {
 	}
 
 	if (extra.skill) {
-		if (
-			leveling.default_skill_caps[extra.skill] &&
-			leveling.default_skill_caps[extra.skill] > levelCap
-		) {
+		if (leveling.default_skill_caps[extra.skill] && leveling.default_skill_caps[extra.skill] > levelCap) {
 			levelCap = leveling.default_skill_caps[extra.skill];
 		}
 
@@ -290,11 +268,7 @@ function getLevelByXp(xp, extra = {}) {
 
 	let progress = Math.max(0, Math.min(xpCurrent / xpForNext, 1));
 
-	let levelWithProgress = getLevelWithProgress(
-		xp,
-		maxLevel,
-		Object.values(xp_table)
-	);
+	let levelWithProgress = getLevelWithProgress(xp, maxLevel, Object.values(xp_table));
 
 	return {
 		xp,
@@ -315,10 +289,7 @@ function getLevelWithProgress(experience, maxLevel, experienceGroup) {
 	for (let toRemove of experienceGroup) {
 		experience -= toRemove;
 		if (experience < 0) {
-			return Math.min(
-				level + (1 - (experience * -1) / toRemove),
-				maxLevel
-			);
+			return Math.min(level + (1 - (experience * -1) / toRemove), maxLevel);
 		}
 		level++;
 	}

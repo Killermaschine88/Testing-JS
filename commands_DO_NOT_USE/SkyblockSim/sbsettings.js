@@ -22,9 +22,7 @@ module.exports = {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(
-					`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``
-				);
+				.setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``);
 
 			message.channel.send({ embeds: [noprofile] });
 			return;
@@ -37,11 +35,7 @@ module.exports = {
 				.setDescription(
 					`**Enable / Disable Settings for Skyblock Simulator**\n\nUse \`${gprefix}sbsettings (Settings Name)\` to toggle the Settings ON/OFF\nAvailable Settings:\n\`img\``
 				)
-				.addField(
-					'Image shown at Sbfarm Command',
-					`${player.data.settings.imgshown}`,
-					true
-				);
+				.addField('Image shown at Sbfarm Command', `${player.data.settings.imgshown}`, true);
 
 			message.channel.send({ embeds: [settings] });
 			return;
@@ -55,10 +49,7 @@ module.exports = {
 			);
 			message.channel.send('Disabled Area Image being shown at sbfarm');
 			return;
-		} else if (
-			args[0] === 'img' &&
-			player.data.settings.imgshown === false
-		) {
+		} else if (args[0] === 'img' && player.data.settings.imgshown === false) {
 			await collection.updateOne(
 				{ _id: message.author.id },
 				{ $set: { 'data.settings.imgshown': true } },

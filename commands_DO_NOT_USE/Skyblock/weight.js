@@ -33,20 +33,16 @@ module.exports = {
 			embeds: [waitembed],
 		});
 
-		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(
-			(res) => {
-				if (res.status != 200) {
-					const nomcacc = new Discord.MessageEmbed()
-						.setDescription(
-							`No Minecraft account found for \`${ign}\``
-						)
-						.setColor('DC143C')
-						.setTimestamp();
-					waitingembed.edit({ embeds: [nomcacc] });
-					return;
-				}
+		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then((res) => {
+			if (res.status != 200) {
+				const nomcacc = new Discord.MessageEmbed()
+					.setDescription(`No Minecraft account found for \`${ign}\``)
+					.setColor('DC143C')
+					.setTimestamp();
+				waitingembed.edit({ embeds: [nomcacc] });
+				return;
 			}
-		); // Test if IGN esists
+		}); // Test if IGN esists
 
 		ign = await getTrueIgn(ign);
 
@@ -65,11 +61,7 @@ module.exports = {
 
 		if (apiData.data.skills.apiEnabled == false) {
 			const apioff = new Discord.MessageEmbed()
-				.setAuthor(
-					ign,
-					`https://cravatar.eu/helmavatar/${ign}/600.png`,
-					`https://sky.shiiyu.moe/stats/${ign}`
-				)
+				.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `https://sky.shiiyu.moe/stats/${ign}`)
 				.setDescription(
 					'This Player current has the Skills API disabled, tell them to enable it in the Skyblock Menu and then try again'
 				)
@@ -82,11 +74,7 @@ module.exports = {
 		//fix this shit
 		if (apiData.data.dungeons == null) {
 			const nodungeonsfound = new Discord.MessageEmbed()
-				.setAuthor(
-					ign,
-					`https://cravatar.eu/helmavatar/${ign}/600.png`,
-					`https://sky.shiiyu.moe/stats/${ign}`
-				)
+				.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `https://sky.shiiyu.moe/stats/${ign}`)
 				.setDescription(`${ign} has not entered the catacombs`)
 				.setColor('DC143C')
 				.setTimestamp();
@@ -95,18 +83,12 @@ module.exports = {
 		}
 
 		const foundresults = new Discord.MessageEmbed()
-			.setAuthor(
-				ign,
-				`https://cravatar.eu/helmavatar/${ign}/600.png`,
-				`https://sky.shiiyu.moe/stats/${ign}`
-			)
+			.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `https://sky.shiiyu.moe/stats/${ign}`)
 			.setColor('7CFC00')
 			.setDescription(
-				`${ign}'s total Weight for their **${
-					apiData.data.name
-				}** profile is **${toFixed(apiData.data.weight)} + ${toFixed(
-					apiData.data.weight_overflow
-				)} Overflow (${toFixed(
+				`${ign}'s total Weight for their **${apiData.data.name}** profile is **${toFixed(
+					apiData.data.weight
+				)} + ${toFixed(apiData.data.weight_overflow)} Overflow (${toFixed(
 					apiData.data.weight + apiData.data.weight_overflow
 				)} Total)**`
 			)
@@ -142,69 +124,45 @@ module.exports = {
 				{
 					name: 'Weight',
 					value: [
-						`**${toFixed(
-							apiData.data.skills.mining.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.skills.mining.weight)}** + ${toFixed(
 							apiData.data.skills.mining.weight_overflow
 						)} *(${toFixed(
-							apiData.data.skills.mining.weight +
-								apiData.data.skills.mining.weight_overflow
+							apiData.data.skills.mining.weight + apiData.data.skills.mining.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.skills.foraging.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.skills.foraging.weight)}** + ${toFixed(
 							apiData.data.skills.foraging.weight_overflow
 						)} *(${toFixed(
-							apiData.data.skills.foraging.weight +
-								apiData.data.skills.foraging.weight_overflow
+							apiData.data.skills.foraging.weight + apiData.data.skills.foraging.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.skills.enchanting.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.skills.enchanting.weight)}** + ${toFixed(
 							apiData.data.skills.enchanting.weight_overflow
 						)} *(${toFixed(
-							apiData.data.skills.enchanting.weight +
-								apiData.data.skills.enchanting.weight_overflow
+							apiData.data.skills.enchanting.weight + apiData.data.skills.enchanting.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.skills.farming.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.skills.farming.weight)}** + ${toFixed(
 							apiData.data.skills.farming.weight_overflow
 						)} *(${toFixed(
-							apiData.data.skills.farming.weight +
-								apiData.data.skills.farming.weight_overflow
+							apiData.data.skills.farming.weight + apiData.data.skills.farming.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.skills.combat.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.skills.combat.weight)}** + ${toFixed(
 							apiData.data.skills.combat.weight_overflow
 						)} *(${toFixed(
-							apiData.data.skills.combat.weight +
-								apiData.data.skills.combat.weight_overflow
+							apiData.data.skills.combat.weight + apiData.data.skills.combat.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.skills.fishing.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.skills.fishing.weight)}** + ${toFixed(
 							apiData.data.skills.fishing.weight_overflow
 						)} *(${toFixed(
-							apiData.data.skills.fishing.weight +
-								apiData.data.skills.fishing.weight_overflow
+							apiData.data.skills.fishing.weight + apiData.data.skills.fishing.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.skills.alchemy.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.skills.alchemy.weight)}** + ${toFixed(
 							apiData.data.skills.alchemy.weight_overflow
 						)} *(${toFixed(
-							apiData.data.skills.alchemy.weight +
-								apiData.data.skills.alchemy.weight_overflow
+							apiData.data.skills.alchemy.weight + apiData.data.skills.alchemy.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.skills.taming.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.skills.taming.weight)}** + ${toFixed(
 							apiData.data.skills.taming.weight_overflow
 						)} *(${toFixed(
-							apiData.data.skills.taming.weight +
-								apiData.data.skills.taming.weight_overflow
+							apiData.data.skills.taming.weight + apiData.data.skills.taming.weight_overflow
 						)})*`,
 					].join('\n'),
 					inline: true,
@@ -229,9 +187,7 @@ module.exports = {
 						apiData.data.slayers.bosses.tarantula.experience
 							.toString()
 							.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-						apiData.data.slayers.bosses.sven.experience
-							.toString()
-							.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+						apiData.data.slayers.bosses.sven.experience.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 						apiData.data.slayers.bosses.enderman.experience
 							.toString()
 							.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
@@ -241,41 +197,28 @@ module.exports = {
 				{
 					name: 'Weight',
 					value: [
-						`**${toFixed(
-							apiData.data.slayers.bosses.revenant.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.slayers.bosses.revenant.weight)}** + ${toFixed(
 							apiData.data.slayers.bosses.revenant.weight_overflow
 						)} *(${toFixed(
 							apiData.data.slayers.bosses.revenant.weight +
-								apiData.data.slayers.bosses.revenant
-									.weight_overflow
+								apiData.data.slayers.bosses.revenant.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.slayers.bosses.tarantula.weight
-						)}** + ${toFixed(
-							apiData.data.slayers.bosses.tarantula
-								.weight_overflow
+						`**${toFixed(apiData.data.slayers.bosses.tarantula.weight)}** + ${toFixed(
+							apiData.data.slayers.bosses.tarantula.weight_overflow
 						)} *(${toFixed(
 							apiData.data.slayers.bosses.tarantula.weight +
-								apiData.data.slayers.bosses.tarantula
-									.weight_overflow
+								apiData.data.slayers.bosses.tarantula.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.slayers.bosses.sven.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.slayers.bosses.sven.weight)}** + ${toFixed(
 							apiData.data.slayers.bosses.sven.weight_overflow
 						)} *(${toFixed(
-							apiData.data.slayers.bosses.sven.weight +
-								apiData.data.slayers.bosses.sven.weight_overflow
+							apiData.data.slayers.bosses.sven.weight + apiData.data.slayers.bosses.sven.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.slayers.bosses.enderman.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.slayers.bosses.enderman.weight)}** + ${toFixed(
 							apiData.data.slayers.bosses.enderman.weight_overflow
 						)} *(${toFixed(
 							apiData.data.slayers.bosses.enderman.weight +
-								apiData.data.slayers.bosses.enderman
-									.weight_overflow
+								apiData.data.slayers.bosses.enderman.weight_overflow
 						)})*`,
 					].join('\n'),
 					inline: true,
@@ -308,61 +251,41 @@ module.exports = {
 				{
 					name: 'Weight',
 					value: [
-						`**${toFixed(
-							apiData.data.dungeons.types.catacombs.weight
-						)}** + ${toFixed(
-							apiData.data.dungeons.types.catacombs
-								.weight_overflow
+						`**${toFixed(apiData.data.dungeons.types.catacombs.weight)}** + ${toFixed(
+							apiData.data.dungeons.types.catacombs.weight_overflow
 						)} *(${toFixed(
 							apiData.data.dungeons.types.catacombs.weight +
-								apiData.data.dungeons.types.catacombs
-									.weight_overflow
+								apiData.data.dungeons.types.catacombs.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.dungeons.classes.healer.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.dungeons.classes.healer.weight)}** + ${toFixed(
 							apiData.data.dungeons.classes.healer.weight_overflow
 						)} *(${toFixed(
 							apiData.data.dungeons.classes.healer.weight +
-								apiData.data.dungeons.classes.healer
-									.weight_overflow
+								apiData.data.dungeons.classes.healer.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.dungeons.classes.mage.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.dungeons.classes.mage.weight)}** + ${toFixed(
 							apiData.data.dungeons.classes.mage.weight_overflow
 						)} *(${toFixed(
 							apiData.data.dungeons.classes.mage.weight +
-								apiData.data.dungeons.classes.mage
-									.weight_overflow
+								apiData.data.dungeons.classes.mage.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.dungeons.classes.berserker.weight
-						)}** + ${toFixed(
-							apiData.data.dungeons.classes.berserker
-								.weight_overflow
+						`**${toFixed(apiData.data.dungeons.classes.berserker.weight)}** + ${toFixed(
+							apiData.data.dungeons.classes.berserker.weight_overflow
 						)} *(${toFixed(
 							apiData.data.dungeons.classes.berserker.weight +
-								apiData.data.dungeons.classes.berserker
-									.weight_overflow
+								apiData.data.dungeons.classes.berserker.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.dungeons.classes.archer.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.dungeons.classes.archer.weight)}** + ${toFixed(
 							apiData.data.dungeons.classes.archer.weight_overflow
 						)} *(${toFixed(
 							apiData.data.dungeons.classes.archer.weight +
-								apiData.data.dungeons.classes.archer
-									.weight_overflow
+								apiData.data.dungeons.classes.archer.weight_overflow
 						)})*`,
-						`**${toFixed(
-							apiData.data.dungeons.classes.tank.weight
-						)}** + ${toFixed(
+						`**${toFixed(apiData.data.dungeons.classes.tank.weight)}** + ${toFixed(
 							apiData.data.dungeons.classes.tank.weight_overflow
 						)} *(${toFixed(
 							apiData.data.dungeons.classes.tank.weight +
-								apiData.data.dungeons.classes.tank
-									.weight_overflow
+								apiData.data.dungeons.classes.tank.weight_overflow
 						)})*`,
 					].join('\n'),
 					inline: true,
@@ -375,9 +298,7 @@ module.exports = {
 };
 
 async function getUUID(ign) {
-	const response = await fetch(
-		`https://api.mojang.com/users/profiles/minecraft/${ign}`
-	);
+	const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
 	const result = await response.json();
 	return result.id;
 }
@@ -387,16 +308,12 @@ async function getApiData(ign, method) {
 	const config = require('../../config.json');
 
 	const UUID = await getUUID(ign);
-	const response = await fetch(
-		`https://baltrazz.repl.co/v1/profiles/${UUID}/${method}?key=${config.apikey}`
-	);
+	const response = await fetch(`https://baltrazz.repl.co/v1/profiles/${UUID}/${method}?key=${config.apikey}`);
 	return await response.json();
 }
 
 async function getTrueIgn(ign) {
-	const response = await fetch(
-		`https://api.mojang.com/users/profiles/minecraft/${ign}`
-	);
+	const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
 	const result = await response.json();
 	return result.name;
 }

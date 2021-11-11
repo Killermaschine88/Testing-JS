@@ -119,9 +119,7 @@ module.exports = {
 		);
 
 		const created = new Discord.MessageEmbed()
-			.setImage(
-				'https://cdn.discordapp.com/attachments/860131688385478666/865211353491570708/maxresdefault.png'
-			)
+			.setImage('https://cdn.discordapp.com/attachments/860131688385478666/865211353491570708/maxresdefault.png')
 			.setColor('90EE90')
 			.setTitle('<a:yes:847468695772987423> Profile Created')
 			.setDescription(

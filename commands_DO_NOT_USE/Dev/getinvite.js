@@ -9,8 +9,7 @@ module.exports = {
 	folder: 'Dev',
 	aliases: ['gi'],
 	execute: (client, message, args) => {
-		if (message.author.id !== config.ownerID)
-			return message.channel.send("Can't use this!");
+		if (message.author.id !== config.ownerID) return message.channel.send("Can't use this!");
 		const arg = args[0];
 		let targetguild = client.guilds.cache.get(arg);
 		if (!targetguild) {
@@ -19,9 +18,7 @@ module.exports = {
 			targetguild.channels.cache
 				.random()
 				.createInvite({ maxAge: 0, maxUses: 1 })
-				.then((inv) =>
-					message.channel.send(`${targetguild.name}\n${inv.url}`)
-				);
+				.then((inv) => message.channel.send(`${targetguild.name}\n${inv.url}`));
 		}
 	},
 };

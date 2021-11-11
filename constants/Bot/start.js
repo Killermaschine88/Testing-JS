@@ -53,11 +53,9 @@ async function start(client, mclient) {
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator Events');
 
-			let next_eventtime =
-				Number((Date.now() / 1000).toFixed(0)) + 15 * 60 * 60;
+			let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + 15 * 60 * 60;
 			next_eventtime = Number(next_eventtime);
-			let event_endtime =
-				Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
+			let event_endtime = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			event_endtime = Number(event_endtime);
 			collection2.updateOne(
 				{ _id: 'magic_find' },
@@ -93,11 +91,9 @@ async function start(client, mclient) {
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator Events');
 
-			let next_eventtime =
-				Number((Date.now() / 1000).toFixed(0)) + 10 * 60 * 60;
+			let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + 10 * 60 * 60;
 			next_eventtime = Number(next_eventtime);
-			let event_endtime =
-				Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
+			let event_endtime = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			event_endtime = Number(event_endtime);
 			collection2.updateOne(
 				{ _id: 'magic_find' },
@@ -124,11 +120,7 @@ async function start(client, mclient) {
 	const mfoff = new CronJob(
 		'0 18 * * *',
 		async function () {
-			collection2.updateOne(
-				{ _id: 'magic_find' },
-				{ $set: { enabled: false } },
-				{ upsert: true }
-			);
+			collection2.updateOne({ _id: 'magic_find' }, { $set: { enabled: false } }, { upsert: true });
 
 			client.channels
 				.fetch('908000544868691990')
@@ -143,10 +135,7 @@ async function start(client, mclient) {
 	const mfoff2 = new CronJob(
 		'0 8 * * *',
 		async function () {
-			collection2.updateOne(
-				{ _id: 'magic_find' },
-				{ $set: { enabled: false } }
-			);
+			collection2.updateOne({ _id: 'magic_find' }, { $set: { enabled: false } });
 
 			client.channels
 				.fetch('908000544868691990')
@@ -170,11 +159,9 @@ async function start(client, mclient) {
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator Events');
 
-			let next_eventtime =
-				Number((Date.now() / 1000).toFixed(0)) + 15 * 60 * 60;
+			let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + 15 * 60 * 60;
 			next_eventtime = Number(next_eventtime);
-			let event_endtime =
-				Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
+			let event_endtime = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			event_endtime = Number(event_endtime);
 			collection2.updateOne(
 				{ _id: 'shark_fishing' },
@@ -210,11 +197,9 @@ async function start(client, mclient) {
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator Events');
 
-			let next_eventtime =
-				Number((Date.now() / 1000).toFixed(0)) + 15 * 60 * 60;
+			let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + 15 * 60 * 60;
 			next_eventtime = Number(next_eventtime);
-			let event_endtime =
-				Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
+			let event_endtime = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			event_endtime = Number(event_endtime);
 			collection2.updateOne(
 				{ _id: 'shark_fishing' },
@@ -241,11 +226,7 @@ async function start(client, mclient) {
 	const sharkoff1 = new CronJob(
 		'0 11 * * *',
 		async function () {
-			collection2.updateOne(
-				{ _id: 'shark_fishing' },
-				{ $set: { enabled: false } },
-				{ upsert: true }
-			);
+			collection2.updateOne({ _id: 'shark_fishing' }, { $set: { enabled: false } }, { upsert: true });
 
 			client.channels
 				.fetch('908000544868691990')
@@ -260,11 +241,7 @@ async function start(client, mclient) {
 	const sharkoff2 = new CronJob(
 		'0 21 * * *',
 		async function () {
-			collection2.updateOne(
-				{ _id: 'shark_fishing' },
-				{ $set: { enabled: false } },
-				{ upsert: true }
-			);
+			collection2.updateOne({ _id: 'shark_fishing' }, { $set: { enabled: false } }, { upsert: true });
 
 			client.channels
 				.fetch('908000544868691990')

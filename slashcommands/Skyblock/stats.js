@@ -13,22 +13,18 @@ module.exports = {
 
 		ign = ign.replace(/\W/g, ''); // removes weird characters
 
-		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(
-			(res) => {
-				if (res.status != 200) {
-					return interaction.editReply({
-						embeds: [
-							new Discord.MessageEmbed()
-								.setDescription(
-									`No Minecraft account found for \`${ign}\``
-								)
-								.setColor('DC143C')
-								.setTimestamp(),
-						],
-					});
-				}
+		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then((res) => {
+			if (res.status != 200) {
+				return interaction.editReply({
+					embeds: [
+						new Discord.MessageEmbed()
+							.setDescription(`No Minecraft account found for \`${ign}\``)
+							.setColor('DC143C')
+							.setTimestamp(),
+					],
+				});
 			}
-		); // Test if IGN esists
+		}); // Test if IGN esists
 
 		ign = await getTrueIgn(ign);
 
@@ -45,18 +41,12 @@ module.exports = {
 
 		if (apiData.status != 200) {
 			return waitingembed.edit({
-				embeds: [
-					new Discord.MessageEmbed()
-						.setDescription(apiData.reason)
-						.setColor('DC143C')
-						.setTimestamp(),
-				],
+				embeds: [new Discord.MessageEmbed().setDescription(apiData.reason).setColor('DC143C').setTimestamp()],
 			});
 		}
 
 		// IGN is valid and player has skyblock profiles
-		if (!apiData.apiEnabled === false)
-			return interaction.editReply('This players API is off.');
+		if (!apiData.apiEnabled === false) return interaction.editReply('This players API is off.');
 		let bank = apiData.data.coins.bank;
 		if (!bank) bank = '0';
 		let purse = apiData.data.coins.purse;
@@ -64,9 +54,7 @@ module.exports = {
 		return interaction.editReply({
 			embeds: [
 				new Discord.MessageEmbed()
-					.setTitle(
-						`Stats for ${ign} on Profile: ${apiData.data.name}`
-					)
+					.setTitle(`Stats for ${ign} on Profile: ${apiData.data.name}`)
 					.setColor('7CFC00')
 					.setAuthor(
 						ign,
@@ -77,39 +65,27 @@ module.exports = {
 					.addFields(
 						{
 							name: '💰 Coins',
-							value: `Total: ${toFixed(
-								apiData.data.coins.total
-							)}\nBank: ${toFixed(bank)}\nPurse: ${toFixed(
-								purse
-							)}`,
+							value: `Total: ${toFixed(apiData.data.coins.total)}\nBank: ${toFixed(
+								bank
+							)}\nPurse: ${toFixed(purse)}`,
 							inline: true,
 						},
 
 						{
 							name: '<:rev:852892164559732806> Slayers',
-							value: `Zombie: ${toFixed(
-								apiData.data.slayers.bosses.revenant.level
-							)}\nSpider: ${toFixed(
+							value: `Zombie: ${toFixed(apiData.data.slayers.bosses.revenant.level)}\nSpider: ${toFixed(
 								apiData.data.slayers.bosses.tarantula.level
-							)}\nWolf: ${toFixed(
-								apiData.data.slayers.bosses.sven.level
-							)}`,
+							)}\nWolf: ${toFixed(apiData.data.slayers.bosses.sven.level)}`,
 							inline: true,
 						},
 
 						{
 							name: 'Weight',
-							value: `Total: ${toFixed(
-								apiData.data.weight
-							)}\nOverflow: ${toFixed(
+							value: `Total: ${toFixed(apiData.data.weight)}\nOverflow: ${toFixed(
 								apiData.data.weight_overflow
-							)}\nSkills: ${toFixed(
-								apiData.data.skills.weight
-							)}\nSlayers: ${toFixed(
+							)}\nSkills: ${toFixed(apiData.data.skills.weight)}\nSlayers: ${toFixed(
 								apiData.data.slayers.weight
-							)}\nDungons: ${toFixed(
-								apiData.data.dungeons.weight
-							)}`,
+							)}\nDungons: ${toFixed(apiData.data.dungeons.weight)}`,
 							inline: true,
 						},
 
@@ -125,9 +101,7 @@ module.exports = {
 };
 
 async function getUUID(ign) {
-	const response = await fetch(
-		`https://api.mojang.com/users/profiles/minecraft/${ign}`
-	);
+	const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
 	const result = await response.json();
 	return result.id;
 }
@@ -137,16 +111,12 @@ async function getApiData(ign) {
 	const config = require('../../constants/Bot/config.json');
 
 	const UUID = await getUUID(ign);
-	const response = await fetch(
-		`https://baltrazz.repl.co/v1/profiles/${UUID}/skills?key=${config.apikey}`
-	);
+	const response = await fetch(`https://baltrazz.repl.co/v1/profiles/${UUID}/skills?key=${config.apikey}`);
 	return await response.json();
 }
 
 async function getTrueIgn(ign) {
-	const response = await fetch(
-		`https://api.mojang.com/users/profiles/minecraft/${ign}`
-	);
+	const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
 	const result = await response.json();
 	return result.name;
 }

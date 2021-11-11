@@ -24,8 +24,7 @@ module.exports = {
 
 		let rod = {
 			name: player.data.equipment.fishing.rod.name,
-			sea_creature_chance:
-				player.data.equipment.fishing.rod.sea_creature_chance,
+			sea_creature_chance: player.data.equipment.fishing.rod.sea_creature_chance,
 			fishing_speed: player.data.equipment.fishing.rod.fishing_speed,
 		};
 
@@ -48,14 +47,8 @@ module.exports = {
 		let choosen = '';
 		let choosen2 = '';
 
-		if (
-			player.data.inventory.items.find(
-				(item) => item.name == 'Lilypad'
-			) != undefined
-		) {
-			lilyamount = player.data.inventory.items.find(
-				(item) => item.name == 'Lilypad'
-			).amount;
+		if (player.data.inventory.items.find((item) => item.name == 'Lilypad') != undefined) {
+			lilyamount = player.data.inventory.items.find((item) => item.name == 'Lilypad').amount;
 		}
 
 		//Buttons
@@ -83,10 +76,7 @@ module.exports = {
 			.setStyle('PRIMARY')
 			.setDisabled(true);
 
-		const cancel_button = new Discord.MessageButton()
-			.setCustomId('cancel')
-			.setLabel('Cancel')
-			.setStyle('DANGER');
+		const cancel_button = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel').setStyle('DANGER');
 
 		const row = new Discord.MessageActionRow();
 		const row2 = new Discord.MessageActionRow();
@@ -100,11 +90,7 @@ module.exports = {
 
 			cost = 5000;
 			amount = 10;
-		} else if (
-			rod.name == 'Prismarine Rod' &&
-			coins >= 25000 &&
-			lilyamount >= 20
-		) {
+		} else if (rod.name == 'Prismarine Rod' && coins >= 25000 && lilyamount >= 20) {
 			rod_button.setDisabled(false);
 			rodname = 'Sponge Rod';
 			rodscc = 10;
@@ -112,11 +98,7 @@ module.exports = {
 
 			cost = 25000;
 			amount = 20;
-		} else if (
-			rod.name == 'Sponge Rod' &&
-			coins >= 50000 &&
-			lilyamount >= 30
-		) {
+		} else if (rod.name == 'Sponge Rod' && coins >= 50000 && lilyamount >= 30) {
 			rod_button.setDisabled(false);
 			rodname = 'Speedster Rod';
 			rodscc = 15;
@@ -124,11 +106,7 @@ module.exports = {
 
 			cost = 50000;
 			amount = 30;
-		} else if (
-			rod.name == 'Speedster Rod' &&
-			coins >= 100000 &&
-			lilyamount >= 50
-		) {
+		} else if (rod.name == 'Speedster Rod' && coins >= 100000 && lilyamount >= 50) {
 			rod_button.setDisabled(false);
 			rodname = "Farmer's Rod";
 			rodscc = 20;
@@ -136,11 +114,7 @@ module.exports = {
 
 			cost = 100000;
 			amount = 50;
-		} else if (
-			rod.name == "Farmer's Rod" &&
-			coins >= 250000 &&
-			lilyamount >= 75
-		) {
+		} else if (rod.name == "Farmer's Rod" && coins >= 250000 && lilyamount >= 75) {
 			rod_button.setDisabled(false);
 			rodname = 'Challenging Rod';
 			rodscc = 25;
@@ -148,11 +122,7 @@ module.exports = {
 
 			cost = 250000;
 			amount = 75;
-		} else if (
-			rod.name == 'Challenging Rod' &&
-			coins >= 500000 &&
-			lilyamount >= 100
-		) {
+		} else if (rod.name == 'Challenging Rod' && coins >= 500000 && lilyamount >= 100) {
 			rod_button.setDisabled(false);
 			rodname = 'Rod of Champions';
 			rodscc = 30;
@@ -160,11 +130,7 @@ module.exports = {
 
 			cost = 500000;
 			amount = 100;
-		} else if (
-			rod.name == 'Rod of Champions' &&
-			coins >= 1000000 &&
-			lilyamount >= 150
-		) {
+		} else if (rod.name == 'Rod of Champions' && coins >= 1000000 && lilyamount >= 150) {
 			rod_button.setDisabled(false);
 			rodname = 'Rod of Legends';
 			rodscc = 40;
@@ -172,11 +138,7 @@ module.exports = {
 
 			cost = 1000000;
 			amount = 150;
-		} else if (
-			rod.name == 'Rod of Legends' &&
-			player.data.profile.gems >= 50 &&
-			lilyamount >= 250
-		) {
+		} else if (rod.name == 'Rod of Legends' && player.data.profile.gems >= 50 && lilyamount >= 250) {
 			rod_button.setDisabled(false);
 			rodname = 'Rod of the Sea';
 			rodscc = 50;
@@ -292,39 +254,21 @@ module.exports = {
 			row2.addComponents(rod_button);
 		}
 
-		if (
-			player.data.misc.booster_cookie.active == false &&
-			row.components.length < 4
-		) {
+		if (player.data.misc.booster_cookie.active == false && row.components.length < 4) {
 			row.addComponents(cookie_button);
-		} else if (
-			player.data.misc.booster_cookie.active == false &&
-			row2.components.length < 4
-		) {
+		} else if (player.data.misc.booster_cookie.active == false && row2.components.length < 4) {
 			row2.addComponents(cookie_button);
 		}
 
-		if (
-			!swordinv.find((item) => item.name == 'Leaping Sword') &&
-			row.components.length < 4
-		) {
+		if (!swordinv.find((item) => item.name == 'Leaping Sword') && row.components.length < 4) {
 			row.addComponents(sword_button);
-		} else if (
-			!swordinv.find((item) => item.name == 'Leaping Sword') &&
-			row2.components.length < 4
-		) {
+		} else if (!swordinv.find((item) => item.name == 'Leaping Sword') && row2.components.length < 4) {
 			row2.addComponents(sword_button);
 		}
 
-		if (
-			!armorinv.find((item) => item.name == 'Superior Dragon Armor') &&
-			row.components.length < 4
-		) {
+		if (!armorinv.find((item) => item.name == 'Superior Dragon Armor') && row.components.length < 4) {
 			row.addComponents(armor_button);
-		} else if (
-			!armorinv.find((item) => item.name == 'Superior Dragon Armor') &&
-			row2.components.length < 4
-		) {
+		} else if (!armorinv.find((item) => item.name == 'Superior Dragon Armor') && row2.components.length < 4) {
 			row2.addComponents(armor_button);
 		}
 
@@ -346,11 +290,7 @@ module.exports = {
 				true
 			);
 		} else if (rod.name == 'Prismarine Rod') {
-			shopembed.addField(
-				'Sponge Rod',
-				'**Cost:** 25k Coins + 20 Lilypads\n\n**Stats:**\n`10 α`, `20% 🎣`',
-				true
-			);
+			shopembed.addField('Sponge Rod', '**Cost:** 25k Coins + 20 Lilypads\n\n**Stats:**\n`10 α`, `20% 🎣`', true);
 		} else if (rod.name == 'Sponge Rod') {
 			shopembed.addField(
 				'Speedster Rod',
@@ -401,11 +341,7 @@ module.exports = {
 		//Sword Fields
 		if (swordinv.find((item) => item.name == 'Leaping Sword')) {
 		} else if (swordinv.find((item) => item.name == "Tactician's Sword")) {
-			shopembed.addField(
-				'Leaping Sword',
-				'**Cost:** 5m\n\n**Stats:** `150 ⚔️`, `110 ❁`, `40 ☣`, `100 ☠`',
-				true
-			);
+			shopembed.addField('Leaping Sword', '**Cost:** 5m\n\n**Stats:** `150 ⚔️`, `110 ❁`, `40 ☣`, `100 ☠`', true);
 		} else if (swordinv.find((item) => item.name == 'Zombie Sword')) {
 			shopembed.addField(
 				"Tactician's Sword",
@@ -413,23 +349,11 @@ module.exports = {
 				true
 			);
 		} else if (swordinv.find((item) => item.name == 'Golem Sword')) {
-			shopembed.addField(
-				'Zombie Sword',
-				'**Cost:** 100k\n\n**Stats:** `75 ⚔️`, `60 ❁`, `20 ☣`, `50 ☠`',
-				true
-			);
+			shopembed.addField('Zombie Sword', '**Cost:** 100k\n\n**Stats:** `75 ⚔️`, `60 ❁`, `20 ☣`, `50 ☠`', true);
 		} else if (swordinv.find((item) => item.name == 'Undead Sword')) {
-			shopembed.addField(
-				'Golem Sword',
-				'**Cost:** 50k\n\n**Stats:** `50 ⚔️`, `40 ❁`, `10 ☣`, `30 ☠`',
-				true
-			);
+			shopembed.addField('Golem Sword', '**Cost:** 50k\n\n**Stats:** `50 ⚔️`, `40 ❁`, `10 ☣`, `30 ☠`', true);
 		} else if (swordinv.find((item) => item.name == 'Fist')) {
-			shopembed.addField(
-				'Undead Sword',
-				'**Cost:** 15k\n\n**Stats:** `20 ⚔️`, `15 ❁`, `10 ☠`',
-				true
-			);
+			shopembed.addField('Undead Sword', '**Cost:** 15k\n\n**Stats:** `20 ⚔️`, `15 ❁`, `10 ☠`', true);
 		}
 
 		//Armor Fields
@@ -446,9 +370,7 @@ module.exports = {
 				'**Cost:** 5m\n\n**Stats:** `200 ❤`, `150 ❈`, `100 ❁`, `15 ☣`, `50 ☠`',
 				true
 			);
-		} else if (
-			armorinv.find((item) => item.name == 'Monster Hunter Armor')
-		) {
+		} else if (armorinv.find((item) => item.name == 'Monster Hunter Armor')) {
 			shopembed.addField(
 				'Tarantula Armor',
 				'**Cost:** 1m\n\n**Stats:** `225 ❤`, `100 ❈`, `50 ❁`, `25 ☣`, `75 ☠`',
@@ -467,11 +389,7 @@ module.exports = {
 				true
 			);
 		} else if (armorinv.find((item) => item.name == 'Naked')) {
-			shopembed.addField(
-				'Leaflet Armor',
-				'**Cost:** 50k\n\n**Stats:** `50 ❤`, `10 ❈`, `5 ☣`, `10 ☠`',
-				true
-			);
+			shopembed.addField('Leaflet Armor', '**Cost:** 50k\n\n**Stats:** `50 ❤`, `10 ❈`, `5 ☣`, `10 ☠`', true);
 		}
 
 		//Filter and Collector
@@ -520,10 +438,8 @@ module.exports = {
 						{
 							$set: {
 								'data.equipment.fishing.rod.name': rodname,
-								'data.equipment.fishing.rod.sea_creature_chance':
-									rodscc,
-								'data.equipment.fishing.rod.fishing_speed':
-									rodspeed,
+								'data.equipment.fishing.rod.sea_creature_chance': rodscc,
+								'data.equipment.fishing.rod.fishing_speed': rodspeed,
 								reforge: 'None',
 								recombobulated: false,
 							},
@@ -542,9 +458,7 @@ module.exports = {
 					if (gemsneeded != 0) {
 						const finished = new Discord.MessageEmbed()
 							.setTitle('Rod Upgarded')
-							.setDescription(
-								`Purchased **${rodname}** for 50 Gems and ${amount} Lilypads.`
-							)
+							.setDescription(`Purchased **${rodname}** for 50 Gems and ${amount} Lilypads.`)
 							.setColor('GREEN');
 
 						interaction.editReply({
@@ -554,9 +468,7 @@ module.exports = {
 					} else {
 						const finished = new Discord.MessageEmbed()
 							.setTitle('Rod Upgarded')
-							.setDescription(
-								`Purchased **${rodname}** for ${cost} Coins and ${amount} Lilypads.`
-							)
+							.setDescription(`Purchased **${rodname}** for ${cost} Coins and ${amount} Lilypads.`)
 							.setColor('GREEN');
 
 						interaction.editReply({
@@ -578,8 +490,7 @@ module.exports = {
 						{
 							$set: {
 								'data.misc.booster_cookie.active': true,
-								'data.misc.booster_cookie.expires':
-									expirationtime,
+								'data.misc.booster_cookie.expires': expirationtime,
 							},
 						},
 						{ upsert: true }
@@ -642,8 +553,7 @@ module.exports = {
 									crit_chance: item.crit_chance,
 									crit_damage: item.crit_damage,
 									magic_find: item.magic_find,
-									sea_creature_chance:
-										item.sea_creature_chance,
+									sea_creature_chance: item.sea_creature_chance,
 									recombobulated: item.recombobulated,
 									reforge: 'None',
 								},
@@ -657,9 +567,7 @@ module.exports = {
 						{ upsert: true }
 					);
 					const lootembed = new Discord.MessageEmbed()
-						.setDescription(
-							`**${choosen2}** purchased! Use \`/sb wardrobe\` to equip it.`
-						)
+						.setDescription(`**${choosen2}** purchased! Use \`/sb wardrobe\` to equip it.`)
 						.setColor('GREEN')
 						.setFooter('Skyblock Simulator');
 					return interaction.editReply({
@@ -667,9 +575,7 @@ module.exports = {
 						components: [],
 					});
 				} else {
-					const cancelled = new Discord.MessageEmbed()
-						.setTitle('Menu Cancelled')
-						.setColor('RED');
+					const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
 					interaction.editReply({
 						embeds: [cancelled],
 						components: [],

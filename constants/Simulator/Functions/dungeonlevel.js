@@ -39,10 +39,7 @@ function getCataLevelByXp(xp, extra = {}) {
 	}
 
 	if (extra.skill) {
-		if (
-			leveling.default_skill_caps[extra.skill] &&
-			leveling.default_skill_caps[extra.skill] > levelCap
-		) {
+		if (leveling.default_skill_caps[extra.skill] && leveling.default_skill_caps[extra.skill] > levelCap) {
 			levelCap = leveling.default_skill_caps[extra.skill];
 		}
 
@@ -80,11 +77,7 @@ function getCataLevelByXp(xp, extra = {}) {
 
 	let progress = Math.max(0, Math.min(xpCurrent / xpForNext, 1));
 
-	let levelWithProgress = getLevelWithProgress(
-		xp,
-		maxLevel,
-		Object.values(xp_table)
-	);
+	let levelWithProgress = getLevelWithProgress(xp, maxLevel, Object.values(xp_table));
 
 	return {
 		xp,
@@ -105,10 +98,7 @@ function getLevelWithProgress(experience, maxLevel, experienceGroup) {
 	for (let toRemove of experienceGroup) {
 		experience -= toRemove;
 		if (experience < 0) {
-			return Math.min(
-				level + (1 - (experience * -1) / toRemove),
-				maxLevel
-			);
+			return Math.min(level + (1 - (experience * -1) / toRemove), maxLevel);
 		}
 		level++;
 	}

@@ -15,22 +15,18 @@ module.exports = {
 
 		ign = ign.replace(/\W/g, ''); // removes weird characters
 
-		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(
-			(res) => {
-				if (res.status != 200) {
-					return interaction.editReply({
-						embeds: [
-							new Discord.MessageEmbed()
-								.setDescription(
-									`No Minecraft account found for \`${ign}\``
-								)
-								.setColor('DC143C')
-								.setTimestamp(),
-						],
-					});
-				}
+		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then((res) => {
+			if (res.status != 200) {
+				return interaction.editReply({
+					embeds: [
+						new Discord.MessageEmbed()
+							.setDescription(`No Minecraft account found for \`${ign}\``)
+							.setColor('DC143C')
+							.setTimestamp(),
+					],
+				});
 			}
-		); // Test if IGN esists
+		}); // Test if IGN esists
 
 		const waitembed = new Discord.MessageEmbed()
 			.setDescription('Checking for Player Data . . .')
@@ -45,12 +41,7 @@ module.exports = {
 
 		if (apiData.status != 200) {
 			return waitingembed.edit({
-				embeds: [
-					new Discord.MessageEmbed()
-						.setDescription(apiData.reason)
-						.setColor('DC143C')
-						.setTimestamp(),
-				],
+				embeds: [new Discord.MessageEmbed().setDescription(apiData.reason).setColor('DC143C').setTimestamp()],
 			});
 		}
 
@@ -87,18 +78,10 @@ module.exports = {
 
 		let ttotalxp = Math.floor(totalxp / 1000);
 		if (ttotalxp > 999999) {
-			ttotalxp =
-				Math.floor(totalxp / 1000000000) +
-				'.' +
-				Math.floor((ttotalxp % 1000000000) / 100000) +
-				'B';
+			ttotalxp = Math.floor(totalxp / 1000000000) + '.' + Math.floor((ttotalxp % 1000000000) / 100000) + 'B';
 		} else if (ttotalxp > 999) {
 			{
-				ttotalxp =
-					Math.floor(totalxp / 1000000) +
-					'.' +
-					Math.floor((totalxp % 1000000) / 10000) +
-					'M';
+				ttotalxp = Math.floor(totalxp / 1000000) + '.' + Math.floor((totalxp % 1000000) / 10000) + 'M';
 			}
 		} else {
 			ttotalxp = ttotalxp + 'K';
@@ -107,11 +90,7 @@ module.exports = {
 		let mixp = apiData.data.skills.mining.experience;
 		let tmixp = Math.floor(mixp / 1000);
 		if (tmixp > 999) {
-			tmixp =
-				Math.floor(mixp / 1000000) +
-				'.' +
-				Math.floor((mixp % 1000000) / 10000) +
-				'M';
+			tmixp = Math.floor(mixp / 1000000) + '.' + Math.floor((mixp % 1000000) / 10000) + 'M';
 		} else {
 			tmixp = tmixp + 'K';
 		}
@@ -119,11 +98,7 @@ module.exports = {
 		let foxp = apiData.data.skills.foraging.experience;
 		let tfoxp = Math.floor(foxp / 1000);
 		if (tfoxp > 999) {
-			tfoxp =
-				Math.floor(foxp / 1000000) +
-				'.' +
-				Math.floor((foxp % 1000000) / 10000) +
-				'M';
+			tfoxp = Math.floor(foxp / 1000000) + '.' + Math.floor((foxp % 1000000) / 10000) + 'M';
 		} else {
 			tfoxp = tfoxp + 'K';
 		}
@@ -131,11 +106,7 @@ module.exports = {
 		let enxp = apiData.data.skills.enchanting.experience;
 		let tenxp = Math.floor(enxp / 1000);
 		if (tenxp > 999) {
-			tenxp =
-				Math.floor(enxp / 1000000) +
-				'.' +
-				Math.floor((enxp % 1000000) / 10000) +
-				'M';
+			tenxp = Math.floor(enxp / 1000000) + '.' + Math.floor((enxp % 1000000) / 10000) + 'M';
 		} else {
 			tenxp = tenxp + 'K';
 		}
@@ -143,11 +114,7 @@ module.exports = {
 		let faxp = apiData.data.skills.farming.experience;
 		let tfaxp = Math.floor(faxp / 1000);
 		if (tfaxp > 999) {
-			tfaxp =
-				Math.floor(faxp / 1000000) +
-				'.' +
-				Math.floor((faxp % 1000000) / 10000) +
-				'M';
+			tfaxp = Math.floor(faxp / 1000000) + '.' + Math.floor((faxp % 1000000) / 10000) + 'M';
 		} else {
 			tfaxp = tfaxp + 'K';
 		}
@@ -155,11 +122,7 @@ module.exports = {
 		let coxp = apiData.data.skills.combat.experience;
 		let tcoxp = Math.floor(coxp / 1000);
 		if (tcoxp > 999) {
-			tcoxp =
-				Math.floor(coxp / 1000000) +
-				'.' +
-				Math.floor((coxp % 1000000) / 10000) +
-				'M';
+			tcoxp = Math.floor(coxp / 1000000) + '.' + Math.floor((coxp % 1000000) / 10000) + 'M';
 		} else {
 			tcoxp = tcoxp + 'K';
 		}
@@ -167,11 +130,7 @@ module.exports = {
 		let fixp = apiData.data.skills.fishing.experience;
 		let tfixp = Math.floor(fixp / 1000);
 		if (tfixp > 999) {
-			tfixp =
-				Math.floor(fixp / 1000000) +
-				'.' +
-				Math.floor((fixp % 1000000) / 10000) +
-				'M';
+			tfixp = Math.floor(fixp / 1000000) + '.' + Math.floor((fixp % 1000000) / 10000) + 'M';
 		} else {
 			tfixp = tfixp + 'K';
 		}
@@ -179,11 +138,7 @@ module.exports = {
 		let alxp = apiData.data.skills.alchemy.experience;
 		let talxp = Math.floor(alxp / 1000);
 		if (talxp > 999) {
-			talxp =
-				Math.floor(alxp / 1000000) +
-				'.' +
-				Math.floor((alxp % 1000000) / 10000) +
-				'M';
+			talxp = Math.floor(alxp / 1000000) + '.' + Math.floor((alxp % 1000000) / 10000) + 'M';
 		} else {
 			talxp = talxp + 'K';
 		}
@@ -191,11 +146,7 @@ module.exports = {
 		let taxp = apiData.data.skills.taming.experience;
 		let ttaxp = Math.floor(taxp / 1000);
 		if (ttaxp > 999) {
-			ttaxp =
-				Math.floor(taxp / 1000000) +
-				'.' +
-				Math.floor((taxp % 1000000) / 10000) +
-				'M';
+			ttaxp = Math.floor(taxp / 1000000) + '.' + Math.floor((taxp % 1000000) / 10000) + 'M';
 		} else {
 			ttaxp = ttaxp + 'K';
 		}
@@ -211,24 +162,16 @@ module.exports = {
 						`http://sky.shiiyu.moe/stats/${ign}`
 					)
 					.setDescription(`Total Skill XP: **${ttotalxp}**`)
-					.setFooter(
-						`${ign}'s Skill Average: ${toFixed(
-							apiData.data.skills.average_skills
-						)}`
-					)
+					.setFooter(`${ign}'s Skill Average: ${toFixed(apiData.data.skills.average_skills)}`)
 					.addFields(
 						{
 							name: '<:mining:852069714577719306> Mining',
-							value: `Level: **${toFixed(
-								apiData.data.skills.mining.level
-							)}**\nTotal XP: **${tmixp}**`,
+							value: `Level: **${toFixed(apiData.data.skills.mining.level)}**\nTotal XP: **${tmixp}**`,
 							inline: true,
 						},
 						{
 							name: '<:foraging:852069714447695872> Foraging',
-							value: `Level: **${toFixed(
-								apiData.data.skills.foraging.level
-							)}**\nTotal XP: **${tfoxp}**`,
+							value: `Level: **${toFixed(apiData.data.skills.foraging.level)}**\nTotal XP: **${tfoxp}**`,
 							inline: true,
 						},
 						{
@@ -240,37 +183,27 @@ module.exports = {
 						},
 						{
 							name: '<:farming:852069714451759114> Farming',
-							value: `Level: **${toFixed(
-								apiData.data.skills.farming.level
-							)}**\nTotal XP: **${tfaxp}**`,
+							value: `Level: **${toFixed(apiData.data.skills.farming.level)}**\nTotal XP: **${tfaxp}**`,
 							inline: true,
 						},
 						{
 							name: '<:combat:852069714527911956> Combat',
-							value: `Level: **${toFixed(
-								apiData.data.skills.combat.level
-							)}**\nTotal XP: **${tcoxp}**`,
+							value: `Level: **${toFixed(apiData.data.skills.combat.level)}**\nTotal XP: **${tcoxp}**`,
 							inline: true,
 						},
 						{
 							name: '<:fishing:852069714359877643> Fishing',
-							value: `Level: **${toFixed(
-								apiData.data.skills.fishing.level
-							)}**\nTotal XP: **${tfixp}**`,
+							value: `Level: **${toFixed(apiData.data.skills.fishing.level)}**\nTotal XP: **${tfixp}**`,
 							inline: true,
 						},
 						{
 							name: '<:alchemy:852069714480988180> Alchemy',
-							value: `Level: **${toFixed(
-								apiData.data.skills.alchemy.level
-							)}**\nTotal XP: **${talxp}**`,
+							value: `Level: **${toFixed(apiData.data.skills.alchemy.level)}**\nTotal XP: **${talxp}**`,
 							inline: true,
 						},
 						{
 							name: '<:taming:852069714493833227> Taming',
-							value: `Level: **${toFixed(
-								apiData.data.skills.taming.level
-							)}**\nTotal XP: **${ttaxp}**`,
+							value: `Level: **${toFixed(apiData.data.skills.taming.level)}**\nTotal XP: **${ttaxp}**`,
 							inline: true,
 						}
 					),
@@ -280,9 +213,7 @@ module.exports = {
 };
 
 async function getUUID(ign) {
-	const response = await fetch(
-		`https://api.mojang.com/users/profiles/minecraft/${ign}`
-	);
+	const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
 	const result = await response.json();
 	return result.id;
 }
@@ -292,16 +223,12 @@ async function getApiData(ign, method) {
 	const config = require('../../constants/Bot/config.json');
 
 	const UUID = await getUUID(ign);
-	const response = await fetch(
-		`https://baltrazz.repl.co/v1/profiles/${UUID}/${method}?key=${config.apikey}`
-	);
+	const response = await fetch(`https://baltrazz.repl.co/v1/profiles/${UUID}/${method}?key=${config.apikey}`);
 	return await response.json();
 }
 
 async function getTrueIgn(ign) {
-	const response = await fetch(
-		`https://api.mojang.com/users/profiles/minecraft/${ign}`
-	);
+	const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
 	const result = await response.json();
 	return result.name;
 }
