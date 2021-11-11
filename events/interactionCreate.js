@@ -3,11 +3,17 @@ const config = require('../constants/Bot/config.json');
 
 module.exports = {
 	name: 'interactionCreate',
+	/**
+	 *
+	 * @param {Discord.Interaction} interaction
+	 * @param {*} mclient
+	 * @returns
+	 */
 	async execute(interaction, mclient) {
 		if (interaction.isAutocomplete()) {
 			const focused = interaction.options.getFocused();
 
-			if (interaction.options._subcommand == 'reforge') {
+			if (interaction.options.getSubcommand(false) == 'reforge') {
 				let stones = [
 					'Dragon Claw',
 					'Wither Blood',
@@ -25,11 +31,7 @@ module.exports = {
 				];
 				let found = [];
 				let found2 = [];
-				let seen = stones.filter(
-					(stone) =>
-						stone.toLowerCase().includes(focused) ||
-						stone.includes(focused)
-				);
+				let seen = stones.filter((stone) => stone.toLowerCase().includes(focused) || stone.includes(focused));
 
 				if (seen.length != 0) {
 					let i = 0;
@@ -50,7 +52,7 @@ module.exports = {
 				} else {
 					interaction.respond(found2);
 				}
-			} else if (interaction.options._subcommand == 'sell') {
+			} else if (interaction.options.getSubcommand(false) == 'sell') {
 				let items = [
 					'Hardstone',
 					'Coal',
@@ -92,15 +94,12 @@ module.exports = {
 					'Enchanted Spider Eye',
 					'Rotten Flesh',
 					'Carrot',
-					'Potatoe',
+					'Potato',
+					'Shark Fin',
 				];
 				let found = [];
 				let found2 = [];
-				let seen = items.filter(
-					(item) =>
-						item.toLowerCase().includes(focused) ||
-						item.includes(focused)
-				);
+				let seen = items.filter((item) => item.toLowerCase().includes(focused) || item.includes(focused));
 
 				if (seen.length != 0) {
 					let i = 0;
@@ -141,11 +140,7 @@ module.exports = {
 			});
 		}
 
-		let validchannels = [
-			'GUILD_TEXT',
-			'GUILD_PUBLIC_THREAD',
-			'GUILD_PRIVATE_THREAD',
-		];
+		let validchannels = ['GUILD_TEXT', 'GUILD_PUBLIC_THREAD', 'GUILD_PRIVATE_THREAD'];
 		if (!validchannels.includes(interaction.channel.type)) {
 			const embed = new Discord.MessageEmbed()
 				.setTitle('Unsupported Channel')
@@ -174,9 +169,8 @@ module.exports = {
 
 		let commandExecute = interaction.commandName;
 
-		if (interaction.options._subcommand != null) {
-			commandExecute =
-				interaction.commandName + interaction.options._subcommand;
+		if (interaction.options.getSubcommand(false) != null) {
+			commandExecute = interaction.commandName + interaction.options.getSubcommand(false);
 		}
 
 		const collection1 = mclient.db('Sky-Bot').collection('settings');
@@ -184,10 +178,7 @@ module.exports = {
 			_id: interaction.client.user.id,
 		});
 
-		if (
-			settings.maintanance.state == true &&
-			interaction.user.id != '570267487393021969'
-		) {
+		if (settings.maintanance.state == true && interaction.user.id != '570267487393021969') {
 			const maintan = new Discord.MessageEmbed()
 				.setTitle('⚠️ Sky Bot Maintanance ⚠️')
 				.setColor('ORANGE')
@@ -220,9 +211,7 @@ module.exports = {
 				}
 			}
 
-			const collection2 = mclient
-				.db('SkyblockSim')
-				.collection('blockedchannels');
+			const collection2 = mclient.db('SkyblockSim').collection('blockedchannels');
 			let channel = await collection2.findOne({
 				_id: interaction.channelId,
 			});
@@ -236,15 +225,14 @@ module.exports = {
 								'This channel is already being used by someone to play dungeons or to fish/mime.\n\nTo reduce lag for them please consider inviting me to your own Server or creating a Thread to play there.'
 							)
 							.setFooter('Kind regards Sky Bot Developer');
-						const row =
-							new Discord.MessageActionRow().addComponents(
-								new Discord.MessageButton()
-									.setLabel('Bot Invite')
-									.setURL(
-										'https://discord.com/api/oauth2/authorize?client_id=839835292785704980&permissions=139653925953&scope=applications.commands%20bot'
-									)
-									.setStyle('LINK')
-							);
+						const row = new Discord.MessageActionRow().addComponents(
+							new Discord.MessageButton()
+								.setLabel('Bot Invite')
+								.setURL(
+									'https://discord.com/api/oauth2/authorize?client_id=839835292785704980&permissions=139653925953&scope=applications.commands%20bot'
+								)
+								.setStyle('LINK')
+						);
 						return interaction.reply({
 							embeds: [blockedembed],
 							components: [row],
@@ -267,14 +255,13 @@ module.exports = {
 
 		let cooldownAmount = (cd || 3) * 1000;
 
-		/* //Owner Cooldown Bypass
-  if (message.author.id === '570267487393021969') {
-    cooldownAmount = 0
-  }*/
+		/*//Owner Cooldown Bypass
+		if (interaction.user.id === '570267487393021969') {
+			cooldownAmount = 0
+		}*/
 
 		if (timestamps.has(interaction.user.id)) {
-			let expirationTime =
-				timestamps.get(interaction.user.id) + cooldownAmount;
+			let expirationTime = timestamps.get(interaction.user.id) + cooldownAmount;
 
 			/*const collection = mclient.db('Sky-Bot').collection('SkyblockSim')
     const found = await collection.findOne({ _id: message.author.id })
@@ -302,15 +289,13 @@ module.exports = {
     let reduced = cdr1 + cdr2 + cdr3 + cdr4*/
 			let exptime = expirationTime;
 
-			if (now < exptime) {
+			if (now < exptime && interaction.user.id !== '570267487393021969') {
 				const timeLeft = (exptime - now) / 1000;
 				let cdembed = new Discord.MessageEmbed()
 					.setTitle('Command Cooldown')
 					.setColor('ORANGE')
 					.setDescription(
-						`You need to wait **${timeLeft.toFixed(
-							1
-						)}s** before using **${commandExecute}** again.`
+						`You need to wait **${timeLeft.toFixed(1)}s** before using **${commandExecute}** again.`
 					);
 
 				return interaction.reply({
@@ -321,43 +306,29 @@ module.exports = {
 		}
 
 		timestamps.set(interaction.user.id, now);
-		setTimeout(
-			() => timestamps.delete(interaction.user.id),
-			cooldownAmount
-		);
+		setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
 		/*console.log(timestamps)
     console.log(now)
     console.log(cooldownAmount)*/
 
 		try {
 			const collection = mclient.db('Sky-Bot').collection('commanduses');
-			collection.updateOne(
-				{ _id: interaction.commandName },
-				{ $inc: { uses: 1 } },
-				{ upsert: true }
-			);
+			collection.updateOne({ _id: interaction.commandName }, { $inc: { uses: 1 } }, { upsert: true });
 
 			await interaction.deferReply();
-			await interaction.client.slashcommands
-				.get(commandExecute)
-				.execute(interaction, mclient);
+			await interaction.client.slashcommands.get(commandExecute).execute(interaction, mclient);
 		} catch (error) {
 			console.error(error);
 			interaction.followUp({
-				content:
-					'There was an error while executing this command and the Bot Dev has been notified.',
+				content: 'There was an error while executing this command and the Bot Dev has been notified.',
 				ephemeral: true,
 			});
 			const errembed = new Discord.MessageEmbed()
-				.setTitle(
-					`Error occured when ${interaction.user.tag} used ${commandExecute}`
-				)
+				.setTitle(`Error occured when ${interaction.user.tag} used ${commandExecute}`)
 				.setDescription(`${error.stack}`);
-			await interaction.client.users
-				.fetch('570267487393021969')
-				.then(async (user) => {
-					await user.send({ embeds: [errembed] });
-				});
+			await interaction.client.users.fetch('570267487393021969').then(async (user) => {
+				await user.send({ embeds: [errembed] });
+			});
 		}
 	},
 };

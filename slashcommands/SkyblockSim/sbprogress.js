@@ -23,9 +23,7 @@ module.exports = {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(
-					`The specified User hasn\'t played Skyblock Simulator yet.`
-				);
+				.setDescription(`The specified User hasn\'t played Skyblock Simulator yet.`);
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
@@ -64,42 +62,26 @@ module.exports = {
 		let rodnum = await getRodProgress(rodname);
 		rodnum = ((rodnum / 9) * 100).toFixed(2);
 
-		embed.addField(
-			'<:fishing:852069714359877643> Fishing Rod',
-			`${rodnum}%`,
-			true
-		);
+		embed.addField('<:fishing:852069714359877643> Fishing Rod', `${rodnum}%`, true);
 
 		//Pickaxe
 		let pickaxename = player.data.equipment.mining.pickaxe.name;
 		let pickaxenum = await getPickaxeProgress(pickaxename);
 		pickaxenum = ((pickaxenum / 7) * 100).toFixed(2);
 
-		embed.addField(
-			'<:mining:852069714577719306> Pickaxe',
-			`${pickaxenum}%`,
-			true
-		);
+		embed.addField('<:mining:852069714577719306> Pickaxe', `${pickaxenum}%`, true);
 
 		//Armor
 		let armornum = await getArmorProgress(player);
 		armornum = ((armornum / 11) * 100).toFixed(2);
 
-		embed.addField(
-			'<:tank:852079613051666472> Armor',
-			`${armornum}%`,
-			true
-		);
+		embed.addField('<:tank:852079613051666472> Armor', `${armornum}%`, true);
 
 		//Sword
 		let swordnum = await getSwordProgress(player);
 		swordnum = ((swordnum / 10) * 100).toFixed(2);
 
-		embed.addField(
-			'<:berserker:852079613052059658> Sword',
-			`${swordnum}%`,
-			true
-		);
+		embed.addField('<:berserker:852079613052059658> Sword', `${swordnum}%`, true);
 
 		//Dungeons
 		let catamaxxp = 569809640;

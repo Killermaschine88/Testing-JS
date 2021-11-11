@@ -35,9 +35,7 @@ module.exports = {
 
 		let embed = new Discord.MessageEmbed()
 			.setTitle('Leaderboard')
-			.setDescription(
-				'Choose the Leaderboard you want to see from the Select Menu.'
-			)
+			.setDescription('Choose the Leaderboard you want to see from the Select Menu.')
 			.setFooter('Skyblock Simulator');
 
 		await interaction.editReply({
@@ -47,22 +45,18 @@ module.exports = {
 
 		// Wait for a selectbox option to be chosen and then
 		// send a leaderboard of the selected type
-		const filter = (i) =>
-			i.customId === 'leaderSelect' && i.user.id === interaction.user.id;
-		const leaderCollector =
-			await interaction.channel.createMessageComponentCollector({
-				filter,
-				componentType: 'SELECT_MENU',
-				time: 300000,
-			});
+		const filter = (i) => i.customId === 'leaderSelect' && i.user.id === interaction.user.id;
+		const leaderCollector = await interaction.channel.createMessageComponentCollector({
+			filter,
+			componentType: 'SELECT_MENU',
+			time: 300000,
+		});
 
 		leaderCollector.on('collect', async (collectedTypeInteraction) => {
 			type = GetType(collectedTypeInteraction.values[0]);
 
 			// Get the collection values sorted by the selected type
-			let lbCol = await eval(
-				`collection.find({}).sort({ "${type.data}": -1 }).toArray()`
-			);
+			let lbCol = await eval(`collection.find({}).sort({ "${type.data}": -1 }).toArray()`);
 
 			let lbString = '';
 			let index = lbCol.findIndex((lb) => lb._id == interaction.user.id);
@@ -70,9 +64,7 @@ module.exports = {
 			// Build a string showing the values of selected type
 			let i = 0;
 			while (i < lbCol.length && i < 10) {
-				lbString += `#${i + 1} - <@!${lbCol[i]._id}>: ${eval(
-					`lbCol[i].${type.data}.toLocaleString()`
-				)}\n`;
+				lbString += `#${i + 1} - <@!${lbCol[i]._id}>: ${eval(`lbCol[i].${type.data}.toLocaleString()`)}\n`;
 				i++;
 			}
 

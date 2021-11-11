@@ -92,9 +92,7 @@ client.slashcommands = new Discord.Collection();
 const slashcommandFolders = fs.readdirSync('./slashcommands');
 
 for (const folder of slashcommandFolders) {
-	const commandFiles = fs
-		.readdirSync(`./slashcommands/${folder}`)
-		.filter((file) => file.endsWith('.js'));
+	const commandFiles = fs.readdirSync(`./slashcommands/${folder}`).filter((file) => file.endsWith('.js'));
 	for (const file of commandFiles) {
 		const command = require(`./slashcommands/${folder}/${file}`);
 		sc += 1;
@@ -102,14 +100,12 @@ for (const folder of slashcommandFolders) {
 	}
 }
 
-const commandFolders = fs.readdirSync('./commands');
+const commandFolders = fs.readdirSync('./commands_DO_NOT_USE');
 
 for (const folder of commandFolders) {
-	const commandFiles = fs
-		.readdirSync(`./commands/${folder}`)
-		.filter((file) => file.endsWith('.js'));
+	const commandFiles = fs.readdirSync(`./commands_DO_NOT_USE/${folder}`).filter((file) => file.endsWith('.js'));
 	for (const file of commandFiles) {
-		const command = require(`./commands/${folder}/${file}`);
+		const command = require(`./commands_DO_NOT_USE/${folder}/${file}`);
 		c += 1;
 		client.commands.set(command.name.toLowerCase(), command);
 	}
@@ -118,8 +114,7 @@ for (const folder of commandFolders) {
 //Command Handler
 client.on('messageCreate', async (message) => {
 	if (message.author.bot) return;
-	if (message.channel.type === 'DM')
-		return message.channel.send('I dont work in DMs.');
+	if (message.channel.type === 'DM') return message.channel.send('I dont work in DMs.');
 
 	let gprefix = await prefixx.get(message.guild.id, { raw: false });
 	if (gprefix === null) gprefix = '.';
@@ -131,9 +126,7 @@ client.on('messageCreate', async (message) => {
 
 	const command =
 		client.commands.get(commandName) ||
-		client.commands.find(
-			(cmd) => cmd.aliases && cmd.aliases.includes(commandName)
-		);
+		client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 
 	if (!command) return;
 
@@ -163,9 +156,7 @@ client.on('messageCreate', async (message) => {
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now) / 1000;
 			return message.reply(
-				`You need to wait **${timeLeft.toFixed(1)}s** before using \`${
-					command.name
-				}\` again.`
+				`You need to wait **${timeLeft.toFixed(1)}s** before using \`${command.name}\` again.`
 			);
 		}
 	}
@@ -180,14 +171,8 @@ client.on('messageCreate', async (message) => {
 	if (message.author.id != '570267487393021969') {
 		if (found == null || found.scopeadded == false) {
 			try {
-				await client.guilds.cache
-					.get(message.guild.id)
-					?.commands.fetch([]);
-				await servercoll.updateOne(
-					{ _id: message.guild.id },
-					{ $set: { scopeadded: true } },
-					{ upsert: true }
-				);
+				await client.guilds.cache.get(message.guild.id)?.commands.fetch([]);
+				await servercoll.updateOne({ _id: message.guild.id }, { $set: { scopeadded: true } }, { upsert: true });
 			} catch (error) {
 				const noscope = new Discord.MessageEmbed()
 					.setTitle('Slash Command Changes')
@@ -242,20 +227,14 @@ client.on('messageCreate', async (message) => {
 });
 
 //Event Handler
-const eventFiles = fs
-	.readdirSync('./events')
-	.filter((file) => file.endsWith('.js'));
+const eventFiles = fs.readdirSync('./events').filter((file) => file.endsWith('.js'));
 
 for (const file of eventFiles) {
 	const event = require(`./events/${file}`);
 	if (event.once) {
-		client.once(event.name, (...args) =>
-			event.execute(...args, mclient, client)
-		);
+		client.once(event.name, (...args) => event.execute(...args, mclient, client));
 	} else {
-		client.on(event.name, (...args) =>
-			event.execute(...args, mclient, client)
-		);
+		client.on(event.name, (...args) => event.execute(...args, mclient, client));
 		e += 1;
 	}
 }

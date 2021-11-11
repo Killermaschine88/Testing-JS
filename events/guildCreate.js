@@ -23,13 +23,8 @@ module.exports = {
 				discordLog(
 					client,
 					new Discord.MessageEmbed()
-						.setAuthor(
-							client.user.username,
-							client.user.avatarURL()
-						)
-						.setDescription(
-							`Joined a Guild: \`${guild.name}\`\n${guild.id}`
-						)
+						.setAuthor(client.user.username, client.user.avatarURL())
+						.setDescription(`Joined a Guild: \`${guild.name}\`\n${guild.id}`)
 						.setColor('7CFC00')
 						.setTimestamp()
 						.addFields(
@@ -43,11 +38,7 @@ module.exports = {
 							},
 							{
 								name: 'Bot Count of the Server',
-								value: `${
-									guild.members.cache.filter(
-										(u) => u.user.bot
-									).size
-								}`,
+								value: `${guild.members.cache.filter((u) => u.user.bot).size}`,
 							},
 							{
 								name: 'Total Server Count Now',

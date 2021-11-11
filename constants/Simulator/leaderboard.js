@@ -9,37 +9,43 @@ const TYPES = {
 		emote: '<:coins:861974605203636253>',
 	},
 	COMBAT: {
-		name: 'Combat-XP',
+		name: 'Combat',
 		value: 'combatxp',
 		data: 'data.skills.combat',
 		emote: '<:combat:852069714527911956>',
 	},
 	FISHING: {
-		name: 'Fishing-XP',
+		name: 'Fishing',
 		value: 'fishingxp',
 		data: 'data.skills.fishing',
 		emote: '<:fishing:852069714359877643>',
 	},
 	MINING: {
-		name: 'Mining-XP',
+		name: 'Mining',
 		value: 'miningxp',
 		data: 'data.skills.mining',
 		emote: '<:mining:852069714577719306>',
 	},
+	DUNGEONS: {
+		name: 'Dungeons',
+		value: 'dungeonsxp',
+		data: 'data.dungeons.xp',
+		emote: '<:catacombs:858745517025656863>',
+	},
 	ASSASSIN: {
-		name: 'Assassin-XP',
+		name: 'Assassin',
 		value: 'assassinxp',
 		data: 'data.dungeons.class.available.assassin.xp',
 		emote: '🗡️',
 	},
 	TANK: {
-		name: 'Tank-XP',
+		name: 'Tank',
 		value: 'tankxp',
 		data: 'data.dungeons.class.available.tank.xp',
 		emote: '<:tank:852079613051666472>',
 	},
 	BERSERKER: {
-		name: 'Berserker-XP',
+		name: 'Berserker',
 		value: 'berserkerxp',
 		data: 'data.dungeons.class.available.berserker.xp',
 		emote: '<:berserker:852079613052059658>',
@@ -65,6 +71,9 @@ const GetType = (type) => {
 		}
 		case TYPES.MINING.value: {
 			return TYPES.MINING;
+		}
+		case TYPES.DUNGEONS.value: {
+			return TYPES.DUNGEONS;
 		}
 		case TYPES.ASSASSIN.value: {
 			return TYPES.ASSASSIN;

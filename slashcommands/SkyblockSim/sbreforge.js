@@ -70,39 +70,23 @@ module.exports = {
 		}
 
 		if (type == 'sword') {
-			let validreforges = [
-				'dragon claw',
-				'wither blood',
-				'warped stone',
-				'recombobulator 3000',
-			];
+			let validreforges = ['dragon claw', 'wither blood', 'warped stone', 'recombobulator 3000'];
 			let itemname = sword[itemId].name;
 
 			if (!validreforges.includes(reforge)) {
 				const errembed = new Discord.MessageEmbed()
 					.setTitle('Invalid Reforge')
-					.setDescription(
-						'You entered an invalid Reforge Name see the Reforge tab at `/sb wiki`.'
-					)
+					.setDescription('You entered an invalid Reforge Name see the Reforge tab at `/sb wiki`.')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [errembed] });
 			}
 
-			if (
-				!player.data.inventory.items.find(
-					(item) =>
-						item.name.toLowerCase() == reforge && item.amount > 0
-				)
-			) {
+			if (!player.data.inventory.items.find((item) => item.name.toLowerCase() == reforge && item.amount > 0)) {
 				const errembed = new Discord.MessageEmbed()
 					.setTitle('No Reforge Stone')
-					.setDescription(
-						`You don't have any **${caps(
-							reforge
-						)}** Reforge Stones.`
-					)
+					.setDescription(`You don't have any **${caps(reforge)}** Reforge Stones.`)
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -177,28 +161,17 @@ module.exports = {
 			if (!validreforges.includes(reforge)) {
 				const errembed = new Discord.MessageEmbed()
 					.setTitle('Invalid Reforge')
-					.setDescription(
-						'You entered an invalid Reforge Name see the Reforge tab at `/sb wiki`.'
-					)
+					.setDescription('You entered an invalid Reforge Name see the Reforge tab at `/sb wiki`.')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [errembed] });
 			}
 
-			if (
-				!player.data.inventory.items.find(
-					(item) =>
-						item.name.toLowerCase() == reforge && item.amount > 0
-				)
-			) {
+			if (!player.data.inventory.items.find((item) => item.name.toLowerCase() == reforge && item.amount > 0)) {
 				const errembed = new Discord.MessageEmbed()
 					.setTitle('No Reforge Stone')
-					.setDescription(
-						`You don't have any **${caps(
-							reforge
-						)}** Reforge Stones.`
-					)
+					.setDescription(`You don't have any **${caps(reforge)}** Reforge Stones.`)
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -262,38 +235,22 @@ module.exports = {
 
 			return interaction.editReply({ embeds: [applied] });
 		} else if (type == 'pickaxe') {
-			let validreforges = [
-				'onyx',
-				'diamonite',
-				'rock gemstone',
-				'recombobulator 3000',
-			];
+			let validreforges = ['onyx', 'diamonite', 'rock gemstone', 'recombobulator 3000'];
 
 			if (!validreforges.includes(reforge)) {
 				const errembed = new Discord.MessageEmbed()
 					.setTitle('Invalid Reforge')
-					.setDescription(
-						'You entered an invalid Reforge Name see the Reforge tab at `/sb wiki`.'
-					)
+					.setDescription('You entered an invalid Reforge Name see the Reforge tab at `/sb wiki`.')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [errembed] });
 			}
 
-			if (
-				!player.data.inventory.items.find(
-					(item) =>
-						item.name.toLowerCase() == reforge && item.amount > 0
-				)
-			) {
+			if (!player.data.inventory.items.find((item) => item.name.toLowerCase() == reforge && item.amount > 0)) {
 				const errembed = new Discord.MessageEmbed()
 					.setTitle('No Reforge Stone')
-					.setDescription(
-						`You don't have any **${caps(
-							reforge
-						)}** Reforge Stones.`
-					)
+					.setDescription(`You don't have any **${caps(reforge)}** Reforge Stones.`)
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -317,8 +274,7 @@ module.exports = {
 					{ _id: interaction.user.id },
 					{
 						$set: {
-							'data.equipment.mining.pickaxe.reforge':
-								apply_reforge,
+							'data.equipment.mining.pickaxe.reforge': apply_reforge,
 						},
 					},
 					{ upsert: true }
@@ -346,45 +302,28 @@ module.exports = {
 
 			let applied = new Discord.MessageEmbed()
 				.setTitle('Reforge applied')
-				.setDescription(
-					`Successfully applied **${apply_reforge}** to **Pickaxe**.`
-				)
+				.setDescription(`Successfully applied **${apply_reforge}** to **Pickaxe**.`)
 				.setColor('90EE90')
 				.setFooter('Skyblock Simulator');
 
 			return interaction.editReply({ embeds: [applied] });
 		} else if (type == 'rod') {
-			let validreforges = [
-				'hardened wood',
-				'lucky dice',
-				'recombobulator 3000',
-			];
+			let validreforges = ['hardened wood', 'lucky dice', 'recombobulator 3000'];
 
 			if (!validreforges.includes(reforge)) {
 				const errembed = new Discord.MessageEmbed()
 					.setTitle('Invalid Reforge')
-					.setDescription(
-						'You entered an invalid Reforge Name see the Reforge tab at `/sb wiki`.'
-					)
+					.setDescription('You entered an invalid Reforge Name see the Reforge tab at `/sb wiki`.')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
 				return interaction.editReply({ embeds: [errembed] });
 			}
 
-			if (
-				!player.data.inventory.items.find(
-					(item) =>
-						item.name.toLowerCase() == reforge && item.amount > 0
-				)
-			) {
+			if (!player.data.inventory.items.find((item) => item.name.toLowerCase() == reforge && item.amount > 0)) {
 				const errembed = new Discord.MessageEmbed()
 					.setTitle('No Reforge Stone')
-					.setDescription(
-						`You don't have any **${caps(
-							reforge
-						)}** Reforge Stones.`
-					)
+					.setDescription(`You don't have any **${caps(reforge)}** Reforge Stones.`)
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -434,9 +373,7 @@ module.exports = {
 
 			let applied = new Discord.MessageEmbed()
 				.setTitle('Reforge applied')
-				.setDescription(
-					`Successfully applied **${apply_reforge}** to **Fishing Rod**.`
-				)
+				.setDescription(`Successfully applied **${apply_reforge}** to **Fishing Rod**.`)
 				.setColor('90EE90')
 				.setFooter('Skyblock Simulator');
 
@@ -448,9 +385,7 @@ module.exports = {
 function caps(words) {
 	let separateWord = words.toLowerCase().split(' ');
 	for (let i = 0; i < separateWord.length; i++) {
-		separateWord[i] =
-			separateWord[i].charAt(0).toUpperCase() +
-			separateWord[i].substring(1);
+		separateWord[i] = separateWord[i].charAt(0).toUpperCase() + separateWord[i].substring(1);
 	}
 	return separateWord.join(' ');
 }

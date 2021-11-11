@@ -13,46 +13,22 @@ module.exports = {
 		let events = await collection.find({}).toArray();
 
 		let mf_event = events[0];
+		let shark_event = events[1];
 
 		const embed = new Discord.MessageEmbed()
 			.setTitle('Skyblock Simulator Wiki')
 			.setColor('90EE90')
 			.setFooter('Skyblock Simulator')
-			.setDescription(
-				'Press the corresponding Button to see the Information of the desired Item.'
-			);
+			.setDescription('Press the corresponding Button to see the Information of the desired Item.');
 
-		const button1 = new Discord.MessageButton()
-			.setCustomId('general')
-			.setLabel('General Info')
-			.setStyle('PRIMARY');
-		const button2 = new Discord.MessageButton()
-			.setCustomId('symbols')
-			.setLabel('Symbols')
-			.setStyle('PRIMARY');
-		const button3 = new Discord.MessageButton()
-			.setCustomId('misc')
-			.setLabel('Misc')
-			.setStyle('PRIMARY');
-		const button4 = new Discord.MessageButton()
-			.setCustomId('events')
-			.setLabel('Events')
-			.setStyle('PRIMARY');
-		const button5 = new Discord.MessageButton()
-			.setCustomId('dungeons')
-			.setLabel('Dungeons')
-			.setStyle('PRIMARY');
-		const button6 = new Discord.MessageButton()
-			.setCustomId('reforges')
-			.setLabel('Reforges')
-			.setStyle('PRIMARY');
+		const button1 = new Discord.MessageButton().setCustomId('general').setLabel('General Info').setStyle('PRIMARY');
+		const button2 = new Discord.MessageButton().setCustomId('symbols').setLabel('Symbols').setStyle('PRIMARY');
+		const button3 = new Discord.MessageButton().setCustomId('misc').setLabel('Misc').setStyle('PRIMARY');
+		const button4 = new Discord.MessageButton().setCustomId('events').setLabel('Events').setStyle('PRIMARY');
+		const button5 = new Discord.MessageButton().setCustomId('dungeons').setLabel('Dungeons').setStyle('PRIMARY');
+		const button6 = new Discord.MessageButton().setCustomId('reforges').setLabel('Reforges').setStyle('PRIMARY');
 
-		const row1 = new Discord.MessageActionRow().addComponents(
-			button1,
-			button2,
-			button4,
-			button5
-		);
+		const row1 = new Discord.MessageActionRow().addComponents(button1, button2, button4, button5);
 		const row2 = new Discord.MessageActionRow().addComponents(button6);
 
 		let menu = await interaction.editReply({
@@ -111,6 +87,18 @@ module.exports = {
 					);
 				}
 
+				if (shark_event.enabled == false) {
+					eventembed.addField(
+						`Shark Fishing`,
+						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 19:00 - 21:00 (7:00 pm - 9:00 pm)\nEvent Active: ${shark_event.enabled}\nNext Event: <t:${shark_event.next_event}:R>`
+					);
+				} else {
+					eventembed.addField(
+						`Shark Fishing`,
+						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 19:00 - 21:00 (7:00 pm - 9:00 pm)\nEvent Active: ${shark_event.enabled}\nEvent End: <t:${shark_event.end_event}:R>`
+					);
+				}
+
 				menu.edit({ embeds: [eventembed] });
 			} else if (i.customId == 'dungeons') {
 				let dungeonsembed = new Discord.MessageEmbed()
@@ -122,14 +110,10 @@ module.exports = {
 						'Give bonuses inside Dungeon Runs\n\nAssassin (`2 ❁` per Class Level)\nBerserker (`1 ❁` and `1 ❈` per Class Level)\nTank (`1 ❈` and `2 ❤` per Class Level)',
 						true
 					)
-					.addField(
-						'Score',
-						'Used to determine the Loot Chests you will recieve after the dungeon run',
-						true
-					)
+					.addField('Score', 'Used to determine the Loot Chests you will recieve after the dungeon run', true)
 					.addField(
 						'Puzzles',
-						'Small Puzzles like a Quiz and Tic Tac Toe are found in a dungeon run which grant 20 Score.',
+						'Small Puzzles like a Quiz and Tic Tac Toe are found in a dungeon run which grant 30 Score.',
 						true
 					)
 					.addField(
@@ -149,9 +133,7 @@ module.exports = {
 					.setTitle('Reforge Information')
 					.setColor('90EE90')
 					.setFooter('Skyblock Simulator')
-					.setDescription(
-						'**Format:** Reforge Stone Name (Reforge Bonus) [Reforge Name] {Item Origin}'
-					)
+					.setDescription('**Format:** Reforge Stone Name (Reforge Bonus) [Reforge Name] {Item Origin}')
 					.addField(
 						'General Reforges',
 						'Recombobulator 3000 (10% Item Stat increase) [] {Dungeons any Floor}',

@@ -9,9 +9,7 @@ module.exports = {
 	folder: 'Bot',
 	aliases: [],
 	async execute(interaction) {
-		const embed = new Discord.MessageEmbed().setDescription(
-			'Pinging . . .'
-		);
+		const embed = new Discord.MessageEmbed().setDescription('Pinging . . .');
 		await interaction.editReply({ embeds: [embed] });
 
 		interaction.fetchReply().then((m) => {
@@ -19,10 +17,7 @@ module.exports = {
 			let ping = '';
 			if (m.createdTimestamp - interaction.createdTimestamp < 150) {
 				ping = '<:ping:847473419011620955>';
-			} else if (
-				m.createdTimestamp - interaction.createdTimestamp <
-				300
-			) {
+			} else if (m.createdTimestamp - interaction.createdTimestamp < 300) {
 				ping = '<:ping2:859717516548636672>';
 			} else {
 				ping = '<:ping3:859717516284002314>';
@@ -45,17 +40,12 @@ module.exports = {
 						.addFields(
 							{
 								name: `${ping} BOT Latency`,
-								value: `${
-									m.createdTimestamp -
-									interaction.createdTimestamp
-								}ms.`,
+								value: `${m.createdTimestamp - interaction.createdTimestamp}ms.`,
 								inline: false,
 							},
 							{
 								name: `${ping1} API Latency`,
-								value: `${Math.round(
-									interaction.client.ws.ping
-								)}ms.`,
+								value: `${Math.round(interaction.client.ws.ping)}ms.`,
 								inline: false,
 							}
 						),

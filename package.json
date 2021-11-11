@@ -39,5 +39,8 @@
 		"url": "https://github.com/Killermaschine88/Testing-JS/issues"
 	},
 	"homepage": "https://github.com/Killermaschine88/Testing-JS#readme",
-	"description": ""
+	"description": "",
+	"devDependencies": {
+		"prettier": "^2.4.1"
+	}
 }

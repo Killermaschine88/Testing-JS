@@ -81,9 +81,7 @@ module.exports = {
 		}
 
 		const selection = new Discord.MessageEmbed()
-			.setDescription(
-				`Successfully switched Class to **${classchoosen}**.`
-			)
+			.setDescription(`Successfully switched Class to **${classchoosen}**.`)
 			.setColor('GREEN')
 			.setFooter('Skyblock Simulator');
 

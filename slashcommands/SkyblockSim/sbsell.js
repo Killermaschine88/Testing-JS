@@ -19,8 +19,16 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No Profile found')
 				.setDescription(`Create a Profile using \`/sb start\``);
-			interaction.editReply({ embeds: [noprofile] });
-			return;
+			return interaction.editReply({ embeds: [noprofile] });
+		}
+
+		if (player.data.misc.is_massselling) {
+			const nosell = new Discord.MessageEmbed()
+				.setColor('RED')
+				.setTitle('Selling blocked!')
+				.setDescription('Selling blocked! You are currently mass-selling!')
+				.setFooter('Skyblock Simulator');
+			return interaction.editReply({ embeds: [nosell] });
 		}
 
 		let sellall = interaction.options.getString('sell-all');
@@ -36,8 +44,7 @@ module.exports = {
 		let date1 = Date.now();
 
 		if (sellall == 'yes') {
-			//&&plyer.data.misc.is_massselling == false so they cant multi sell often
-
+			await collection.updateOne({ _id: interaction.user.id }, { $set: { 'data.misc.is_massselling': true } });
 			for (const item of player.data.inventory.items) {
 				if (item.amount != 0 && item.name != '') {
 					let sellname = item.name.split(' ');
@@ -50,8 +57,7 @@ module.exports = {
 						const words = item.name.split(' ');
 
 						for (let i = 0; i < words.length; i++) {
-							words[i] =
-								words[i][0].toUpperCase() + words[i].substr(1);
+							words[i] = words[i][0].toUpperCase() + words[i].substr(1);
 						}
 
 						let sellitem = words.join(' ');
@@ -64,8 +70,7 @@ module.exports = {
 							},
 							{
 								$inc: {
-									'data.inventory.items.$.amount':
-										-item.amount,
+									'data.inventory.items.$.amount': -item.amount,
 								},
 							}
 						);
@@ -80,8 +85,7 @@ module.exports = {
 						const words = item.name.split(' ');
 
 						for (let i = 0; i < words.length; i++) {
-							words[i] =
-								words[i][0].toUpperCase() + words[i].substr(1);
+							words[i] = words[i][0].toUpperCase() + words[i].substr(1);
 						}
 
 						let sellitem = words.join(' ');
@@ -98,8 +102,7 @@ module.exports = {
 							},
 							{
 								$inc: {
-									'data.inventory.items.$.amount':
-										-item.amount,
+									'data.inventory.items.$.amount': -item.amount,
 								},
 							}
 						);
@@ -119,15 +122,12 @@ module.exports = {
 			} else if (taken < 10000) {
 				taken = taken / 1000 + ' s';
 			}
+			await collection.updateOne({ _id: interaction.user.id }, { $set: { 'data.misc.is_massselling': false } });
 			let embed = new Discord.MessageEmbed()
 				.setTitle('Sell All Finished')
 				.setColor('90EE90')
 				.setFooter('Skyblock Simulator')
-				.setDescription(
-					`Sold ${sellallitems} Items for ${sellallcoins.toFixed(
-						2
-					)} Coins.\nTook: \`${taken}\``
-				);
+				.setDescription(`Sold ${sellallitems} Items for ${sellallcoins.toFixed(2)} Coins.\nTook: \`${taken}\``);
 			return interaction.editReply({ embeds: [embed] });
 		}
 
@@ -147,12 +147,8 @@ module.exports = {
 
 		let sellitem = words.join(' ');
 
-		const founditem = player.data.inventory.items.find(
-			(item) => item.name == sellitem
-		);
-		const itemindex = player.data.inventory.items.findIndex(
-			(item) => item.name === sellitem
-		);
+		const founditem = player.data.inventory.items.find((item) => item.name == sellitem);
+		const itemindex = player.data.inventory.items.findIndex((item) => item.name === sellitem);
 
 		if (founditem === undefined) {
 			let invaliditemembed = new Discord.MessageEmbed()
@@ -286,9 +282,7 @@ function getPrice(sellitem) {
 }
 
 async function getPrice1(bzname) {
-	const response = await fetch(
-		`https://api.slothpixel.me/api/skyblock/bazaar/${bzname}`
-	);
+	const response = await fetch(`https://api.slothpixel.me/api/skyblock/bazaar/${bzname}`);
 	return await response.json();
 }
 
