@@ -472,6 +472,11 @@ const data = [
 					},
 				],
 			},
+      {
+        name: 'craft',
+        type: 'SUB_COMMAND',
+        description: 'Craft Items',
+      },
 		],
 	},
 ];
