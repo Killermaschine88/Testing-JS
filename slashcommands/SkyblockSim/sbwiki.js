@@ -113,7 +113,7 @@ module.exports = {
 					.addField('Score', 'Used to determine the Loot Chests you will recieve after the dungeon run', true)
 					.addField(
 						'Puzzles',
-						'Small Puzzles like a Quiz and Tic Tac Toe are found in a dungeon run which grant 20 Score.',
+						'Small Puzzles like a Quiz and Tic Tac Toe are found in a dungeon run which grant 30 Score.',
 						true
 					)
 					.addField(
