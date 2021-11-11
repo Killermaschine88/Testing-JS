@@ -21,26 +21,18 @@ module.exports = {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(
-					`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``
-				);
+				.setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``);
 			message.channel.send({ embeds: [noprofile] });
 			return;
 		}
 
 		let earnedxp = Math.floor(Math.random() * (100 - 1) + 1);
 
-		await collection.updateOne(
-			{ _id: message.author.id },
-			{ $inc: { farming: earnedxp } },
-			{ upsert: true }
-		);
+		await collection.updateOne({ _id: message.author.id }, { $inc: { farming: earnedxp } }, { upsert: true });
 
 		const finished = new Discord.MessageEmbed()
 			.setColor('90EE90')
-			.setDescription(
-				`Finished farming Crops and earned <:farming:852069714451759114> ${earnedxp} Farming XP.`
-			);
+			.setDescription(`Finished farming Crops and earned <:farming:852069714451759114> ${earnedxp} Farming XP.`);
 
 		message.channel.send({ embeds: [finished] });
 	},

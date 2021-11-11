@@ -21,19 +21,15 @@ module.exports = {
 
 		ign = ign.replace(/\W/g, ''); // removes weird characters
 
-		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(
-			(res) => {
-				if (res.status != 200) {
-					const nomc = new Discord.MessageEmbed()
-						.setDescription(
-							`No Minecraft account found for \`${ign}\``
-						)
-						.setColor('DC143C')
-						.setTimestamp();
-					message.channel.send({ embeds: [nomc] });
-				}
+		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then((res) => {
+			if (res.status != 200) {
+				const nomc = new Discord.MessageEmbed()
+					.setDescription(`No Minecraft account found for \`${ign}\``)
+					.setColor('DC143C')
+					.setTimestamp();
+				message.channel.send({ embeds: [nomc] });
 			}
-		); // Test if IGN esists
+		}); // Test if IGN esists
 
 		ign = await getTrueIgn(ign);
 
@@ -70,310 +66,185 @@ module.exports = {
 
 		// IGN is valid and player has skyblock profiles
 
-		let tier7 =
-			apiData.data.dungeons.types.catacombs.tier_completions.tier_7;
+		let tier7 = apiData.data.dungeons.types.catacombs.tier_completions.tier_7;
 		if (!tier7) tier7 = 0;
 
-		let tier6 =
-			apiData.data.dungeons.types.catacombs.tier_completions.tier_6;
+		let tier6 = apiData.data.dungeons.types.catacombs.tier_completions.tier_6;
 		if (!tier6) tier6 = 0;
 
-		let tier5 =
-			apiData.data.dungeons.types.catacombs.tier_completions.tier_5;
+		let tier5 = apiData.data.dungeons.types.catacombs.tier_completions.tier_5;
 		if (!tier5) tier5 = 0;
 
-		let tier4 =
-			apiData.data.dungeons.types.catacombs.tier_completions.tier_4;
+		let tier4 = apiData.data.dungeons.types.catacombs.tier_completions.tier_4;
 		if (!tier4) tier4 = 0;
 
-		let tier3 =
-			apiData.data.dungeons.types.catacombs.tier_completions.tier_3;
+		let tier3 = apiData.data.dungeons.types.catacombs.tier_completions.tier_3;
 		if (!tier3) tier3 = 0;
 
-		let tier2 =
-			apiData.data.dungeons.types.catacombs.tier_completions.tier_2;
+		let tier2 = apiData.data.dungeons.types.catacombs.tier_completions.tier_2;
 		if (!tier2) tier2 = 0;
 
-		let tier1 =
-			apiData.data.dungeons.types.catacombs.tier_completions.tier_1;
+		let tier1 = apiData.data.dungeons.types.catacombs.tier_completions.tier_1;
 		if (!tier1) tier1 = 0;
 
 		let value1 = apiData.data.dungeons.types.catacombs.best_score.tier_1;
 		if (!value1) value1 = 0;
-		if (value1)
-			value1 =
-				apiData.data.dungeons.types.catacombs.best_score.tier_1.value;
+		if (value1) value1 = apiData.data.dungeons.types.catacombs.best_score.tier_1.value;
 
 		let value2 = apiData.data.dungeons.types.catacombs.best_score.tier_2;
 		if (!value2) value2 = 0;
-		if (value2)
-			value2 =
-				apiData.data.dungeons.types.catacombs.best_score.tier_2.value;
+		if (value2) value2 = apiData.data.dungeons.types.catacombs.best_score.tier_2.value;
 
 		let value3 = apiData.data.dungeons.types.catacombs.best_score.tier_3;
 		if (!value3) value3 = 0;
-		if (value3)
-			value3 =
-				apiData.data.dungeons.types.catacombs.best_score.tier_3.value;
+		if (value3) value3 = apiData.data.dungeons.types.catacombs.best_score.tier_3.value;
 
 		let value4 = apiData.data.dungeons.types.catacombs.best_score.tier_4;
 		if (!value4) value4 = 0;
-		if (value4)
-			value4 =
-				apiData.data.dungeons.types.catacombs.best_score.tier_4.value;
+		if (value4) value4 = apiData.data.dungeons.types.catacombs.best_score.tier_4.value;
 
 		let value5 = apiData.data.dungeons.types.catacombs.best_score.tier_5;
 		if (!value5) value5 = 0;
-		if (value5)
-			value5 =
-				apiData.data.dungeons.types.catacombs.best_score.tier_5.value;
+		if (value5) value5 = apiData.data.dungeons.types.catacombs.best_score.tier_5.value;
 
 		let value6 = apiData.data.dungeons.types.catacombs.best_score.tier_6;
 		if (!value6) value6 = 0;
-		if (value6)
-			value6 =
-				apiData.data.dungeons.types.catacombs.best_score.tier_6.value;
+		if (value6) value6 = apiData.data.dungeons.types.catacombs.best_score.tier_6.value;
 
 		let value7 = apiData.data.dungeons.types.catacombs.best_score.tier_7;
 		if (!value7) value7 = 0;
-		if (value7)
-			value7 =
-				apiData.data.dungeons.types.catacombs.best_score.tier_7.value;
+		if (value7) value7 = apiData.data.dungeons.types.catacombs.best_score.tier_7.value;
 
-		let time1 =
-			apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_1;
+		let time1 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_1;
 		if (!time1) time1 = 0;
-		if (time1)
-			time1 =
-				apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_1
-					.seconds;
+		if (time1) time1 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_1.seconds;
 		let min1 = Math.floor(time1 / 60);
 		let sec1 = Math.floor(time1 % 60);
 
-		let time2 =
-			apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_2;
+		let time2 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_2;
 		if (!time2) time2 = 0;
-		if (time2)
-			time2 =
-				apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_2
-					.seconds;
+		if (time2) time2 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_2.seconds;
 		let min2 = Math.floor(time2 / 60);
 		let sec2 = Math.floor(time2 % 60);
 
-		let time3 =
-			apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_3;
+		let time3 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_3;
 		if (!time3) time3 = 0;
-		if (time3)
-			time3 =
-				apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_3
-					.seconds;
+		if (time3) time3 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_3.seconds;
 		let min3 = Math.floor(time3 / 60);
 		let sec3 = Math.floor(time3 % 60);
 
-		let time4 =
-			apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_4;
+		let time4 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_4;
 		if (!time4) time4 = 0;
-		if (time4)
-			time4 =
-				apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_4
-					.seconds;
+		if (time4) time4 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_4.seconds;
 		let min4 = Math.floor(time4 / 60);
 		let sec4 = Math.floor(time4 % 60);
 
-		let time5 =
-			apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_5;
+		let time5 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_5;
 		if (!time5) time5 = 0;
-		if (time5)
-			time5 =
-				apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_5
-					.seconds;
+		if (time5) time5 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_5.seconds;
 		let min5 = Math.floor(time5 / 60);
 		let sec5 = Math.floor(time5 % 60);
 
-		let time6 =
-			apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_6;
+		let time6 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_6;
 		if (!time6) time6 = 0;
-		if (time6)
-			time6 =
-				apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_6
-					.seconds;
+		if (time6) time6 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_6.seconds;
 		let min6 = Math.floor(time6 / 60);
 		let sec6 = Math.floor(time6 % 60);
 
-		let time7 =
-			apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_7;
+		let time7 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_7;
 		if (!time7) time7 = 0;
-		if (time7)
-			time7 =
-				apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_7
-					.seconds;
+		if (time7) time7 = apiData.data.dungeons.types.catacombs.fastest_time_s_plus.tier_7.seconds;
 		let min7 = Math.floor(time7 / 60);
 		let sec7 = Math.floor(time7 % 60);
 
-		let mtier7 =
-			apiData.data.dungeons.types.catacombs.master_mode.tier_completions
-				.tier_7;
+		let mtier7 = apiData.data.dungeons.types.catacombs.master_mode.tier_completions.tier_7;
 		if (!mtier7) mtier7 = 0;
 
-		let mtier6 =
-			apiData.data.dungeons.types.catacombs.master_mode.tier_completions
-				.tier_6;
+		let mtier6 = apiData.data.dungeons.types.catacombs.master_mode.tier_completions.tier_6;
 		if (!mtier6) mtier6 = 0;
 
-		let mtier5 =
-			apiData.data.dungeons.types.catacombs.master_mode.tier_completions
-				.tier_5;
+		let mtier5 = apiData.data.dungeons.types.catacombs.master_mode.tier_completions.tier_5;
 		if (!mtier5) mtier5 = 0;
 
-		let mtier4 =
-			apiData.data.dungeons.types.catacombs.master_mode.tier_completions
-				.tier_4;
+		let mtier4 = apiData.data.dungeons.types.catacombs.master_mode.tier_completions.tier_4;
 		if (!mtier4) mtier4 = 0;
 
-		let mtier3 =
-			apiData.data.dungeons.types.catacombs.master_mode.tier_completions
-				.tier_3;
+		let mtier3 = apiData.data.dungeons.types.catacombs.master_mode.tier_completions.tier_3;
 		if (!mtier3) mtier3 = 0;
 
-		let mtier2 =
-			apiData.data.dungeons.types.catacombs.master_mode.tier_completions
-				.tier_2;
+		let mtier2 = apiData.data.dungeons.types.catacombs.master_mode.tier_completions.tier_2;
 		if (!mtier2) mtier2 = 0;
 
-		let mtier1 =
-			apiData.data.dungeons.types.catacombs.master_mode.tier_completions
-				.tier_1;
+		let mtier1 = apiData.data.dungeons.types.catacombs.master_mode.tier_completions.tier_1;
 		if (!mtier1) mtier1 = 0;
 
-		let mvalue1 =
-			apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_1;
+		let mvalue1 = apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_1;
 		if (!mvalue1) mvalue1 = 0;
-		if (mvalue1)
-			mvalue1 =
-				apiData.data.dungeons.types.catacombs.master_mode.best_score
-					.tier_1.value;
+		if (mvalue1) mvalue1 = apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_1.value;
 
-		let mvalue2 =
-			apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_2;
+		let mvalue2 = apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_2;
 		if (!mvalue2) mvalue2 = 0;
-		if (mvalue2)
-			mvalue2 =
-				apiData.data.dungeons.types.catacombs.master_mode.best_score
-					.tier_2.value;
+		if (mvalue2) mvalue2 = apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_2.value;
 
-		let mvalue3 =
-			apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_3;
+		let mvalue3 = apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_3;
 		if (!mvalue3) mvalue3 = 0;
-		if (mvalue3)
-			mvalue3 =
-				apiData.data.dungeons.types.catacombs.best_score.tier_3.value;
+		if (mvalue3) mvalue3 = apiData.data.dungeons.types.catacombs.best_score.tier_3.value;
 
-		let mvalue4 =
-			apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_4;
+		let mvalue4 = apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_4;
 		if (!mvalue4) mvalue4 = 0;
-		if (mvalue4)
-			mvalue4 =
-				apiData.data.dungeons.types.catacombs.master_mode.best_score
-					.tier_4.value;
+		if (mvalue4) mvalue4 = apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_4.value;
 
-		let mvalue5 =
-			apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_5;
+		let mvalue5 = apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_5;
 		if (!mvalue5) mvalue5 = 0;
-		if (mvalue5)
-			mvalue5 =
-				apiData.data.dungeons.types.catacombs.master_mode.best_score
-					.tier_5.value;
+		if (mvalue5) mvalue5 = apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_5.value;
 
-		let mvalue6 =
-			apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_6;
+		let mvalue6 = apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_6;
 		if (!mvalue6) mvalue6 = 0;
-		if (mvalue6)
-			mvalue6 =
-				apiData.data.dungeons.types.catacombs.master_mode.best_score
-					.tier_6.value;
+		if (mvalue6) mvalue6 = apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_6.value;
 
-		let mvalue7 =
-			apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_7;
+		let mvalue7 = apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_7;
 		if (!mvalue7) mvalue7 = 0;
-		if (mvalue7)
-			mvalue7 =
-				apiData.data.dungeons.types.catacombs.master_mode.best_score
-					.tier_7.value;
+		if (mvalue7) mvalue7 = apiData.data.dungeons.types.catacombs.master_mode.best_score.tier_7.value;
 
-		let mtime1 =
-			apiData.data.dungeons.types.catacombs.master_mode
-				.fastest_time_s_plus.tier_1;
+		let mtime1 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_1;
 		if (!mtime1) mtime1 = 0;
-		if (mtime1)
-			mtime1 =
-				apiData.data.dungeons.types.catacombs.master_mode
-					.fastest_time_s_plus.tier_1.seconds;
+		if (mtime1) mtime1 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_1.seconds;
 		let mmin1 = Math.floor(mtime1 / 60);
 		let msec1 = Math.floor(mtime1 % 60);
 
-		let mtime2 =
-			apiData.data.dungeons.types.catacombs.master_mode
-				.fastest_time_s_plus.tier_2;
+		let mtime2 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_2;
 		if (!mtime2) mtime2 = 0;
-		if (mtime2)
-			mtime2 =
-				apiData.data.dungeons.types.catacombs.master_mode
-					.fastest_time_s_plus.tier_2.seconds;
+		if (mtime2) mtime2 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_2.seconds;
 		let mmin2 = Math.floor(mtime2 / 60);
 		let msec2 = Math.floor(mtime2 % 60);
 
-		let mtime3 =
-			apiData.data.dungeons.types.catacombs.master_mode
-				.fastest_time_s_plus.tier_3;
+		let mtime3 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_3;
 		if (!mtime3) mtime3 = 0;
-		if (mtime3)
-			mtime3 =
-				apiData.data.dungeons.types.catacombs.master_mode
-					.fastest_time_s_plus.tier_3.seconds;
+		if (mtime3) mtime3 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_3.seconds;
 		let mmin3 = Math.floor(mtime3 / 60);
 		let msec3 = Math.floor(mtime3 % 60);
 
-		let mtime4 =
-			apiData.data.dungeons.types.catacombs.master_mode
-				.fastest_time_s_plus.tier_4;
+		let mtime4 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_4;
 		if (!mtime4) mtime4 = 0;
-		if (mtime4)
-			mtime4 =
-				apiData.data.dungeons.types.catacombs.master_mode
-					.fastest_time_s_plus.tier_4.seconds;
+		if (mtime4) mtime4 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_4.seconds;
 		let mmin4 = Math.floor(mtime4 / 60);
 		let msec4 = Math.floor(mtime4 % 60);
 
-		let mtime5 =
-			apiData.data.dungeons.types.catacombs.master_mode
-				.fastest_time_s_plus.tier_5;
+		let mtime5 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_5;
 		if (!mtime5) mtime5 = 0;
-		if (mtime5)
-			mtime5 =
-				apiData.data.dungeons.types.catacombs.master_mode
-					.fastest_time_s_plus.tier_5.seconds;
+		if (mtime5) mtime5 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_5.seconds;
 		let mmin5 = Math.floor(mtime5 / 60);
 		let msec5 = Math.floor(mtime5 % 60);
 
-		let mtime6 =
-			apiData.data.dungeons.types.catacombs.master_mode
-				.fastest_time_s_plus.tier_6;
+		let mtime6 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_6;
 		if (!mtime6) mtime6 = 0;
-		if (mtime6)
-			mtime6 =
-				apiData.data.dungeons.types.catacombs.master_mode
-					.fastest_time_s_plus.tier_6.seconds;
+		if (mtime6) mtime6 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_6.seconds;
 		let mmin6 = Math.floor(mtime6 / 60);
 		let msec6 = Math.floor(mtime6 % 60);
 
-		let mtime7 =
-			apiData.data.dungeons.types.catacombs.master_mode
-				.fastest_time_s_plus.tier_7;
+		let mtime7 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_7;
 		if (!mtime7) mtime7 = 0;
-		if (mtime7)
-			mtime7 =
-				apiData.data.dungeons.types.catacombs.master_mode
-					.fastest_time_s_plus.tier_7.seconds;
+		if (mtime7) mtime7 = apiData.data.dungeons.types.catacombs.master_mode.fastest_time_s_plus.tier_7.seconds;
 		let mmin7 = Math.floor(mtime7 / 60);
 		let msec7 = Math.floor(mtime7 % 60);
 
@@ -383,17 +254,11 @@ module.exports = {
 			.setFooter(
 				"Click their Name to view their SkyShiiyu\n0m 0s means they haven't gotten an S+ on said Floor yet."
 			)
-			.setAuthor(
-				ign,
-				`https://cravatar.eu/helmavatar/${ign}/600.png`,
-				`http://sky.shiiyu.moe/stats/${ign}`
-			)
+			.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `http://sky.shiiyu.moe/stats/${ign}`)
 			.setDescription(
 				`Catacombs Level: **${toFixed(
 					apiData.data.dungeons.types.catacombs.level
-				)}**\nSecrets Count: **${toFixed(
-					apiData.data.dungeons.secrets_found
-				)}**`
+				)}**\nSecrets Count: **${toFixed(apiData.data.dungeons.secrets_found)}**`
 			)
 			.addFields(
 				{
@@ -408,9 +273,7 @@ module.exports = {
 				},
 				{
 					name: '<:berserker:852079613052059658> Berserker Level',
-					value: toFixed(
-						apiData.data.dungeons.classes.berserker.level
-					),
+					value: toFixed(apiData.data.dungeons.classes.berserker.level),
 					inline: true,
 				},
 				{
@@ -505,9 +368,7 @@ module.exports = {
 };
 
 async function getUUID(ign) {
-	const response = await fetch(
-		`https://api.mojang.com/users/profiles/minecraft/${ign}`
-	);
+	const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
 	const result = await response.json();
 	return result.id;
 }
@@ -517,16 +378,12 @@ async function getApiData(ign) {
 	const config = require('../../config.json');
 
 	const UUID = await getUUID(ign);
-	const response = await fetch(
-		`https://baltrazz.repl.co/v1/profiles/${UUID}/dungeons?key=${config.apikey}`
-	);
+	const response = await fetch(`https://baltrazz.repl.co/v1/profiles/${UUID}/dungeons?key=${config.apikey}`);
 	return await response.json();
 }
 
 async function getTrueIgn(ign) {
-	const response = await fetch(
-		`https://api.mojang.com/users/profiles/minecraft/${ign}`
-	);
+	const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
 	const result = await response.json();
 	return result.name;
 }

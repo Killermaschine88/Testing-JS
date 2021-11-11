@@ -16,9 +16,7 @@ module.exports = {
 		const collection = mclient.db('SkyblockSim').collection('Players');
 		let player = await collection.findOne({ _id: interaction.user.id });
 
-		const collection1 = mclient
-			.db('SkyblockSim')
-			.collection('blockedchannels');
+		const collection1 = mclient.db('SkyblockSim').collection('blockedchannels');
 
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
@@ -31,9 +29,7 @@ module.exports = {
 
 		if (player.data.misc.is_fishing === true) {
 			const alreadyfishing = new Discord.MessageEmbed()
-				.setTitle(
-					"You are already Fishing somewhere so i can't create another Pond for you"
-				)
+				.setTitle("You are already Fishing somewhere so i can't create another Pond for you")
 				.setColor('RED')
 				.setFooter('Skyblock Simulator');
 			interaction.editReply({ embeds: [alreadyfishing] });
@@ -109,32 +105,13 @@ module.exports = {
 			.setDisabled(true);
 
 		//Stop Button
-		const bcancel = new Discord.MessageButton()
-			.setCustomId('cancel')
-			.setLabel('Stop Fishing')
-			.setStyle('DANGER');
+		const bcancel = new Discord.MessageButton().setCustomId('cancel').setLabel('Stop Fishing').setStyle('DANGER');
 
 		//Different Rows needed
-		const row = new Discord.MessageActionRow().addComponents(
-			bcatch,
-			bkillscoff,
-			bcancel
-		);
-		const row1 = new Discord.MessageActionRow().addComponents(
-			blure,
-			bkillscoff,
-			bcancel
-		);
-		const row2 = new Discord.MessageActionRow().addComponents(
-			bcatchoff,
-			bkillsc,
-			bcancel
-		);
-		const row3 = new Discord.MessageActionRow().addComponents(
-			blureoff,
-			bkillscoff,
-			bcancel
-		);
+		const row = new Discord.MessageActionRow().addComponents(bcatch, bkillscoff, bcancel);
+		const row1 = new Discord.MessageActionRow().addComponents(blure, bkillscoff, bcancel);
+		const row2 = new Discord.MessageActionRow().addComponents(bcatchoff, bkillsc, bcancel);
+		const row3 = new Discord.MessageActionRow().addComponents(blureoff, bkillscoff, bcancel);
 
 		//Pond Embed
 		let pond = new Discord.MessageEmbed()
@@ -145,9 +122,7 @@ module.exports = {
 				`Rod: **${rod}**\nSea Creature Chance: **${sea_creature_chance}**\nFishing Speed: **${rod_speed}**%`
 			);
 		if (player.data.settings.imgshown == true) {
-			pond.setImage(
-				'https://cdn.discordapp.com/attachments/871669216703578152/905004300835631174/unknown.png'
-			); //rod in hand
+			pond.setImage('https://cdn.discordapp.com/attachments/871669216703578152/905004300835631174/unknown.png'); //rod in hand
 		}
 
 		const menu = await interaction.editReply({
@@ -181,8 +156,7 @@ module.exports = {
 		collector.on('collect', async (i) => {
 			if (player.data.misc.is_mining == true) {
 				interaction.followUp({
-					content:
-						'You cheeky tried to multi grind Skills not with me :).',
+					content: 'You cheeky tried to multi grind Skills not with me :).',
 					ephemeral: true,
 				});
 				return collector.stop();
@@ -191,10 +165,7 @@ module.exports = {
 			if (i.customId === 'cast' && rod_casted === false) {
 				rod_casted = true;
 				pond.fields = [];
-				pond.addField(
-					'\u200b',
-					'<a:wait:847471618272002059> Waiting for something to bite the Bait.'
-				);
+				pond.addField('\u200b', '<a:wait:847471618272002059> Waiting for something to bite the Bait.');
 				if (player.data.settings.imgshown == true) {
 					pond.setImage(
 						'https://cdn.discordapp.com/attachments/871669216703578152/905004413695983636/unknown.png'
@@ -217,32 +188,19 @@ module.exports = {
 			} else if (i.customId === 'lure' && rod_casted === true) {
 				let creature = isSeaCreature(sea_creature_chance, isCreature);
 				if (creature === 'yes') {
-					foundmob = await getSeaCreatureStats(
-						mob,
-						mobs,
-						fishinglvl,
-						mclient
-					);
+					foundmob = await getSeaCreatureStats(mob, mobs, fishinglvl, mclient);
 					mhp = foundmob.hp;
 					mdmg = foundmob.dmg;
 					pond.fields = [];
 					pond.setColor('ORANGE');
-					pond.addField(
-						`${foundmob.name} caught!`,
-						`Player Health: ❤️ ${php}\nMob Health: ❤️ ${mhp}`
-					);
+					pond.addField(`${foundmob.name} caught!`, `Player Health: ❤️ ${php}\nMob Health: ❤️ ${mhp}`);
 					menu.edit({ embeds: [pond], components: [row2] });
 					rod_casted = false;
 				} else {
 					let raredrop = isRareDrop(fishinglvl);
 					if (raredrop == 'yes') {
-						let coinamounts = [
-							2500, 5000, 7500, 10000, 15000, 20000,
-						];
-						let coindrop =
-							coinamounts[
-								Math.floor(Math.random() * coinamounts.length)
-							];
+						let coinamounts = [2500, 5000, 7500, 10000, 15000, 20000];
+						let coindrop = coinamounts[Math.floor(Math.random() * coinamounts.length)];
 
 						await collection.updateOne(
 							{ _id: interaction.user.id },
@@ -252,24 +210,13 @@ module.exports = {
 
 						rod_casted = false;
 						pond.fields = [];
-						pond.addField(
-							`RARE CATCH!!!`,
-							`earned **<:coins:861974605203636253> ${coindrop} Coins**`
-						);
+						pond.addField(`RARE CATCH!!!`, `earned **<:coins:861974605203636253> ${coindrop} Coins**`);
 
 						menu.edit({ embeds: [pond], components: [row] });
 					} else {
-						let fishxp = Math.floor(
-							Math.random() * (200 - 50) + 50
-						);
-						let fishes = [
-							'Raw Fish',
-							'Raw Salmon',
-							'Pufferfish',
-							'Clownfish',
-						];
-						let fishname =
-							fishes[Math.floor(Math.random() * fishes.length)];
+						let fishxp = Math.floor(Math.random() * (200 - 50) + 50);
+						let fishes = ['Raw Fish', 'Raw Salmon', 'Pufferfish', 'Clownfish'];
+						let fishname = fishes[Math.floor(Math.random() * fishes.length)];
 						let fishingcoins = 0;
 						if (fishname === 'Raw Fish') {
 							fishingcoins = 30;
@@ -311,18 +258,9 @@ module.exports = {
 				let crit = isCrit(critchance, critted);
 				if (crit === 'yes') {
 					pdmg =
-						Math.floor(
-							(5 + damage) *
-								(1 + strength / 100) *
-								(1 + combatlvl * 0.04)
-						) *
-						(1 + critdmg / 100);
+						Math.floor((5 + damage) * (1 + strength / 100) * (1 + combatlvl * 0.04)) * (1 + critdmg / 100);
 				} else {
-					pdmg = Math.floor(
-						(5 + damage) *
-							(1 + strength / 100) *
-							(1 + combatlvl * 0.04)
-					);
+					pdmg = Math.floor((5 + damage) * (1 + strength / 100) * (1 + combatlvl * 0.04));
 				}
 
 				php = dmgtaken(php, mdmg);
@@ -336,22 +274,14 @@ module.exports = {
 					);
 				} else {
 					pond.fields = [];
-					pond.addField(
-						`Battle`,
-						`Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (- ${pdmg})`
-					);
+					pond.addField(`Battle`, `Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (- ${pdmg})`);
 				}
 				menu.edit({ embeds: [pond] });
 
 				if (i.customId === 'killsc' && mhp <= 0) {
 					let amount = Math.floor(Math.random() * (3 - 1) + 1);
 					let mobdrop = 'Lilypad';
-					let special_mobs = [
-						'Nurse Shark',
-						'Blue Shark',
-						'Tiger Shark',
-						'Great White Shark',
-					];
+					let special_mobs = ['Nurse Shark', 'Blue Shark', 'Tiger Shark', 'Great White Shark'];
 					if (special_mobs.includes(foundmob.name)) {
 						mobdrop = 'Shark Fin';
 					}
@@ -368,16 +298,9 @@ module.exports = {
 						_id: interaction.user.id,
 					});
 
-					const updatePlayer = await addItems(
-						mobdrop,
-						amount,
-						player
-					);
+					const updatePlayer = await addItems(mobdrop, amount, player);
 
-					await collection.replaceOne(
-						{ _id: interaction.user.id },
-						updatePlayer
-					);
+					await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
 
 					await collection.updateOne(
 						{ _id: interaction.user.id },
@@ -388,10 +311,7 @@ module.exports = {
 				} else if (i.customId === 'killsc' && php <= 0) {
 					pond.fields = [];
 					pond.setColor('RED');
-					pond.addField(
-						`Result`,
-						`Died to the Enemy which had **❤️ ${mhp}** left.`
-					);
+					pond.addField(`Result`, `Died to the Enemy which had **❤️ ${mhp}** left.`);
 					menu.edit({ embeds: [pond] });
 					collector.stop();
 				}
@@ -409,11 +329,7 @@ module.exports = {
 				{ $set: { 'data.misc.is_fishing': false } },
 				{ upsert: true }
 			);
-			await collection1.updateOne(
-				{ _id: interaction.channelId },
-				{ $set: { blocked: false } },
-				{ upsert: true }
-			);
+			await collection1.updateOne({ _id: interaction.channelId }, { $set: { blocked: false } }, { upsert: true });
 			try {
 				await menu.edit({ embeds: [pond], components: [] });
 			} catch (e) {}
@@ -440,23 +356,18 @@ async function getSeaCreatureStats(mob, mobs, fishinglvl, mclient) {
 	let seacreatures = '';
 	if (shark_event.enabled) {
 		seacreatures = Object.entries(mobs).filter(
-			([name, props]) =>
-				props.level <= fishinglvl ||
-				(props.level <= fishinglvl && props.shark_mob)
+			([name, props]) => props.level <= fishinglvl || (props.level <= fishinglvl && props.shark_mob)
 		);
 	} else {
-		seacreatures = Object.entries(mobs).filter(
-			([name, props]) => props.level <= fishinglvl && !props.shark_mob
-		);
+		seacreatures = Object.entries(mobs).filter(([name, props]) => props.level <= fishinglvl && !props.shark_mob);
 	}
- // console.log(seacreatures)
+	// console.log(seacreatures)
 
 	if (seacreatures === undefined) {
 		mob = 'None';
 		return mob;
 	}
-	let mobchoosen =
-		seacreatures[Math.floor(Math.random() * seacreatures.length)];
+	let mobchoosen = seacreatures[Math.floor(Math.random() * seacreatures.length)];
 	mob = mobchoosen[1];
 	return mob;
 }

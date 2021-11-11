@@ -13,9 +13,7 @@ module.exports = {
 	folder: 'Skyblock',
 	aliases: ['bz'],
 	async execute(interaction) {
-		Object.keys(list).forEach((key) =>
-			list[key].bazaar ? (list2[key] = list[key]) : ''
-		);
+		Object.keys(list).forEach((key) => (list[key].bazaar ? (list2[key] = list[key]) : ''));
 
 		var method = 'save';
 
@@ -23,9 +21,7 @@ module.exports = {
 
 		const waiting = new Discord.MessageEmbed()
 			.setTitle('Checking Bazaar Data')
-			.setFooter(
-				"If I don't respond within 10 Seconds then the Item wasn't found or an Error occurred"
-			);
+			.setFooter("If I don't respond within 10 Seconds then the Item wasn't found or an Error occurred");
 
 		const wait = await interaction.editReply({ embeds: [waiting] });
 
@@ -49,9 +45,7 @@ module.exports = {
 
 		var apiData = await getApiData(result, method);
 
-		const notfound = new Discord.MessageEmbed().setTitle(
-			`Couldnt find Item ${result}`
-		);
+		const notfound = new Discord.MessageEmbed().setTitle(`Couldnt find Item ${result}`);
 
 		if (apiData.error) {
 			wait.edit({ embeds: [notfound] });
@@ -80,16 +74,12 @@ module.exports = {
 					.addFields(
 						{
 							name: `Insta Sell Price`,
-							value: `${toFixed(
-								apiData.quick_status.sellPrice
-							).toLocaleString()}`,
+							value: `${toFixed(apiData.quick_status.sellPrice).toLocaleString()}`,
 							inline: true,
 						},
 						{
 							name: `Amount of Sell Offers`,
-							value: `${toFixed(
-								apiData.quick_status.sellOrders
-							).toLocaleString()}`,
+							value: `${toFixed(apiData.quick_status.sellOrders).toLocaleString()}`,
 							inline: true,
 						},
 						{
@@ -99,16 +89,12 @@ module.exports = {
 						},
 						{
 							name: `Insta Buy Price`,
-							value: `${toFixed(
-								apiData.quick_status.buyPrice
-							).toLocaleString()}`,
+							value: `${toFixed(apiData.quick_status.buyPrice).toLocaleString()}`,
 							inline: true,
 						},
 						{
 							name: `Amount of Buy Offers`,
-							value: `${toFixed(
-								apiData.quick_status.buyOrders
-							).toLocaleString()}`,
+							value: `${toFixed(apiData.quick_status.buyOrders).toLocaleString()}`,
 							inline: true,
 						},
 						{
@@ -131,9 +117,7 @@ async function getApiData(result) {
 	delete require.cache[require.resolve('../../constants/Bot/config.json')];
 	const config = require('../../constants/Bot/config.json');
 
-	const response = await fetch(
-		`https://api.slothpixel.me/api/skyblock/bazaar/${result}?key=${config.apikey}`
-	);
+	const response = await fetch(`https://api.slothpixel.me/api/skyblock/bazaar/${result}?key=${config.apikey}`);
 	return await response.json();
 }
 

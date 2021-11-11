@@ -9,16 +9,10 @@ module.exports = {
 	folder: 'Dev',
 	aliases: ['gc'],
 	async execute(client, message, args) {
-		if (message.author.id !== config.ownerID)
-			return message.channel.send("Can't use this!");
-		if (!args[0])
-			return message.channel.send(
-				'Please provide a valid Slash Command!'
-			);
+		if (message.author.id !== config.ownerID) return message.channel.send("Can't use this!");
+		if (!args[0]) return message.channel.send('Please provide a valid Slash Command!');
 
-		const code = client.slashcommands
-			.get(args[0].toLowerCase())
-			.execute.toString();
+		const code = client.slashcommands.get(args[0].toLowerCase()).execute.toString();
 
 		if (code.length <= 1700) {
 			message.channel.send(`\`\`\`js\n${code}\`\`\``);

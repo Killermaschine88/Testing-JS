@@ -26,45 +26,39 @@ module.exports = {
 		const scamREASON = args.slice(2).join(' ');
 
 		if (args[0] === undefined || args[1] === undefined) {
-			message.channel.send(
-				'scammeradd (Scammer IGN) (Scam Proof[IMGUR Link]) (Scam Reason)'
-			);
+			message.channel.send('scammeradd (Scammer IGN) (Scam Proof[IMGUR Link]) (Scam Reason)');
 			return;
 		}
 
 		// get uuid from mentioned ign here
-		axios
-			.get(`https://some-random-api.ml/mc?username=${scammerIGN}`)
-			.then(async (res) => {
-				const uuid = res.data.uuid;
+		axios.get(`https://some-random-api.ml/mc?username=${scammerIGN}`).then(async (res) => {
+			const uuid = res.data.uuid;
 
-				const collection = mclient.db('Sky-Bot').collection('Scammers');
+			const collection = mclient.db('Sky-Bot').collection('Scammers');
 
-				await collection.updateOne(
-					{ _id: uuid },
-					{
-						$set: {
-							scammerIGN: scammerIGN,
-							scamPROOF: scamPROOF,
-							scamREASON: scamREASON,
-						},
+			await collection.updateOne(
+				{ _id: uuid },
+				{
+					$set: {
+						scammerIGN: scammerIGN,
+						scamPROOF: scamPROOF,
+						scamREASON: scamREASON,
 					},
-					{ upsert: true }
-				);
+				},
+				{ upsert: true }
+			);
 
-				const sucEmbed = new Discord.MessageEmbed()
-					.setTitle('Scammer Added')
-					.setColor('GREEN')
-					.setDescription(
-						`Successfully added **${scammerIGN}** to the Scammer list for: **${scamREASON}**`
-					)
-					.setFooter(`Added by ${message.author.tag}`);
+			const sucEmbed = new Discord.MessageEmbed()
+				.setTitle('Scammer Added')
+				.setColor('GREEN')
+				.setDescription(`Successfully added **${scammerIGN}** to the Scammer list for: **${scamREASON}**`)
+				.setFooter(`Added by ${message.author.tag}`);
 
-				await message.channel.send({ embeds: [sucEmbed] });
-				await client.channels
-					.fetch(config.scamlog)
-					.then((channel) => channel.send({ embeds: sucEmbed }))
-					.catch(console.error);
-			});
+			await message.channel.send({ embeds: [sucEmbed] });
+			await client.channels
+				.fetch(config.scamlog)
+				.then((channel) => channel.send({ embeds: sucEmbed }))
+				.catch(console.error);
+		});
 	},
 };

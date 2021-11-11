@@ -12,18 +12,14 @@ module.exports = {
 	async execute(interaction) {
 		let ign = interaction.options.getString('name');
 
-		delete require.cache[
-			require.resolve('../../constants/Bot/config.json')
-		];
+		delete require.cache[require.resolve('../../constants/Bot/config.json')];
 		const config = require('../../constants/Bot/config.json');
 
 		// npm install axios
 		const axios = require(`axios`).default;
 		// npm install axios
 		try {
-			let uuid = await axios.get(
-				`https://api.mojang.com/users/profiles/minecraft/${ign}`
-			);
+			let uuid = await axios.get(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
 
 			let hypixelapi = await axios.default.get(
 				`https://api.hypixel.net/skyblock/profiles?key=${config.apikey}&uuid=${uuid.data.id}`
@@ -38,9 +34,7 @@ module.exports = {
 			const embed = new Discord.MessageEmbed()
 				.setTitle('ERROR')
 				.setColor('RED')
-				.setDescription(
-					'Invalid Minecraft Username or User doesnt have any Skyblock Profiles.'
-				);
+				.setDescription('Invalid Minecraft Username or User doesnt have any Skyblock Profiles.');
 			return interaction.editReply({ embeds: [embed] });
 		}
 
@@ -160,34 +154,25 @@ module.exports = {
 		} else {
 			while (i < inventory.prices.length) {
 				inventorytext += `${arrow}`;
-				if (
-					inventory.prices[i].item.stack_size != 1 &&
-					inventory.prices[i].item.name != undefined
-				) {
+				if (inventory.prices[i].item.stack_size != 1 && inventory.prices[i].item.name != undefined) {
 					inventorytext += `${inventory.prices[i].item.stack_size}x `;
 				}
 				if (inventory.prices[i].item.reforge != undefined) {
-					inventorytext += `${caps(
-						inventory.prices[i].item.reforge
-					)} `;
+					inventorytext += `${caps(inventory.prices[i].item.reforge)} `;
 				}
 				if (inventory.prices[i].item.name != undefined) {
 					inventorytext += `${inventory.prices[i].item.name} `;
 				}
 				if (inventory.prices[i].item.name == undefined) {
-					inventorytext += `[Lvl ${
-						inventory.prices[i].value.pet_level
-					}] ${caps(inventory.prices[i].item.tier)} ${caps(
-						inventory.prices[i].item.type
-					)} `;
+					inventorytext += `[Lvl ${inventory.prices[i].value.pet_level}] ${caps(
+						inventory.prices[i].item.tier
+					)} ${caps(inventory.prices[i].item.type)} `;
 				}
 				if (inventory.prices[i].item.recombobulated == true) {
 					inventorytext += `${recomb} `;
 				}
 				if (inventory.prices[i].total != undefined) {
-					inventorytext += `**(${num(
-						inventory.prices[i].total
-					)})**\n`;
+					inventorytext += `**(${num(inventory.prices[i].total)})**\n`;
 				}
 				i += 1;
 			}
@@ -200,10 +185,7 @@ module.exports = {
 		} else {
 			while (i < ec.prices.length) {
 				ectext += `${arrow}`;
-				if (
-					ec.prices[i].item.stack_size != 1 &&
-					ec.prices[i].item.name != undefined
-				) {
+				if (ec.prices[i].item.stack_size != 1 && ec.prices[i].item.name != undefined) {
 					ectext += `${ec.prices[i].item.stack_size}x `;
 				}
 				if (ec.prices[i].item.reforge != undefined) {
@@ -213,9 +195,9 @@ module.exports = {
 					ectext += `${ec.prices[i].item.name} `;
 				}
 				if (ec.prices[i].item.name == undefined) {
-					ectext += `[Lvl ${ec.prices[i].value.pet_level}] ${caps(
-						ec.prices[i].item.tier
-					)} ${caps(ec.prices[i].item.type)} `;
+					ectext += `[Lvl ${ec.prices[i].value.pet_level}] ${caps(ec.prices[i].item.tier)} ${caps(
+						ec.prices[i].item.type
+					)} `;
 				}
 				if (ec.prices[i].item.recombobulated == true) {
 					ectext += `${recomb} `;
@@ -234,10 +216,7 @@ module.exports = {
 		} else {
 			while (i < storage.prices.length) {
 				storagetext += `${arrow}`;
-				if (
-					storage.prices[i].item.stack_size != 1 &&
-					storage.prices[i].item.name != undefined
-				) {
+				if (storage.prices[i].item.stack_size != 1 && storage.prices[i].item.name != undefined) {
 					storagetext += `${storage.prices[i].item.stack_size}x `;
 				}
 				if (storage.prices[i].item.reforge != undefined) {
@@ -247,11 +226,9 @@ module.exports = {
 					storagetext += `${storage.prices[i].item.name} `;
 				}
 				if (storage.prices[i].item.name == undefined) {
-					storagetext += `[Lvl ${
-						storage.prices[i].value.pet_level
-					}] ${caps(storage.prices[i].item.tier)} ${caps(
-						storage.prices[i].item.type
-					)} `;
+					storagetext += `[Lvl ${storage.prices[i].value.pet_level}] ${caps(
+						storage.prices[i].item.tier
+					)} ${caps(storage.prices[i].item.type)} `;
 				}
 				if (storage.prices[i].item.recombobulated == true) {
 					storagetext += `${recomb} `;
@@ -271,9 +248,9 @@ module.exports = {
 			while (i < pets.prices.length) {
 				petstext += `${arrow}`;
 				if (pets.prices[i].item.type != undefined) {
-					petstext += `[Lvl ${pets.prices[i].value.pet_level}] ${caps(
-						pets.prices[i].item.tier
-					)} ${caps(pets.prices[i].item.type)} `;
+					petstext += `[Lvl ${pets.prices[i].value.pet_level}] ${caps(pets.prices[i].item.tier)} ${caps(
+						pets.prices[i].item.type
+					)} `;
 				}
 				if (pets.prices[i].total != undefined) {
 					petstext += `**(${num(pets.prices[i].total)})**\n`;
@@ -308,58 +285,17 @@ module.exports = {
 
 		const endembed = new Discord.MessageEmbed()
 			.setFooter('Calcs by Skezza')
-			.setAuthor(
-				ign,
-				`https://cravatar.eu/helmavatar/${ign}/600.png`,
-				`http://sky.shiiyu.moe/stats/${ign}`
-			)
-			.setDescription(
-				`${ign}'s Networth is ${total.toLocaleString()} (${num(total)})`
-			)
-			.addField(
-				`<:coins:861974605203636253> Purse`,
-				`${num(nw.purse.total)}`
-			)
-			.addField(
-				`<:gold:869126927011708929> Bank`,
-				`${num(nw.banking.total)}`
-			)
-			.addField(
-				`<:tank:852079613051666472> Armor (${num(armor.total)})`,
-				`${armortext}`
-			)
-			.addField(
-				`<:armorstand:881177222440943657> Wardrobe (${num(
-					wardrobe.total
-				)})`,
-				`${wardrobetext}`
-			)
-			.addField(
-				`<:chest:881176353444085820> Inventory (${num(
-					inventory.total
-				)})`,
-				`${inventorytext}`
-			)
-			.addField(
-				`<:ec:881176371634794586> Ender Chest (${num(ec.total)})`,
-				`${ectext}`
-			)
-			.addField(
-				`<:backpack:881176409983303740> Storage (${num(
-					storage.total
-				)})`,
-				`${storagetext}`
-			)
-			.addField(
-				`<:taming:852069714493833227> Pets (${num(pets.total)})`,
-				`${petstext}`
-			)
-			.addField(
-				`<:talisbag:881176392178499634> Accessories (${num(
-					talis.total
-				)})`,
-				`${talistext}`
-			)
+			.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `http://sky.shiiyu.moe/stats/${ign}`)
+			.setDescription(`${ign}'s Networth is ${total.toLocaleString()} (${num(total)})`)
+			.addField(`<:coins:861974605203636253> Purse`, `${num(nw.purse.total)}`)
+			.addField(`<:gold:869126927011708929> Bank`, `${num(nw.banking.total)}`)
+			.addField(`<:tank:852079613051666472> Armor (${num(armor.total)})`, `${armortext}`)
+			.addField(`<:armorstand:881177222440943657> Wardrobe (${num(wardrobe.total)})`, `${wardrobetext}`)
+			.addField(`<:chest:881176353444085820> Inventory (${num(inventory.total)})`, `${inventorytext}`)
+			.addField(`<:ec:881176371634794586> Ender Chest (${num(ec.total)})`, `${ectext}`)
+			.addField(`<:backpack:881176409983303740> Storage (${num(storage.total)})`, `${storagetext}`)
+			.addField(`<:taming:852069714493833227> Pets (${num(pets.total)})`, `${petstext}`)
+			.addField(`<:talisbag:881176392178499634> Accessories (${num(talis.total)})`, `${talistext}`)
 			.setColor('90EE90');
 
 		interaction.editReply({ embeds: [endembed] });
@@ -367,18 +303,14 @@ module.exports = {
 };
 
 num = (num) => {
-	if (num >= 1000000000)
-		return (num / 1000000000).toFixed(1).replace(/.0$/, '') + 'B';
-	if (num >= 1000000)
-		return (num / 1000000).toFixed(1).replace(/.0$/, '') + 'M';
+	if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace(/.0$/, '') + 'B';
+	if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/.0$/, '') + 'M';
 	if (num >= 1000) return (num / 1000).toFixed(1).replace(/.0$/, '') + 'K';
 	return num;
 };
 
 async function getTrueIgn(ign) {
-	const response = await fetch(
-		`https://api.mojang.com/users/profiles/minecraft/${ign}`
-	);
+	const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`);
 	const result = await response.json();
 	return result.name;
 }
@@ -387,9 +319,7 @@ function caps(words) {
 	words = words.replace('_', ' ');
 	let separateWord = words.toLowerCase().split(' ');
 	for (let i = 0; i < separateWord.length; i++) {
-		separateWord[i] =
-			separateWord[i].charAt(0).toUpperCase() +
-			separateWord[i].substring(1);
+		separateWord[i] = separateWord[i].charAt(0).toUpperCase() + separateWord[i].substring(1);
 	}
 	return separateWord.join(' ');
 }

@@ -19,9 +19,7 @@ module.exports = {
 		if (gprefix === null) gprefix = '.';
 
 		if (player === null) {
-			const nodata = new Discord.MessageEmbed()
-				.setColor('RED')
-				.setDescription(`No Profile found for <@!${id}>`);
+			const nodata = new Discord.MessageEmbed().setColor('RED').setDescription(`No Profile found for <@!${id}>`);
 			message.channel.send({ embeds: [nodata] });
 			return;
 		}
@@ -64,9 +62,7 @@ module.exports = {
 
 		let sellitem = words.join(' ');
 
-		const founditem = player.data.inventory.items.find(
-			(item) => item.name === sellitem
-		);
+		const founditem = player.data.inventory.items.find((item) => item.name === sellitem);
 
 		//Check if Input exists
 		if (args[0] === undefined || args[1] === undefined) {
@@ -92,9 +88,7 @@ module.exports = {
 
 		//Check if Amount is a Number
 		if (isNaN(amount)) {
-			message.channel.send(
-				`Please enter a Number or All as Amount. You entered: **${amount}`
-			);
+			message.channel.send(`Please enter a Number or All as Amount. You entered: **${amount}`);
 			return;
 		}
 
@@ -135,10 +129,7 @@ module.exports = {
 		if (earnedcoins) {
 			const updatePlayer = addItem(sellitem, amount, player);
 
-			await collection.replaceOne(
-				{ _id: message.author.id },
-				updatePlayer
-			);
+			await collection.replaceOne({ _id: message.author.id }, updatePlayer);
 
 			await collection.updateOne(
 				{ _id: message.author.id },
@@ -149,9 +140,7 @@ module.exports = {
 			const sold = new Discord.MessageEmbed()
 				.setFooter('Skyblock Simulator')
 				.setColor('90EE90')
-				.setDescription(
-					`Successfully sold **${amount}x ${sellitem}** for **${earnedcoins} Coins**`
-				);
+				.setDescription(`Successfully sold **${amount}x ${sellitem}** for **${earnedcoins} Coins**`);
 			message.channel.send({ embeds: [sold] });
 			return;
 		}
@@ -190,8 +179,6 @@ function getPrice(sellitem) {
 }
 
 async function getPrice1(bzname) {
-	const response = await fetch(
-		`https://api.slothpixel.me/api/skyblock/bazaar/${bzname}`
-	);
+	const response = await fetch(`https://api.slothpixel.me/api/skyblock/bazaar/${bzname}`);
 	return await response.json();
 }

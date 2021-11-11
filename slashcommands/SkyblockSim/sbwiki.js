@@ -19,41 +19,16 @@ module.exports = {
 			.setTitle('Skyblock Simulator Wiki')
 			.setColor('90EE90')
 			.setFooter('Skyblock Simulator')
-			.setDescription(
-				'Press the corresponding Button to see the Information of the desired Item.'
-			);
+			.setDescription('Press the corresponding Button to see the Information of the desired Item.');
 
-		const button1 = new Discord.MessageButton()
-			.setCustomId('general')
-			.setLabel('General Info')
-			.setStyle('PRIMARY');
-		const button2 = new Discord.MessageButton()
-			.setCustomId('symbols')
-			.setLabel('Symbols')
-			.setStyle('PRIMARY');
-		const button3 = new Discord.MessageButton()
-			.setCustomId('misc')
-			.setLabel('Misc')
-			.setStyle('PRIMARY');
-		const button4 = new Discord.MessageButton()
-			.setCustomId('events')
-			.setLabel('Events')
-			.setStyle('PRIMARY');
-		const button5 = new Discord.MessageButton()
-			.setCustomId('dungeons')
-			.setLabel('Dungeons')
-			.setStyle('PRIMARY');
-		const button6 = new Discord.MessageButton()
-			.setCustomId('reforges')
-			.setLabel('Reforges')
-			.setStyle('PRIMARY');
+		const button1 = new Discord.MessageButton().setCustomId('general').setLabel('General Info').setStyle('PRIMARY');
+		const button2 = new Discord.MessageButton().setCustomId('symbols').setLabel('Symbols').setStyle('PRIMARY');
+		const button3 = new Discord.MessageButton().setCustomId('misc').setLabel('Misc').setStyle('PRIMARY');
+		const button4 = new Discord.MessageButton().setCustomId('events').setLabel('Events').setStyle('PRIMARY');
+		const button5 = new Discord.MessageButton().setCustomId('dungeons').setLabel('Dungeons').setStyle('PRIMARY');
+		const button6 = new Discord.MessageButton().setCustomId('reforges').setLabel('Reforges').setStyle('PRIMARY');
 
-		const row1 = new Discord.MessageActionRow().addComponents(
-			button1,
-			button2,
-			button4,
-			button5
-		);
+		const row1 = new Discord.MessageActionRow().addComponents(button1, button2, button4, button5);
 		const row2 = new Discord.MessageActionRow().addComponents(button6);
 
 		let menu = await interaction.editReply({
@@ -135,11 +110,7 @@ module.exports = {
 						'Give bonuses inside Dungeon Runs\n\nAssassin (`2 ❁` per Class Level)\nBerserker (`1 ❁` and `1 ❈` per Class Level)\nTank (`1 ❈` and `2 ❤` per Class Level)',
 						true
 					)
-					.addField(
-						'Score',
-						'Used to determine the Loot Chests you will recieve after the dungeon run',
-						true
-					)
+					.addField('Score', 'Used to determine the Loot Chests you will recieve after the dungeon run', true)
 					.addField(
 						'Puzzles',
 						'Small Puzzles like a Quiz and Tic Tac Toe are found in a dungeon run which grant 20 Score.',
@@ -162,9 +133,7 @@ module.exports = {
 					.setTitle('Reforge Information')
 					.setColor('90EE90')
 					.setFooter('Skyblock Simulator')
-					.setDescription(
-						'**Format:** Reforge Stone Name (Reforge Bonus) [Reforge Name] {Item Origin}'
-					)
+					.setDescription('**Format:** Reforge Stone Name (Reforge Bonus) [Reforge Name] {Item Origin}')
 					.addField(
 						'General Reforges',
 						'Recombobulator 3000 (10% Item Stat increase) [] {Dungeons any Floor}',

@@ -174,8 +174,7 @@ const data = [
 			},
 			{
 				name: 'info',
-				description:
-					'Shows information about yourself or a mentioned User',
+				description: 'Shows information about yourself or a mentioned User',
 				type: 'SUB_COMMAND',
 				options: [
 					{
@@ -245,8 +244,7 @@ const data = [
 					},
 					{
 						name: 'state',
-						description:
-							'Specify if you want to enable/disable said setting',
+						description: 'Specify if you want to enable/disable said setting',
 						type: 'STRING',
 						required: true,
 						choices: [
@@ -269,8 +267,7 @@ const data = [
 			},
 			{
 				name: 'warp',
-				description:
-					'Allows you to warp to different Areas of the Game',
+				description: 'Allows you to warp to different Areas of the Game',
 				type: 'SUB_COMMAND',
 			},
 			{
@@ -350,8 +347,7 @@ const data = [
 			},
 			{
 				name: 'wiki',
-				description:
-					'Displays the Wiki and Help Page for the Simulator',
+				description: 'Displays the Wiki and Help Page for the Simulator',
 				type: 'SUB_COMMAND',
 			},
 			{
@@ -361,8 +357,7 @@ const data = [
 			},
 			{
 				name: 'reforge',
-				description:
-					'Allows you to reforge Items to increase their Stats',
+				description: 'Allows you to reforge Items to increase their Stats',
 				type: 'SUB_COMMAND',
 				options: [
 					{
@@ -429,8 +424,7 @@ const data = [
 				options: [
 					{
 						name: 'action',
-						description:
-							'send and reply require the optional fields',
+						description: 'send and reply require the optional fields',
 						type: 'STRING',
 						required: true,
 						choices: [
@@ -472,11 +466,11 @@ const data = [
 					},
 				],
 			},
-      {
-        name: 'craft',
-        type: 'SUB_COMMAND',
-        description: 'Craft Items',
-      },
+			{
+				name: 'craft',
+				type: 'SUB_COMMAND',
+				description: 'Craft Items',
+			},
 		],
 	},
 ];

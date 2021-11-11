@@ -9,8 +9,7 @@ module.exports = {
 	folder: 'Dev',
 	aliases: ['rs'],
 	async execute(client, message, args) {
-		if (message.author.id !== config.ownerID)
-			return message.channel.send("Can't use this!");
+		if (message.author.id !== config.ownerID) return message.channel.send("Can't use this!");
 
 		const restart = new Discord.MessageEmbed()
 			.setColor('ORANGE')

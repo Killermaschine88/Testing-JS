@@ -21,10 +21,7 @@ module.exports = {
 				'[Invite me](https://discord.com/api/oauth2/authorize?client_id=839835292785704980&permissions=139653925953&scope=applications.commands%20bot)',
 				true
 			)
-			.addField(
-				'Vote Link',
-				'[Vote for me](https://top.gg/bot/839835292785704980)'
-			);
+			.addField('Vote Link', '[Vote for me](https://top.gg/bot/839835292785704980)');
 
 		const buttons = new Discord.MessageActionRow().addComponents(
 			new Discord.MessageButton()

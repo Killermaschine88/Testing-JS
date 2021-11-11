@@ -15,38 +15,14 @@ module.exports = {
 		const found1 = await collection.find({}).sort({ coins: -1 }).toArray();
 		const k = await collection.find({}).sort({ tkills: -1 }).toArray();
 		//Skill XP Leaderboard
-		const mining1 = await collection
-			.find({})
-			.sort({ mining: -1 })
-			.toArray();
-		const foraging1 = await collection
-			.find({})
-			.sort({ foraging: -1 })
-			.toArray();
-		const enchanting1 = await collection
-			.find({})
-			.sort({ enchanting: -1 })
-			.toArray();
-		const farming1 = await collection
-			.find({})
-			.sort({ farming: -1 })
-			.toArray();
-		const combat1 = await collection
-			.find({})
-			.sort({ combat: -1 })
-			.toArray();
-		const fishing1 = await collection
-			.find({})
-			.sort({ fishing: -1 })
-			.toArray();
-		const alchemy1 = await collection
-			.find({})
-			.sort({ alchemy: -1 })
-			.toArray();
-		const taming1 = await collection
-			.find({})
-			.sort({ taming: -1 })
-			.toArray();
+		const mining1 = await collection.find({}).sort({ mining: -1 }).toArray();
+		const foraging1 = await collection.find({}).sort({ foraging: -1 }).toArray();
+		const enchanting1 = await collection.find({}).sort({ enchanting: -1 }).toArray();
+		const farming1 = await collection.find({}).sort({ farming: -1 }).toArray();
+		const combat1 = await collection.find({}).sort({ combat: -1 }).toArray();
+		const fishing1 = await collection.find({}).sort({ fishing: -1 }).toArray();
+		const alchemy1 = await collection.find({}).sort({ alchemy: -1 }).toArray();
+		const taming1 = await collection.find({}).sort({ taming: -1 }).toArray();
 
 		const lb = new Discord.MessageEmbed()
 			.setTitle('Skyblock Simulator Leaderboard')

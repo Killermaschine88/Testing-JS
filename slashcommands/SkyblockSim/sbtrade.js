@@ -23,10 +23,7 @@ module.exports = {
 		const collection1 = mclient.db('SkyblockSim').collection('trades');
 		let trades = await collection1.findOne({ _id: interaction.user.id });
 
-		if (
-			trades != null &&
-			(action == 'send-offer' || action == 'reply-offer')
-		) {
+		if (trades != null && (action == 'send-offer' || action == 'reply-offer')) {
 			let ongoingtrade = new Discord.MessageEmbed()
 				.setTitle('Ongoing Trade')
 				.setDescription(
@@ -41,9 +38,7 @@ module.exports = {
 		if (action == 'send-offer') {
 			if (!user.id || user.id == interaction.user.id || user.bot) {
 				let nouserembed = new Discord.MessageEmbed()
-					.setDescription(
-						'You cant send trades to yourself a Bot or an invalid User.'
-					)
+					.setDescription('You cant send trades to yourself a Bot or an invalid User.')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -52,9 +47,7 @@ module.exports = {
 
 			if (tradeitem == null || amount == null) {
 				let invalid = new Discord.MessageEmbed()
-					.setTitle(
-						'Trade Item and Amount are required for this action.'
-					)
+					.setTitle('Trade Item and Amount are required for this action.')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -131,9 +124,7 @@ module.exports = {
 				return interaction.editReply({ embeds: [sentembed] });
 			}
 
-			let finditem = player.data.inventory.items.find(
-				(item) => item.name == caps(tradeitem)
-			);
+			let finditem = player.data.inventory.items.find((item) => item.name == caps(tradeitem));
 
 			if (finditem == undefined || (finditem.amount == 0 && amount < 0)) {
 				let noitemembed = new Discord.MessageEmbed()
@@ -218,9 +209,7 @@ module.exports = {
 		} else if (action == 'reply-offer') {
 			if (!user.id || user.id == interaction.user.id || user.bot) {
 				let nouserembed = new Discord.MessageEmbed()
-					.setDescription(
-						'You cant send trades to yourself a Bot or an invalid User.'
-					)
+					.setDescription('You cant send trades to yourself a Bot or an invalid User.')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -238,9 +227,7 @@ module.exports = {
 
 			if (tradeitem == null || amount == null) {
 				let invalid = new Discord.MessageEmbed()
-					.setTitle(
-						'Trade Item and Amount are required for this action.'
-					)
+					.setTitle('Trade Item and Amount are required for this action.')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -312,17 +299,13 @@ module.exports = {
 				return interaction.editReply({ embeds: [sentembed] });
 			}
 
-			let finditem = player.data.inventory.items.find(
-				(item) => item.name == caps(tradeitem)
-			);
+			let finditem = player.data.inventory.items.find((item) => item.name == caps(tradeitem));
 
 			if (finditem == undefined && finditem.amount == 0 && amount < 0) {
 				let noitemembed = new Discord.MessageEmbed()
 					.setTitle('No Item found.')
 					.setDescription(
-						`Couldn\'t find any Items matching \`${caps(
-							tradeitem
-						)}\`, make sure you spelled it corrrectly.`
+						`Couldn\'t find any Items matching \`${caps(tradeitem)}\`, make sure you spelled it corrrectly.`
 					)
 					.setFooter('Skyblock Simulator')
 					.setColor('RED');
@@ -416,16 +399,9 @@ module.exports = {
 					{ upsert: true }
 				);
 			} else {
-				const updatePlayer = await addItems(
-					offer.sender.item,
-					offer.sender.amount,
-					user1
-				);
+				const updatePlayer = await addItems(offer.sender.item, offer.sender.amount, user1);
 
-				await collection.replaceOne(
-					{ _id: offer.reciever.id },
-					updatePlayer
-				);
+				await collection.replaceOne({ _id: offer.reciever.id }, updatePlayer);
 			}
 
 			if (offer.reciever.item == 'Coins') {
@@ -439,38 +415,23 @@ module.exports = {
 					{ upsert: true }
 				);
 			} else {
-				const updatePlayer1 = await addItems(
-					offer.reciever.item,
-					offer.reciever.amount,
-					user2
-				);
+				const updatePlayer1 = await addItems(offer.reciever.item, offer.reciever.amount, user2);
 
-				await collection.replaceOne(
-					{ _id: offer.sender.id },
-					updatePlayer1
-				);
+				await collection.replaceOne({ _id: offer.sender.id }, updatePlayer1);
 			}
 
 			try {
 				let tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade accepted`)
-					.setDescription(
-						`Trade accepted you got the ${offer.reciever.amount} ${offer.reciever.item}`
-					);
-				let fetched = await interaction.client.users.fetch(
-					offer.sender.id
-				);
+					.setDescription(`Trade accepted you got the ${offer.reciever.amount} ${offer.reciever.item}`);
+				let fetched = await interaction.client.users.fetch(offer.sender.id);
 				await fetched.send({ embeds: [tradereq] });
 			} catch (e) {}
 			try {
 				let tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade accepted`)
-					.setDescription(
-						`Trade accepted you got the ${offer.sender.amount} ${offer.sender.item}`
-					);
-				let fetched = await interaction.client.users.fetch(
-					offer.reciever.id
-				);
+					.setDescription(`Trade accepted you got the ${offer.sender.amount} ${offer.sender.item}`);
+				let fetched = await interaction.client.users.fetch(offer.reciever.id);
 				await fetched.send({ embeds: [tradereq] });
 			} catch (e) {}
 
@@ -510,16 +471,9 @@ module.exports = {
 					{ upsert: true }
 				);
 			} else {
-				const updatePlayer = await addItems(
-					offer.reciever.item,
-					offer.reciever.amount,
-					user1
-				);
+				const updatePlayer = await addItems(offer.reciever.item, offer.reciever.amount, user1);
 
-				await collection.replaceOne(
-					{ _id: offer.reciever.id },
-					updatePlayer
-				);
+				await collection.replaceOne({ _id: offer.reciever.id }, updatePlayer);
 			}
 
 			if (offer.sender.item == 'Coins') {
@@ -533,38 +487,23 @@ module.exports = {
 					{ upsert: true }
 				);
 			} else {
-				const updatePlayer1 = await addItems(
-					offer.sender.item,
-					offer.sender.amount,
-					user2
-				);
+				const updatePlayer1 = await addItems(offer.sender.item, offer.sender.amount, user2);
 
-				await collection.replaceOne(
-					{ _id: offer.sender.id },
-					updatePlayer1
-				);
+				await collection.replaceOne({ _id: offer.sender.id }, updatePlayer1);
 			}
 
 			try {
 				let tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade denied`)
-					.setDescription(
-						`Trade denied you got the ${offer.reciever.amount} ${offer.reciever.item} back.`
-					);
-				let fetched = await interaction.client.users.fetch(
-					offer.reciever.id
-				);
+					.setDescription(`Trade denied you got the ${offer.reciever.amount} ${offer.reciever.item} back.`);
+				let fetched = await interaction.client.users.fetch(offer.reciever.id);
 				await fetched.send({ embeds: [tradereq] });
 			} catch (e) {}
 			try {
 				let tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade denied`)
-					.setDescription(
-						`Trade denied you got the ${offer.sender.amount} ${offer.sender.item} back.`
-					);
-				let fetched = await interaction.client.users.fetch(
-					offer.sender.id
-				);
+					.setDescription(`Trade denied you got the ${offer.sender.amount} ${offer.sender.item} back.`);
+				let fetched = await interaction.client.users.fetch(offer.sender.id);
 				await fetched.send({ embeds: [traddeniedereq] });
 			} catch (e) {}
 
@@ -585,9 +524,7 @@ module.exports = {
 function caps(words) {
 	let separateWord = words.toLowerCase().split(' ');
 	for (let i = 0; i < separateWord.length; i++) {
-		separateWord[i] =
-			separateWord[i].charAt(0).toUpperCase() +
-			separateWord[i].substring(1);
+		separateWord[i] = separateWord[i].charAt(0).toUpperCase() + separateWord[i].substring(1);
 	}
 	return separateWord.join(' ');
 }

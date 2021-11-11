@@ -17,9 +17,7 @@ module.exports = {
 			return;
 		}
 
-		const waiting = new Discord.MessageEmbed().setTitle(
-			'Checking Player Data'
-		);
+		const waiting = new Discord.MessageEmbed().setTitle('Checking Player Data');
 
 		const wait = await message.channel.send({ embeds: [waiting] });
 
@@ -81,16 +79,10 @@ module.exports = {
 			while (i < armor.prices.length) {
 				if (armor.prices[i].item.recombobulated) {
 					armortext +=
-						armor.prices[i].item.name +
-						` ${recomb}` +
-						` **(${num(armor.prices[i].total)})**` +
-						'\n';
+						armor.prices[i].item.name + ` ${recomb}` + ` **(${num(armor.prices[i].total)})**` + '\n';
 					i += 1;
 				} else {
-					armortext +=
-						armor.prices[i].item.name +
-						` **(${num(armor.prices[i].total)})**` +
-						'\n';
+					armortext += armor.prices[i].item.name + ` **(${num(armor.prices[i].total)})**` + '\n';
 					i += 1;
 				}
 			}
@@ -103,16 +95,10 @@ module.exports = {
 			while (i < wardrobe.prices.length) {
 				if (wardrobe.prices[i].item.recombobulated) {
 					wardrobetext +=
-						wardrobe.prices[i].item.name +
-						` ${recomb}` +
-						` **(${num(wardrobe.prices[i].total)})**` +
-						'\n';
+						wardrobe.prices[i].item.name + ` ${recomb}` + ` **(${num(wardrobe.prices[i].total)})**` + '\n';
 					i += 1;
 				} else {
-					wardrobetext +=
-						wardrobe.prices[i].item.name +
-						` **(${num(wardrobe.prices[i].total)})**` +
-						'\n';
+					wardrobetext += wardrobe.prices[i].item.name + ` **(${num(wardrobe.prices[i].total)})**` + '\n';
 					i += 1;
 				}
 			}
@@ -131,10 +117,7 @@ module.exports = {
 						'\n';
 					i += 1;
 				} else {
-					inventorytext +=
-						inventory.prices[i].item.name +
-						` **(${num(inventory.prices[i].total)})**` +
-						'\n';
+					inventorytext += inventory.prices[i].item.name + ` **(${num(inventory.prices[i].total)})**` + '\n';
 					i += 1;
 				}
 			}
@@ -146,17 +129,10 @@ module.exports = {
 		} else {
 			while (i < ec.prices.length) {
 				if (ec.prices[i].item?.recombobulated) {
-					ectext +=
-						ec.prices[i].item.name +
-						` ${recomb}` +
-						` **(${num(ec.prices[i].total)})**` +
-						'\n';
+					ectext += ec.prices[i].item.name + ` ${recomb}` + ` **(${num(ec.prices[i].total)})**` + '\n';
 					i += 1;
 				} else {
-					ectext +=
-						ec.prices[i].item.name +
-						` **(${num(ec.prices[i].total)})**` +
-						'\n';
+					ectext += ec.prices[i].item.name + ` **(${num(ec.prices[i].total)})**` + '\n';
 					i += 1;
 				}
 			}
@@ -169,16 +145,10 @@ module.exports = {
 			while (i < storage.prices.length) {
 				if (storage.prices[i].item?.recombobulated) {
 					storagetext +=
-						storage.prices[i].item.name +
-						` ${recomb}` +
-						` **(${num(storage.prices[i].total)})**` +
-						'\n';
+						storage.prices[i].item.name + ` ${recomb}` + ` **(${num(storage.prices[i].total)})**` + '\n';
 					i += 1;
 				} else {
-					storagetext +=
-						storage.prices[i].item.name +
-						` **(${num(storage.prices[i].total)})**` +
-						'\n';
+					storagetext += storage.prices[i].item.name + ` **(${num(storage.prices[i].total)})**` + '\n';
 					i += 1;
 				}
 			}
@@ -217,16 +187,10 @@ module.exports = {
 			while (i < talis.prices.length) {
 				if (talis.prices[i].item?.recombobulated) {
 					talistext +=
-						talis.prices[i].item.name +
-						` ${recomb}` +
-						` **(${num(talis.prices[i].total)})**` +
-						'\n';
+						talis.prices[i].item.name + ` ${recomb}` + ` **(${num(talis.prices[i].total)})**` + '\n';
 					i += 1;
 				} else {
-					talistext +=
-						talis.prices[i].item.name +
-						` **(${num(talis.prices[i].total)})**` +
-						'\n';
+					talistext += talis.prices[i].item.name + ` **(${num(talis.prices[i].total)})**` + '\n';
 					i += 1;
 				}
 			}
@@ -234,53 +198,16 @@ module.exports = {
 		}
 
 		const endembed = new Discord.MessageEmbed()
-			.setDescription(
-				`${ign}'s Networth is ${total.toLocaleString()} (${num(total)})`
-			)
-			.addField(
-				`<:coins:861974605203636253> Purse`,
-				`${num(nw.purse.total)}`
-			)
-			.addField(
-				`<:gold:869126927011708929> Bank`,
-				`${num(nw.banking.total)}`
-			)
-			.addField(
-				`<:tank:852079613051666472> Armor (${num(armor.total)})`,
-				`${armortext}`
-			)
-			.addField(
-				`<:armorstand:881177222440943657> Wardrobe (${num(
-					wardrobe.total
-				)})`,
-				`${wardrobetext}`
-			)
-			.addField(
-				`<:chest:881176353444085820> Inventory (${num(
-					inventory.total
-				)})`,
-				`${inventorytext}`
-			)
-			.addField(
-				`<:ec:881176371634794586> Ender Chest (${num(ec.total)})`,
-				`${ectext}`
-			)
-			.addField(
-				`<:backpack:881176409983303740> Storage (${num(
-					storage.total
-				)})`,
-				`${storagetext}`
-			)
-			.addField(
-				`<:taming:852069714493833227> Pets (${num(pets.total)})`,
-				`${petstext}`
-			)
-			.addField(
-				`<:talisbag:881176392178499634> Accessories (${num(
-					talis.total
-				)})`,
-				`${talistext}`
-			)
+			.setDescription(`${ign}'s Networth is ${total.toLocaleString()} (${num(total)})`)
+			.addField(`<:coins:861974605203636253> Purse`, `${num(nw.purse.total)}`)
+			.addField(`<:gold:869126927011708929> Bank`, `${num(nw.banking.total)}`)
+			.addField(`<:tank:852079613051666472> Armor (${num(armor.total)})`, `${armortext}`)
+			.addField(`<:armorstand:881177222440943657> Wardrobe (${num(wardrobe.total)})`, `${wardrobetext}`)
+			.addField(`<:chest:881176353444085820> Inventory (${num(inventory.total)})`, `${inventorytext}`)
+			.addField(`<:ec:881176371634794586> Ender Chest (${num(ec.total)})`, `${ectext}`)
+			.addField(`<:backpack:881176409983303740> Storage (${num(storage.total)})`, `${storagetext}`)
+			.addField(`<:taming:852069714493833227> Pets (${num(pets.total)})`, `${petstext}`)
+			.addField(`<:talisbag:881176392178499634> Accessories (${num(talis.total)})`, `${talistext}`)
 			.setColor('90EE90');
 
 		wait.edit({ embeds: [endembed] });
@@ -288,10 +215,8 @@ module.exports = {
 };
 
 num = (num) => {
-	if (num >= 1000000000)
-		return (num / 1000000000).toFixed(1).replace(/.0$/, '') + 'B';
-	if (num >= 1000000)
-		return (num / 1000000).toFixed(1).replace(/.0$/, '') + 'M';
+	if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace(/.0$/, '') + 'B';
+	if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/.0$/, '') + 'M';
 	if (num >= 1000) return (num / 1000).toFixed(1).replace(/.0$/, '') + 'K';
 	return num;
 };

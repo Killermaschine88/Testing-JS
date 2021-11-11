@@ -22,9 +22,7 @@ module.exports = {
 		let player = await collection.findOne({ _id: id });
 
 		if (player === null) {
-			const nodata = new Discord.MessageEmbed()
-				.setColor('RED')
-				.setDescription(`No Profile found for <@!${id}>`);
+			const nodata = new Discord.MessageEmbed().setColor('RED').setDescription(`No Profile found for <@!${id}>`);
 			interaction.editReply({ embeds: [nodata] });
 			return;
 		}
@@ -70,11 +68,9 @@ module.exports = {
 		}
 		i = 0;
 
-		let armorstr =
-			'**Format:** [ItemId] Recombobulator Reforge Itemname Stats\n\n';
+		let armorstr = '**Format:** [ItemId] Recombobulator Reforge Itemname Stats\n\n';
 		let armornum = 0;
-		let swordstr =
-			'**Format:** [ItemId] Recombobulator Reforge Itemname Stats\n\n';
+		let swordstr = '**Format:** [ItemId] Recombobulator Reforge Itemname Stats\n\n';
 		let swordnum = 0;
 		for (item of player.data.inventory.armor) {
 			armorstr += `[${armornum}] `;
@@ -149,8 +145,7 @@ module.exports = {
 		const ps = await playerStats(player, type, cookie);
 
 		//Various Stats
-		let playerfishingspeed =
-			player.data.equipment.fishing.rod.fishing_speed;
+		let playerfishingspeed = player.data.equipment.fishing.rod.fishing_speed;
 
 		let eqsword = '';
 		let eqarmor = '';
@@ -162,10 +157,7 @@ module.exports = {
 		}
 
 		if (player.data.equipment.combat.sword.reforge != 'None') {
-			eqsword +=
-				player.data.equipment.combat.sword.reforge +
-				' ' +
-				player.data.equipment.combat.sword.name;
+			eqsword += player.data.equipment.combat.sword.reforge + ' ' + player.data.equipment.combat.sword.name;
 		} else {
 			eqsword += player.data.equipment.combat.sword.name;
 		}
@@ -174,10 +166,7 @@ module.exports = {
 			eqarmor += '<:recomb:881094744183275540> ';
 		}
 		if (player.data.equipment.combat.armor.reforge != 'None') {
-			eqarmor +=
-				player.data.equipment.combat.armor.reforge +
-				' ' +
-				player.data.equipment.combat.armor.name;
+			eqarmor += player.data.equipment.combat.armor.reforge + ' ' + player.data.equipment.combat.armor.name;
 		} else {
 			eqarmor += player.data.equipment.combat.armor.name;
 		}
@@ -186,10 +175,7 @@ module.exports = {
 			eqpickaxe += '<:recomb:881094744183275540> ';
 		}
 		if (player.data.equipment.mining.pickaxe.reforge != 'None') {
-			eqpickaxe +=
-				player.data.equipment.mining.pickaxe.reforge +
-				' ' +
-				player.data.equipment.mining.pickaxe.name;
+			eqpickaxe += player.data.equipment.mining.pickaxe.reforge + ' ' + player.data.equipment.mining.pickaxe.name;
 		} else {
 			eqpickaxe += player.data.equipment.mining.pickaxe.name;
 		}
@@ -198,10 +184,7 @@ module.exports = {
 			eqrod += '<:recomb:881094744183275540> ';
 		}
 		if (player.data.equipment.fishing.rod.reforge != 'None') {
-			eqrod +=
-				player.data.equipment.fishing.rod.reforge +
-				' ' +
-				player.data.equipment.fishing.rod.name;
+			eqrod += player.data.equipment.fishing.rod.reforge + ' ' + player.data.equipment.fishing.rod.name;
 		} else {
 			eqrod += player.data.equipment.fishing.rod.name;
 		}
@@ -210,9 +193,7 @@ module.exports = {
 			.setFooter('Skyblock Simulator')
 			.setColor('90EE90')
 			.setDescription(
-				`**Info for <@!${id}> on Profile ${
-					player.data.profile.cute_name
-				}**\nProfile Creation: <t:${
+				`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${
 					player.data.profile.started
 				}:f>\nCoins: **${player.data.profile.coins.toLocaleString()} <:coins:861974605203636253>**\nGems: **${
 					player.data.profile.gems
@@ -231,10 +212,7 @@ module.exports = {
 			.addField('Location', `${player.data.misc.location}`, true);
 
 		if (player.data.misc.booster_cookie.active == true) {
-			foundinfo.addField(
-				`Booster Cookie`,
-				`Expiration Date: <t:${player.data.misc.booster_cookie.expires}>`
-			);
+			foundinfo.addField(`Booster Cookie`, `Expiration Date: <t:${player.data.misc.booster_cookie.expires}>`);
 		}
 
 		const row = new Discord.MessageActionRow().addComponents(
@@ -271,11 +249,7 @@ module.exports = {
 				.setEmoji('852079613052059658')
 				.setLabel('Sword')
 				.setStyle('PRIMARY'),
-			new Discord.MessageButton()
-				.setCustomId('settings')
-				.setEmoji('🛠️')
-				.setLabel('Settings')
-				.setStyle('PRIMARY')
+			new Discord.MessageButton().setCustomId('settings').setEmoji('🛠️').setLabel('Settings').setStyle('PRIMARY')
 		);
 
 		const menu = await interaction.editReply({
@@ -296,9 +270,7 @@ module.exports = {
 						.setFooter('Skyblock Simulator')
 						.setColor('90EE90')
 						.setDescription(
-							`**Info for <@!${id}> on Profile ${
-								player.data.profile.cute_name
-							}**\nProfile Creation: <t:${
+							`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${
 								player.data.profile.started
 							}:f>\nCoins: **${player.data.profile.coins.toLocaleString()} <:coins:861974605203636253>**\nGems: **${
 								player.data.profile.gems
@@ -314,11 +286,7 @@ module.exports = {
 							`Health: **\`${ps.health} ❤\`**\nDefense: \`${ps.defense} ❈\`\nDamage: \`${ps.damage} ⚔️\`\nStrength: \`${ps.strength} ❁\`\nCrit Chance: \`${ps.crit_chance} ☣\`\nCrit Damage: \`${ps.crit_damage} ☠\`\nMagic Find: \`${ps.magic_find} ✯\`\nSea Creature Chance: \`${ps.sea_creature_chance} α\`\nFishing Speed: \`${playerfishingspeed} 🎣\`\nMining Speed: \`${ps.mining_speed} ⸕\`\nMining Fortune: \`${ps.mining_fortune} ☘\``,
 							true
 						)
-						.addField(
-							'Location',
-							`${player.data.misc.location}`,
-							true
-						);
+						.addField('Location', `${player.data.misc.location}`, true);
 
 					menu.edit({ embeds: [main] });
 				} else if (i.customId === 'inv') {
@@ -334,9 +302,7 @@ module.exports = {
 
 						.setFooter('Skyblock Simulator')
 						.setColor('90EE90')
-						.setDescription(
-							`**Slayer Info for <@${id}>**\n\n**NOT ADDED YET!!!**`
-						)
+						.setDescription(`**Slayer Info for <@${id}>**\n\n**NOT ADDED YET!!!**`)
 						.addField(
 							'<:rev:852892164559732806> Revenant Horror',
 							`XP: **${player.data.slayer.zombiexp}**\nBoss Kills: **${player.data.slayer.zombiekills}**`,
@@ -391,11 +357,7 @@ module.exports = {
 					let set = player.data.settings.confirmation || true;
 
 					settingembed.setDescription(`Settings Info for <@${id}>`);
-					settingembed.addField(
-						'Image Shown',
-						`${player.data.settings.imgshown}`,
-						true
-					);
+					settingembed.addField('Image Shown', `${player.data.settings.imgshown}`, true);
 					settingembed.addField('Confirmation Message', `${set}`);
 					interaction.editReply({ embeds: [settingembed] });
 				}
@@ -449,10 +411,7 @@ function getLevelByXp(xp, extra = {}) {
 	}
 
 	if (extra.skill) {
-		if (
-			leveling.default_skill_caps[extra.skill] &&
-			leveling.default_skill_caps[extra.skill] > levelCap
-		) {
+		if (leveling.default_skill_caps[extra.skill] && leveling.default_skill_caps[extra.skill] > levelCap) {
 			levelCap = leveling.default_skill_caps[extra.skill];
 		}
 
@@ -490,11 +449,7 @@ function getLevelByXp(xp, extra = {}) {
 
 	let progress = Math.max(0, Math.min(xpCurrent / xpForNext, 1));
 
-	let levelWithProgress = getLevelWithProgress(
-		xp,
-		maxLevel,
-		Object.values(xp_table)
-	);
+	let levelWithProgress = getLevelWithProgress(xp, maxLevel, Object.values(xp_table));
 
 	return {
 		xp,
@@ -515,10 +470,7 @@ function getLevelWithProgress(experience, maxLevel, experienceGroup) {
 	for (let toRemove of experienceGroup) {
 		experience -= toRemove;
 		if (experience < 0) {
-			return Math.min(
-				level + (1 - (experience * -1) / toRemove),
-				maxLevel
-			);
+			return Math.min(level + (1 - (experience * -1) / toRemove), maxLevel);
 		}
 		level++;
 	}

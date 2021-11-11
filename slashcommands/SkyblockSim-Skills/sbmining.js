@@ -16,9 +16,7 @@ module.exports = {
 		const collection = mclient.db('SkyblockSim').collection('Players');
 		let player = await collection.findOne({ _id: interaction.user.id });
 
-		const collection1 = mclient
-			.db('SkyblockSim')
-			.collection('blockedchannels');
+		const collection1 = mclient.db('SkyblockSim').collection('blockedchannels');
 
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
@@ -31,9 +29,7 @@ module.exports = {
 
 		if (player.data.misc.is_mining === true) {
 			const alreadymining = new Discord.MessageEmbed()
-				.setTitle(
-					"You are already Mining somewhere so i can't create another Mine for you"
-				)
+				.setTitle("You are already Mining somewhere so i can't create another Mine for you")
 				.setColor('RED')
 				.setFooter('Skyblock Simulator');
 			interaction.editReply({ embeds: [alreadymining] });
@@ -55,9 +51,7 @@ module.exports = {
 		if (!validlocations.includes(player.data.misc.location)) {
 			const invalidarea = new Discord.MessageEmbed()
 				.setTitle('Not at a Mining Area')
-				.setDescription(
-					'You are not at a valid Mining Area, please choose one from /sb warp'
-				)
+				.setDescription('You are not at a valid Mining Area, please choose one from /sb warp')
 				.setColor('RED');
 
 			return interaction.editReply({ embeds: [invalidarea] });
@@ -81,10 +75,7 @@ module.exports = {
 			.setFooter('Skyblock Simulator')
 			.setColor('GREY');
 
-		const cancel = new Discord.MessageButton()
-			.setCustomId('cancel')
-			.setLabel('Stop Mining')
-			.setStyle('DANGER');
+		const cancel = new Discord.MessageButton().setCustomId('cancel').setLabel('Stop Mining').setStyle('DANGER');
 
 		const mine = new Discord.MessageButton()
 			.setCustomId('mine')
@@ -100,10 +91,7 @@ module.exports = {
 			.setDisabled(true);
 
 		const row = new Discord.MessageActionRow().addComponents(mine, cancel);
-		const row1 = new Discord.MessageActionRow().addComponents(
-			mineoff,
-			cancel
-		);
+		const row1 = new Discord.MessageActionRow().addComponents(mineoff, cancel);
 
 		let menu = await interaction.editReply({
 			embeds: [embed],
@@ -136,13 +124,9 @@ module.exports = {
 
 		//Collector
 		collector.on('collect', async (i) => {
-			if (
-				!validlocations.includes(player.data.misc.location) ||
-				player.data.misc.is_fishing == true
-			) {
+			if (!validlocations.includes(player.data.misc.location) || player.data.misc.is_fishing == true) {
 				interaction.followUp({
-					content:
-						'You cheeky tried to multi grind Skills not with me :).',
+					content: 'You cheeky tried to multi grind Skills not with me :).',
 					ephemeral: true,
 				});
 				return collector.stop();
@@ -154,10 +138,7 @@ module.exports = {
 					embed.setImage(ore.img);
 				}
 				embed.fields = [];
-				embed.addField(
-					'\u200B',
-					`Mined **${ore.amount}x ${ore.name}** at the **${location}**`
-				);
+				embed.addField('\u200B', `Mined **${ore.amount}x ${ore.name}** at the **${location}**`);
 
 				interaction.editReply({ embeds: [embed], components: [row1] });
 
@@ -167,10 +148,7 @@ module.exports = {
 
 				const updatePlayer = await addItems(ore, player);
 
-				await collection.replaceOne(
-					{ _id: interaction.user.id },
-					updatePlayer
-				);
+				await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
 
 				await collection.updateOne(
 					{ _id: interaction.user.id },
@@ -195,11 +173,7 @@ module.exports = {
 				{ $set: { 'data.misc.is_mining': false } },
 				{ upsert: true }
 			);
-			await collection1.updateOne(
-				{ _id: interaction.channelId },
-				{ $set: { blocked: false } },
-				{ upsert: true }
-			);
+			await collection1.updateOne({ _id: interaction.channelId }, { $set: { blocked: false } }, { upsert: true });
 			menu.edit({ embeds: [embed], components: [] });
 		});
 	},
@@ -292,68 +266,55 @@ function getOre(player, ps) {
 	//Decide whats choosen
 	if (randore == 'Cobblestone') {
 		name = 'Cobblestone';
-		img =
-			'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/a/a2/Bruchstein.png';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/a/a2/Bruchstein.png';
 		xp = 3;
 	} else if (randore == 'Coal') {
 		name = 'Coal';
-		img =
-			'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/c/c1/Kohle.png';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/c/c1/Kohle.png';
 		xp = 5;
 	} else if (randore == 'Iron Ingot') {
 		name = 'Iron Ingot';
-		img =
-			'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/2/24/Eisenbarren.png';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/2/24/Eisenbarren.png';
 		xp = 7;
 	} else if (randore == 'Gold Ingot') {
 		name = 'Gold Ingot';
-		img =
-			'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/9/93/Goldbarren.png';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/9/93/Goldbarren.png';
 		xp = 10;
 	} else if (randore == 'Lapis Lazuli') {
 		name = 'Lapis Lazuli';
-		img =
-			'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/8/81/Lapislazuli.png';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/8/81/Lapislazuli.png';
 		xp = 15;
 	} else if (randore == 'Redstone') {
 		name = 'Redstone';
-		img =
-			'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/2/20/Redstone-Staub.png';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/2/20/Redstone-Staub.png';
 		xp = 20;
 	} else if (randore == 'Emerald') {
 		name = 'Emerald';
-		img =
-			'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/c/c5/Smaragd.png';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/c/c5/Smaragd.png';
 		xp = 25;
 	} else if (randore == 'Diamond') {
 		name = 'Diamond';
-		img =
-			'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/6/64/Diamant.png';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/6/64/Diamant.png';
 		xp = 30;
 	} else if (randore == 'Obsidian') {
 		name = 'Obsidian';
-		img =
-			'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/2/24/Obsidian.png';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/2/24/Obsidian.png';
 		xp = 35;
 	} else if (randore == 'Mithril') {
 		name = 'Mithril';
-		img =
-			'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/0/0c/Prismarinkristalle.png';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/0/0c/Prismarinkristalle.png';
 		xp = 30;
 	} else if (randore == 'Hardstone') {
 		name = 'Hardstone';
-		img =
-			'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/4/45/Stein.png';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/4/45/Stein.png';
 		xp = 10;
 	} else if (randore == 'Gemstone') {
 		name = 'Gemstone';
-		img =
-			'https://static.wikia.nocookie.net/hypixel-skyblock/images/8/8d/Rough_Ruby_Gemstone.png';
+		img = 'https://static.wikia.nocookie.net/hypixel-skyblock/images/8/8d/Rough_Ruby_Gemstone.png';
 		xp = 40;
 	} else if (randore == 'Titanium') {
 		name = 'Titanium';
-		img =
-			'https://static.wikia.nocookie.net/hypixel-skyblock/images/c/cc/Titanium.png';
+		img = 'https://static.wikia.nocookie.net/hypixel-skyblock/images/c/cc/Titanium.png';
 		xp = 35;
 	}
 

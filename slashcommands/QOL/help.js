@@ -17,9 +17,7 @@ module.exports = {
 						'\n`help <Command Name>`\nFor a more Detailed view on Commands\n\n🤖 - Bot Help\n🔧 - Config Help\n🎲 - Fun Help\n🔨 - Moderation Help\n❓ - QOL Help\n🏝️ - Skyblock Help\n😎 - Skyblock Simulator\n👍 - Skyblock Simulator-Skills\n⚠️ - Work in Progress Help'
 					)
 					.setColor('ORANGE')
-					.setFooter(
-						'You have 30 Seconds to React then the Menu will stop working.'
-					);
+					.setFooter('You have 30 Seconds to React then the Menu will stop working.');
 
 				const menu = await message.channel.send({
 					embeds: [mainembed],
@@ -36,17 +34,7 @@ module.exports = {
 					.then(() => menu.react('⚠️'));
 
 				const filter = (reaction, user) =>
-					[
-						'🤖',
-						'🔧',
-						'🎲',
-						'🔨',
-						'❓',
-						'🏝️',
-						'😎',
-						'👍',
-						'⚠️',
-					].includes(reaction.emoji.name) &&
+					['🤖', '🔧', '🎲', '🔨', '❓', '🏝️', '😎', '👍', '⚠️'].includes(reaction.emoji.name) &&
 					user.id === message.author.id;
 
 				const collector = menu.createReactionCollector({
@@ -151,19 +139,13 @@ function getEmbed(emoji) {
 	}
 
 	if (type.length > 2) {
-		const commandFiles = fs
-			.readdirSync(`./commands/${type}`)
-			.filter((file) => file.endsWith('.js'));
+		const commandFiles = fs.readdirSync(`./commands/${type}`).filter((file) => file.endsWith('.js'));
 		const descriptions = [];
 
 		commandFiles.forEach((file) => {
 			const command = require(`../${type}/${file}`);
 			let currentCommand = [];
-			currentCommand.push(
-				`\`${
-					command.name.charAt(0).toUpperCase() + command.name.slice(1)
-				}\``
-			);
+			currentCommand.push(`\`${command.name.charAt(0).toUpperCase() + command.name.slice(1)}\``);
 			currentCommand.push('-');
 			currentCommand.push(command.description);
 			descriptions.push(currentCommand.join(' '));

@@ -9,8 +9,7 @@ module.exports = {
 	folder: 'Dev',
 	aliases: ['se'],
 	async execute(client, message, args, mclient) {
-		if (message.author.id !== config.ownerID)
-			return message.channel.send("Can't use this!");
+		if (message.author.id !== config.ownerID) return message.channel.send("Can't use this!");
 
 		const collection = mclient.db('Sky-Bot').collection('settings');
 		let settings = await collection.find({ _id: client.user.id });
@@ -19,8 +18,7 @@ module.exports = {
 		let state = args[1];
 		let reason = args.slice(2).join(' ');
 
-		if (!setting || !state)
-			return message.channel.send('No input for setting or State.');
+		if (!setting || !state) return message.channel.send('No input for setting or State.');
 
 		if (state == 'true') {
 			state = true;

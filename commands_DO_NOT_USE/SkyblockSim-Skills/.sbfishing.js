@@ -24,9 +24,7 @@ module.exports = {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(
-					`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``
-				);
+				.setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``);
 			message.channel.send({ embeds: [noprofile] });
 			return;
 		}
@@ -73,15 +71,9 @@ module.exports = {
 		console.log(fishing_time);
 
 		//Buttons for Catching Fish
-		const bcatch = new Discord.MessageButton()
-			.setCustomId('cast')
-			.setLabel('Cast Rod')
-			.setStyle('PRIMARY');
+		const bcatch = new Discord.MessageButton().setCustomId('cast').setLabel('Cast Rod').setStyle('PRIMARY');
 
-		const blure = new Discord.MessageButton()
-			.setCustomId('lure')
-			.setLabel('Lure Rod')
-			.setStyle('PRIMARY');
+		const blure = new Discord.MessageButton().setCustomId('lure').setLabel('Lure Rod').setStyle('PRIMARY');
 
 		const bcatchoff = new Discord.MessageButton()
 			.setCustomId('a')
@@ -108,32 +100,13 @@ module.exports = {
 			.setDisabled(true);
 
 		//Stop Button
-		const bcancel = new Discord.MessageButton()
-			.setCustomId('cancel')
-			.setLabel('Stop Fishing')
-			.setStyle('DANGER');
+		const bcancel = new Discord.MessageButton().setCustomId('cancel').setLabel('Stop Fishing').setStyle('DANGER');
 
 		//Different Rows needed
-		const row = new Discord.MessageActionRow().addComponents(
-			bcatch,
-			bkillscoff,
-			bcancel
-		);
-		const row1 = new Discord.MessageActionRow().addComponents(
-			blure,
-			bkillscoff,
-			bcancel
-		);
-		const row2 = new Discord.MessageActionRow().addComponents(
-			bcatchoff,
-			bkillsc,
-			bcancel
-		);
-		const row3 = new Discord.MessageActionRow().addComponents(
-			blureoff,
-			bkillscoff,
-			bcancel
-		);
+		const row = new Discord.MessageActionRow().addComponents(bcatch, bkillscoff, bcancel);
+		const row1 = new Discord.MessageActionRow().addComponents(blure, bkillscoff, bcancel);
+		const row2 = new Discord.MessageActionRow().addComponents(bcatchoff, bkillsc, bcancel);
+		const row3 = new Discord.MessageActionRow().addComponents(blureoff, bkillscoff, bcancel);
 
 		//Pond Embed
 		let pond = new Discord.MessageEmbed()
@@ -170,10 +143,7 @@ module.exports = {
 			if (i.customId === 'cast' && rod_casted === false) {
 				rod_casted = true;
 				pond.fields = [];
-				pond.addField(
-					'\u200b',
-					'<a:wait:847471618272002059> Waiting for something to bite the Bait.'
-				);
+				pond.addField('\u200b', '<a:wait:847471618272002059> Waiting for something to bite the Bait.');
 
 				menu.edit({ embeds: [pond], components: [row3] });
 
@@ -191,10 +161,7 @@ module.exports = {
 					mdmg = foundmob.dmg;
 					pond.fields = [];
 					pond.setColor('ORANGE');
-					pond.addField(
-						`${foundmob.name} caught!`,
-						`Player Health: ❤️ ${php}\nMob Health: ❤️ ${mhp}`
-					);
+					pond.addField(`${foundmob.name} caught!`, `Player Health: ❤️ ${php}\nMob Health: ❤️ ${mhp}`);
 					menu.edit({ embeds: [pond], components: [row2] });
 					rod_casted = false;
 				} else {
@@ -214,18 +181,9 @@ module.exports = {
 				let crit = isCrit(critchance, critted);
 				if (crit === 'yes') {
 					pdmg =
-						Math.floor(
-							(5 + damage) *
-								(1 + strength / 100) *
-								(1 + combatlvl * 0.04)
-						) *
-						(1 + critdmg / 100);
+						Math.floor((5 + damage) * (1 + strength / 100) * (1 + combatlvl * 0.04)) * (1 + critdmg / 100);
 				} else {
-					pdmg = Math.floor(
-						(5 + damage) *
-							(1 + strength / 100) *
-							(1 + combatlvl * 0.04)
-					);
+					pdmg = Math.floor((5 + damage) * (1 + strength / 100) * (1 + combatlvl * 0.04));
 				}
 
 				php = dmgtaken(php, mdmg);
@@ -239,10 +197,7 @@ module.exports = {
 					);
 				} else {
 					pond.fields = [];
-					pond.addField(
-						`Battle`,
-						`Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (- ${pdmg})`
-					);
+					pond.addField(`Battle`, `Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (- ${pdmg})`);
 				}
 				menu.edit({ embeds: [pond] });
 
@@ -264,10 +219,7 @@ module.exports = {
 				} else if (i.customId === 'killsc' && php <= 0) {
 					pond.fields = [];
 					pond.setColor('RED');
-					pond.addField(
-						`Result`,
-						`Died to the Enemy which had **❤️ ${mhp}** left.`
-					);
+					pond.addField(`Result`, `Died to the Enemy which had **❤️ ${mhp}** left.`);
 					menu.edit({ embeds: [pond] });
 					collector.stop();
 				}
@@ -302,15 +254,12 @@ function isSeaCreature(sea_creature_chance, isCreature) {
 }
 
 function getSeaCreatureStats(mob, mobs, fishinglvl) {
-	let seacreatures = Object.entries(mobs).filter(
-		([name, props]) => props.level <= fishinglvl
-	);
+	let seacreatures = Object.entries(mobs).filter(([name, props]) => props.level <= fishinglvl);
 	if (seacreatures === undefined) {
 		mob = 'None';
 		return mob;
 	}
-	let mobchoosen =
-		seacreatures[Math.floor(Math.random() * seacreatures.length)];
+	let mobchoosen = seacreatures[Math.floor(Math.random() * seacreatures.length)];
 	mob = mobchoosen[1];
 	return mob;
 }

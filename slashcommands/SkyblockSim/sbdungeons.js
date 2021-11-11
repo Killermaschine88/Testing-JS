@@ -45,11 +45,7 @@ module.exports = {
 					ephemeral: true,
 				});
 			}
-			if (
-				map[a][b] == 0 ||
-				((map[a][b] == 3 || map[a][b] == 4 || map[a][b] == 6) &&
-					!ignoreEvent)
-			)
+			if (map[a][b] == 0 || ((map[a][b] == 3 || map[a][b] == 4 || map[a][b] == 6) && !ignoreEvent))
 				return [location, false];
 
 			map[x][y] = 1;
@@ -215,42 +211,18 @@ module.exports = {
 				h != fog &&
 				i != fog
 			) {
-				if (
-					(a == b && b == c && b != fog) ||
-					(a == d && d == g && d != fog) ||
-					(a == e && e == i && e != fog)
-				)
+				if ((a == b && b == c && b != fog) || (a == d && d == g && d != fog) || (a == e && e == i && e != fog))
 					return [true, a];
-				if (
-					(d == e && e == f && e != fog) ||
-					(b == e && e == h && e != fog) ||
-					(g == e && e == c && e != fog)
-				)
+				if ((d == e && e == f && e != fog) || (b == e && e == h && e != fog) || (g == e && e == c && e != fog))
 					return [true, e];
-				if (
-					(g == h && h == i && h != fog) ||
-					(c == f && f == i && f != fog)
-				)
-					return [true, i];
+				if ((g == h && h == i && h != fog) || (c == f && f == i && f != fog)) return [true, i];
 				else return [true, undefined];
 			}
-			if (
-				(a == b && b == c && b != fog) ||
-				(a == d && d == g && d != fog) ||
-				(a == e && e == i && e != fog)
-			)
+			if ((a == b && b == c && b != fog) || (a == d && d == g && d != fog) || (a == e && e == i && e != fog))
 				return [true, a];
-			if (
-				(d == e && e == f && e != fog) ||
-				(b == e && e == h && e != fog) ||
-				(g == e && e == c && e != fog)
-			)
+			if ((d == e && e == f && e != fog) || (b == e && e == h && e != fog) || (g == e && e == c && e != fog))
 				return [true, e];
-			if (
-				(g == h && h == i && h != fog) ||
-				(c == f && f == i && f != fog)
-			)
-				return [true, i];
+			if ((g == h && h == i && h != fog) || (c == f && f == i && f != fog)) return [true, i];
 			else return [false, undefined];
 		};
 		const shuffle = (array) => {
@@ -261,10 +233,7 @@ module.exports = {
 				randomIndex = Math.floor(Math.random() * currentIndex);
 				currentIndex--;
 
-				[array[currentIndex], array[randomIndex]] = [
-					array[randomIndex],
-					array[currentIndex],
-				];
+				[array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
 			}
 
 			return array;
@@ -273,9 +242,7 @@ module.exports = {
 		const collection = mclient.db('SkyblockSim').collection('Players');
 		let player = await collection.findOne({ _id: interaction.user.id });
 
-		const collection1 = mclient
-			.db('SkyblockSim')
-			.collection('blockedchannels');
+		const collection1 = mclient.db('SkyblockSim').collection('blockedchannels');
 
 		if (!player) {
 			const noprofile = new MessageEmbed()
@@ -289,9 +256,7 @@ module.exports = {
 		if (player.data.misc.in_dungeon) {
 			const runopen = new MessageEmbed()
 				.setTitle('Another Dungeon is already open somewhere.')
-				.setDescription(
-					'The Dungeon automatically closes after 1 minute of inactivity'
-				)
+				.setDescription('The Dungeon automatically closes after 1 minute of inactivity')
 				.setColor('RED')
 				.setFooter('Skyblock Simulator');
 			return interaction.editReply({ embeds: [runopen] });
@@ -302,9 +267,7 @@ module.exports = {
 
 		let combatlvl = skillLevel(player.data.skills.combat).level;
 
-		let classlevel = classLevel(
-			player.data.dungeons.class.selected.xp
-		).level;
+		let classlevel = classLevel(player.data.dungeons.class.selected.xp).level;
 		let catalevel = classLevel(player.data.dungeons.xp).level;
 
 		if (player.data.dungeons.class.selected.name == 'Assassin') {
@@ -375,11 +338,7 @@ module.exports = {
 				.setEmoji('852111493909446686')
 				.setLabel('Floor 2')
 				.setStyle('PRIMARY'),
-			new MessageButton()
-				.setCustomId('f3')
-				.setEmoji('852111493952176148')
-				.setLabel('Floor 3')
-				.setStyle('PRIMARY')
+			new MessageButton().setCustomId('f3').setEmoji('852111493952176148').setLabel('Floor 3').setStyle('PRIMARY')
 		);
 
 		const floorSelect = new MessageEmbed()
@@ -413,9 +372,7 @@ module.exports = {
 				else if (id == 'f2') floor = 2;
 				else if (id === 'f3') floor = 3;
 				else {
-					const cancelled = new MessageEmbed()
-						.setTitle('Menu Cancelled')
-						.setColor('RED');
+					const cancelled = new MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
 					menu.edit({ embeds: [cancelled], components: [] });
 					return;
 				}
@@ -459,31 +416,15 @@ module.exports = {
 		);
 
 		//Variables needed for movement
-		const up = new MessageButton()
-			.setCustomId('up')
-			.setLabel('⬆️')
-			.setStyle('PRIMARY');
+		const up = new MessageButton().setCustomId('up').setLabel('⬆️').setStyle('PRIMARY');
 
-		const down = new MessageButton()
-			.setCustomId('down')
-			.setLabel('⬇️')
-			.setStyle('PRIMARY');
+		const down = new MessageButton().setCustomId('down').setLabel('⬇️').setStyle('PRIMARY');
 
-		const left = new MessageButton()
-			.setCustomId('left')
-			.setLabel('⬅️')
-			.setStyle('PRIMARY');
+		const left = new MessageButton().setCustomId('left').setLabel('⬅️').setStyle('PRIMARY');
 
-		const right = new MessageButton()
-			.setCustomId('right')
-			.setLabel('➡️')
-			.setStyle('PRIMARY');
+		const right = new MessageButton().setCustomId('right').setLabel('➡️').setStyle('PRIMARY');
 
-		const attack = new MessageButton()
-			.setCustomId('attack')
-			.setLabel('⚔️')
-			.setStyle('PRIMARY')
-			.setDisabled(true);
+		const attack = new MessageButton().setCustomId('attack').setLabel('⚔️').setStyle('PRIMARY').setDisabled(true);
 
 		const interact = new MessageButton()
 			.setCustomId('interact')
@@ -491,10 +432,7 @@ module.exports = {
 			.setStyle('PRIMARY')
 			.setDisabled(true);
 
-		const cancel = new MessageButton()
-			.setCustomId('cancel')
-			.setLabel('️C️a️n️c️e️l️')
-			.setStyle('DANGER');
+		const cancel = new MessageButton().setCustomId('cancel').setLabel('️C️a️n️c️e️l️').setStyle('DANGER');
 		//Buttons for Loot
 		const wood_button = new MessageButton()
 			.setCustomId('wood')
@@ -522,22 +460,10 @@ module.exports = {
 			.setLabel('Chest')
 			.setStyle('PRIMARY');
 
-		const row1 = new MessageActionRow().addComponents(
-			attack,
-			up,
-			interact,
-			cancel
-		);
+		const row1 = new MessageActionRow().addComponents(attack, up, interact, cancel);
 		const row2 = new MessageActionRow().addComponents(left, down, right);
-		const bossrow = new MessageActionRow().addComponents(
-			attack,
-			interact,
-			cancel
-		);
-		const lootrow = new MessageActionRow().addComponents(
-			wood_button,
-			gold_button
-		);
+		const bossrow = new MessageActionRow().addComponents(attack, interact, cancel);
+		const lootrow = new MessageActionRow().addComponents(wood_button, gold_button);
 
 		var test = new MessageEmbed();
 		test.setFooter('Skyblock Simulator');
@@ -560,8 +486,7 @@ module.exports = {
 		test.setDescription(`🎯 Score: **${score}**\n\n${mapArray(map)}`);
 
 		// If puzzle or door is near, interact button activates
-		row1.components[2].disabled =
-			nearPuzzle()[0] || nearDoor()[0] ? false : true;
+		row1.components[2].disabled = nearPuzzle()[0] || nearDoor()[0] ? false : true;
 		// If enemy is near, fight button activates
 		row1.components[0].disabled = nearEnemy()[0] ? false : true;
 
@@ -574,60 +499,24 @@ module.exports = {
 		});
 
 		const row3 = new MessageActionRow().addComponents(
-			new MessageButton()
-				.setCustomId('1')
-				.setLabel('X')
-				.setStyle('SECONDARY'),
-			new MessageButton()
-				.setCustomId('2')
-				.setLabel('X')
-				.setStyle('SECONDARY'),
-			new MessageButton()
-				.setCustomId('3')
-				.setLabel('X')
-				.setStyle('SECONDARY')
+			new MessageButton().setCustomId('1').setLabel('X').setStyle('SECONDARY'),
+			new MessageButton().setCustomId('2').setLabel('X').setStyle('SECONDARY'),
+			new MessageButton().setCustomId('3').setLabel('X').setStyle('SECONDARY')
 		);
 		const row4 = new MessageActionRow().addComponents(
-			new MessageButton()
-				.setCustomId('4')
-				.setLabel('X')
-				.setStyle('SECONDARY'),
-			new MessageButton()
-				.setCustomId('5')
-				.setLabel('X')
-				.setStyle('SECONDARY'),
-			new MessageButton()
-				.setCustomId('6')
-				.setLabel('X')
-				.setStyle('SECONDARY')
+			new MessageButton().setCustomId('4').setLabel('X').setStyle('SECONDARY'),
+			new MessageButton().setCustomId('5').setLabel('X').setStyle('SECONDARY'),
+			new MessageButton().setCustomId('6').setLabel('X').setStyle('SECONDARY')
 		);
 		const row5 = new MessageActionRow().addComponents(
-			new MessageButton()
-				.setCustomId('7')
-				.setLabel('X')
-				.setStyle('SECONDARY'),
-			new MessageButton()
-				.setCustomId('8')
-				.setLabel('X')
-				.setStyle('SECONDARY'),
-			new MessageButton()
-				.setCustomId('9')
-				.setLabel('X')
-				.setStyle('SECONDARY')
+			new MessageButton().setCustomId('7').setLabel('X').setStyle('SECONDARY'),
+			new MessageButton().setCustomId('8').setLabel('X').setStyle('SECONDARY'),
+			new MessageButton().setCustomId('9').setLabel('X').setStyle('SECONDARY')
 		);
 		const row6 = new MessageActionRow().addComponents(
-			new MessageButton()
-				.setCustomId('A')
-				.setLabel('A')
-				.setStyle('SECONDARY'),
-			new MessageButton()
-				.setCustomId('B')
-				.setLabel('B')
-				.setStyle('SECONDARY'),
-			new MessageButton()
-				.setCustomId('C')
-				.setLabel('C')
-				.setStyle('SECONDARY')
+			new MessageButton().setCustomId('A').setLabel('A').setStyle('SECONDARY'),
+			new MessageButton().setCustomId('B').setLabel('B').setStyle('SECONDARY'),
+			new MessageButton().setCustomId('C').setLabel('C').setStyle('SECONDARY')
 		);
 
 		const fog = '🌫️';
@@ -849,42 +738,28 @@ module.exports = {
 
 				if (rowPick == 0) {
 					if (columnPick == 0) row3.components[0].disabled = true;
-					else if (columnPick == 1)
-						row3.components[1].disabled = true;
-					else if (columnPick == 2)
-						row3.components[2].disabled = true;
+					else if (columnPick == 1) row3.components[1].disabled = true;
+					else if (columnPick == 2) row3.components[2].disabled = true;
 				} else if (rowPick == 1) {
 					if (columnPick == 0) row4.components[0].disabled = true;
-					else if (columnPick == 1)
-						row4.components[1].disabled = true;
-					else if (columnPick == 2)
-						row4.components[2].disabled = true;
+					else if (columnPick == 1) row4.components[1].disabled = true;
+					else if (columnPick == 2) row4.components[2].disabled = true;
 				} else if (rowPick == 2) {
 					if (columnPick == 0) row5.components[0].disabled = true;
-					else if (columnPick == 1)
-						row5.components[1].disabled = true;
-					else if (columnPick == 2)
-						row5.components[2].disabled = true;
+					else if (columnPick == 1) row5.components[1].disabled = true;
+					else if (columnPick == 2) row5.components[2].disabled = true;
 				}
 
 				let [W, E] = wincheckTTT();
 
 				if (W) {
-					const txt =
-						E == '🟩'
-							? `You Won!!`
-							: E
-							? `You Lost ...`
-							: `You Tied`;
+					const txt = E == '🟩' ? `You Won!!` : E ? `You Lost ...` : `You Tied`;
 					if (E == '🟩' || !E) {
 						inTTT = false;
 						score += 30;
 						//await menu.edit({ embeds: [test], components: [row1, row2] })
 						//await sleep(1000)
-						test.description =
-							`🎯 Score: **${score}** (+30)` +
-							'\n\n' +
-							mapArray();
+						test.description = `🎯 Score: **${score}** (+30)` + '\n\n' + mapArray();
 
 						table = [
 							[fog, fog, fog],
@@ -909,10 +784,7 @@ module.exports = {
 						runFailed = false;
 						inTTT = false;
 						score -= 30;
-						test.description =
-							`🎯 Score: **${score}** (-30)` +
-							'\n\n' +
-							mapArray();
+						test.description = `🎯 Score: **${score}** (-30)` + '\n\n' + mapArray();
 						table = [
 							[fog, fog, fog],
 							[fog, fog, fog],
@@ -940,19 +812,13 @@ module.exports = {
 				let [w, e] = wincheckTTT();
 
 				if (w) {
-					const txt =
-						e == '🟩'
-							? `You Won!!`
-							: e
-							? `You Lost ...`
-							: `You Tied`;
+					const txt = e == '🟩' ? `You Won!!` : e ? `You Lost ...` : `You Tied`;
 					if (e == '🟩' || !e) {
 						inTTT = false;
 						test.description += `\n${txt}`;
 						//await menu.edit({ embeds: [test], components: [row1, row2] })
 						//await sleep(1000)
-						test.description =
-							`🎯 Score: **${score}**` + '\n\n' + mapArray();
+						test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray();
 
 						table = [
 							[fog, fog, fog],
@@ -977,10 +843,7 @@ module.exports = {
 						runFailed = false;
 						inTTT = false;
 						score -= 30;
-						test.description =
-							`🎯 Score: **${score}** (-30)` +
-							'\n\n' +
-							mapArray();
+						test.description = `🎯 Score: **${score}** (-30)` + '\n\n' + mapArray();
 						table = [
 							[fog, fog, fog],
 							[fog, fog, fog],
@@ -1037,8 +900,7 @@ module.exports = {
 					//    }
 					await sleep(1000);
 					score += 30;
-					test.description =
-						`🎯 Score: **${score}** (+30)` + '\n\n' + mapArray();
+					test.description = `🎯 Score: **${score}** (+30)` + '\n\n' + mapArray();
 
 					return await menu.edit({
 						embeds: [test],
@@ -1048,8 +910,7 @@ module.exports = {
 					runFailed = false;
 					inQuiz = false;
 					score -= 30;
-					test.description =
-						`🎯 Score: **${score}** (-30)` + '\n\n' + mapArray();
+					test.description = `🎯 Score: **${score}** (-30)` + '\n\n' + mapArray();
 					//    if(noButtonedit == false) {
 					await menu.edit({
 						embeds: [test],
@@ -1057,34 +918,21 @@ module.exports = {
 					});
 					//    }
 				}
-			} else if (
-				id == 'up' ||
-				id == 'left' ||
-				id == 'right' ||
-				id == 'down'
-			) {
+			} else if (id == 'up' || id == 'left' || id == 'right' || id == 'down') {
 				const locationAndPuzzleCheck = movePlayer(id, false);
 				location = locationAndPuzzleCheck[0];
 				var puzzleOrNot = locationAndPuzzleCheck[1];
 				test.fields = [];
-				test.description =
-					`🎯 Score: **${score}**` + '\n\n' + mapArray();
+				test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray();
 			} else if (id == 'attack') {
 				const direction = nearEnemy()[1];
 				let fightEnded = false;
 
 				if (bossFight) {
-					let pdmg = Math.floor(
-						(5 + pstats.damage) *
-							(1 + pstats.strength / 100) *
-							(1 + combatlvl * 0.04)
-					);
+					let pdmg = Math.floor((5 + pstats.damage) * (1 + pstats.strength / 100) * (1 + combatlvl * 0.04));
 
 					const crit = isCrit(critchance); //Change Variable for Crit Chance and change way how crit returns
-					if (crit)
-						pdmg = Math.floor(
-							pdmg * (1 + pstats.crit_damage / 100)
-						);
+					if (crit) pdmg = Math.floor(pdmg * (1 + pstats.crit_damage / 100));
 
 					php = dmgtaken(php, mdmg); //php = player health, pdmg = playerdmg
 					mhp = dmgdealt(mhp, pdmg); //mhp = mob health, mdmg = mod damage
@@ -1096,9 +944,7 @@ module.exports = {
 					test.addField(
 						`Battle`,
 						`Player Health: ❤️ ${php} (- ${mdmg})
-                Boss Health: ❤️ ${mhp} (-${
-							crit ? '<:crit:870306942806020106>' : ''
-						} ${pdmg})`
+                Boss Health: ❤️ ${mhp} (-${crit ? '<:crit:870306942806020106>' : ''} ${pdmg})`
 					);
 
 					//   if(noButtonedit == false) {
@@ -1110,10 +956,7 @@ module.exports = {
 						fightEnded = true;
 						test.fields = [];
 						test.setColor('ORANGE');
-						test.addField(
-							`\u200B`,
-							`Killed the Boss with **❤️ ${php}** left and earned Combat XP`
-						); //Add combat xp var
+						test.addField(`\u200B`, `Killed the Boss with **❤️ ${php}** left and earned Combat XP`); //Add combat xp var
 						await collection.updateOne(
 							//Add Combat XP from enemy Kill (do once mobs decided)
 							{ _id: interaction.user.id },
@@ -1130,10 +973,7 @@ module.exports = {
 					} else if (php <= 0) {
 						test.fields = [];
 						test.setColor('RED');
-						test.addField(
-							`\u200B`,
-							`Died to the Boss which had **❤️ ${mhp}** left.`
-						);
+						test.addField(`\u200B`, `Died to the Boss which had **❤️ ${mhp}** left.`);
 						runFailed = true;
 						return collector.stop();
 					}
@@ -1174,11 +1014,7 @@ module.exports = {
 							lootrow.addComponents(diamond_button);
 							lootrow.addComponents(emerald_button);
 							preclaim = true;
-						} else if (
-							floor == 3 &&
-							score >= 150 &&
-							preclaim == false
-						) {
+						} else if (floor == 3 && score >= 150 && preclaim == false) {
 							diamond_loot = lt.diamond.roll(pstats.magic_find);
 							if (isNaN(diamond_loot)) {
 								test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot}\n**`;
@@ -1197,17 +1033,10 @@ module.exports = {
 					}
 				} else {
 					// START FIGHT
-					let pdmg = Math.floor(
-						(5 + pstats.damage) *
-							(1 + pstats.strength / 100) *
-							(1 + combatlvl * 0.04)
-					);
+					let pdmg = Math.floor((5 + pstats.damage) * (1 + pstats.strength / 100) * (1 + combatlvl * 0.04));
 
 					const crit = isCrit(critchance); //Change Variable for Crit Chance and change way how crit returns
-					if (crit)
-						pdmg = Math.floor(
-							pdmg * (1 + pstats.crit_damage / 100)
-						);
+					if (crit) pdmg = Math.floor(pdmg * (1 + pstats.crit_damage / 100));
 
 					php = dmgtaken(php, mdmg); //php = player health, pdmg = playerdmg
 					mhp = dmgdealt(mhp, pdmg); //mhp = mob health, mdmg = mod damage
@@ -1219,9 +1048,7 @@ module.exports = {
 					test.addField(
 						`Battle`,
 						`Player Health: ❤️ ${php} (- ${mdmg})
-                Mob Health: ❤️ ${mhp} (-${
-							crit ? '<:crit:870306942806020106>' : ''
-						} ${pdmg})`
+                Mob Health: ❤️ ${mhp} (-${crit ? '<:crit:870306942806020106>' : ''} ${pdmg})`
 					);
 
 					// when still in fight locks movement so he can't get out the fight
@@ -1237,10 +1064,7 @@ module.exports = {
 						score += 20;
 						test.fields = [];
 						test.setColor('ORANGE');
-						test.addField(
-							`\u200B`,
-							`Killed the Enemy with **❤️ ${php}** left and earned Combat XP`
-						); //Add combat xp var
+						test.addField(`\u200B`, `Killed the Enemy with **❤️ ${php}** left and earned Combat XP`); //Add combat xp var
 						await collection.updateOne(
 							//Add Combat XP from enemy Kill (do once mobs decided)
 							{ _id: interaction.user.id },
@@ -1264,10 +1088,7 @@ module.exports = {
 					} else if (php <= 0) {
 						test.fields = [];
 						test.setColor('RED');
-						test.addField(
-							`\u200B`,
-							`Died to the Enemy which had **❤️ ${mhp}** left.`
-						);
+						test.addField(`\u200B`, `Died to the Enemy which had **❤️ ${mhp}** left.`);
 						runFailed = true;
 						return collector.stop();
 					}
@@ -1291,13 +1112,9 @@ module.exports = {
 						}
 						// console.log(direction + 'dir')
 						location = movePlayer(direction, true)[0]; // replace the mob emoji only after mob is killed
-						test.description =
-							`🎯 Score: **${score}** (+20)` +
-							'\n\n' +
-							mapArray();
+						test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray();
 					}
-					test.description =
-						`🎯 Score: **${score}**` + '\n\n' + mapArray();
+					test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray();
 					menu.edit({ embeds: [test], components: [row1, row2] }); // Components need to get adjusted might be wrong
 				}
 			} else if (id == 'interact') {
@@ -1323,8 +1140,7 @@ module.exports = {
 					const direction = nearPuzzle()[1];
 
 					// START PUZZLE
-					let puzzle =
-						puzzles[Math.floor(Math.random() * puzzles.length)]; // get random puzzle
+					let puzzle = puzzles[Math.floor(Math.random() * puzzles.length)]; // get random puzzle
 					//  console.log(puzzle)
 
 					if (puzzle == 'ttt') {
@@ -1335,31 +1151,20 @@ module.exports = {
 						];
 						const [rowPick, columnPick] = randomPick;
 
-						test.setDescription(
-							updateTTT(rowPick, columnPick, false)
-						);
+						test.setDescription(updateTTT(rowPick, columnPick, false));
 
 						if (rowPick == 0) {
-							if (columnPick == 0)
-								row3.components[0].disabled = true;
-							else if (columnPick == 1)
-								row3.components[1].disabled = true;
-							else if (columnPick == 2)
-								row3.components[2].disabled = true;
+							if (columnPick == 0) row3.components[0].disabled = true;
+							else if (columnPick == 1) row3.components[1].disabled = true;
+							else if (columnPick == 2) row3.components[2].disabled = true;
 						} else if (rowPick == 1) {
-							if (columnPick == 0)
-								row4.components[0].disabled = true;
-							else if (columnPick == 1)
-								row4.components[1].disabled = true;
-							else if (columnPick == 2)
-								row4.components[2].disabled = true;
+							if (columnPick == 0) row4.components[0].disabled = true;
+							else if (columnPick == 1) row4.components[1].disabled = true;
+							else if (columnPick == 2) row4.components[2].disabled = true;
 						} else if (rowPick == 2) {
-							if (columnPick == 0)
-								row5.components[0].disabled = true;
-							else if (columnPick == 1)
-								row5.components[1].disabled = true;
-							else if (columnPick == 2)
-								row5.components[2].disabled = true;
+							if (columnPick == 0) row5.components[0].disabled = true;
+							else if (columnPick == 1) row5.components[1].disabled = true;
+							else if (columnPick == 2) row5.components[2].disabled = true;
 						}
 
 						// if(noButtonedit == false) {
@@ -1371,8 +1176,7 @@ module.exports = {
 					} else if (puzzle == 'quiz') {
 						inQuiz = true;
 
-						quiz =
-							quizzes[Math.floor(Math.random() * quizzes.length)]; // Gets random quiz
+						quiz = quizzes[Math.floor(Math.random() * quizzes.length)]; // Gets random quiz
 						console.log(quiz);
 						randomOptions = shuffle(quiz.options); // Shuffle the asnwers
 
@@ -1395,9 +1199,7 @@ module.exports = {
 					}
 
 					location = movePlayer(direction, true)[0]; // replace the mob emoji only after mob is killed
-					if (!inTTT && !inQuiz)
-						test.description =
-							`🎯 Score: **${score}**` + '\n\n' + mapArray();
+					if (!inTTT && !inQuiz) test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray();
 				}
 			} else if (id == 'cancel') {
 				runCancelled = true;
@@ -1405,8 +1207,7 @@ module.exports = {
 			}
 
 			// If puzzle or door is near, interact button activates
-			row1.components[2].disabled =
-				nearPuzzle()[0] || nearDoor()[0] ? false : true;
+			row1.components[2].disabled = nearPuzzle()[0] || nearDoor()[0] ? false : true;
 			// If enemy is near, fight button activates
 			row1.components[0].disabled = nearEnemy()[0] ? false : true;
 
@@ -1438,9 +1239,7 @@ module.exports = {
 
 					const lootembed = new MessageEmbed()
 						.setTitle(`Floor ${floor} Finished`)
-						.setDescription(
-							`<:coins:861974605203636253> **${loot}** Coins added to your Profile.`
-						)
+						.setDescription(`<:coins:861974605203636253> **${loot}** Coins added to your Profile.`)
 						.setColor('GREEN')
 						.setFooter('Skyblock Simulator');
 					//if(noButtonedit == false) {
@@ -1457,16 +1256,11 @@ module.exports = {
 
 					const updatePlayer = addItem(sellitem, amount, player);
 
-					await collection.replaceOne(
-						{ _id: interaction.user.id },
-						updatePlayer
-					);
+					await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
 
 					const lootembed = new MessageEmbed()
 						.setTitle(`Floor ${floor} Finished`)
-						.setDescription(
-							`<:recomb:881094744183275540> **${loot}** added to your Profile.`
-						)
+						.setDescription(`<:recomb:881094744183275540> **${loot}** added to your Profile.`)
 						.setColor('GREEN')
 						.setFooter('Skyblock Simulator');
 					// if(noButtonedit == false) {
@@ -1478,9 +1272,7 @@ module.exports = {
 					if (loot.includes('Armor') && choosen == true) {
 						//handle armor here
 						let item = dungloot[loot];
-						let item2 = player.data.inventory.armor.find(
-							(armors) => armors.name == loot
-						);
+						let item2 = player.data.inventory.armor.find((armors) => armors.name == loot);
 
 						if (item2 && item2.name == loot) {
 							await collection.updateOne(
@@ -1515,8 +1307,7 @@ module.exports = {
 											crit_chance: item.crit_chance,
 											crit_damage: item.crit_damage,
 											magic_find: item.magic_find,
-											sea_creature_chance:
-												item.sea_creature_chance,
+											sea_creature_chance: item.sea_creature_chance,
 											recombobulated: item.recombobulated,
 											reforge: item.reforge,
 										},
@@ -1527,9 +1318,7 @@ module.exports = {
 
 							const lootembed = new MessageEmbed()
 								.setTitle(`Floor ${floor} Finished`)
-								.setDescription(
-									`<:tank:852079613051666472> **${loot}** added to your Profile.`
-								)
+								.setDescription(`<:tank:852079613051666472> **${loot}** added to your Profile.`)
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
 							//   if(noButtonedit == false) {
@@ -1547,9 +1336,7 @@ module.exports = {
 					) {
 						//handle sword here
 						let item = dungloot[loot];
-						let item2 = player.data.inventory.sword.find(
-							(swords) => swords.name == loot
-						);
+						let item2 = player.data.inventory.sword.find((swords) => swords.name == loot);
 
 						if (item2 && item2.name == loot) {
 							await collection.updateOne(
@@ -1592,9 +1379,7 @@ module.exports = {
 
 							const lootembed = new MessageEmbed()
 								.setTitle(`Floor ${floor} Finished`)
-								.setDescription(
-									`<:berserker:852079613052059658> **${loot}** added to your Profile.`
-								)
+								.setDescription(`<:berserker:852079613052059658> **${loot}** added to your Profile.`)
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
 							//  if(noButtonedit == false) {
@@ -1611,14 +1396,10 @@ module.exports = {
 			if (puzzleOrNot) {
 				test.addField('Secret Found', '\u200B');
 				score += 20;
-				test.description =
-					`🎯 Score: **${score}** (+20)` + '\n\n' + mapArray();
+				test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray();
 			}
 			if (!inTTT && !inQuiz && !bossFight)
-				return (
-					test.setColor('GREY'),
-					menu.edit({ embeds: [test], components: [row1, row2] })
-				);
+				return test.setColor('GREY'), menu.edit({ embeds: [test], components: [row1, row2] });
 		});
 		collector.on('end', async (collected) => {
 			try {
@@ -1648,44 +1429,35 @@ module.exports = {
 				}
 
 				if (runFinished) {
-					if (
-						player.data.dungeons.class.selected.name == 'Assassin'
-					) {
+					if (player.data.dungeons.class.selected.name == 'Assassin') {
 						await collection.updateOne(
 							{ _id: interaction.user.id },
 							{
 								$inc: {
 									'data.dungeons.class.selected.xp': xpearned,
-									'data.dungeons.class.available.assassin.xp':
-										xpearned,
+									'data.dungeons.class.available.assassin.xp': xpearned,
 								},
 							},
 							{ upsert: true }
 						);
-					} else if (
-						player.data.dungeons.class.selected.xp == 'Tank'
-					) {
+					} else if (player.data.dungeons.class.selected.xp == 'Tank') {
 						await collection.updateOne(
 							{ _id: interaction.user.id },
 							{
 								$inc: {
 									'data.dungeons.class.selected.xp': xpearned,
-									'data.dungeons.class.available.tank.xp':
-										xpearned,
+									'data.dungeons.class.available.tank.xp': xpearned,
 								},
 							},
 							{ upsert: true }
 						);
-					} else if (
-						player.data.dungeons.class.selected.xp == 'Berserker'
-					) {
+					} else if (player.data.dungeons.class.selected.xp == 'Berserker') {
 						await collection.updateOne(
 							{ _id: interaction.user.id },
 							{
 								$inc: {
 									'data.dungeons.class.selected.xp': xpearned,
-									'data.dungeons.class.available.berserker.xp':
-										xpearned,
+									'data.dungeons.class.available.berserker.xp': xpearned,
 								},
 							},
 							{ upsert: true }
@@ -1711,22 +1483,13 @@ module.exports = {
 				);
 				test.fields = [];
 				if (runFailed) {
-					test.addField(
-						'Dungeon Run Over',
-						'**Reason**\n* Died to Mob/Boss'
-					);
+					test.addField('Dungeon Run Over', '**Reason**\n* Died to Mob/Boss');
 				} else if (runCancelled) {
-					test.addField(
-						'Dungeon Run Over',
-						'**Reason**\n* Timed out\n* Cancelled'
-					);
+					test.addField('Dungeon Run Over', '**Reason**\n* Timed out\n* Cancelled');
 				} else if (runFinished) {
 					return;
 				} else if (runiscrashed) {
-					test.addField(
-						'Dungeon Run Crashed',
-						'**Reason**\n* User spammed Button'
-					);
+					test.addField('Dungeon Run Crashed', '**Reason**\n* User spammed Button');
 				}
 				test.setColor('RED');
 				await menu.edit({ embeds: [test], components: [] });
@@ -1767,10 +1530,8 @@ function addItem(sellitem, amount, player) {
 }
 
 num = (num) => {
-	if (num >= 1000000000)
-		return (num / 1000000000).toFixed(1).replace(/.0$/, '') + 'B';
-	if (num >= 1000000)
-		return (num / 1000000).toFixed(1).replace(/.0$/, '') + 'M';
+	if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace(/.0$/, '') + 'B';
+	if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/.0$/, '') + 'M';
 	if (num >= 1000) return (num / 1000).toFixed(1).replace(/.0$/, '') + 'K';
 	return num;
 };

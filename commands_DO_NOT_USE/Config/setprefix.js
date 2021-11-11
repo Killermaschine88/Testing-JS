@@ -12,9 +12,7 @@ module.exports = {
 	aliases: ['sp'],
 	async execute(client, message, args) {
 		if (!message.member.permissions.has('ADMINISTRATOR'))
-			return message.channel.send(
-				'You are missing the Permission `ADMINISTRATOR`.'
-			);
+			return message.channel.send('You are missing the Permission `ADMINISTRATOR`.');
 
 		const id = message.guild.id;
 		let gprefix = await prefixx.get(id);
@@ -36,9 +34,7 @@ module.exports = {
 		}
 
 		if (args[0].length > 3) {
-			message.channel.send(
-				`Please choose a Prefix Below \`3 Characters\`.\nYou entered: \`${args[0]}\``
-			);
+			message.channel.send(`Please choose a Prefix Below \`3 Characters\`.\nYou entered: \`${args[0]}\``);
 			return;
 		} else {
 			await prefixx.set(id, args[0]);

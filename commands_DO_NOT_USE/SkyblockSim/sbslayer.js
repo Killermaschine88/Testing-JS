@@ -21,9 +21,7 @@ module.exports = {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(
-					`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``
-				);
+				.setDescription(`Create a Profile using \`${gprefix}sbstart\` or \`${gprefix}sbcreate\``);
 
 			message.channel.send({ embeds: [noprofile] });
 			return;
@@ -33,9 +31,7 @@ module.exports = {
 			.setTitle('Skyblock Simulator Slayer Menu')
 			.setColor('90EE90')
 			.setFooter('Skyblock Simulator')
-			.setDescription(
-				'Press the Corresponding Emoji for the Slayer you want to do.'
-			);
+			.setDescription('Press the Corresponding Emoji for the Slayer you want to do.');
 
 		const row = new Discord.MessageActionRow().addComponents(
 			new Discord.MessageButton()
@@ -58,10 +54,7 @@ module.exports = {
 				.setCustomId('enderman')
 				.setLabel('Voidgloom')
 				.setStyle('PRIMARY'),
-			new Discord.MessageButton()
-				.setCustomId('end')
-				.setLabel('Cancel')
-				.setStyle('DANGER')
+			new Discord.MessageButton().setCustomId('end').setLabel('Cancel').setStyle('DANGER')
 		);
 		const menu = await message.channel.send({
 			embeds: [start],
@@ -96,9 +89,7 @@ module.exports = {
 				} else if (i.customId === 'enderman') {
 					choosen = 'Voidgloom';
 				} else if (i.customId === 'end') {
-					const cancelled = new Discord.MessageEmbed()
-						.setTitle('Menu cancelled')
-						.setColor('RED');
+					const cancelled = new Discord.MessageEmbed().setTitle('Menu cancelled').setColor('RED');
 					menu.edit({ components: [], embeds: [cancelled] });
 					return;
 				}
@@ -115,26 +106,11 @@ module.exports = {
 					`Decide the Tier of ${choosen} Slayer you want to fight.\n\n**Cost per Slayer**\nT1: **2.5k Coins**\nT2: **7.5k Coins**\nT3: **10kCoins**\nT4: **50k Coins**`
 				);
 			const trow = new Discord.MessageActionRow().addComponents(
-				new Discord.MessageButton()
-					.setCustomId('t1')
-					.setLabel('Tier 1')
-					.setStyle('PRIMARY'),
-				new Discord.MessageButton()
-					.setCustomId('t2')
-					.setLabel('Tier 2')
-					.setStyle('PRIMARY'),
-				new Discord.MessageButton()
-					.setCustomId('t3')
-					.setLabel('Tier 3')
-					.setStyle('PRIMARY'),
-				new Discord.MessageButton()
-					.setCustomId('t4')
-					.setLabel('Tier 4')
-					.setStyle('PRIMARY'),
-				new Discord.MessageButton()
-					.setCustomId('end')
-					.setLabel('Cancel')
-					.setStyle('DANGER')
+				new Discord.MessageButton().setCustomId('t1').setLabel('Tier 1').setStyle('PRIMARY'),
+				new Discord.MessageButton().setCustomId('t2').setLabel('Tier 2').setStyle('PRIMARY'),
+				new Discord.MessageButton().setCustomId('t3').setLabel('Tier 3').setStyle('PRIMARY'),
+				new Discord.MessageButton().setCustomId('t4').setLabel('Tier 4').setStyle('PRIMARY'),
+				new Discord.MessageButton().setCustomId('end').setLabel('Cancel').setStyle('DANGER')
 			);
 			menu.edit({ embeds: [tembed], components: [trow] });
 		}
@@ -155,9 +131,7 @@ module.exports = {
 				} else if (i.customId === 't4') {
 					tier = 'T4';
 				} else if (i.customId === 'end') {
-					const cancelled = new Discord.MessageEmbed()
-						.setTitle('Menu cancelled')
-						.setColor('RED');
+					const cancelled = new Discord.MessageEmbed().setTitle('Menu cancelled').setColor('RED');
 					menu.edit({ components: [], embeds: [cancelled] });
 					return;
 				}
@@ -180,20 +154,14 @@ module.exports = {
 		}
 
 		if (!slayerxp) {
-			const cancelled = new Discord.MessageEmbed()
-				.setTitle('Menu cancelled')
-				.setColor('RED');
+			const cancelled = new Discord.MessageEmbed().setTitle('Menu cancelled').setColor('RED');
 			menu.edit({ components: [], embeds: [cancelled] });
 			return;
 		}
 
 		if (choosen === 'Revenant' && coins > slayercost) {
 			color = '90EE90';
-			await collection1.updateOne(
-				{ _id: message.author.id },
-				{ $inc: { coins: -slayercost } },
-				{ upsert: true }
-			);
+			await collection1.updateOne({ _id: message.author.id }, { $inc: { coins: -slayercost } }, { upsert: true });
 			await collection2.updateOne(
 				{ _id: message.author.id },
 				{ $inc: { zombiexp: slayerxp, zombiekills: 1 } },
@@ -201,11 +169,7 @@ module.exports = {
 			);
 		} else if (choosen === 'Tarantula' && coins > slayercost) {
 			color = 'GREY';
-			await collection1.updateOne(
-				{ _id: message.author.id },
-				{ $inc: { coins: -slayercost } },
-				{ upsert: true }
-			);
+			await collection1.updateOne({ _id: message.author.id }, { $inc: { coins: -slayercost } }, { upsert: true });
 			await collection2.updateOne(
 				{ _id: message.author.id },
 				{ $inc: { spiderxp: slayerxp, spiderkills: 1 } },
@@ -213,11 +177,7 @@ module.exports = {
 			);
 		} else if (choosen === 'Sven' && coins > slayercost) {
 			color = 'WHITE';
-			await collection1.updateOne(
-				{ _id: message.author.id },
-				{ $inc: { coins: -slayercost } },
-				{ upsert: true }
-			);
+			await collection1.updateOne({ _id: message.author.id }, { $inc: { coins: -slayercost } }, { upsert: true });
 			await collection2.updateOne(
 				{ _id: message.author.id },
 				{ $inc: { wolfxp: slayerxp, wolfkills: 1 } },
@@ -225,11 +185,7 @@ module.exports = {
 			);
 		} else if (choosen === 'Voidgloom' && coins > slayercost) {
 			color = 'PURPLE';
-			await collection1.updateOne(
-				{ _id: message.author.id },
-				{ $inc: { coins: -slayercost } },
-				{ upsert: true }
-			);
+			await collection1.updateOne({ _id: message.author.id }, { $inc: { coins: -slayercost } }, { upsert: true });
 			await collection2.updateOne(
 				{ _id: message.author.id },
 				{ $inc: { endermanxp: slayerxp, endermankills: 1 } },
@@ -241,9 +197,7 @@ module.exports = {
 				.setTitle('Insuffucicient Coins')
 				.setColor('RED')
 				.setFooter('Skyblock Simulator')
-				.setDescription(
-					`You can\'t afford to kill a **${tier} ${choosen}** Slayer!`
-				);
+				.setDescription(`You can\'t afford to kill a **${tier} ${choosen}** Slayer!`);
 			menu.edit({ embeds: [poor], components: [] });
 			return;
 		}
