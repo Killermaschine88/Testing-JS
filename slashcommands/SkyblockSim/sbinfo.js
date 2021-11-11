@@ -206,7 +206,7 @@ module.exports = {
 			)
 			.addField(
 				'Stats',
-				`Health: **\`${ps.health} ❤\`**\nDefense: \`${ps.defense} ❈\`\nDamage: \`${ps.damage} ⚔️\`\nStrength: \`${ps.strength} ❁\`\nCrit Chance: \`${ps.crit_chance} ☣\`\nCrit Damage: \`${ps.crit_damage} ☠\`\nMagic Find: \`${ps.magic_find} ✯\`\nSea Creature Chance: \`${ps.sea_creature_chance} α\`\nFishing Speed: \`${playerfishingspeed} 🎣\`\nMining Speed: \`${ps.mining_speed} ⸕\`\nMining Fortune: \`${ps.mining_fortune} ☘\``,
+				`Effective Health: **\`${ps.health} ❤\`\n**Health: **\`${ps.hp} ❤\`**\nDefense: \`${ps.defense} ❈\`\nDamage: \`${ps.damage} ⚔️\`\nStrength: \`${ps.strength} ❁\`\nCrit Chance: \`${ps.crit_chance} ☣\`\nCrit Damage: \`${ps.crit_damage} ☠\`\nMagic Find: \`${ps.magic_find} ✯\`\nSea Creature Chance: \`${ps.sea_creature_chance} α\`\nFishing Speed: \`${playerfishingspeed} 🎣\`\nMining Speed: \`${ps.mining_speed} ⸕\`\nMining Fortune: \`${ps.mining_fortune} ☘\``,
 				true
 			)
 			.addField('Location', `${player.data.misc.location}`, true);
@@ -282,10 +282,10 @@ module.exports = {
 							true
 						)
 						.addField(
-							'Stats',
-							`Health: **\`${ps.health} ❤\`**\nDefense: \`${ps.defense} ❈\`\nDamage: \`${ps.damage} ⚔️\`\nStrength: \`${ps.strength} ❁\`\nCrit Chance: \`${ps.crit_chance} ☣\`\nCrit Damage: \`${ps.crit_damage} ☠\`\nMagic Find: \`${ps.magic_find} ✯\`\nSea Creature Chance: \`${ps.sea_creature_chance} α\`\nFishing Speed: \`${playerfishingspeed} 🎣\`\nMining Speed: \`${ps.mining_speed} ⸕\`\nMining Fortune: \`${ps.mining_fortune} ☘\``,
-							true
-						)
+				'Stats',
+				`Effective Health: **\`${ps.health} ❤\`\n**Health: **\`${ps.hp} ❤\`**\nDefense: \`${ps.defense} ❈\`\nDamage: \`${ps.damage} ⚔️\`\nStrength: \`${ps.strength} ❁\`\nCrit Chance: \`${ps.crit_chance} ☣\`\nCrit Damage: \`${ps.crit_damage} ☠\`\nMagic Find: \`${ps.magic_find} ✯\`\nSea Creature Chance: \`${ps.sea_creature_chance} α\`\nFishing Speed: \`${playerfishingspeed} 🎣\`\nMining Speed: \`${ps.mining_speed} ⸕\`\nMining Fortune: \`${ps.mining_fortune} ☘\``,
+				true
+			)
 						.addField('Location', `${player.data.misc.location}`, true);
 
 					menu.edit({ embeds: [main] });

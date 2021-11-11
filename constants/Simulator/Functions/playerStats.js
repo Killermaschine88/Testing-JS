@@ -23,6 +23,7 @@ async function playerStats(player) {
 
 	//Base Stats
 	let health = stats.health;
+  let hp = 0;
 	let defense = stats.defense;
 	let damage = stats.damage;
 	let strength = stats.strength;
@@ -108,10 +109,13 @@ async function playerStats(player) {
 		mining_fortune = Math.floor(mining_fortune * 1.1);
 	}
 
+  hp = health
+
 	health = Math.floor(health * (1 + defense / 100));
 
 	return {
 		health,
+    hp,
 		defense,
 		damage,
 		strength,
