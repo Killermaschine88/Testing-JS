@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const sets = require('../../constants/Simulator/Json/dungeonloot.json');
 
 module.exports = {
 	name: 'sbcraft',
@@ -43,7 +44,7 @@ module.exports = {
 		// Wait for a selectbox option to be chosen and then
 		// send a leaderboard of the selected type
 		const filter = (i) =>
-			i.customId === 'craftmemu' && i.user.id === interaction.user.id;
+			i.customId === 'craftmenu' && i.user.id === interaction.user.id;
 		const leaderCollector =
 			await menu.createMessageComponentCollector({
 				filter,
@@ -51,15 +52,65 @@ module.exports = {
 				time: 300000,
 			});
 
-		leaderCollector.on('collect', async (collectedTypeInteraction) => {
-			console.log(collectedTypeInteraction)
+		leaderCollector.on('collect', async (i) => {
+      const inv = player.data.inventory.items
+      const inv2 = player.data.inventory.armor
+			const id = i.values[0]
+
+      if(inv.find(item => item.name == 'Shark Fin' && item.amount >= 100) && inv.find(item => item.name == 'Lilypad' && item.amount >= 100) && !inv2.find(armor => armor.name == 'Shark Scale Armor')) {
+        
+        const item = sets['Shark Scale Armor']
+        embed.setDescription('Crafted **Shark Scale Armor**');
+        embed.fields = [];
+        embed.setColor('GREEN');
+
+        collection.updateOne(
+						{ _id: interaction.user.id },
+						{
+							$push: {
+								'data.inventory.armor': {
+									name: 'Shark Scale Armor',
+									health: item.health,
+									defense: item.defense,
+									strength: item.strength,
+									crit_chance: item.crit_chance,
+									crit_damage: item.crit_damage,
+									magic_find: item.magic_find,
+									sea_creature_chance:
+										item.sea_creature_chance,
+									recombobulated: item.recombobulated,
+									reforge: 'None',
+								},
+							},
+						},
+						{ upsert: true }
+					);
+        await collection.updateOne(
+						{ _id: interaction.user.id, 'data.inventory.items.name': 'Shark Fin' },
+						{ $inc: { 'data.inventory.items.$.amount': -100 } },
+						{ upsert: true }
+					);
+        await collection.updateOne(
+						{ _id: interaction.user.id, 'data.inventory.items.name': 'Lilypad' },
+						{ $inc: { 'data.inventory.items.$.amount': -100 } },
+						{ upsert: true }
+					);
+        
+      } else if(id == 'next item') {
+        
+      } else {
+        embed.setDescription("Insufficient Amount of Items can't craft desired Item.");
+        embed.fields = [];
+        embed.setColor('RED');
+      }
+      
 
 			
 			
 
 			
 
-			await collectedTypeInteraction.update({ embeds: [embed], components: [] });
+			await i.update({ embeds: [embed], components: [] });
 		});
 
 		leaderCollector.on('end', async (collected) => {

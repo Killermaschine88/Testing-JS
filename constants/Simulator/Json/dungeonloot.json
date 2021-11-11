@@ -125,6 +125,18 @@
 		"coins": 10000000,
 		"reforge": "None"
 	},
+  "Shark Scale Armor": {
+		"recombobulated": false,
+		"health": 200,
+		"defense": 120,
+		"strength": 75,
+		"crit_chance": 25,
+		"crit_damage": 90,
+		"magic_find": 0,
+		"sea_creature_chance": 20,
+		"coins": 10000000,
+		"reforge": "None"
+	},
 	"Undead Sword": {
 		"recombobulated": false,
 		"damage": 20,
