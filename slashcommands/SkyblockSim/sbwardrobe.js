@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbwardrobe',
@@ -33,7 +34,7 @@ module.exports = {
 				.setTitle('Negative Number')
 				.setDescription(`You can\'t enter an negative Number.'`)
 				.setColor('RED')
-				.setFooter('Skyblock Simulator');
+				.setFooter(getFooter(player));
 
 			return interaction.editReply({ embeds: [errembed] });
 		}
@@ -45,7 +46,7 @@ module.exports = {
 					`You don\'t own a Sword with the Number \`${number}\`.\nCheck the Sword Category at \`/sb info\` to see what Items you own.`
 				)
 				.setColor('RED')
-				.setFooter('Skyblock Simulator');
+				.setFooter(getFooter(player));
 
 			return interaction.editReply({ embeds: [errembed] });
 		}
@@ -57,7 +58,7 @@ module.exports = {
 					`You don\'t own an Armor with the Number \`${number}\`.\nCheck the Armor Category at \`/sb info\` to see what Items you own.`
 				)
 				.setColor('RED')
-				.setFooter('Skyblock Simulator');
+				.setFooter(getFooter(player));
 
 			return interaction.editReply({ embeds: [errembed] });
 		}
@@ -92,7 +93,7 @@ module.exports = {
 				.setTitle('Sword Changed')
 				.setDescription(`Successfully changed equipped Sword to **${eqsword}**`)
 				.setColor('GREEN')
-				.setFooter('Skyblock Simulator');
+				.setFooter(getFooter(player));
 
 			return interaction.editReply({ embeds: [sucembed] });
 		} else if (type == 'armor') {
@@ -127,7 +128,7 @@ module.exports = {
 				.setTitle('Armor Changed')
 				.setDescription(`Successfully changed equipped Armor to **${eqarmor}**`)
 				.setColor('GREEN')
-				.setFooter('Skyblock Simulator');
+				.setFooter(getFooter(player));
 
 			return interaction.editReply({ embeds: [sucembed] });
 		}
