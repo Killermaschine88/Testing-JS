@@ -427,7 +427,7 @@ module.exports = {
 				const blazingwarp = new Discord.MessageEmbed()
 					.setTitle('Skyblock Simulator Blazing Fortress Areas')
 					.setFooter(getFooter(player))
-					.setColor(getColor(played))
+					.setColor(getColor(player))
 					.setDescription(
 						'**Available Areas (Combat Level)**\nand found Drops at the Areas\n\nMolten Castle (5) <:gold_nugget:869900883977183244><:gold:869126927011708929><:blaze_rod:869900884358860820>\nMolten Bridge (8) <:magma_cream:869900884144947201><:coal:869126927062028298><:bone:869900884405002270>\nLava Field (10) <:magma_cream:869900884144947201><:ghast_tear:869900884337905684>'
 					);
@@ -613,7 +613,7 @@ module.exports = {
 							const travelled = new Discord.MessageEmbed()
 								.setDescription(`Travelled to the **${location}**.`)
 								.setColor(getColor(player))
-								.setFooter(getFooter(played));
+								.setFooter(getFooter(player));
 							menu.edit({ embeds: [travelled], components: [] });
 						} else {
 							const cancelled = new Discord.MessageEmbed()
