@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbprogress',
@@ -30,8 +31,8 @@ module.exports = {
 
 		let embed = new Discord.MessageEmbed()
 			.setDescription(`**Skyblock Simulator Progress for <@!${id}>**`)
-			.setColor('90EE90')
-			.setFooter('Skyblock Simulator');
+			.setColor(getColor(player))
+			.setFooter(getFooter(player));
 
 		//Skills Completion
 		let lvl50xp = 55172425;
