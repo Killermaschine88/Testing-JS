@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const sets = require('../../constants/Simulator/Json/dungeonloot.json');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbcraft',
@@ -29,7 +30,8 @@ module.exports = {
 		const embed = new Discord.MessageEmbed()
 			.setTitle('Crafting')
 			.setDescription('Available Items with their respective Stats and Item Cost\n')
-			.setFooter('Skyblock Simulator');
+			.setFooter(getFooter(player))
+    .setColor(getColor(player))
 
 		const row = new Discord.MessageActionRow();
 

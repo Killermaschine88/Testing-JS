@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const cataLevel = require('../../constants/Simulator/Functions/dungeonlevel.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbclass',
@@ -36,8 +37,8 @@ module.exports = {
 
 		if (classchoosen === null) {
 			const classes = new Discord.MessageEmbed()
-				.setColor('GREY')
-				.setFooter('Skyblock Simulator')
+				.setColor(getColor(player))
+				.setFooter(getFooter(player))
 				.setDescription(
 					`**Available Classes and their Stats**\n\n**Assassin [${assassinlevel}]**\n2 Strength per Level\n\n**Berserker [${berserkerlevel}]**\n1 Strength and 1 Defense per Level\n\n**Tank [${tanklevel}]**\n1 Defense and 2 Health Per Level\n\n\n**Currently Selected**\nName: ${currentclass}\nXP: ${currentxp}`
 				);
@@ -82,8 +83,8 @@ module.exports = {
 
 		const selection = new Discord.MessageEmbed()
 			.setDescription(`Successfully switched Class to **${classchoosen}**.`)
-			.setColor('GREEN')
-			.setFooter('Skyblock Simulator');
+			.setColor(getColor(player))
+			.setFooter(getFooter(player));
 
 		interaction.editReply({ embeds: [selection] });
 	},

@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbdaily',
@@ -66,8 +67,8 @@ module.exports = {
 						`I have added <:coins:861974605203636253> **25k Coins** and <:gems:879264850348486696> **${gems} Gems** to your Profile but unfortunately, your Streak has reset. 😢\nYou will be able to claim it again in **24 Hours**`
 					);
 				}
-				failedstreak.setFooter(`Daily Streak: 1`);
-				failedstreak.setColor('GREEN');
+				failedstreak.setFooter(`${getFooter(player)}\nDaily Streak: 1`);
+				failedstreak.setColor(getColor(player));
 
 				interaction.editReply({ embeds: [failedstreak] });
 				return;
@@ -101,17 +102,18 @@ module.exports = {
 						`I have added <:coins:861974605203636253> **25k Coins** and <:gems:879264850348486696> **${gems} Gems** to your Profile.\nYou will be able to claim it again in **24 Hours**`
 					);
 				}
-				claimed.setFooter(`Daily Streak: ${player.data.misc.daily.streak + 1}`);
-				claimed.setColor('GREEN');
+				claimed.setFooter(`${getFooter(player)}\nDaily Streak: ${player.data.misc.daily.streak + 1}`);
+				claimed.setColor(getColor(player));
 
 				interaction.editReply({ embeds: [claimed] });
 				return;
 			}
 		} else {
 			const toearly = new Discord.MessageEmbed()
-				.setTitle("Can't claim Daily Reward yet")
-				.setDescription(`You can claim your Daily Reward again on <t:${next_claim}:f>`)
-				.setColor('RED');
+				toearly.setTitle("Can't claim Daily Reward yet")
+				toearly.setDescription(`You can claim your Daily Reward again on <t:${next_claim}:f>`)
+				toearly.setColor(getColor(player));
+      toearly.setFooter(getFooter(player))
 
 			interaction.editReply({ embeds: [toearly] });
 			return;
