@@ -43,10 +43,11 @@ module.exports = {
 		//farming = getLevelByXp(farming);
 		combat = getLevelByXp(combat);
 		fishing = getLevelByXp(fishing);
-		cata = catalvl(cata).level;
+		cata = catalvl(cata).level
 		classxp = catalvl(classxp).level;
 
-   // console.log(combat)
+    //console.log(combat)
+    //console.log(cata)
 
 		let salevel = mining.level + combat.level + fishing.level;
 		salevel = salevel / 3;
