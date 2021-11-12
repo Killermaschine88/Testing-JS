@@ -46,7 +46,7 @@ module.exports = {
 		cata = catalvl(cata).level;
 		classxp = catalvl(classxp).level;
 
-    //console.log(mining)
+   // console.log(combat)
 
 		let salevel = mining.level + combat.level + fishing.level;
 		salevel = salevel / 3;
@@ -204,7 +204,7 @@ module.exports = {
 			)
 			.addField(
 				`Skills [${sa}]`,
-				`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp} XP / ${mining.xpForNext} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp} XP / ${combat.xpForNext} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp} XP / ${fishing.xpForNext} XP**`,
+				`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xpCurrent} XP / ${mining.xpForNext} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xpCurrent} XP / ${combat.xpForNext} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xpCurrent} XP / ${fishing.xpForNext} XP**`,
 				true
 			)
 			.addField(
@@ -281,7 +281,7 @@ module.exports = {
 						)
 						.addField(
 				`Skills [${sa}]`,
-				`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp} XP / ${mining.xpForNext} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp} XP / ${combat.xpForNext} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp} XP / ${fishing.xpForNext} XP**`,
+				`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xpCurrent} XP / ${mining.xpForNext} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xpCurrent} XP / ${combat.xpForNext} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xpCurrent} XP / ${fishing.xpForNext} XP**`,
 				true
 			)
 						.addField(
