@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const dungloot = require('../../constants/Simulator/Json/dungeonloot.json');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbshop',
@@ -279,8 +280,8 @@ module.exports = {
 			.setDescription(
 				"Upgrades or Items you can buy will Show up here. (If nothing shows up then you can't buy anything)"
 			)
-			.setFooter('Skyblock Simulator')
-			.setColor('GREY');
+			.setFooter(getFooter(player))
+			.setColor(getColor(player));
 
 		//Rod Fields
 		if (rod.name == 'Fishing Rod') {
@@ -458,6 +459,7 @@ module.exports = {
 					if (gemsneeded != 0) {
 						const finished = new Discord.MessageEmbed()
 							.setTitle('Rod Upgarded')
+              .setFooter(getFooter(player))
 							.setDescription(`Purchased **${rodname}** for 50 Gems and ${amount} Lilypads.`)
 							.setColor('GREEN');
 
@@ -467,6 +469,7 @@ module.exports = {
 						});
 					} else {
 						const finished = new Discord.MessageEmbed()
+              .setFooter(getFooter(player))
 							.setTitle('Rod Upgarded')
 							.setDescription(`Purchased **${rodname}** for ${cost} Coins and ${amount} Lilypads.`)
 							.setColor('GREEN');
@@ -497,6 +500,7 @@ module.exports = {
 					);
 
 					const purchased = new Discord.MessageEmbed()
+            .setFooter(getFooter(playef))
 						.setDescription('Purchased Booster Cookie')
 						.setColor('GREEN');
 
@@ -534,7 +538,7 @@ module.exports = {
             `
 						)
 						.setColor('GREEN')
-						.setFooter('Skyblock Simulator');
+						.setFooter(getFooter(player));
 					return interaction.editReply({
 						embeds: [lootembed],
 						components: [],
@@ -569,13 +573,13 @@ module.exports = {
 					const lootembed = new Discord.MessageEmbed()
 						.setDescription(`**${choosen2}** purchased! Use \`/sb wardrobe\` to equip it.`)
 						.setColor('GREEN')
-						.setFooter('Skyblock Simulator');
+						.setFooter(getFooter(player));
 					return interaction.editReply({
 						embeds: [lootembed],
 						components: [],
 					});
 				} else {
-					const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
+					const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED').setFooter(getFooter(player));
 					interaction.editReply({
 						embeds: [cancelled],
 						components: [],

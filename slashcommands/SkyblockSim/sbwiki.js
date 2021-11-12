@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbwiki',
@@ -17,8 +18,8 @@ module.exports = {
 
 		const embed = new Discord.MessageEmbed()
 			.setTitle('Skyblock Simulator Wiki')
-			.setColor('90EE90')
-			.setFooter('Skyblock Simulator')
+			.setColor(getColor('Skyblock'))
+			.setFooter(getFooter('Skyblock'))
 			.setDescription('Press the corresponding Button to see the Information of the desired Item.');
 
 		const button1 = new Discord.MessageButton().setCustomId('general').setLabel('General Info').setStyle('PRIMARY');
@@ -54,15 +55,15 @@ module.exports = {
 					.setDescription(
 						'**Available Commands**\n`sb class`, `sb daily`, `sb dungeons`, `sb grind`, `sb info`, `sb reforge`, `sb sell`, `sb settings`, `sb shop`, `sb start`, `sb wardrobe`, `sb warp`, `sb wiki`, `sb fishing`, `sb mining`'
 					)
-					.setColor('90EE90')
-					.setFooter('Skyblock Simulator');
+					.setColor(getColor('Skyblock'))
+					.setFooter(getFooter('Skyblock'));
 
 				menu.edit({ embeds: [generalembed] });
 			} else if (i.customId == 'symbols') {
 				const symbolembed = new Discord.MessageEmbed()
 					.setTitle('Symbol Information')
-					.setColor('90EE90')
-					.setFooter('Skyblock Simulator')
+					.setColor(getColor('Skyblock'))
+					.setFooter(getFooter('Skyblock'))
 					.setDescription(
 						'`❤ Health`\n`❈ Defense`\n`⚔️ Damage`\n`❁ Strength`\n`☣ Crit Chance`\n`☠ Crit Damage`\n`✯ Magic Find`\n`α Sea Creature Chance`\n`🎣 Fishing Speed`\n`⸕ Mining Speed`\n`☘ Mining Fortune`'
 					);
@@ -73,8 +74,8 @@ module.exports = {
 
 				let eventembed = new Discord.MessageEmbed();
 				eventembed.setTitle('Event Information');
-				eventembed.setColor('90EE90');
-				eventembed.setFooter('Skyblock Simulator');
+				eventembed.setColor(getColor('Skyblock'));
+				eventembed.setFooter(getFooter('Skyblock'));
 				if (mf_event.enabled == false) {
 					eventembed.addField(
 						`Magic Find`,
@@ -95,7 +96,7 @@ module.exports = {
 				} else {
 					eventembed.addField(
 						`Shark Fishing`,
-						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 19:00 - 21:00 (7:00 pm - 9:00 pm)\nEvent Active: ${shark_event.enabled}\nEvent End: <t:${shark_event.end_event}:R>`
+						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 20:00 - 22:00 (8:00 pm - 10:00 pm)\nEvent Active: ${shark_event.enabled}\nEvent End: <t:${shark_event.end_event}:R>`
 					);
 				}
 
@@ -103,8 +104,8 @@ module.exports = {
 			} else if (i.customId == 'dungeons') {
 				let dungeonsembed = new Discord.MessageEmbed()
 					.setTitle('Dungeons Information')
-					.setColor('90EE90')
-					.setFooter('Skyblock Simulator')
+					.setColor(getColor('Skyblock'))
+					.setFooter(getFooter('Skyblock'))
 					.addField(
 						'Classes',
 						'Give bonuses inside Dungeon Runs\n\nAssassin (`2 ❁` per Class Level)\nBerserker (`1 ❁` and `1 ❈` per Class Level)\nTank (`1 ❈` and `2 ❤` per Class Level)',
@@ -131,8 +132,8 @@ module.exports = {
 			} else if (i.customId == 'reforges') {
 				let reforgeembed = new Discord.MessageEmbed()
 					.setTitle('Reforge Information')
-					.setColor('90EE90')
-					.setFooter('Skyblock Simulator')
+					.setColor(getColor('Skyblock'))
+					.setFooter(getFooter('Skyblock'))
 					.setDescription('**Format:** Reforge Stone Name (Reforge Bonus) [Reforge Name] {Item Origin}')
 					.addField(
 						'General Reforges',
