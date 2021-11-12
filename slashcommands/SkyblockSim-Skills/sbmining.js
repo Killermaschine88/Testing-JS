@@ -3,6 +3,7 @@ const emoji = require('../../constants/Simulator/Json/emojis.json');
 const mobs = require('../../constants/Simulator/Json/mobstats.json');
 const getLevel = require('../../constants/Simulator/Functions/skilllvl.js');
 const playerStats = require('../../constants/Simulator/Functions/playerStats.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbmining',
@@ -31,7 +32,7 @@ module.exports = {
 			const alreadymining = new Discord.MessageEmbed()
 				.setTitle("You are already Mining somewhere so i can't create another Mine for you")
 				.setColor('RED')
-				.setFooter('Skyblock Simulator');
+				.setFooter(getFooter(player));
 			interaction.editReply({ embeds: [alreadymining] });
 			return;
 		}
@@ -50,9 +51,10 @@ module.exports = {
 		];
 		if (!validlocations.includes(player.data.misc.location)) {
 			const invalidarea = new Discord.MessageEmbed()
-				.setTitle('Not at a Mining Area')
-				.setDescription('You are not at a valid Mining Area, please choose one from /sb warp')
-				.setColor('RED');
+				invalidarea.setTitle('Not at a Mining Area')
+				invalidarea.setDescription('You are not at a valid Mining Area, please choose one from /sb warp')
+				invalidarea.setColor('RED');
+      invalidarea.setFooter(getFooter(played))
 
 			return interaction.editReply({ embeds: [invalidarea] });
 		}
@@ -72,8 +74,8 @@ module.exports = {
 				`Pickaxe: **${player.data.equipment.mining.pickaxe.name}**\nMining Speed: **${ps.mining_speed}**\nMining Fortune: **${ps.mining_fortune}**`
 			)
 
-			.setFooter('Skyblock Simulator')
-			.setColor('GREY');
+			.setFooter(getFooter(player))
+			.setColor(getColor(player));
 
 		const cancel = new Discord.MessageButton().setCustomId('cancel').setLabel('Stop Mining').setStyle('DANGER');
 

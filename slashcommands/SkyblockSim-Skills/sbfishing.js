@@ -3,6 +3,7 @@ const emoji = require('../../constants/Simulator/Json/emojis.json');
 const mobs = require('../../constants/Simulator/Json/mobstats.json');
 const getLevel = require('../../constants/Simulator/Functions/skilllvl.js');
 const playerStats = require('../../constants/Simulator/Functions/playerStats.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbfishing',
@@ -31,14 +32,13 @@ module.exports = {
 			const alreadyfishing = new Discord.MessageEmbed()
 				.setTitle("You are already Fishing somewhere so i can't create another Pond for you")
 				.setColor('RED')
-				.setFooter('Skyblock Simulator');
+				.setFooter(getFooter('Pond'));
 			interaction.editReply({ embeds: [alreadyfishing] });
 			return;
 		}
 
 		//Values needed
-		let type = 'all';
-		let pstats = await playerStats(player, type);
+		let pstats = await playerStats(player);
 		let fishinglvl = getLevel(player.data.skills.fishing).level;
 		let rod = player.data.equipment.fishing.rod.name;
 		let rod_speed = player.data.equipment.fishing.rod.fishing_speed;
@@ -116,8 +116,8 @@ module.exports = {
 		//Pond Embed
 		let pond = new Discord.MessageEmbed()
 			.setTitle('Fishing Pond')
-			.setColor('BLUE')
-			.setFooter('Skyblock Simulator')
+			.setColor(getColor('Pond'))
+			.setFooter(getFooter('Pond'))
 			.setDescription(
 				`Rod: **${rod}**\nSea Creature Chance: **${sea_creature_chance}**\nFishing Speed: **${rod_speed}**%`
 			);
