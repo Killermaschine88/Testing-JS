@@ -54,7 +54,7 @@ module.exports = {
 				invalidarea.setTitle('Not at a Mining Area')
 				invalidarea.setDescription('You are not at a valid Mining Area, please choose one from /sb warp')
 				invalidarea.setColor('RED');
-      invalidarea.setFooter(getFooter(played))
+      invalidarea.setFooter(getFooter(player))
 
 			return interaction.editReply({ embeds: [invalidarea] });
 		}

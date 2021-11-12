@@ -38,13 +38,15 @@ module.exports = {
 		let classxp = player.data.dungeons.class.selected.xp;
 
 		mining = getLevelByXp(mining);
-		foraging = getLevelByXp(foraging);
-		enchanting = getLevelByXp(enchanting);
-		farming = getLevelByXp(farming);
+		//foraging = getLevelByXp(foraging);
+		//enchanting = getLevelByXp(enchanting);
+		//farming = getLevelByXp(farming);
 		combat = getLevelByXp(combat);
 		fishing = getLevelByXp(fishing);
 		cata = catalvl(cata).level;
 		classxp = catalvl(classxp).level;
+
+    //console.log(mining)
 
 		let salevel = mining.level + combat.level + fishing.level;
 		salevel = salevel / 3;
@@ -202,7 +204,7 @@ module.exports = {
 			)
 			.addField(
 				`Skills [${sa}]`,
-				`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp} XP**`,
+				`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp} XP / ${mining.xpForNext} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp} XP / ${combat.xpForNext} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp} XP / ${fishing.xpForNext} XP**`,
 				true
 			)
 			.addField(
@@ -278,10 +280,10 @@ module.exports = {
 							} <:gems:879264850348486696>**\nWeapon: **${eqsword}**\nArmor: **${eqarmor}**\nRod: **${eqrod}**\nPickaxe: **${eqpickaxe}**`
 						)
 						.addField(
-							`Skills [${sa}]`,
-							`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp} XP**`,
-							true
-						)
+				`Skills [${sa}]`,
+				`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp} XP / ${mining.xpForNext} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp} XP / ${combat.xpForNext} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp} XP / ${fishing.xpForNext} XP**`,
+				true
+			)
 						.addField(
 				'Stats',
 				`Effective Health: **\`${ps.health} ❤\`\n**Health: **\`${ps.hp} ❤\`**\nDefense: \`${ps.defense} ❈\`\nDamage: \`${ps.damage} ⚔️\`\nStrength: \`${ps.strength} ❁\`\nCrit Chance: \`${ps.crit_chance} ☣\`\nCrit Damage: \`${ps.crit_damage} ☠\`\nMagic Find: \`${ps.magic_find} ✯\`\nSea Creature Chance: \`${ps.sea_creature_chance} α\`\nFishing Speed: \`${playerfishingspeed} 🎣\`\nMining Speed: \`${ps.mining_speed} ⸕\`\nMining Fortune: \`${ps.mining_fortune} ☘\``,
