@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const lt = require('../../constants/Simulator/LootTables/loottables.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbgrind',
@@ -54,9 +55,9 @@ module.exports = {
 		}
 
 		const start = new Discord.MessageEmbed()
-			.setColor('90EE90')
+			.setColor(getColor(player))
 			.setDescription(`<a:runningsteve:865198832316317706> Wandering around the **${location}** to find Mobs.`)
-			.setFooter('Skyblock Simulator');
+			.setFooter(getFooter(player));
 
 		const menu = await interaction.editReply({ embeds: [start] });
 
@@ -71,7 +72,7 @@ module.exports = {
 			const nomobsfound = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setDescription(`Failed to find any Mobs in the **${location}**`)
-				.setFooter('Skyblock Simulator');
+				.setFooter(getFooter(player));
 			menu.edit({ embeds: [nomobsfound] });
 			return;
 		}
@@ -159,11 +160,11 @@ module.exports = {
 		if (player.data.settings.imgshown === true) {
 			endembed.setImage(`${img}`);
 		}
-		endembed.setColor('90EE90');
+		endembed.setColor(getColor(player));
 
 		let imgShown = player.data.settings.imgshown ? 'disable' : 'enable';
 		endembed.setFooter(
-			`Skyblock Simulator\nIf you wish to ${imgShown} a picture of the area being shown, use /sb settings img`
+			`${getFooter(player)}\nIf you wish to ${imgShown} a picture of the area being shown, use /sb settings img`
 		);
 
 		if (mobkills === 1) {

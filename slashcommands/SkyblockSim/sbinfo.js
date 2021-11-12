@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const leveling = require('../../constants/Simulator/Functions/leveling.js');
 const playerStats = require('../../constants/Simulator/Functions/playerStats.js');
 const catalvl = require('../../constants/Simulator/Functions/dungeonlevel.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbinfo',
@@ -190,8 +191,8 @@ module.exports = {
 		}
 
 		const foundinfo = new Discord.MessageEmbed()
-			.setFooter('Skyblock Simulator')
-			.setColor('90EE90')
+			.setFooter(getFooter(player))
+			.setColor(getColor(player))
 			.setDescription(
 				`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${
 					player.data.profile.started
@@ -267,8 +268,8 @@ module.exports = {
 				if (i.customId === 'main') {
 					await i.deferUpdate();
 					const main = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(
 							`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${
 								player.data.profile.started
@@ -292,16 +293,16 @@ module.exports = {
 				} else if (i.customId === 'inv') {
 					await i.deferUpdate();
 					const inv = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(`**Inventory for <@${id}>**\n${str}`);
 					menu.edit({ embeds: [inv] });
 				} else if (i.customId === 'slayer') {
 					await i.deferUpdate();
 					const slayer = new Discord.MessageEmbed()
 
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(`**Slayer Info for <@${id}>**\n\n**NOT ADDED YET!!!**`)
 						.addField(
 							'<:rev:852892164559732806> Revenant Horror',
@@ -327,8 +328,8 @@ module.exports = {
 				} else if (i.customId === 'dungeons') {
 					await i.deferUpdate();
 					const dungeons = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(
 							`**Dungeons Info for <@${id}>**\n<:catacombs:854399510951624775> Dungeons XP [${cata}]: **${player.data.dungeons.xp}**\n<:mage:852079612699607072> Selected Class [${classxp}]: \n* Name: **${player.data.dungeons.class.selected.name}**\n* XP: **${player.data.dungeons.class.selected.xp}**`
 						);
@@ -336,8 +337,8 @@ module.exports = {
 				} else if (i.customId === 'armorlist') {
 					await i.deferUpdate();
 					const dungeons = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(
 							`${armorstr}\nYou can change your Armor using \`/sb wardrobe armor itemid\`\nExample: \`/sb wardrobe armor 0\``
 						);
@@ -345,8 +346,8 @@ module.exports = {
 				} else if (i.customId === 'swordlist') {
 					await i.deferUpdate();
 					const dungeons = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(
 							`${swordstr}\nYou can change your Sword using \`/sb wardrobe sword itemid\`\nExample: \`/sb wardrobe sword 0\``
 						);
@@ -354,6 +355,8 @@ module.exports = {
 				} else if (i.customId == 'settings') {
 					await i.deferUpdate();
 					let settingembed = new Discord.MessageEmbed();
+          settingembed.setColor(getColor(player))
+            settingembed.setFooter(getFooter(player))
 					let set = player.data.settings.confirmation || true;
 
 					settingembed.setDescription(`Settings Info for <@${id}>`);
@@ -378,7 +381,7 @@ function getLevelByXp(xp, extra = {}) {
 		case 'runecrafting':
 			xp_table = leveling.runecrafting_xp;
 			break;
-		case 'dungeoneering':
+		case 'dungeons':
 			xp_table = leveling.dungeoneering_xp;
 			break;
 		default:
