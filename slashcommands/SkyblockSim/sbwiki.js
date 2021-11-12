@@ -90,7 +90,7 @@ module.exports = {
 				if (shark_event.enabled == false) {
 					eventembed.addField(
 						`Shark Fishing`,
-						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 19:00 - 21:00 (7:00 pm - 9:00 pm)\nEvent Active: ${shark_event.enabled}\nNext Event: <t:${shark_event.next_event}:R>`
+						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 20:00 - 22:00 (8:00 pm - 10:00 pm)\nEvent Active: ${shark_event.enabled}\nNext Event: <t:${shark_event.next_event}:R>`
 					);
 				} else {
 					eventembed.addField(
