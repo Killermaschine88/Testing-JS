@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 
 module.exports = {
 	name: 'Slayer',
-	description: 'Shows the Users Slayer Data.',
+	description: "Shows the user's slayer data.",
 	usage: 'slayer (IGN)',
 	perms: 'None',
 	folder: 'Skyblock',
@@ -16,7 +16,7 @@ module.exports = {
 		ign = ign.replace(/\W/g, ''); // removes weird characters
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription('Checking for Player Data . . .')
+			.setDescription('Checking for player data . . .')
 			.setColor('ORANGE');
 
 		const waitingembed = await interaction.editReply({
@@ -145,21 +145,21 @@ module.exports = {
 		const slayerembed = new Discord.MessageEmbed()
 			.setColor('7CFC00')
 			.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `http://sky.shiiyu.moe/stats/${ign}`)
-			.setFooter(`${ign}'s Total Slayer EXP: ` + `${ttotalxp}`)
+			.setFooter(`${ign}'s Total slayer XP: ` + `${ttotalxp}`)
 			/* .addFields(
-           {name: `Slayer Data for ${ign}`, value: getSlayers(apiData), inline: true},
+           {name: `Slayer data for ${ign}`, value: getSlayers(apiData), inline: true},
       )*/
 
-			.setDescription(`**Slayer Data for ${ign}**`)
+			.setDescription(`**Slayer data for ${ign}**`)
 			.addFields(
 				{
 					name: `<:rev:852892164559732806> **Revenant [${rfixed}]**`,
-					value: `Experience: **${rrxp}**\n\n **Slayer Kills:** \n\`\`\`T1: ${r1}\nT2: ${r2}\nT3: ${r3}\nT4: ${r4}\nT5: ${r5}\`\`\``,
+					value: `Experience: **${rrxp}**\n\n **Slayer kills:** \n\`\`\`T1: ${r1}\nT2: ${r2}\nT3: ${r3}\nT4: ${r4}\nT5: ${r5}\`\`\``,
 					inline: true,
 				},
 				{
 					name: `<:tara:852892164392222740> **Tarantula [${tfixed}]**`,
-					value: `Experience: **${ttxp}**\n\n **Slayer Kills:** \n\`\`\`T1: ${t1}\nT2: ${t2}\nT3: ${t3}\nT4: ${t4}\nT5: ${t5}\`\`\``,
+					value: `Experience: **${ttxp}**\n\n **Slayer kills:** \n\`\`\`T1: ${t1}\nT2: ${t2}\nT3: ${t3}\nT4: ${t4}\nT5: ${t5}\`\`\``,
 					inline: true,
 				},
 				{
@@ -169,7 +169,7 @@ module.exports = {
 				},
 				{
 					name: `<:eman:854253314747924511> **Enderman [${efixed}]**`,
-					value: `Experience: **${eexp}**\n\n **Slayer Kills:** \n\`\`\`T1: ${e1}\nT2: ${e2}\nT3: ${e3}\nT4: ${e4}\nT5: ${e5}\`\`\``,
+					value: `Experience: **${eexp}**\n\n **Slayer kills:** \n\`\`\`T1: ${e1}\nT2: ${e2}\nT3: ${e3}\nT4: ${e4}\nT5: ${e5}\`\`\``,
 				}
 			);
 
@@ -207,13 +207,13 @@ function getSlayers(apiData) {
 
 	return [
 		`<:rev:852892164559732806> **Revenant [${rlevel}]**`,
-		`Experience: **${rxp}**\n\n **Slayer Kills:** \n\`\`\`T1: ${r1}\nT2: ${r2}\nT3: ${r3}\nT4: ${r4}\nT5: ${r5}\`\`\``,
+		`Experience: **${rxp}**\n\n **Slayer kills:** \n\`\`\`T1: ${r1}\nT2: ${r2}\nT3: ${r3}\nT4: ${r4}\nT5: ${r5}\`\`\``,
 		`<:tara:852892164392222740> **Tarantula [${tlevel}]**`,
-		`Experience: **${txp}**\n\n **Slayer Kills:** \n\`\`\`T1: ${t1}\nT2: ${t2}\nT3: ${t3}\nT4: ${t4}\`\`\``,
+		`Experience: **${txp}**\n\n **Slayer kills:** \n\`\`\`T1: ${t1}\nT2: ${t2}\nT3: ${t3}\nT4: ${t4}\`\`\``,
 		`<:sven:852892164299423754> **Sven [${slevel}]**`,
-		`Experience: **${sxp}**\n\n **Slayer Kills:** \n\`\`\`T1: ${s1}\nT2: ${s2}\nT3: ${s3}\nT4: ${s4}\`\`\``,
+		`Experience: **${sxp}**\n\n **Slayer kills:** \n\`\`\`T1: ${s1}\nT2: ${s2}\nT3: ${s3}\nT4: ${s4}\`\`\``,
 		`<:eman:854253314747924511> **Enderman [${elevel}]**`,
-		`Experience: **${exp}**\n\n **Slayer Kills:** \n\`\`\`T1: ${e1}\nT2: ${e2}\nT3: ${e3}\nT4: ${e4}\`\`\``,
+		`Experience: **${exp}**\n\n **Slayer kills:** \n\`\`\`T1: ${e1}\nT2: ${e2}\nT3: ${e3}\nT4: ${e4}\`\`\``,
 	].join('\n');
 }
 
