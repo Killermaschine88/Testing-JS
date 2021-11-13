@@ -20,7 +20,7 @@ module.exports = {
 		let gems = 0;
 		let streak = player.data.misc.daily.streak + 1;
 
-		if (player === null) {
+		if (player == null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')

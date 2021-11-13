@@ -239,7 +239,7 @@ async function start(client, mclient) {
 	);
 
 	const sharkoff2 = new CronJob(
-		'0 21 * * *',
+		'0 11 * * *',
 		async function () {
 			collection2.updateOne({ _id: 'shark_fishing' }, { $set: { enabled: false } }, { upsert: true });
 
