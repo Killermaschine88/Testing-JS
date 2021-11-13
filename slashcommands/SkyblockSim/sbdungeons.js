@@ -37,7 +37,7 @@ module.exports = {
 				let crashembed = new MessageEmbed()
 					.addField(
 						'Dungeon Run Crashed',
-						"**Reason:**\nUser spammed Button.\nIn order to prevent this don't spam Buttons so the Bot has time to respond."
+						"**Reason:** User spammed a button.\nDon't spam the buttons; give the bot time to respond."
 					)
 					.setColor('RED');
 				return interaction.followUp({
@@ -85,7 +85,7 @@ module.exports = {
 				let crashembed = new MessageEmbed()
 					.addField(
 						'Dungeon Run Crashed',
-						"**Reason:**\nUser spammed Button.\nIn order to prevent this don't spam Buttons so the Bot has time to respond."
+						"**Reason:** User spammed a button.\nDon't spam the buttons; give the bot time to respond."
 					)
 					.setColor('RED');
 				return interaction.followUp({
@@ -119,7 +119,7 @@ module.exports = {
 				let crashembed = new MessageEmbed()
 					.addField(
 						'Dungeon Run Crashed',
-						"**Reason:**\nUser spammed Button.\nIn order to prevent this don't spam Buttons so the Bot has time to respond."
+						"**Reason:** User spammed a button.\nDon't spam the buttons; give the bot time to respond."
 					)
 					.setColor('RED');
 				return interaction.followUp({
@@ -248,15 +248,15 @@ module.exports = {
 			const noprofile = new MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription(`Create a profile using \`/sb start\``);
 			return interaction.editReply({ embeds: [noprofile] });
 		}
 
 		//Checks if the Player already has an open Dungeon Run
 		if (player.data.misc.in_dungeon) {
 			const runopen = new MessageEmbed()
-				.setTitle('Another Dungeon is already open somewhere.')
-				.setDescription('The Dungeon automatically closes after 1 minute of inactivity')
+				.setTitle('You are already in a Dungeon.')
+				.setDescription('Dungeons automatically close after 1 minute of inactivity')
 				.setColor('RED')
 				.setFooter('Skyblock Simulator');
 			return interaction.editReply({ embeds: [runopen] });
@@ -386,9 +386,9 @@ module.exports = {
 		}
 
 		const invalidreqs = new MessageEmbed()
-			.setTitle('Requirements not met.')
+			.setTitle('Requirements not met')
 			.setDescription(
-				`**Needed Requirements**\nFloor 1 -> Combat 8\nFloor 2 -> Catacombs 4\nFloor 3 -> Catacombs 8\n\n**Your Stats**\nCombat: ${combatlvl}\nCatacombs: ${catalevel}\n`
+				`**Requirements:**\nFloor 1 -> Combat 8\nFloor 2 -> Catacombs 4\nFloor 3 -> Catacombs 8\n\n**Your Stats**\nCombat: ${combatlvl}\nCatacombs: ${catalevel}\n`
 			)
 			.setColor('RED');
 
@@ -528,7 +528,7 @@ module.exports = {
 
 		const quizzes = [
 			{
-				question: `How many Skills are there in Hypixel Skyblock? (All Skills Included)`,
+				question: "How many skills are there in Hypixel's Skyblock?",
 				options: [
 					['10', false],
 					['11', false],
@@ -536,7 +536,7 @@ module.exports = {
 				],
 			},
 			{
-				question: `How much Catacombs XP do you need for Level 50`, // Did u ever learn english grammar bro? "much" if the value is too big to count, "many" if you can count it.
+				question: `How much Catacombs XP do you need for level 50?`,
 				options: [
 					['569 Mil', true],
 					['560 Mil', false],
@@ -544,7 +544,7 @@ module.exports = {
 				],
 			},
 			{
-				question: `How many Pets are there?`,
+				question: `How many pets are there?`,
 				options: [
 					['50', false],
 					['54', false],
@@ -552,7 +552,7 @@ module.exports = {
 				],
 			},
 			{
-				question: `Who is the Owner of Hypixel?`,
+				question: `Who is the owner of Hypixel?`,
 				options: [
 					['hypxel', false],
 					['hpixel', false],
@@ -560,7 +560,7 @@ module.exports = {
 				],
 			},
 			{
-				question: `How many Talismans are there?`, // bruh, plural for talisman  is talismans
+				question: `How many Talismans are there?`,
 				options: [
 					['77', true],
 					['70', false],
@@ -568,7 +568,7 @@ module.exports = {
 				],
 			},
 			{
-				question: `Which non Boss and non Slayer Mini-Boss Mob has the highest HP?`,
+				question: `Which non-boss and non-slayer mini-boss has the highest HP?`,
 				options: [
 					['Voidling Extremist', true],
 					['Voidling Fanatic', false],
@@ -576,7 +576,7 @@ module.exports = {
 				],
 			},
 			{
-				question: `How many Areas are there? (Excluding Sub Areas)`,
+				question: `How many areas are there? (Excluding sub-areas)`,
 				options: [
 					['20', false],
 					['22', true],
@@ -753,7 +753,7 @@ module.exports = {
 				let [W, E] = wincheckTTT();
 
 				if (W) {
-					const txt = E == '🟩' ? `You Won!!` : E ? `You Lost ...` : `You Tied`;
+					const txt = E == '🟩' ? 'You won!' : E ? 'You lost...' : 'You tied';
 					if (E == '🟩' || !E) {
 						inTTT = false;
 						score += 30;
@@ -943,8 +943,8 @@ module.exports = {
 					test.fields = [];
 					test.addField(
 						`Battle`,
-						`Player Health: ❤️ ${php} (- ${mdmg})
-                Boss Health: ❤️ ${mhp} (-${crit ? '<:crit:870306942806020106>' : ''} ${pdmg})`
+						`Player health: ❤️ ${php} HP (- ${mdmg})
+                Boss health: ❤️ ${mhp} HP (-${crit ? '<:crit:870306942806020106>' : ''} ${pdmg})`
 					);
 
 					//   if(noButtonedit == false) {
@@ -956,7 +956,7 @@ module.exports = {
 						fightEnded = true;
 						test.fields = [];
 						test.setColor('ORANGE');
-						test.addField(`\u200B`, `Killed the Boss with **❤️ ${php}** left and earned Combat XP`); //Add combat xp var
+						test.addField(`\u200B`, `Killed the boss with **❤️ ${php} HP** left, and you earned combat XP`); //Add combat xp var
 						await collection.updateOne(
 							//Add Combat XP from enemy Kill (do once mobs decided)
 							{ _id: interaction.user.id },
@@ -973,7 +973,7 @@ module.exports = {
 					} else if (php <= 0) {
 						test.fields = [];
 						test.setColor('RED');
-						test.addField(`\u200B`, `Died to the Boss which had **❤️ ${mhp}** left.`);
+						test.addField(`\u200B`, `Died to the boss, which had **❤️ ${mhp} HP** left.`);
 						runFailed = true;
 						return collector.stop();
 					}
@@ -1007,9 +1007,9 @@ module.exports = {
 								test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot} Coins\n**`;
 							}
 							if (isNaN(emerald_loot)) {
-								test.description += `<:emerald:869126927380779008> Emerlad Chest: **${emerald_loot}\n**`;
+								test.description += `<:emerald:869126927380779008> Emerald Chest: **${emerald_loot}\n**`;
 							} else {
-								test.description += `<:emerald:869126927380779008> Emerlad Chest: **${emerald_loot} Coins\n**`;
+								test.description += `<:emerald:869126927380779008> Emerald Chest: **${emerald_loot} Coins\n**`;
 							}
 							lootrow.addComponents(diamond_button);
 							lootrow.addComponents(emerald_button);
@@ -1047,8 +1047,8 @@ module.exports = {
 					test.fields = [];
 					test.addField(
 						`Battle`,
-						`Player Health: ❤️ ${php} (- ${mdmg})
-                Mob Health: ❤️ ${mhp} (-${crit ? '<:crit:870306942806020106>' : ''} ${pdmg})`
+						`Player health: ❤️ ${php} (- ${mdmg})
+                Mob health: ❤️ ${mhp} (-${crit ? '<:crit:870306942806020106>' : ''} ${pdmg})`
 					);
 
 					// when still in fight locks movement so he can't get out the fight
@@ -1064,7 +1064,7 @@ module.exports = {
 						score += 20;
 						test.fields = [];
 						test.setColor('ORANGE');
-						test.addField(`\u200B`, `Killed the Enemy with **❤️ ${php}** left and earned Combat XP`); //Add combat xp var
+						test.addField('\u200B', 'Killed the enemy with **❤️ ${php} HP** left and earned combat XP'); //Add combat xp var
 						await collection.updateOne(
 							//Add Combat XP from enemy Kill (do once mobs decided)
 							{ _id: interaction.user.id },
@@ -1088,7 +1088,7 @@ module.exports = {
 					} else if (php <= 0) {
 						test.fields = [];
 						test.setColor('RED');
-						test.addField(`\u200B`, `Died to the Enemy which had **❤️ ${mhp}** left.`);
+						test.addField('\u200B', 'Died to the enemy which had **❤️ ${mhp} HP** left.');
 						runFailed = true;
 						return collector.stop();
 					}
@@ -1102,7 +1102,7 @@ module.exports = {
 							let crashembed = new MessageEmbed()
 								.addField(
 									'Dungeon Run Crashed',
-									"**Reason:**\nUser spammed Button.\nIn order to prevent this don't spam Buttons so the Bot has time to respond."
+									"**Reason:** User spammed a button.\nDon't spam the buttons; give the bot time to respond."
 								)
 								.setColor('RED');
 							return interaction.followUp({
@@ -1129,8 +1129,8 @@ module.exports = {
 					test.fields = [];
 					test.addField(
 						`Battle`,
-						`Player Health: ❤️ ${php}
-                Mob Health: ❤️ ${mhp}`
+						`Player health: ❤️ ${php} HP
+                Mob Health: ❤️ ${mhp} HP`
 					);
 					//  if(noButtonedit == false) {
 					await menu.edit({ embeds: [test], components: [bossrow] });
@@ -1239,7 +1239,7 @@ module.exports = {
 
 					const lootembed = new MessageEmbed()
 						.setTitle(`Floor ${floor} Finished`)
-						.setDescription(`<:coins:861974605203636253> **${loot}** Coins added to your Profile.`)
+						.setDescription(`<:coins:861974605203636253> **${loot}** coins added to your profile.`)
 						.setColor('GREEN')
 						.setFooter('Skyblock Simulator');
 					//if(noButtonedit == false) {
@@ -1260,7 +1260,7 @@ module.exports = {
 
 					const lootembed = new MessageEmbed()
 						.setTitle(`Floor ${floor} Finished`)
-						.setDescription(`<:recomb:881094744183275540> **${loot}** added to your Profile.`)
+						.setDescription(`<:recomb:881094744183275540> **${loot}** added to your profile.`)
 						.setColor('GREEN')
 						.setFooter('Skyblock Simulator');
 					// if(noButtonedit == false) {
@@ -1283,9 +1283,9 @@ module.exports = {
 							const lootembed = new MessageEmbed()
 								.setTitle(`Floor ${floor} Finished`)
 								.setDescription(
-									`You already own <:tank:852079613051666472> **${loot}** so i added you <:coins:861974605203636253> **${num(
+									`You already own <:tank:852079613051666472> **${loot}**, so I gave you <:coins:861974605203636253> **${num(
 										item.coins
-									)}** Coins to your Profile.`
+									)} coins** instead.`
 								)
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
@@ -1318,7 +1318,7 @@ module.exports = {
 
 							const lootembed = new MessageEmbed()
 								.setTitle(`Floor ${floor} Finished`)
-								.setDescription(`<:tank:852079613051666472> **${loot}** added to your Profile.`)
+								.setDescription(`<:tank:852079613051666472> **${loot}** added to your orofile.`)
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
 							//   if(noButtonedit == false) {
@@ -1347,9 +1347,9 @@ module.exports = {
 							const lootembed = new MessageEmbed()
 								.setTitle(`Floor ${floor} Finished`)
 								.setDescription(
-									`You already own <:berserker:852079613052059658> **${loot}** so i added you <:coins:861974605203636253> **${num(
+									`You already own <:berserker:852079613052059658> **${loot}**, so I gave you <:coins:861974605203636253> **${num(
 										item.coins
-									)}** Coins to your Profile.`
+									)} coins** instead.`
 								)
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
@@ -1379,7 +1379,7 @@ module.exports = {
 
 							const lootembed = new MessageEmbed()
 								.setTitle(`Floor ${floor} Finished`)
-								.setDescription(`<:berserker:852079613052059658> **${loot}** added to your Profile.`)
+								.setDescription(`<:berserker:852079613052059658> **${loot}** added to your profile.`)
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
 							//  if(noButtonedit == false) {
@@ -1483,13 +1483,13 @@ module.exports = {
 				);
 				test.fields = [];
 				if (runFailed) {
-					test.addField('Dungeon Run Over', '**Reason**\n* Died to Mob/Boss');
+					test.addField('Dungeon Run Over', '**Reason**\n* Died to mob/boss');
 				} else if (runCancelled) {
-					test.addField('Dungeon Run Over', '**Reason**\n* Timed out\n* Cancelled');
+					test.addField('Dungeon Run Over', '**Reason**\n* Timed out or cancelled');
 				} else if (runFinished) {
 					return;
 				} else if (runiscrashed) {
-					test.addField('Dungeon Run Crashed', '**Reason**\n* User spammed Button');
+					test.addField('Dungeon Run Crashed', "**Reason**\n* User spammed a button.\nDon't spam the buttons; give the bot time to respond.");
 				}
 				test.setColor('RED');
 				await menu.edit({ embeds: [test], components: [] });
@@ -1497,7 +1497,7 @@ module.exports = {
 		});
 
 		/*  } catch (e) {
-      test.setDescription('An Error occured!')
+      test.setDescription('An error occured!')
       test.setColor('Red')
     return interaction.editReply({embeds: [test], components: []})
   }*/
