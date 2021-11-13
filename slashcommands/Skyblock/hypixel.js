@@ -4,7 +4,7 @@ const config = require('../../constants/Bot/config.json');
 
 module.exports = {
 	name: 'Hypixel',
-	description: 'Shows Info about the Hypixel profile of the user',
+	description: 'Shows info about the Hypixel profile of the user',
 	usage: '!hypixel (IGN)',
 	perms: 'None',
 	folder: 'Skyblock',
@@ -15,7 +15,7 @@ module.exports = {
 		mcname = mcname.replace(/\W/g, ''); // removes weird characters
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription('Checking for Player Data . . .')
+			.setDescription('Checking for player data . . .')
 			.setColor('ORANGE');
 
 		const waitingembed = await interaction.editReply({
@@ -72,9 +72,9 @@ module.exports = {
 												.addFields(
 													{
 														name: '**Level**',
-														value: `**Network Level**: ${Math.floor(
+														value: `**Network level**: ${Math.floor(
 															level
-														)}\n**Total Exp**: ${networkExp}\n**Total Karma**: ${karma}`,
+														)}\n**Total XP**: ${networkExp}\n**Total karma**: ${karma}`,
 														inline: true,
 													},
 													{
@@ -121,11 +121,11 @@ module.exports = {
 												.addFields(
 													{
 														name: '**Level**',
-														value: `**Network Level**: ${Math.floor(
+														value: `**Network level**: ${Math.floor(
 															level
-														)}\n**Total Exp**: ${networkExp.toLocaleString(
+														)}\n**Total XP**: ${networkExp.toLocaleString(
 															'en-US'
-														)}\n**Total Karma**: ${karma.toLocaleString('en-US')}`,
+														)}\n**Total karma**: ${karma.toLocaleString('en-US')}`,
 														inline: true,
 													},
 													{
@@ -135,7 +135,7 @@ module.exports = {
 													},
 													{
 														name: '**Guild**',
-														value: `**Guild Name**: ${guildName}\n**Created At**: ${guildCreated}`,
+														value: `**Guild name**: ${guildName}\n**Created at**: ${guildCreated}`,
 														inline: true,
 													},
 													{
