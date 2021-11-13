@@ -7,7 +7,7 @@ const list2 = require('./list2.json');
 
 module.exports = {
 	name: 'Bazaar',
-	description: 'Get Bazaar Data for an item',
+	description: 'Get bazaar data for an item',
 	usage: 'bazzar (item)',
 	perms: 'None',
 	folder: 'Skyblock',
@@ -21,7 +21,7 @@ module.exports = {
 
 		const waiting = new Discord.MessageEmbed()
 			.setTitle('Checking Bazaar Data')
-			.setFooter("If I don't respond within 10 Seconds then the Item wasn't found or an Error occurred");
+			.setFooter("If I don't respond within 10 seconds, the item wasn't found or an error occurred");
 
 		const wait = await interaction.editReply({ embeds: [waiting] });
 
@@ -45,7 +45,7 @@ module.exports = {
 
 		var apiData = await getApiData(result, method);
 
-		const notfound = new Discord.MessageEmbed().setTitle(`Couldnt find Item ${result}`);
+		const notfound = new Discord.MessageEmbed().setTitle(`Couldnt find item ${result}`);
 
 		if (apiData.error) {
 			wait.edit({ embeds: [notfound] });
@@ -64,7 +64,7 @@ module.exports = {
 		return wait.edit({
 			embeds: [
 				new Discord.MessageEmbed()
-					.setTitle(`Bazaar Data for ${result}`)
+					.setTitle(`Bazaar data for ${result}`)
 					.setColor('7CFC00')
 					.setAuthor(
 						result,
