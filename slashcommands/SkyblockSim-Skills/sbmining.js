@@ -7,7 +7,7 @@ const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbmining',
-	description: 'Earn Fishing XP',
+	description: 'Earn fishing XP',
 	usage: 'sbfishing',
 	perms: 'None',
 	folder: 'SkyblockSim',
@@ -22,15 +22,15 @@ module.exports = {
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
-				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setTitle('No profile found')
+				.setDescription(`Create a profile using \`/sb start\``);
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
 		if (player.data.misc.is_mining === true) {
 			const alreadymining = new Discord.MessageEmbed()
-				.setTitle("You are already Mining somewhere so i can't create another Mine for you")
+				.setTitle("You are already mining")
 				.setColor('RED')
 				.setFooter(getFooter(player));
 			interaction.editReply({ embeds: [alreadymining] });
@@ -51,10 +51,10 @@ module.exports = {
 		];
 		if (!validlocations.includes(player.data.misc.location)) {
 			const invalidarea = new Discord.MessageEmbed()
-				invalidarea.setTitle('Not at a Mining Area')
-				invalidarea.setDescription('You are not at a valid Mining Area, please choose one from /sb warp')
-				invalidarea.setColor('RED');
-      invalidarea.setFooter(getFooter(player))
+				.setTitle('Not at a mining area')
+				.setDescription('You are not at a valid mining area, please choose one from /sb warp')
+				.setColor('RED');
+				.setFooter(getFooter(player))
 
 			return interaction.editReply({ embeds: [invalidarea] });
 		}
@@ -71,7 +71,7 @@ module.exports = {
 		let embed = new Discord.MessageEmbed()
 			.setTitle('Mine')
 			.setDescription(
-				`Pickaxe: **${player.data.equipment.mining.pickaxe.name}**\nMining Speed: **${ps.mining_speed}**\nMining Fortune: **${ps.mining_fortune}**`
+				`Pickaxe: **${player.data.equipment.mining.pickaxe.name}**\nMining speed: **${ps.mining_speed}**\nMining fortune: **${ps.mining_fortune}**`
 			)
 
 			.setFooter(getFooter(player))
@@ -128,7 +128,7 @@ module.exports = {
 		collector.on('collect', async (i) => {
 			if (!validlocations.includes(player.data.misc.location) || player.data.misc.is_fishing == true) {
 				interaction.followUp({
-					content: 'You cheeky tried to multi grind Skills not with me :).',
+					content: 'You seem to be fishing, cheeky you.',
 					ephemeral: true,
 				});
 				return collector.stop();
@@ -168,7 +168,7 @@ module.exports = {
 		collector.on('end', async (collected) => {
 			embed.setColor('RED');
 			embed.fields = [];
-			embed.addField('\u200b', 'Stopped Mining.');
+			embed.addField('\u200b', 'Stopped mining.');
 			embed.setImage('');
 			await collection.updateOne(
 				{ _id: interaction.user.id },
