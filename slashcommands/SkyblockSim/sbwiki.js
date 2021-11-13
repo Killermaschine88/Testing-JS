@@ -20,7 +20,7 @@ module.exports = {
 			.setTitle('Skyblock Simulator Wiki')
 			.setColor(getColor('Skyblock'))
 			.setFooter(getFooter('Skyblock'))
-			.setDescription('Press the corresponding Button to see the Information of the desired Item.');
+			.setDescription('Press the corresponding button to see the information of the desired item.');
 
 		const button1 = new Discord.MessageButton().setCustomId('general').setLabel('General Info').setStyle('PRIMARY');
 		const button2 = new Discord.MessageButton().setCustomId('symbols').setLabel('Symbols').setStyle('PRIMARY');
@@ -65,7 +65,7 @@ module.exports = {
 					.setColor(getColor('Skyblock'))
 					.setFooter(getFooter('Skyblock'))
 					.setDescription(
-						'`❤ Health`\n`❈ Defense`\n`⚔️ Damage`\n`❁ Strength`\n`☣ Crit Chance`\n`☠ Crit Damage`\n`✯ Magic Find`\n`α Sea Creature Chance`\n`🎣 Fishing Speed`\n`⸕ Mining Speed`\n`☘ Mining Fortune`'
+						'`❤ Health`\n`❈ Defense`\n`⚔️ Damage`\n`❁ Strength`\n`☣ Crit chance`\n`☠ Crit damage`\n`✯ Magic find`\n`α Sea Creature chance`\n`🎣 Fishing speed`\n`⸕ Mining speed`\n`☘ Mining fortune`'
 					);
 
 				menu.edit({ embeds: [symbolembed] });
@@ -108,23 +108,23 @@ module.exports = {
 					.setFooter(getFooter('Skyblock'))
 					.addField(
 						'Classes',
-						'Give bonuses inside Dungeon Runs\n\nAssassin (`2 ❁` per Class Level)\nBerserker (`1 ❁` and `1 ❈` per Class Level)\nTank (`1 ❈` and `2 ❤` per Class Level)',
+						'Give bonuses inside Dungeon runs\n\nAssassin (`2 ❁` per class level)\nBerserker (`1 ❁` and `1 ❈` per class level)\nTank (`1 ❈` and `2 ❤` per class level)',
 						true
 					)
 					.addField('Score', 'Used to determine the Loot Chests you will recieve after the dungeon run', true)
 					.addField(
 						'Puzzles',
-						'Small Puzzles like a Quiz and Tic Tac Toe are found in a dungeon run which grant 30 Score.',
+						'Small puzzles like a quiz and tic-tac-toe are found in a dungeon run which grant 30 score.',
 						true
 					)
 					.addField(
 						'Loot Chests',
-						'Spawn after defeating the Dungeon Boss\n\n<:oak_wood:882624301503754350> Chest (Guaranteed)\n<:gold:869126927011708929> Chest (Guaranteed)\n<:diamond:869126926646788097> Chest (min. F2 & min. 150 Score)\n<:emerald:869126927380779008> Chest (min. F3 & min. 180 Score)',
+						'Spawn after defeating the Dungeon Boss\n\n<:oak_wood:882624301503754350> Chest (guaranteed)\n<:gold:869126927011708929> Chest (guaranteed)\n<:diamond:869126926646788097> Chest (min. F2 & min. 150 score)\n<:emerald:869126927380779008> Chest (min. F3 & min. 180 score)',
 						true
 					)
 					.addField(
 						'Dungeon Loot',
-						'Found in Loot Chests at the end of the dungeon run.\nCurrently Recombobulators, 5 different Armor sets and 5 different Swords can be found in Loot Chests.',
+						'Found in Loot Chests at the end of the dungeon run.\nCurrently Recombobulators, 5 different armor sets and 5 different swords can be found in Loot Chests.',
 						true
 					);
 
