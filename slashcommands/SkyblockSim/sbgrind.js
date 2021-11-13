@@ -4,7 +4,7 @@ const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbgrind',
-	description: 'Earnes you Money',
+	description: 'Earns you money',
 	usage: 'sbfarm',
 	perms: 'None',
 	folder: 'SkyblockSim',
@@ -19,7 +19,7 @@ module.exports = {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription(`Create a profile using \`/sb start\``);
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
@@ -46,7 +46,7 @@ module.exports = {
 		if (!areas.includes(location)) {
 			const badarea = new Discord.MessageEmbed()
 				.setTitle('Invalid Combat Area')
-				.setDescription(`You are currently at the **${location}** which isn\'t a Combat area.`)
+				.setDescription(`You are currently at the **${location}**, which isn't a combat area.`)
 				.setColor('RED')
 				.setFooter('Skyblock Simulator');
 
@@ -56,7 +56,7 @@ module.exports = {
 
 		const start = new Discord.MessageEmbed()
 			.setColor(getColor(player))
-			.setDescription(`<a:runningsteve:865198832316317706> Wandering around the **${location}** to find Mobs.`)
+			.setDescription(`<a:runningsteve:865198832316317706> Wandering around scouting for mobs.`)
 			.setFooter(getFooter(player));
 
 		const menu = await interaction.editReply({ embeds: [start] });
@@ -71,7 +71,7 @@ module.exports = {
 		if (findmobs === rolledmobs) {
 			const nomobsfound = new Discord.MessageEmbed()
 				.setColor('RED')
-				.setDescription(`Failed to find any Mobs in the **${location}**`)
+				.setDescription(`Failed to find any mobs in the **${location}**`)
 				.setFooter(getFooter(player));
 			menu.edit({ embeds: [nomobsfound] });
 			return;
