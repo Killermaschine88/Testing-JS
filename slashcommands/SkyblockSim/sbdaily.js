@@ -23,8 +23,8 @@ module.exports = {
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
-				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setTitle('No profile found')
+				.setDescription(`Create a profile using \`/sb start\``);
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
@@ -60,14 +60,14 @@ module.exports = {
 				failedstreak.setTitle('Claimed Daily Reward');
 				if (gems == 0) {
 					failedstreak.setDescription(
-						`I have added <:coins:861974605203636253> **25k Coins** to your Profile but unfortunately, your Streak has reset. 😢\nYou will be able to claim it again in **24 Hours**`
+						`Added <:coins:861974605203636253> **25k coins** to your profile, but unfortunately your streak has been reset 😢\nYou can claim again in **24 hours**`
 					);
 				} else {
 					failedstreak.setDescription(
-						`I have added <:coins:861974605203636253> **25k Coins** and <:gems:879264850348486696> **${gems} Gems** to your Profile but unfortunately, your Streak has reset. 😢\nYou will be able to claim it again in **24 Hours**`
+						`Added <:coins:861974605203636253> **25k coins** and <:gems:879264850348486696> **${gems} gems** to your profile, but unfortunately your streak has been reset 😢\nYou can claim again in **24 hours**`
 					);
 				}
-				failedstreak.setFooter(`${getFooter(player)}\nDaily Streak: 1`);
+				failedstreak.setFooter(`${getFooter(player)}\nDaily streak: 1`);
 				failedstreak.setColor(getColor(player));
 
 				interaction.editReply({ embeds: [failedstreak] });
@@ -95,27 +95,27 @@ module.exports = {
 				claimed.setTitle('Claimed Daily Reward');
 				if (gems == 0) {
 					claimed.setDescription(
-						`I have added <:coins:861974605203636253> **25k Coins** to your Profile.\nYou will be able to claim it again in **24 Hours**`
+						`Added <:coins:861974605203636253> **25k coins** to your profile.\nYou can claim again in **24 hours**`
 					);
 				} else {
 					claimed.setDescription(
-						`I have added <:coins:861974605203636253> **25k Coins** and <:gems:879264850348486696> **${gems} Gems** to your Profile.\nYou will be able to claim it again in **24 Hours**`
+						`Added <:coins:861974605203636253> **25k coins** and <:gems:879264850348486696> **${gems} gems** to your profile.\nYou can claim again in **24 hours**`
 					);
 				}
-				claimed.setFooter(`${getFooter(player)}\nDaily Streak: ${player.data.misc.daily.streak + 1}`);
+				claimed.setFooter(`${getFooter(player)}\nDaily streak: ${player.data.misc.daily.streak + 1}`);
 				claimed.setColor(getColor(player));
 
 				interaction.editReply({ embeds: [claimed] });
 				return;
 			}
 		} else {
-			const toearly = new Discord.MessageEmbed()
-				toearly.setTitle("Can't claim Daily Reward yet")
-				toearly.setDescription(`You can claim your Daily Reward again on <t:${next_claim}:f>`)
-				toearly.setColor(getColor(player));
-      toearly.setFooter(getFooter(player))
+			const tooEarly = new Discord.MessageEmbed()
+				.setTitle("Can't claim daily reward yet")
+				.setDescription(`You can do it again <t:${next_claim}:R>`)
+				.setColor(getColor(player))
+				.setFooter(getFooter(player))
 
-			interaction.editReply({ embeds: [toearly] });
+			interaction.editReply({ embeds: [tooEarly] });
 			return;
 		}
 	},
