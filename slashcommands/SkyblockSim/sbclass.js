@@ -20,7 +20,7 @@ module.exports = {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription(`Create a profile using \`/sb start\``);
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
@@ -40,7 +40,7 @@ module.exports = {
 				.setColor(getColor(player))
 				.setFooter(getFooter(player))
 				.setDescription(
-					`**Available Classes and their Stats**\n\n**Assassin [${assassinlevel}]**\n2 Strength per Level\n\n**Berserker [${berserkerlevel}]**\n1 Strength and 1 Defense per Level\n\n**Tank [${tanklevel}]**\n1 Defense and 2 Health Per Level\n\n\n**Currently Selected**\nName: ${currentclass}\nXP: ${currentxp}`
+					`**Available classes and their stats**\n\n**Assassin [${assassinlevel}]**\n2 Strength per level\n\n**Berserker [${berserkerlevel}]**\n1 strength and 1 defense per level\n\n**Tank [${tanklevel}]**\n1 defense and 2 health per level\n\n\n**Currently Selected**\nName: ${currentclass}\nXP: ${currentxp}`
 				);
 			interaction.editReply({ embeds: [classes] });
 			return;
@@ -82,7 +82,7 @@ module.exports = {
 		}
 
 		const selection = new Discord.MessageEmbed()
-			.setDescription(`Successfully switched Class to **${classchoosen}**.`)
+			.setDescription(`Successfully switched class to **${classchoosen}**.`)
 			.setColor(getColor(player))
 			.setFooter(getFooter(player));
 
