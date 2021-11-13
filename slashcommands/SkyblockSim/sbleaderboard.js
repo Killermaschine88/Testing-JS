@@ -36,7 +36,7 @@ module.exports = {
 
 		let embed = new Discord.MessageEmbed()
 			embed.setTitle('Leaderboard')
-			embed.setDescription('Choose the Leaderboard you want to see from the Select Menu.')
+			embed.setDescription('Choose the leaderboard you want to see from the select menu.')
 			embed.setFooter(getFooter('Skyblock'));
     embed.setColor(getColor('Skyblock'))
 
