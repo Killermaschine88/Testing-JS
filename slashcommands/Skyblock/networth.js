@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 
 module.exports = {
 	name: 'networth',
-	description: 'Get Networth Data for an Player',
+	description: 'Get the net worth data for a player',
 	usage: 'networth (ign)',
 	perms: 'None',
 	folder: 'Skyblock',
@@ -34,7 +34,7 @@ module.exports = {
 			const embed = new Discord.MessageEmbed()
 				.setTitle('ERROR')
 				.setColor('RED')
-				.setDescription('Invalid Minecraft Username or User doesnt have any Skyblock Profiles.');
+				.setDescription('Invalid Minecraft username or user does not have a Skyblock profile.');
 			return interaction.editReply({ embeds: [embed] });
 		}
 
@@ -50,18 +50,18 @@ module.exports = {
 
 		let errtext = '';
 		/* if (net.status == 404) {
-      errtext = 'Status: 404\nReason: User not found within the Skyblock Playerbase'
+      errtext = 'Status: 404\nReason: User not found within the Skyblock player base'
     } else if (net.status == 500) {
-      errtext = 'Status: 500\nReason: Internal Error'
+      errtext = 'Status: 500\nReason: Internal error'
     } else if (net.status == 429) {
-      errtext = 'Status: 429\nReason: Something went wrong, please wait a minute then try again'
+      errtext = 'Status: 429\nReason: Something went wrong, please try again later'
     } else {
       errtext = 'Status: ' + net.status + '\nReason: ' + net.statusText
     }
 
     if (net.status != 200) {
       const errorembed = new Discord.MessageEmbed()
-        .setTitle('An Error occured!')
+        .setTitle('An error occured!')
         .setDescription(`${errtext}`)
         .setColor('RED')
       wait.edit({ embeds: [errorembed] })
@@ -104,7 +104,7 @@ module.exports = {
 
 		//Armor Section
 		if (armor.prices.length == 0) {
-			armortext = 'API Disabled or no Items';
+			armortext = 'API disabled or no items';
 		} else {
 			while (i < armor.prices.length) {
 				armortext += `${arrow}`;
@@ -127,7 +127,7 @@ module.exports = {
 
 		//Wardrobe Section
 		if (wardrobe.prices.length == 0) {
-			wardrobetext = 'API Disabled or no Items';
+			wardrobetext = 'API disabled or no items';
 		} else {
 			while (i < wardrobe.prices.length) {
 				wardrobetext += `${arrow}`;
@@ -150,7 +150,7 @@ module.exports = {
 
 		//Inventory Section
 		if (inventory.prices.length == 0) {
-			inventorytext = 'API Disabled or no Items';
+			inventorytext = 'API disabled or no items';
 		} else {
 			while (i < inventory.prices.length) {
 				inventorytext += `${arrow}`;
@@ -181,7 +181,7 @@ module.exports = {
 
 		//Enderchest Section
 		if (ec.prices.length == 0) {
-			ectext = 'API Disabled or no Items';
+			ectext = 'API disabled or no items';
 		} else {
 			while (i < ec.prices.length) {
 				ectext += `${arrow}`;
@@ -212,7 +212,7 @@ module.exports = {
 
 		//Storage Section
 		if (storage.prices.length == 0) {
-			storagetext = 'API Disabled or no Items';
+			storagetext = 'API disabled or no items';
 		} else {
 			while (i < storage.prices.length) {
 				storagetext += `${arrow}`;
@@ -243,7 +243,7 @@ module.exports = {
 
 		//Pets Section
 		if (pets.prices.length == 0) {
-			petstext = 'API Disabled or no Items';
+			petstext = 'API disabled or no items';
 		} else {
 			while (i < pets.prices.length) {
 				petstext += `${arrow}`;
@@ -262,7 +262,7 @@ module.exports = {
 
 		//Talisman Section
 		if (talis.prices.length == 0) {
-			talistext = 'API Disabled or no Items';
+			talistext = 'API disabled or no items';
 		} else {
 			while (i < talis.prices.length) {
 				talistext += `${arrow}`;
