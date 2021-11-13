@@ -14,10 +14,10 @@ module.exports = {
 				const mainembed = new Discord.MessageEmbed()
 					.setTitle('Sky Bot Help')
 					.setDescription(
-						'\n`help <Command Name>`\nFor a more Detailed view on Commands\n\n🤖 - Bot Help\n🔧 - Config Help\n🎲 - Fun Help\n🔨 - Moderation Help\n❓ - QOL Help\n🏝️ - Skyblock Help\n😎 - Skyblock Simulator\n👍 - Skyblock Simulator-Skills\n⚠️ - Work in Progress Help'
+						'\n`help <Command Name>`\nFor a more detailed view on commands\n\n🤖 - Bot Help\n🔧 - Config Help\n🎲 - Fun Help\n🔨 - Moderation Help\n❓ - QOL Help\n🏝️ - Skyblock Help\n😎 - Skyblock Simulator\n👍 - Skyblock Simulator-Skills\n⚠️ - Work in Progress Help'
 					)
 					.setColor('ORANGE')
-					.setFooter('You have 30 Seconds to React then the Menu will stop working.');
+					.setFooter('Times out in 30s');
 
 				const menu = await message.channel.send({
 					embeds: [mainembed],
@@ -64,7 +64,7 @@ module.exports = {
 					embeds: [
 						new Discord.MessageEmbed()
 							.setDescription(
-								`Command \`${name}\` wasn\'t found.\nUse \`help\` to see all the Valid Commands. `
+								`Command \`${name}\` wasn\'t found.\nUse \`help\` to see all the valid commands. `
 							)
 							.setColor('RED'),
 					],
@@ -83,7 +83,7 @@ module.exports = {
 			}
 
 			embed.setDescription(`${command.description}`);
-			embed.addField('Permissions Needed to Execute', `${command.perms}`);
+			embed.addField('Permissions needed to execute', `${command.perms}`);
 			embed.addField('Usage', `${command.usage}`);
 			embed.addField('Aliases', `${aliases}`);
 
@@ -94,7 +94,7 @@ module.exports = {
 
 function getEmbed(emoji) {
 	let tempEmbed = new Discord.MessageEmbed();
-	tempEmbed.setFooter('help <Command Name> for a more detailed Command Info');
+	tempEmbed.setFooter('/help <command name>');
 	let type = '';
 
 	tempEmbed.setColor('ORANGE');
