@@ -51,7 +51,7 @@ module.exports = {
     } else if(action == 'list') {
 
       const auctions = await collection2.find({}).toArray()
-      console.log(auctions)
+      //console.log(auctions)
 
       if(!auctions || auctions.length == 0) {
         return interaction.editReply('no auctions atm')
