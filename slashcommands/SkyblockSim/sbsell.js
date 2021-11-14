@@ -171,26 +171,19 @@ module.exports = {
 		}
 
 		//Check if more than 1 of said item exists
-		if (founditem === undefined || founditem.amount === 0) {
+		if (founditem === undefined) {
 			const noitems = new Discord.MessageEmbed()
 				.setFooter(getFooter(player))
 				.setColor('RED')
-				.setDescription(`You don\'t have enough Items to be sold.`);
+				.setDescription(`You don\'t have any ${sellitem} to be sold.`);
 			interaction.editReply({ embeds: [noitems] });
 			return;
 		}
 
 		//Check if a Number higher than the owned Amount is enterd
 		if (founditem.amount < amount) {
-			const littleitems = new Discord.MessageEmbed()
-				.setFooter(getFooter(player))
-				.setColor('RED')
-				.setDescription(
-					`You entered a number higher than the amount of ${sellitem} than your own.\nEntered: **${amount}**\nOwned: **${founditem.amount}**`
-				);
-			interaction.editReply({ embeds: [littleitems] });
-			return;
-		}
+      amount = founditem.amount
+    }
 
 		//Get Price for the Item and Calculate earned coins
 		let data = await getPrice1(bzname);
