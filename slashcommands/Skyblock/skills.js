@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 
 module.exports = {
 	name: 'Skills',
-	description: 'Shows the Users Skills.',
+	description: "Shows the user's skills.",
 	usage: 'skills (IGN)',
 	perms: 'None',
 	folder: 'Skyblock',
@@ -29,7 +29,7 @@ module.exports = {
 		}); // Test if IGN esists
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription('Checking for Player Data . . .')
+			.setDescription('Checking for player data . . .')
 			.setColor('ORANGE');
 
 		const waitingembed = await interaction.editReply({
@@ -154,15 +154,15 @@ module.exports = {
 		return waitingembed.edit({
 			embeds: [
 				new Discord.MessageEmbed()
-					.setTitle(`Skill Data for ${ign}`)
+					.setTitle(`Skill data for ${ign}`)
 					.setColor('7CFC00')
 					.setAuthor(
 						ign,
 						`https://cravatar.eu/helmavatar/${ign}/600.png`,
 						`http://sky.shiiyu.moe/stats/${ign}`
 					)
-					.setDescription(`Total Skill XP: **${ttotalxp}**`)
-					.setFooter(`${ign}'s Skill Average: ${toFixed(apiData.data.skills.average_skills)}`)
+					.setDescription(`Total skill XP: **${ttotalxp}**`)
+					.setFooter(`${ign}'s skill average: ${toFixed(apiData.data.skills.average_skills)}`)
 					.addFields(
 						{
 							name: '<:mining:852069714577719306> Mining',

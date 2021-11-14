@@ -9,7 +9,7 @@ module.exports = {
 	aliases: ['sbd'],
 	cooldown: 30,
 	async execute(interaction, mclient) {
-		return interaction.editReply({ content: 'not added yet' });
+		return interaction.editReply({ content: 'Feature not added yet' });
 
 		const collection = mclient.db('SkyblockSim').collection('Players');
 		let player = await collection.findOne({ _id: interaction.user.id });
@@ -18,7 +18,7 @@ module.exports = {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription(`Create a profile using \`/sb start\``);
 
 			interaction.editReply({ embeds: [noprofile] });
 			return;
@@ -29,9 +29,9 @@ module.exports = {
 				.setTitle('Missing Requirements')
 				.setColor('RED')
 				.setDescription(
-					`You don\'t fit the Requirements needed to enter **The End**.\n\nCombat XP needed: **15000**\nYour Combat XP: **${
+					`You don\'t fit the requirements needed to enter **The End**.\n\nCombat XP needed: **15000**\nYour combat XP: **${
 						player.data.skills.combat
-					}**\nMissing Combat XP: **${15000 - player.data.skills.combat}**`
+					}**\nMissing combat XP: **${15000 - player.data.skills.combat}**`
 				);
 			interaction.editReply({ embeds: [noentry] });
 			return;
@@ -45,7 +45,7 @@ module.exports = {
 				.setTitle('Not enough Summoning Eyes')
 				.setColor('RED')
 				.setDescription(
-					`You don\'t have enough Summoning Eyes to fight a Dragon.\nYou need at least **2 Summoning Eyes** to fight a Dragon\nTo get **Summoning Eyes** use /sb warp Area Dragon\'s Nest to farm them`
+					"You don\'t have enough Summoning Eyes to fight a Dragon.\nYou need at least **2 Summoning Eyes** to fight a Dragon\nTo get **Summoning Eyes**, use `/sb warp Area Dragon's Nest` to farm them"
 				);
 
 			interaction.editReply({ embeds: [noeyes] });
@@ -53,7 +53,7 @@ module.exports = {
 		}
 
 		const start = new Discord.MessageEmbed()
-			.setDescription('<a:wait:847471618272002059> Placing Eyes to Summon the Dragon')
+			.setDescription('<a:wait:847471618272002059> Placing Summoning Eyes to summon the Dragon')
 			.setColor('PURPLE')
 			.setFooter('Skyblock Simulator');
 
@@ -142,11 +142,11 @@ module.exports = {
 			.setFooter('Skyblock Simulator\nThis is purely cosmetic as of now will change in the Future');
 		if (loot === 'Fragments') {
 			end.setDescription(
-				`You killed an **${dragname} Dragon** which dropped you **${fragsamount}x ${loot}** earning you **<:coins:861974605203636253> ${earned} Coins**`
+				`You killed **${dragname} Dragon**, which dropped you **${fragsamount}x ${loot}**, earning you **<:coins:861974605203636253> ${earned} coins**`
 			);
 		} else {
 			end.setDescription(
-				`You killed an **${dragname} Dragon** which dropped you **${loot}** earning you **<:coins:861974605203636253> ${earned} Coins**`
+				`You killed **${dragname} Dragon**, which dropped you **${loot}**, earning you **<:coins:861974605203636253> ${earned} coins**`
 			);
 		}
 

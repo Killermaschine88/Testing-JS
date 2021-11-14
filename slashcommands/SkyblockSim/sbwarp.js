@@ -16,8 +16,8 @@ module.exports = {
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
-				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setTitle('No profile found')
+				.setDescription(`Create a profile using \`/sb start\``);
 			return interaction.editReply({ embeds: [noprofile] });
 		}
 
@@ -50,18 +50,18 @@ module.exports = {
 			.setTitle('Skyblock Simulator Warps')
 			.setFooter(getFooter(player))
 			.setColor(getColor(player))
-			.setDescription('Choose the Island Type where you want to Travel');
+			.setDescription('Choose the island type you want to travel to');
 
 		const row = new Discord.MessageActionRow().addComponents(
 			new Discord.MessageButton()
 				.setEmoji('852069714527911956')
 				.setCustomId('combat')
-				.setLabel('Combat')
+				.setLabel('Combat Areas')
 				.setStyle('PRIMARY'),
 			new Discord.MessageButton()
 				.setEmoji('852069714577719306')
 				.setCustomId('mining')
-				.setLabel('Mining')
+				.setLabel('Mining Areas')
 				.setStyle('PRIMARY'),
 			/*new Discord.MessageButton()
           .setEmoji('852069714451759114')
@@ -116,24 +116,24 @@ module.exports = {
 				.setTitle('Skyblock Simulator Combat Islands')
 				.setFooter(getFooter(player))
 				.setColor(getColor(player))
-				.setDescription('**Available Islands (Combat Level)**\nand found drops on the Islands')
+				.setDescription('Available islands and their drops.')
 				.addField(
-					'Hub (0)',
+					'Hub (combat level 0)',
 					`<:rotten_flesh:869900884409221191><:potatoe:869900884593762304><:carrot:869900884300165230>\n<:bone:869900884405002270><:arrow:869900884379832320>`,
 					true
 				)
 				.addField(
-					'Spiders Den (1)',
+					'Spiders Den (combat level 1)',
 					`<:string:869908281215299635><:spider_eye:869908281341132830><:slimeball:869900884308549653>`,
 					true
 				)
 				.addField(
-					'Blazing Fortress (5)',
+					'Blazing Fortress (combat level 5)',
 					`<:gold_nugget:869900883977183244><:gold:869126927011708929><:magma_cream:869900884144947201>\n<:ghast_tear:869900884337905684><:blaze_rod:869900884358860820><:bone:869900884405002270>\n<:coal:869126927062028298>`,
 					true
 				)
 				.addField(
-					'The End (12)',
+					'The End (combat level 12)',
 					`<:ender_pearl:869900884337913896><:eye_of_ender:869900884367257650><:arrow:869900884379832320>\n<:obsidian:869490639769853992><:bone:869900884405002270><:summoning_eye:869900884396638238>`,
 					true
 				);
@@ -178,25 +178,25 @@ module.exports = {
 				.setTitle('Skyblock Simulator Mining Islands')
 				.setFooter(getFooter(player))
 				.setColor(getColor(player))
-				.setDescription('**Available Islands (Mining Level)**\nand found Ores on the Islands')
-				.addField('Coal Mine (0)', '<:cobblestone:869126927124938832><:coal:869126927062028298>', true)
+				.setDescription('Available islands and their ores')
+				.addField('Coal Mine (mining level 0)', '<:cobblestone:869126927124938832><:coal:869126927062028298>', true)
 				.addField(
-					'Gold Mine (1)',
+					'Gold Mine (mining level 1)',
 					'<:cobblestone:869126927124938832><:coal:869126927062028298><:iron:869126927082991636>\n<:gold:869126927011708929>',
 					true
 				)
 				.addField(
-					'Deep Caverns (5)',
+					'Deep Caverns (mining level 5)',
 					'<:cobblestone:869126927124938832><:coal:869126927062028298><:iron:869126927082991636>\n<:gold:869126927011708929><:lapis:869126926986530847><:redstone:869126927263367168>\n<:emerald:869126927380779008><:diamond:869126926646788097><:obsidian:869490639769853992>',
 					true
 				)
 				.addField(
-					'Dwarven Mines (12)',
+					'Dwarven Mines (mining level 12)',
 					'<:cobblestone:869126927124938832><:coal:869126927062028298><:iron:869126927082991636>\n<:gold:869126927011708929><:lapis:869126926986530847><:redstone:869126927263367168>\n<:emerald:869126927380779008><:diamond:869126926646788097><:mithril:869126927141711902>\n<:titanium:869126927368220763>',
 					true
 				)
 				.addField(
-					'Crystal Hollows (15)',
+					'Crystal Hollows (mining level 15)',
 					'<:coal:869126927062028298><:iron:869126927082991636><:gold:869126927011708929>\n<:lapis:869126926986530847><:redstone:869126927263367168><:emerald:869126927380779008>\n<:diamond:869126926646788097><:mithril:869126927141711902><:titanium:869126927368220763>\n<:hardstone:869126926797799475><:gemstone:869126927137533972>',
 					true
 				);
@@ -315,7 +315,7 @@ module.exports = {
 					.setFooter(getFooter(player))
 					.setColor(getColor(player))
 					.setDescription(
-						'**Available Areas (Combat Level)**\nand found Drops at the Areas\n\nGraveyard(0) <:rotten_flesh:869900884409221191><:carrot:869900884300165230><:potatoe:869900884593762304>\nRuins (1) <:bone:869900884405002270>\nHighlevel (2) <:bone:869900884405002270><:arrow:869900884379832320>'
+						'Available areas and their drops\n Graveyard (combat level 0) <:rotten_flesh:869900884409221191><:carrot:869900884300165230><:potatoe:869900884593762304>\nRuins (combat level 1) <:bone:869900884405002270>\nHighlevel (combat level 2) <:bone:869900884405002270><:arrow:869900884379832320>'
 					);
 
 				const b1 = new Discord.MessageButton()
@@ -367,12 +367,14 @@ module.exports = {
 					})
 					.catch((err) => menu.edit({ components: [] }));
 			} else if (island === "Spider's Den") {
+				// why tf is all this hard-coded
+				// who in their right mind does not modularise this
 				const spiderwarp = new Discord.MessageEmbed()
 					.setTitle('Skyblock Simulator Hub Areas')
 					.setFooter(getFooter(player))
 					.setColor(getColor(player))
 					.setDescription(
-						'**Available Areas (Combat Level)**\nand found Drops at the Areas\n\nLower Spiders Hill (1) <:string:869908281215299635><:spider_eye:869908281341132830>\nUpper Spiders Hill (3) <:string:869908281215299635><:spider_eye:869908281341132830>\nSpider Cave (4) <:string:869908281215299635><:spider_eye:869908281341132830><:slimeball:869900884308549653>'
+						'Available areas and their drops\n\nLower Spiders Hill (combat level 1) <:string:869908281215299635><:spider_eye:869908281341132830>\nUpper Spiders Hill (combat level 3) <:string:869908281215299635><:spider_eye:869908281341132830>\nSpider Cave (combat level 4) <:string:869908281215299635><:spider_eye:869908281341132830><:slimeball:869900884308549653>'
 					);
 
 				const b1 = new Discord.MessageButton()
@@ -429,7 +431,7 @@ module.exports = {
 					.setFooter(getFooter(player))
 					.setColor(getColor(player))
 					.setDescription(
-						'**Available Areas (Combat Level)**\nand found Drops at the Areas\n\nMolten Castle (5) <:gold_nugget:869900883977183244><:gold:869126927011708929><:blaze_rod:869900884358860820>\nMolten Bridge (8) <:magma_cream:869900884144947201><:coal:869126927062028298><:bone:869900884405002270>\nLava Field (10) <:magma_cream:869900884144947201><:ghast_tear:869900884337905684>'
+						'Available areas and their drops\n\nMolten Castle (combat level 5) <:gold_nugget:869900883977183244><:gold:869126927011708929><:blaze_rod:869900884358860820>\nMolten Bridge (combat level 8) <:magma_cream:869900884144947201><:coal:869126927062028298><:bone:869900884405002270>\nLava Field (combat level 10) <:magma_cream:869900884144947201><:ghast_tear:869900884337905684>'
 					);
 
 				const b1 = new Discord.MessageButton()
@@ -490,7 +492,7 @@ module.exports = {
 				.setFooter(getFooter(player))
 				.setColor(getColor(player))
 				.setDescription(
-					"**Available Areas (Mining Level)**\nand found Ores at the Areas\n\nGunpowder Mines (5) <:cobblestone:869126927124938832><:coal:869126927062028298><:iron:869126927082991636><:gold:869126927011708929>\nLapis Quarry (6) <:cobblestone:869126927124938832><:lapis:869126926986530847>\nPigman's Den (7) <:cobblestone:869126927124938832><:redstone:869126927263367168>\nSlimehill (8) <:cobblestone:869126927124938832><:emerald:869126927380779008>\nDiamond Reserve (9) <:cobblestone:869126927124938832><:diamond:869126926646788097>\nObsidian Sanctuary (10) <:cobblestone:869126927124938832><:diamond:869126926646788097><:obsidian:869490639769853992>"
+					"Available areas and their ores\n\nGunpowder Mines (mining level 5) <:cobblestone:869126927124938832><:coal:869126927062028298><:iron:869126927082991636><:gold:869126927011708929>\nLapis Quarry (mining level 6) <:cobblestone:869126927124938832><:lapis:869126926986530847>\nPigman's Den (mining level 7) <:cobblestone:869126927124938832><:redstone:869126927263367168>\nSlimehill (mining level 8) <:cobblestone:869126927124938832><:emerald:869126927380779008>\nDiamond Reserve (mining level 9) <:cobblestone:869126927124938832><:diamond:869126926646788097>\nObsidian Sanctuary (mining level 10) <:cobblestone:869126927124938832><:diamond:869126926646788097><:obsidian:869490639769853992>"
 				);
 
 			const b1 = new Discord.MessageButton()
@@ -586,7 +588,7 @@ module.exports = {
 				.setTitle(`Travel to ${location}`)
 				.setColor('ORANGE')
 				.setFooter(getFooter(player))
-				.setDescription(`Are you sure you want to Travel to the **${location}**`);
+				.setDescription(`Are you sure you want to travel to the **${location}**`);
 			const row = new Discord.MessageActionRow().addComponents(
 				new Discord.MessageButton().setCustomId('confirm').setLabel('Confirm').setStyle('SUCCESS'),
 				new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel').setStyle('DANGER')

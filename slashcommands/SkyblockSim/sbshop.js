@@ -4,7 +4,7 @@ const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbshop',
-	description: 'Shows Skyblock Simulator Leaderboard',
+	description: 'Shows Skyblock Simulator leaderboard',
 	usage: 'sblb',
 	perms: 'None',
 	folder: 'SkyblockSim',
@@ -17,8 +17,8 @@ module.exports = {
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
-				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setTitle('No profile found')
+				.setDescription(`Create a profile using \`/sb start\``);
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
@@ -278,7 +278,7 @@ module.exports = {
 		let shopembed = new Discord.MessageEmbed()
 			.setTitle('Skyblock Simulator Shop')
 			.setDescription(
-				"Upgrades or Items you can buy will Show up here. (If nothing shows up then you can't buy anything)"
+				"Upgrades or items you can buy will show up here. (If it is empty, you cannot buy anything 😭)"
 			)
 			.setFooter(getFooter(player))
 			.setColor(getColor(player));
@@ -287,45 +287,45 @@ module.exports = {
 		if (rod.name == 'Fishing Rod') {
 			shopembed.addField(
 				'Prismarine Rod',
-				'**Cost:** 5k Coins + 10 Lilypads\n\n**Stats:**\n`5 α`, `10% 🎣`',
+				'**Cost:** 5k coins + 10 lilypads\n\n**Stats:**\n`5 α`, `10% 🎣`',
 				true
 			);
 		} else if (rod.name == 'Prismarine Rod') {
-			shopembed.addField('Sponge Rod', '**Cost:** 25k Coins + 20 Lilypads\n\n**Stats:**\n`10 α`, `20% 🎣`', true);
+			shopembed.addField('Sponge Rod', '**Cost:** 25k coins + 20 lilypads\n\n**Stats:**\n`10 α`, `20% 🎣`', true);
 		} else if (rod.name == 'Sponge Rod') {
 			shopembed.addField(
 				'Speedster Rod',
-				'**Cost:** 50k Coins + 30 Lilypads\n\n**Stats:**\n`15 α`, 30% 🎣',
+				'**Cost:** 50k coins + 30 lilypads\n\n**Stats:**\n`15 α`, 30% 🎣',
 				true
 			);
 		} else if (rod.name == 'Speedster Rod') {
 			shopembed.addField(
 				"Farmer's Rod",
-				'**Cost:** 100k Coins + 50 Lilypads\n\n**Stats:**\n`20 α`, `40% 🎣`',
+				'**Cost:** 100k coins + 50 lilypads\n\n**Stats:**\n`20 α`, `40% 🎣`',
 				true
 			);
 		} else if (rod.name == "Farmer's Rod") {
 			shopembed.addField(
 				'Challenging Rod',
-				'**Cost:** 250k Coins + 75 Lilypads\n\n**Stats:**\n`25 α`, `50% 🎣`',
+				'**Cost:** 250k coins + 75 lilypads\n\n**Stats:**\n`25 α`, `50% 🎣`',
 				true
 			);
 		} else if (rod.name == 'Challenging Rod') {
 			shopembed.addField(
 				'Rod of Champions',
-				'**Cost:** 500k Coins + 100 Lilypads\n\n**Stats:**\n`30 α`, `60% 🎣`',
+				'**Cost:** 500k coins + 100 lilypads\n\n**Stats:**\n`30 α`, `60% 🎣`',
 				true
 			);
 		} else if (rod.name == 'Rod of Champions') {
 			shopembed.addField(
 				'Rod of Legends',
-				'**Cost:** 1M Coins + 150 Lilypads\n\n**Stats:**\n`40 α`, `70% 🎣`',
+				'**Cost:** 1M coins + 150 lilypads\n\n**Stats:**\n`40 α`, `70% 🎣`',
 				true
 			);
 		} else if (rod.name == 'Rod of Legends') {
 			shopembed.addField(
 				'Rod of the Sea',
-				'**Cost:** 50 Gems + 250 Lilypads\n\n**Stats:**\n`50 α`, `75% 🎣`',
+				'**Cost:** 50 gems + 250 lilypads\n\n**Stats:**\n`50 α`, `75% 🎣`',
 				true
 			);
 		}
@@ -334,7 +334,7 @@ module.exports = {
 		if (player.data.misc.booster_cookie.active == false) {
 			shopembed.addField(
 				'Booster Cookie',
-				'**Cost:** 4 Gems\n\n**Stats:**\n`10 ✯`, 10% Overall Stat incerase',
+				'**Cost:** 4 gems\n\n**Stats:**\n`10 ✯`, 10% overall stat increase',
 				true
 			);
 		}
@@ -342,19 +342,19 @@ module.exports = {
 		//Sword Fields
 		if (swordinv.find((item) => item.name == 'Leaping Sword')) {
 		} else if (swordinv.find((item) => item.name == "Tactician's Sword")) {
-			shopembed.addField('Leaping Sword', '**Cost:** 5m\n\n**Stats:** `150 ⚔️`, `110 ❁`, `40 ☣`, `100 ☠`', true);
+			shopembed.addField('Leaping Sword', '**Cost:** 5m coins\n\n**Stats:** `150 ⚔️`, `110 ❁`, `40 ☣`, `100 ☠`', true);
 		} else if (swordinv.find((item) => item.name == 'Zombie Sword')) {
 			shopembed.addField(
 				"Tactician's Sword",
-				'**Cost:** 1m\n\n**Stats:** `100 ⚔️`, `80 ❁`, `30 ☣`, `75 ☠`',
+				'**Cost:** 1m coins\n\n**Stats:** `100 ⚔️`, `80 ❁`, `30 ☣`, `75 ☠`',
 				true
 			);
 		} else if (swordinv.find((item) => item.name == 'Golem Sword')) {
-			shopembed.addField('Zombie Sword', '**Cost:** 100k\n\n**Stats:** `75 ⚔️`, `60 ❁`, `20 ☣`, `50 ☠`', true);
+			shopembed.addField('Zombie Sword', '**Cost:** 100k coins\n\n**Stats:** `75 ⚔️`, `60 ❁`, `20 ☣`, `50 ☠`', true);
 		} else if (swordinv.find((item) => item.name == 'Undead Sword')) {
-			shopembed.addField('Golem Sword', '**Cost:** 50k\n\n**Stats:** `50 ⚔️`, `40 ❁`, `10 ☣`, `30 ☠`', true);
+			shopembed.addField('Golem Sword', '**Cost:** 50k coins\n\n**Stats:** `50 ⚔️`, `40 ❁`, `10 ☣`, `30 ☠`', true);
 		} else if (swordinv.find((item) => item.name == 'Fist')) {
-			shopembed.addField('Undead Sword', '**Cost:** 15k\n\n**Stats:** `20 ⚔️`, `15 ❁`, `10 ☠`', true);
+			shopembed.addField('Undead Sword', '**Cost:** 15k coins\n\n**Stats:** `20 ⚔️`, `15 ❁`, `10 ☠`', true);
 		}
 
 		//Armor Fields
@@ -362,35 +362,35 @@ module.exports = {
 		} else if (armorinv.find((item) => item.name == 'Frozen Blaze Armor')) {
 			shopembed.addField(
 				'Superior Dragon Armor',
-				'**Cost:** 10m\n\n**Stats:** `300 ❤`, `150 ❈`, `150 ❁`, `40 ☣`, `150 ☠`, `15 ✯`',
+				'**Cost:** 10m coins\n\n**Stats:** `300 ❤`, `150 ❈`, `150 ❁`, `40 ☣`, `150 ☠`, `15 ✯`',
 				true
 			);
 		} else if (armorinv.find((item) => item.name == 'Tarantula Armor')) {
 			shopembed.addField(
 				'Frozen Blaze Armor',
-				'**Cost:** 5m\n\n**Stats:** `200 ❤`, `150 ❈`, `100 ❁`, `15 ☣`, `50 ☠`',
+				'**Cost:** 5m coins\n\n**Stats:** `200 ❤`, `150 ❈`, `100 ❁`, `15 ☣`, `50 ☠`',
 				true
 			);
 		} else if (armorinv.find((item) => item.name == 'Monster Hunter Armor')) {
 			shopembed.addField(
 				'Tarantula Armor',
-				'**Cost:** 1m\n\n**Stats:** `225 ❤`, `100 ❈`, `50 ❁`, `25 ☣`, `75 ☠`',
+				'**Cost:** 1m coins\n\n**Stats:** `225 ❤`, `100 ❈`, `50 ❁`, `25 ☣`, `75 ☠`',
 				true
 			);
 		} else if (armorinv.find((item) => item.name == 'Golem Armor')) {
 			shopembed.addField(
 				'Monster Hunter Armor',
-				'**Cost:** 500k\n\n**Stats:** `150 ❤`, `60 ❈`, `30 ❁`, `15 ☣`, `40 ☠`',
+				'**Cost:** 500k coins\n\n**Stats:** `150 ❤`, `60 ❈`, `30 ❁`, `15 ☣`, `40 ☠`',
 				true
 			);
 		} else if (armorinv.find((item) => item.name == 'Leaflet Armor')) {
 			shopembed.addField(
 				'Golem Armor',
-				'**Cost:** 100k\n\n**Stats:** `100 ❤`, `30 ❈`, `10 ❁`, `10 ☣`, `20 ☠`',
+				'**Cost:** 100k coins\n\n**Stats:** `100 ❤`, `30 ❈`, `10 ❁`, `10 ☣`, `20 ☠`',
 				true
 			);
 		} else if (armorinv.find((item) => item.name == 'Naked')) {
-			shopembed.addField('Leaflet Armor', '**Cost:** 50k\n\n**Stats:** `50 ❤`, `10 ❈`, `5 ☣`, `10 ☠`', true);
+			shopembed.addField('Leaflet Armor', '**Cost:** 50k coins\n\n**Stats:** `50 ❤`, `10 ❈`, `5 ☣`, `10 ☠`', true);
 		}
 
 		//Filter and Collector
@@ -460,7 +460,7 @@ module.exports = {
 						const finished = new Discord.MessageEmbed()
 							.setTitle('Rod Upgarded')
               .setFooter(getFooter(player))
-							.setDescription(`Purchased **${rodname}** for 50 Gems and ${amount} Lilypads.`)
+							.setDescription(`Purchased **${rodname}** for 50 gems and ${amount} Lilypads.`)
 							.setColor('GREEN');
 
 						interaction.editReply({
@@ -471,7 +471,7 @@ module.exports = {
 						const finished = new Discord.MessageEmbed()
               .setFooter(getFooter(player))
 							.setTitle('Rod Upgarded')
-							.setDescription(`Purchased **${rodname}** for ${cost} Coins and ${amount} Lilypads.`)
+							.setDescription(`Purchased **${rodname}** for ${cost} coins and ${amount} lilypads.`)
 							.setColor('GREEN');
 
 						interaction.editReply({

@@ -7,7 +7,7 @@ const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbfishing',
-	description: 'Earn Fishing XP',
+	description: 'Earn fishing XP',
 	usage: 'sbfishing',
 	perms: 'None',
 	folder: 'SkyblockSim',
@@ -22,15 +22,15 @@ module.exports = {
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
-				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setTitle('No profile found')
+				.setDescription(`Create a profile using \`/sb start\``);
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
 		if (player.data.misc.is_fishing === true) {
 			const alreadyfishing = new Discord.MessageEmbed()
-				.setTitle("You are already Fishing somewhere so i can't create another Pond for you")
+				.setTitle("You are already fishing")
 				.setColor('RED')
 				.setFooter(getFooter('Pond'));
 			interaction.editReply({ embeds: [alreadyfishing] });
@@ -77,14 +77,14 @@ module.exports = {
 			.setStyle('PRIMARY');
 
 		const bcatchoff = new Discord.MessageButton()
-			.setCustomId('a')
+			.setCustomId('a') // ???
 			.setEmoji('852069714359877643')
 			.setLabel('Cast Rod')
 			.setStyle('PRIMARY')
 			.setDisabled(true);
 
 		const blureoff = new Discord.MessageButton()
-			.setCustomId('aaaa')
+			.setCustomId('aaaa') // ???
 			.setEmoji('🐟')
 			.setLabel('Lure Rod')
 			.setStyle('PRIMARY')
@@ -98,7 +98,7 @@ module.exports = {
 			.setStyle('PRIMARY');
 
 		const bkillscoff = new Discord.MessageButton()
-			.setCustomId('aa')
+			.setCustomId('aa') // ???
 			.setEmoji('852079613052059658')
 			.setLabel('Attack Sea Creature')
 			.setStyle('PRIMARY')
@@ -119,7 +119,7 @@ module.exports = {
 			.setColor(getColor('Pond'))
 			.setFooter(getFooter('Pond'))
 			.setDescription(
-				`Rod: **${rod}**\nSea Creature Chance: **${sea_creature_chance}**\nFishing Speed: **${rod_speed}**%`
+				`Rod: **${rod}**\nSea Creature chance: **${sea_creature_chance}**%\nFishing speed: **${rod_speed}**%`
 			);
 		if (player.data.settings.imgshown == true) {
 			pond.setImage('https://cdn.discordapp.com/attachments/871669216703578152/905004300835631174/unknown.png'); //rod in hand
@@ -156,7 +156,7 @@ module.exports = {
 		collector.on('collect', async (i) => {
 			if (player.data.misc.is_mining == true) {
 				interaction.followUp({
-					content: 'You cheeky tried to multi grind Skills not with me :).',
+					content: 'You seem to be mining, cheeky you.',
 					ephemeral: true,
 				});
 				return collector.stop();
@@ -165,7 +165,7 @@ module.exports = {
 			if (i.customId === 'cast' && rod_casted === false) {
 				rod_casted = true;
 				pond.fields = [];
-				pond.addField('\u200b', '<a:wait:847471618272002059> Waiting for something to bite the Bait.');
+				pond.addField('\u200b', '<a:wait:847471618272002059> Waiting for something to bite the bait.');
 				if (player.data.settings.imgshown == true) {
 					pond.setImage(
 						'https://cdn.discordapp.com/attachments/871669216703578152/905004413695983636/unknown.png'
@@ -177,7 +177,7 @@ module.exports = {
 				await sleep(fishing_time);
 
 				pond.fields = [];
-				pond.addField('\u200b', 'Something bit the Bait, lure it in.');
+				pond.addField('\u200b', 'Something bit, lure it in!');
 				if (player.data.settings.imgshown == true) {
 					pond.setImage(
 						'https://cdn.discordapp.com/attachments/871669216703578152/905004487725441064/unknown.png'
@@ -193,7 +193,7 @@ module.exports = {
 					mdmg = foundmob.dmg;
 					pond.fields = [];
 					pond.setColor('ORANGE');
-					pond.addField(`${foundmob.name} caught!`, `Player Health: ❤️ ${php}\nMob Health: ❤️ ${mhp}`);
+					pond.addField(`${foundmob.name} caught!`, `Player health: ❤️ **${php}**\nMob health: ❤️ **${mhp}**`);
 					menu.edit({ embeds: [pond], components: [row2] });
 					rod_casted = false;
 				} else {
@@ -210,7 +210,7 @@ module.exports = {
 
 						rod_casted = false;
 						pond.fields = [];
-						pond.addField(`RARE CATCH!!!`, `earned **<:coins:861974605203636253> ${coindrop} Coins**`);
+						pond.addField(`RARE CATCH!`, `Earned **<:coins:861974605203636253> ${coindrop} coins**`);
 
 						menu.edit({ embeds: [pond], components: [row] });
 					} else {
@@ -232,7 +232,7 @@ module.exports = {
 						pond.fields = [];
 						pond.addField(
 							`Caught a ${fishname}`,
-							`earned **${fishxp} Fishing XP** and sold it for **<:coins:861974605203636253> ${fishingcoins} Coins**`
+							`Earned **${fishxp} XP**!\nSold it for <:coins:861974605203636253> **${fishingcoins} coins** (new balance: ${player.data.profile.coins+fishingcoins} coins)`
 						);
 						if (player.data.settings.imgshown == true) {
 							pond.setImage(
@@ -270,11 +270,11 @@ module.exports = {
 					pond.fields = [];
 					pond.addField(
 						`Battle`,
-						`Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (-<:crit:870306942806020106> ${pdmg})`
+						`Player health: ❤️ ${php} (- ${mdmg})\nMob health: ❤️ ${mhp} (-<:crit:870306942806020106> ${pdmg})`
 					);
 				} else {
 					pond.fields = [];
-					pond.addField(`Battle`, `Player Health: ❤️ ${php} (- ${mdmg})\nMob Health: ❤️ ${mhp} (- ${pdmg})`);
+					pond.addField(`Battle`, `Player health: ❤️ ${php} (- ${mdmg})\nMob health: ❤️ ${mhp} (- ${pdmg})`);
 				}
 				menu.edit({ embeds: [pond] });
 
@@ -289,7 +289,7 @@ module.exports = {
 					pond.setColor('BLUE');
 					pond.addField(
 						`Result`,
-						`Killed the Enemy, earned ${foundmob.xp} Fishing XP and ${amount} ${mobdrop}.`
+						`You killed the enemy!\nEarned **${foundmob.xp} XP** and *'${amount} ${mobdrop}**.`
 					);
 
 					php = health;
@@ -311,7 +311,7 @@ module.exports = {
 				} else if (i.customId === 'killsc' && php <= 0) {
 					pond.fields = [];
 					pond.setColor('RED');
-					pond.addField(`Result`, `Died to the Enemy which had **❤️ ${mhp}** left.`);
+					pond.addField(`Result`, `Died to the enemy, which had **❤️ ${mhp}** left.`);
 					menu.edit({ embeds: [pond] });
 					collector.stop();
 				}

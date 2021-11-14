@@ -27,7 +27,7 @@ module.exports = {
 			let ongoingtrade = new Discord.MessageEmbed()
 				.setTitle('Ongoing Trade')
 				.setDescription(
-					`You already have an ongoing trade to <@!${trades.reciever.id}> (${trades.reciever.id}) ask them to accept or deny it so you can send trades again`
+					`You already have an ongoing trade with <@!${trades.reciever.id}> (${trades.reciever.id}).\nAsk them to respond to it so you can continue trading`
 				)
 				.setColor('RED')
 				.setFooter('Skyblock Simulator');
@@ -38,7 +38,7 @@ module.exports = {
 		if (action == 'send-offer') {
 			if (!user.id || user.id == interaction.user.id || user.bot) {
 				let nouserembed = new Discord.MessageEmbed()
-					.setDescription('You cant send trades to yourself a Bot or an invalid User.')
+					.setDescription('You cannot send trades to yourself, a bot, or an invalid user.')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -47,7 +47,7 @@ module.exports = {
 
 			if (tradeitem == null || amount == null) {
 				let invalid = new Discord.MessageEmbed()
-					.setTitle('Trade Item and Amount are required for this action.')
+					.setTitle('Trade item and amount are required for this action.')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -55,7 +55,7 @@ module.exports = {
 			}
 
 			if (tradeitem.includes('coin')) {
-				tradeitem = 'Coins';
+				tradeitem = 'coins';
 
 				if (amount > player.data.profile.coins) {
 					let lowitemsembed = new Discord.MessageEmbed()
@@ -101,9 +101,9 @@ module.exports = {
 				let dmed = 'yes';
 				try {
 					let tradereq = new Discord.MessageEmbed()
-						.setTitle(`Trade Offer from ${interaction.user.tag}`)
+						.setTitle(`Trade offer from ${interaction.user.tag}`)
 						.setDescription(
-							`Wants to trade **${amount} ${tradeitem}**.\n\nSend your offer back with \`/sb trade reply-offer @User/UserId Item amount\` once you sent them an offer back you need to wait for them to accept or deny it.`
+							`Wants to trade **${amount} ${tradeitem}**.\n\nSend your offer back with \`/sb trade reply-offer @User/UserId Item amount\`.`
 						);
 					let fetched = await interaction.client.users.fetch(user.id);
 					await fetched.send({ embeds: [tradereq] });
@@ -114,9 +114,9 @@ module.exports = {
 				let sentembed = new Discord.MessageEmbed()
 					.setTitle('Trade sent')
 					.setDescription(
-						`Sent a trade to the User offering them **${amount} ${caps(
+						`Sent a trade to the user offering them **${amount} ${caps(
 							tradeitem
-						)}**.\nWait for the User to reply you with an offer which u then can accept or deny (you get dmed when they reply an offer)\n\nUser dmed: ${dmed}`
+						)}**.\nYou receive a DM when they reply to the offer\n\nUser DM'ed: ${dmed}`
 					)
 					.setColor('GREEN')
 					.setFooter('Skyblock Simulator');
@@ -128,11 +128,11 @@ module.exports = {
 
 			if (finditem == undefined || (finditem.amount == 0 && amount < 0)) {
 				let noitemembed = new Discord.MessageEmbed()
-					.setTitle('No Item found.')
+					.setTitle('No item found')
 					.setDescription(
-						`Couldn\'t find any Items matching \`${caps(
+						`Could not find any items matching \`${caps(
 							tradeitem
-						)}\` or Amount being above 0, make sure you spelled it corrrectly.`
+						)}\` or amount being above 0.` // I don't understand what this means
 					)
 					.setFooter('Skyblock Simulator')
 					.setColor('RED');
@@ -142,7 +142,7 @@ module.exports = {
 
 			if (amount > finditem.amount) {
 				let lowitemsembed = new Discord.MessageEmbed()
-					.setTitle('Too few Items')
+					.setTitle('Too few items')
 					.setDescription(
 						`You only have ${finditem.amount} ${tradeitem}, but tried to trade ${amount} ${tradeitem}.`
 					)
@@ -187,7 +187,7 @@ module.exports = {
 				let tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade Offer from ${interaction.user.tag}`)
 					.setDescription(
-						`Wants to trade **${amount} ${tradeitem}**.\n\nSend your offer back with \`/sb trade reply-offer @User/UserId Item amount\` once you sent them an offer back you need to wait for them to accept or deny it.`
+						`Wants to trade **${amount} ${tradeitem}**.\n\nSend your offer back with \`/sb trade reply-offer @User/UserId Item amount\`.`
 					);
 				let fetched = await interaction.client.users.fetch(user.id);
 				await fetched.send({ embeds: [tradereq] });
@@ -198,9 +198,9 @@ module.exports = {
 			let sentembed = new Discord.MessageEmbed()
 				.setTitle('Trade sent')
 				.setDescription(
-					`Sent a trade to the User offering them **${amount} ${caps(
+					`Sent a trade to the user offering them **${amount} ${caps(
 						tradeitem
-					)}**.\nWait for the User to reply you with an offer which u then can accept or deny (you get dmed when they reply an offer)\n\nUser dmed: ${dmed}`
+					)}**.\nYou receive a DM when they reply to the offer\n\nUser DM'ed: ${dmed}`
 				)
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator');
@@ -209,7 +209,7 @@ module.exports = {
 		} else if (action == 'reply-offer') {
 			if (!user.id || user.id == interaction.user.id || user.bot) {
 				let nouserembed = new Discord.MessageEmbed()
-					.setDescription('You cant send trades to yourself a Bot or an invalid User.')
+					.setDescription('You cant send trades to yourself, a bot, or an invalid user.')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -218,7 +218,7 @@ module.exports = {
 			let existingsent = await collection1.findOne({ _id: user.id });
 			if (existingsent == null) {
 				let embed = new Discord.MessageEmbed()
-					.setTitle('THis user hasnt sent you a trade')
+					.setTitle('This user has not sent you a trade')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -227,7 +227,7 @@ module.exports = {
 
 			if (tradeitem == null || amount == null) {
 				let invalid = new Discord.MessageEmbed()
-					.setTitle('Trade Item and Amount are required for this action.')
+					.setTitle('Trade item and amount are required for this action.')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -276,9 +276,9 @@ module.exports = {
 				let dmed = 'yes';
 				try {
 					let tradereq = new Discord.MessageEmbed()
-						.setTitle(`Trade Offer from ${interaction.user.tag}`)
+						.setTitle(`Trade offer from ${interaction.user.tag}`)
 						.setDescription(
-							`Wants to offer **${amount} ${tradeitem}** for the Items you offered them.\n\nAccept or deny the trade with \`/sb trade accpet-offer/deny-offer @User/UserId\` if you accept the offer the items will be transfered else you get them back.`
+							`Wants to offer **${amount} ${tradeitem}** for the items you offered them.\n\nAccept or deny the trade with \`/sb trade accpet-offer/deny-offer @User/UserId\``
 						);
 					let fetched = await interaction.client.users.fetch(user.id);
 					await fetched.send({ embeds: [tradereq] });
@@ -289,9 +289,9 @@ module.exports = {
 				let sentembed = new Discord.MessageEmbed()
 					.setTitle('Trade sent')
 					.setDescription(
-						`Sent a trade to the User offering them **${amount} ${caps(
+						`Sent a trade to the user offering them **${amount} ${caps(
 							tradeitem
-						)}** for their Items.\nWait for the User to accept or deny your offer if they accept the trade gets completed else the items get returned.\nUser dmed: ${dmed}`
+						)}**.\nYou receive a DM when they reply to the offer\n\nUser DM'ed: ${dmed}`
 					)
 					.setColor('GREEN')
 					.setFooter('Skyblock Simulator');
@@ -305,7 +305,7 @@ module.exports = {
 				let noitemembed = new Discord.MessageEmbed()
 					.setTitle('No Item found.')
 					.setDescription(
-						`Couldn\'t find any Items matching \`${caps(tradeitem)}\`, make sure you spelled it corrrectly.`
+						`Couldn\'t find any items matching \`${caps(tradeitem)}\`.`
 					)
 					.setFooter('Skyblock Simulator')
 					.setColor('RED');
@@ -354,7 +354,7 @@ module.exports = {
 				let tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade Offer from ${interaction.user.tag}`)
 					.setDescription(
-						`Wants to offer **${amount} ${tradeitem}** for the Items you offered them.\n\nAccept or deny the trade with \`/sb trade accpet-offer/deny-offer @User/UserId\` if you accept the offer the items will be transfered else you get them back.`
+						`Wants to offer **${amount} ${tradeitem}** for the items you offered them.\n\nAccept or deny the trade with \`/sb trade accpet-offer/deny-offer @User/UserId\``
 					);
 				let fetched = await interaction.client.users.fetch(user.id);
 				await fetched.send({ embeds: [tradereq] });
@@ -365,9 +365,9 @@ module.exports = {
 			let sentembed = new Discord.MessageEmbed()
 				.setTitle('Trade sent')
 				.setDescription(
-					`Sent a trade to the User offering them **${amount} ${caps(
+					`Sent a trade to the user offering them **${amount} ${caps(
 						tradeitem
-					)}** for their Items.\nWait for the User to accept or deny your offer if they accept the trade gets completed else the items get returned.\nUser dmed: ${dmed}`
+					)}**.\nYou receive a DM when they reply to the offer\n\nUser DM'ed: ${dmed}`
 				)
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator');
@@ -377,7 +377,7 @@ module.exports = {
 			let offer = await collection1.findOne({ _id: interaction.user.id });
 			if (offer == null) {
 				let embed = new Discord.MessageEmbed()
-					.setTitle('No outgoing trades to that user.')
+					.setTitle('No outgoing trades to that user')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -423,14 +423,14 @@ module.exports = {
 			try {
 				let tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade accepted`)
-					.setDescription(`Trade accepted you got the ${offer.reciever.amount} ${offer.reciever.item}`);
+					.setDescription(`You received **${offer.reciever.amount}x ${offer.reciever.item}**`);
 				let fetched = await interaction.client.users.fetch(offer.sender.id);
 				await fetched.send({ embeds: [tradereq] });
 			} catch (e) {}
 			try {
 				let tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade accepted`)
-					.setDescription(`Trade accepted you got the ${offer.sender.amount} ${offer.sender.item}`);
+					.setDescription(`You received **${offer.sender.amount}x ${offer.sender.item}**`);
 				let fetched = await interaction.client.users.fetch(offer.reciever.id);
 				await fetched.send({ embeds: [tradereq] });
 			} catch (e) {}
@@ -449,7 +449,7 @@ module.exports = {
 			let offer = await collection1.findOne({ _id: interaction.user.id });
 			if (offer == null) {
 				let embed = new Discord.MessageEmbed()
-					.setTitle('No outgoing trades to that user.')
+					.setTitle('No outgoing trades to that user')
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
@@ -495,14 +495,14 @@ module.exports = {
 			try {
 				let tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade denied`)
-					.setDescription(`Trade denied you got the ${offer.reciever.amount} ${offer.reciever.item} back.`);
+					.setDescription(`**${offer.reciever.amount}x ${offer.reciever.item}** was returned to you.`);
 				let fetched = await interaction.client.users.fetch(offer.reciever.id);
 				await fetched.send({ embeds: [tradereq] });
 			} catch (e) {}
 			try {
 				let tradereq = new Discord.MessageEmbed()
 					.setTitle(`Trade denied`)
-					.setDescription(`Trade denied you got the ${offer.sender.amount} ${offer.sender.item} back.`);
+					.setDescription(`**${offer.sender.amount}x ${offer.sender.item}** was returned to you.`);
 				let fetched = await interaction.client.users.fetch(offer.sender.id);
 				await fetched.send({ embeds: [traddeniedereq] });
 			} catch (e) {}
@@ -512,7 +512,7 @@ module.exports = {
 			} catch (e) {}
 
 			let tradedone = new Discord.MessageEmbed()
-				.setTitle('Trade denied and Items returned.')
+				.setTitle('Trade denied')
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator');
 

@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
 	name: 'vote',
-	description: 'Sends the Bots Invite Link',
+	description: 'Sends the bots invite link',
 	usage: 'invite',
 	perms: 'None',
 	folder: 'Bot',
@@ -13,7 +13,7 @@ module.exports = {
 			.setColor('fed8b1')
 			.addField(
 				'<:verifieddev:848830303472189461> Support Server',
-				'[Get Support / Suggest Ideas and Features](https://discord.gg/Ca6XpTRQaR)',
+				'[Get support and suggest ideas and features](https://discord.gg/Ca6XpTRQaR)',
 				true
 			)
 			.addField(

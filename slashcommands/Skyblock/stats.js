@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 module.exports = {
 	name: 'Stats',
 	usage: 'stats (IGN)',
-	description: 'Show Overall Stats for the mentioned User',
+	description: 'Show overall stats for the mentioned user',
 	perms: 'None',
 	folder: 'Skyblock',
 	aliases: [],
@@ -32,7 +32,7 @@ module.exports = {
 		const apiData = await getApiData(ign); // Gets all skyblock player data from Senither's Hypixel API Facade
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription('Checking for Player Data . . .')
+			.setDescription('Checking for player data . . .')
 			.setColor('ORANGE');
 
 		const waitingembed = await interaction.editReply({
@@ -54,14 +54,14 @@ module.exports = {
 		return interaction.editReply({
 			embeds: [
 				new Discord.MessageEmbed()
-					.setTitle(`Stats for ${ign} on Profile: ${apiData.data.name}`)
+					.setTitle(`Stats for ${ign} on profile: ${apiData.data.name}`)
 					.setColor('7CFC00')
 					.setAuthor(
 						ign,
 						`https://cravatar.eu/helmavatar/${ign}/600.png`,
 						`http://sky.shiiyu.moe/stats/${ign}`
 					)
-					.setDescription(`General Stats Overview for the Player`)
+					.setDescription(`General stats overview for the player`)
 					.addFields(
 						{
 							name: '💰 Coins',

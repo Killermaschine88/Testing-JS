@@ -4,7 +4,7 @@ const moment = require('moment');
 module.exports = {
 	name: 'Userinfo',
 	usage: 'userinfo <user>',
-	description: 'Shows info about the User',
+	description: 'Shows info about the user',
 	perms: 'None',
 	folder: 'QOL',
 	aliases: ['ui', 'me', 'whois'],
@@ -34,7 +34,7 @@ module.exports = {
 		if (badges.includes('BUGHUNTER_LEVEL_2')) bughunter2 = '<:BugHunterLvl2:856517850884603935>, ';
 		if (badges.includes('TEAM_USER')) teamuser = '';
 		if (badges.includes('VERIFIED_DEVELOPER')) developer = '<:verifieddev:848830303472189461>, ';
-		if (!badges[0]) balance = 'User has no Badges';
+		if (!badges[0]) balance = 'User has no badges';
 
 		const perms = member.permissions.toArray();
 
@@ -97,7 +97,7 @@ module.exports = {
 				` ${moment.utc(member.user.createdAt).format('dddd, MMMM Do YYYY')}`,
 				true
 			)
-			.addField('Server Join Date', `${joineddate} \n${joined} Days ago`, true)
+			.addField('Server Join Date', `${joineddate} \n${joined} days ago`, true)
 			.addField(
 				'Badges',
 				'\u200b' +

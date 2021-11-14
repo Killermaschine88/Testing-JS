@@ -5,7 +5,7 @@ const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbsell',
-	description: 'Sells Items for Skyblock Simulator',
+	description: 'Sells items for Skyblock Simulator',
 	usage: 'sbsell (Itemname) (Amount)',
 	perms: 'None',
 	folder: 'SkyblockSim',
@@ -18,8 +18,8 @@ module.exports = {
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
-				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setTitle('No profile found')
+				.setDescription(`Create a profile using \`/sb start\``);
 			return interaction.editReply({ embeds: [noprofile] });
 		}
 
@@ -27,7 +27,7 @@ module.exports = {
 			const nosell = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('Selling blocked!')
-				.setDescription('Selling blocked! You are currently mass-selling!')
+				.setDescription('Selling blocked! You are currently mass-selling.')
 				.setFooter(getFooter(player));
 			return interaction.editReply({ embeds: [nosell] });
 		}
@@ -37,7 +37,7 @@ module.exports = {
 		let sellallitems = 0;
 
 		let b4embed = new Discord.MessageEmbed()
-			.setTitle('Started Selling all Items')
+			.setTitle('Started selling all items...')
 			.setColor('GREEN')
 			.setFooter(getFooter(player));
 		interaction.editReply({ embeds: [b4embed] });
@@ -119,16 +119,16 @@ module.exports = {
 			let date2 = Date.now();
 			let taken = date2 - date1;
 			if (taken < 1000) {
-				taken = taken + ' ms';
+				taken = `\`${taken}\` milliseconds`;
 			} else if (taken < 10000) {
-				taken = taken / 1000 + ' s';
+				taken = `\`${taken / 1000}\` seconds`;
 			}
 			await collection.updateOne({ _id: interaction.user.id }, { $set: { 'data.misc.is_massselling': false } });
 			let embed = new Discord.MessageEmbed()
-				.setTitle('Sell All Finished')
+				.setTitle('Sell all finished')
 				.setColor('GREEN')
 				.setFooter(getFooter(player))
-				.setDescription(`Sold ${sellallitems} Items for ${sellallcoins.toFixed(2)} Coins.\nTook: \`${taken}\``);
+				.setDescription(`Sold ${sellallitems} items for **${sellallcoins.toFixed(2)} coins**.\nTook ${taken}`);
 			return interaction.editReply({ embeds: [embed] });
 		}
 
@@ -155,7 +155,7 @@ module.exports = {
 			let invaliditemembed = new Discord.MessageEmbed()
 				.setTitle('Invalid Item Name')
 				.setColor('RED')
-				.setDescription(`\`${sellitem}\` isn't a valid item name or not found in your Inventory.`)
+				.setDescription(`\`${sellitem}\` is not a valid item name or was not found in your inventory.`)
 				.setFooter(getFooter(player));
 			interaction.editReply({ embeds: [invaliditemembed] });
 			return;
@@ -166,7 +166,7 @@ module.exports = {
 				.setTitle('Invalid Amount')
 				.setColor('RED')
 				.setFooter(getFooter(player))
-				.setDescription("Can't sell negative items");
+				.setDescription("Cannot sell a negative number of items");
 			return interaction.editReply({ embeds: [embed] });
 		}
 
@@ -175,6 +175,8 @@ module.exports = {
 			const noitems = new Discord.MessageEmbed()
 				.setFooter(getFooter(player))
 				.setColor('RED')
+
+				.setDescription(`You do not have enough items to be sold.`);
 				.setDescription(`You don\'t have any ${sellitem} to be sold.`);
 			interaction.editReply({ embeds: [noitems] });
 			return;
@@ -235,7 +237,7 @@ module.exports = {
 				.setFooter(getFooter(player))
 				.setColor('GREEN')
 				.setDescription(
-					`Successfully sold **${amount}x ${sellitem}** for **${earnedcoins.toLocaleString()} Coins**`
+					`Successfully sold **${amount}x ${sellitem}** for **${earnedcoins.toLocaleString()} coins**`
 				);
 			interaction.editReply({ embeds: [sold] });
 			return;
