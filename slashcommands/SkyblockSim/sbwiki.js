@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbwiki',
@@ -17,9 +18,9 @@ module.exports = {
 
 		const embed = new Discord.MessageEmbed()
 			.setTitle('Skyblock Simulator Wiki')
-			.setColor('90EE90')
-			.setFooter('Skyblock Simulator')
-			.setDescription('Press the corresponding Button to see the Information of the desired Item.');
+			.setColor(getColor('Skyblock'))
+			.setFooter(getFooter('Skyblock'))
+			.setDescription('Press the corresponding button to see the information of the desired item.');
 
 		const button1 = new Discord.MessageButton().setCustomId('general').setLabel('General Info').setStyle('PRIMARY');
 		const button2 = new Discord.MessageButton().setCustomId('symbols').setLabel('Symbols').setStyle('PRIMARY');
@@ -54,17 +55,17 @@ module.exports = {
 					.setDescription(
 						'**Available Commands**\n`sb class`, `sb daily`, `sb dungeons`, `sb grind`, `sb info`, `sb reforge`, `sb sell`, `sb settings`, `sb shop`, `sb start`, `sb wardrobe`, `sb warp`, `sb wiki`, `sb fishing`, `sb mining`'
 					)
-					.setColor('90EE90')
-					.setFooter('Skyblock Simulator');
+					.setColor(getColor('Skyblock'))
+					.setFooter(getFooter('Skyblock'));
 
 				menu.edit({ embeds: [generalembed] });
 			} else if (i.customId == 'symbols') {
 				const symbolembed = new Discord.MessageEmbed()
 					.setTitle('Symbol Information')
-					.setColor('90EE90')
-					.setFooter('Skyblock Simulator')
+					.setColor(getColor('Skyblock'))
+					.setFooter(getFooter('Skyblock'))
 					.setDescription(
-						'`❤ Health`\n`❈ Defense`\n`⚔️ Damage`\n`❁ Strength`\n`☣ Crit Chance`\n`☠ Crit Damage`\n`✯ Magic Find`\n`α Sea Creature Chance`\n`🎣 Fishing Speed`\n`⸕ Mining Speed`\n`☘ Mining Fortune`'
+						'`❤ Health`\n`❈ Defense`\n`⚔️ Damage`\n`❁ Strength`\n`☣ Crit chance`\n`☠ Crit damage`\n`✯ Magic find`\n`α Sea Creature chance`\n`🎣 Fishing speed`\n`⸕ Mining speed`\n`☘ Mining fortune`'
 					);
 
 				menu.edit({ embeds: [symbolembed] });
@@ -73,8 +74,8 @@ module.exports = {
 
 				let eventembed = new Discord.MessageEmbed();
 				eventembed.setTitle('Event Information');
-				eventembed.setColor('90EE90');
-				eventembed.setFooter('Skyblock Simulator');
+				eventembed.setColor(getColor('Skyblock'));
+				eventembed.setFooter(getFooter('Skyblock'));
 				if (mf_event.enabled == false) {
 					eventembed.addField(
 						`Magic Find`,
@@ -90,12 +91,12 @@ module.exports = {
 				if (shark_event.enabled == false) {
 					eventembed.addField(
 						`Shark Fishing`,
-						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 19:00 - 21:00 (7:00 pm - 9:00 pm)\nEvent Active: ${shark_event.enabled}\nNext Event: <t:${shark_event.next_event}:R>`
+						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 20:00 - 22:00 (8:00 pm - 10:00 pm)\nEvent Active: ${shark_event.enabled}\nNext Event: <t:${shark_event.next_event}:R>`
 					);
 				} else {
 					eventembed.addField(
 						`Shark Fishing`,
-						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 19:00 - 21:00 (7:00 pm - 9:00 pm)\nEvent Active: ${shark_event.enabled}\nEvent End: <t:${shark_event.end_event}:R>`
+						`Everyday from 9:00 - 11:00 (9 am - 11 am) and 20:00 - 22:00 (8:00 pm - 10:00 pm)\nEvent Active: ${shark_event.enabled}\nEvent End: <t:${shark_event.end_event}:R>`
 					);
 				}
 
@@ -103,27 +104,27 @@ module.exports = {
 			} else if (i.customId == 'dungeons') {
 				let dungeonsembed = new Discord.MessageEmbed()
 					.setTitle('Dungeons Information')
-					.setColor('90EE90')
-					.setFooter('Skyblock Simulator')
+					.setColor(getColor('Skyblock'))
+					.setFooter(getFooter('Skyblock'))
 					.addField(
 						'Classes',
-						'Give bonuses inside Dungeon Runs\n\nAssassin (`2 ❁` per Class Level)\nBerserker (`1 ❁` and `1 ❈` per Class Level)\nTank (`1 ❈` and `2 ❤` per Class Level)',
+						'Give bonuses inside Dungeon runs\n\nAssassin (`2 ❁` per class level)\nBerserker (`1 ❁` and `1 ❈` per class level)\nTank (`1 ❈` and `2 ❤` per class level)',
 						true
 					)
 					.addField('Score', 'Used to determine the Loot Chests you will recieve after the dungeon run', true)
 					.addField(
 						'Puzzles',
-						'Small Puzzles like a Quiz and Tic Tac Toe are found in a dungeon run which grant 30 Score.',
+						'Small puzzles like a quiz and tic-tac-toe are found in a dungeon run which grant 30 score.',
 						true
 					)
 					.addField(
 						'Loot Chests',
-						'Spawn after defeating the Dungeon Boss\n\n<:oak_wood:882624301503754350> Chest (Guaranteed)\n<:gold:869126927011708929> Chest (Guaranteed)\n<:diamond:869126926646788097> Chest (min. F2 & min. 150 Score)\n<:emerald:869126927380779008> Chest (min. F3 & min. 180 Score)',
+						'Spawn after defeating the Dungeon Boss\n\n<:oak_wood:882624301503754350> Chest (guaranteed)\n<:gold:869126927011708929> Chest (guaranteed)\n<:diamond:869126926646788097> Chest (min. F2 & min. 150 score)\n<:emerald:869126927380779008> Chest (min. F3 & min. 180 score)',
 						true
 					)
 					.addField(
 						'Dungeon Loot',
-						'Found in Loot Chests at the end of the dungeon run.\nCurrently Recombobulators, 5 different Armor sets and 5 different Swords can be found in Loot Chests.',
+						'Found in Loot Chests at the end of the dungeon run.\nCurrently Recombobulators, 5 different armor sets and 5 different swords can be found in Loot Chests.',
 						true
 					);
 
@@ -131,8 +132,8 @@ module.exports = {
 			} else if (i.customId == 'reforges') {
 				let reforgeembed = new Discord.MessageEmbed()
 					.setTitle('Reforge Information')
-					.setColor('90EE90')
-					.setFooter('Skyblock Simulator')
+					.setColor(getColor('Skyblock'))
+					.setFooter(getFooter('Skyblock'))
 					.setDescription('**Format:** Reforge Stone Name (Reforge Bonus) [Reforge Name] {Item Origin}')
 					.addField(
 						'General Reforges',

@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const sets = require('../../constants/Simulator/Json/dungeonloot.json');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbcraft',
@@ -16,8 +17,8 @@ module.exports = {
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
-				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setTitle('No profile found')
+				.setDescription(`Create a profile using \`/sb start\``);
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
@@ -28,8 +29,9 @@ module.exports = {
 		//Embed and Select Menu
 		const embed = new Discord.MessageEmbed()
 			.setTitle('Crafting')
-			.setDescription('Available Items with their respective Stats and Item Cost\n')
-			.setFooter('Skyblock Simulator');
+			.setDescription('Available items with their respective stats and cost\n')
+			.setFooter(getFooter(player))
+			.setColor(getColor(player))
 
 		const row = new Discord.MessageActionRow();
 
@@ -53,7 +55,7 @@ module.exports = {
 		row.addComponents(craftmenu);
 
 		if (embed.fields.length == 0) {
-			embed.addField('All craftable Items owned', '\u200B', true);
+			embed.addField('All craftable items owned', '\u200B', true);
 		}
 
 		const menu = await interaction.editReply({ embeds: [embed], components: [row] });
@@ -113,7 +115,7 @@ module.exports = {
 			} else if (id == 'new item') {
 			} else {
 				embed.setDescription(
-					"Insufficient Amount of Items can't craft desired Item or you already own the Armor/Sword."
+					"Insufficient amount of items, or you already own the armor/sword."
 				);
 				embed.fields = [];
 				embed.setColor('RED');

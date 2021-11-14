@@ -5,7 +5,7 @@ const urii = process.env['uri'];
 
 module.exports = {
 	name: 'Scammer',
-	description: 'Checks the SBZ and Sky Bot Database for Scammers',
+	description: 'Checks the SBZ and Sky Bot database for scammers',
 	usage: 'scammer (IGN)',
 	perms: 'None',
 	folder: 'Skyblock',
@@ -14,10 +14,8 @@ module.exports = {
 		const ign = interaction.options.getString('ign');
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription('Checking for Player Data . . .')
-			.setFooter(
-				"If i don't respond within 10 Seconds then theres an Error at the Database\nTry again later pls."
-			)
+			.setDescription('Checking for player data . . .')
+			.setFooter("If I take longer than 10s, there was an error. Try again later.")
 			.setColor('ORANGE');
 
 		const waitingembed = await interaction.editReply({
@@ -29,7 +27,7 @@ module.exports = {
 
 			if (uuid === undefined) {
 				const invalidign = new Discord.MessageEmbed()
-					.setDescription(`Invalid Username can\'t find **${ign}** in the Mojang Database.`)
+					.setDescription(`Cannot find **${ign}** in the Mojang database.`)
 					.setColor('ORANGE');
 				waitingembed.edit({ embeds: [invalidign] });
 				return;
@@ -38,7 +36,7 @@ module.exports = {
 			if (res.status != 200) {
 				const apierror = new Discord.MessageEmbed()
 					.setDescription(
-						`An Error has occured this is usually due to the API being overloaded or something going wrong pls try again in a minute.`
+						`An error has occured. The API might be overloaded, or something went wrong. Try again later.`
 					)
 					.setColor('ORANGE');
 				waitingembed.edit({ embeds: [apierror] });
@@ -55,12 +53,12 @@ module.exports = {
 						`https://cravatar.eu/helmavatar/${ign}/600.png`,
 						`https://de.namemc.com/profile/${ign}`
 					)
-					.setTitle('⚠️USER IS A SCAMMER⚠️')
+					.setTitle('⚠️ User is a scammer ⚠️')
 					.setDescription(
-						`**DON\'T TRADE WITH THAT USER**\n\n**IGN:** ${ign}\n**Reason:** ${found.scamREASON}\n**UUID:** ${uuid}`
+						`Do **not** trade with that user\n\n**IGN:** ${ign}\n**Reason:** ${found.scamREASON}\n**UUID:** ${uuid}`
 					)
 					.setColor('RED')
-					.setFooter('Powered by the Sky Bot Scammer Database');
+					.setFooter('Powered by the Sky Bot scammer database');
 				waitingembed.edit({ embeds: [sbembed] });
 				return;
 			} else if (sbz[uuid]) {
@@ -70,9 +68,9 @@ module.exports = {
 						`https://cravatar.eu/helmavatar/${ign}/600.png`,
 						`https://de.namemc.com/profile/${ign}`
 					)
-					.setTitle('⚠️USER IS A SCAMMER⚠️')
+					.setTitle('⚠️ User is a scammer ⚠️')
 					.setDescription(
-						`**DON\'T TRADE WITH THAT USER**\n\n**IGN:** ${ign}\n**Reason:** ${sbz[uuid]['reason']}\n**UUID:** ${uuid}`
+						`Do **not** trade with that user\n\n**IGN:** ${ign}\n**Reason:** ${sbz[uuid]['reason']}\n**UUID:** ${uuid}`
 					)
 					.setColor('RED')
 					.setFooter('Powered by the SkyblockZ Scammer Database');
@@ -85,8 +83,8 @@ module.exports = {
 						`https://cravatar.eu/helmavatar/${ign}/600.png`,
 						`https://de.namemc.com/profile/${ign}`
 					)
-					.setTitle('<a:yes:847468695772987423> USER IS INNOCENT')
-					.setDescription(`Still be careful when trading with anyone!`)
+					.setTitle('<a:yes:847468695772987423> User is innocent')
+					.setDescription('Still be careful when trading with anyone!')
 					.setColor('GREEN');
 				waitingembed.edit({ embeds: [innocent] });
 			}

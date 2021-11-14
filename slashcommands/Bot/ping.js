@@ -3,7 +3,7 @@ const pms = require('pretty-ms');
 
 module.exports = {
 	name: 'ping',
-	description: 'Shows the Bots Ping',
+	description: 'Shows the bots ping',
 	usage: 'ping',
 	perms: 'None',
 	folder: 'Bot',
@@ -39,13 +39,13 @@ module.exports = {
 						.setColor('GREEN')
 						.addFields(
 							{
-								name: `${ping} BOT Latency`,
-								value: `${m.createdTimestamp - interaction.createdTimestamp}ms.`,
+								name: `${ping} Bot Latency`,
+								value: `${m.createdTimestamp - interaction.createdTimestamp} ms.`,
 								inline: false,
 							},
 							{
 								name: `${ping1} API Latency`,
-								value: `${Math.round(interaction.client.ws.ping)}ms.`,
+								value: `${Math.round(interaction.client.ws.ping)} ms.`,
 								inline: false,
 							}
 						),

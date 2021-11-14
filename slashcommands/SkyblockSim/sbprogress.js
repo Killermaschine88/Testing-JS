@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbprogress',
@@ -22,16 +23,16 @@ module.exports = {
 		if (player == null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
-				.setTitle('No Profile found')
-				.setDescription(`The specified User hasn\'t played Skyblock Simulator yet.`);
+				.setTitle('No profile found')
+				.setDescription(`The specified user hasn\'t played Skyblock Simulator yet.`);
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
 		let embed = new Discord.MessageEmbed()
-			.setDescription(`**Skyblock Simulator Progress for <@!${id}>**`)
-			.setColor('90EE90')
-			.setFooter('Skyblock Simulator');
+			.setDescription(`**Skyblock Simulator progress for <@!${id}>**`)
+			.setColor(getColor(player))
+			.setFooter(getFooter(player));
 
 		//Skills Completion
 		let lvl50xp = 55172425;
@@ -53,7 +54,7 @@ module.exports = {
 
 		embed.addField(
 			'Skills',
-			`<:mining:852069714577719306> Mining: ${miningxp}%\n<:combat:852069714527911956> Combat: ${combatxp}%\n<:fishing:852069714359877643> Fishing: ${fishingxp}%`,
+			`<:mining:852069714577719306> Mining: **${miningxp}%**\n<:combat:852069714527911956> Combat: **${combatxp}%**\n<:fishing:852069714359877643> Fishing: **${fishingxp}%**`,
 			true
 		);
 

@@ -6,7 +6,7 @@ const pms = require('pretty-ms');
 module.exports = {
 	name: 'Dungeons',
 	usage: 'dungeons (IGN)',
-	description: 'Show Dungeons Stats for the mentioned User',
+	description: 'Show Dungeons stats for the mentioned User',
 	folder: 'Skyblock',
 	perms: 'None',
 	aliases: ['d', 'cata'],
@@ -30,7 +30,7 @@ module.exports = {
 		// At this point we know its a valid IGN, but not if it has skyblock profiles
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription('Checking for Player Data . . .')
+			.setDescription('Checking for player data . . .')
 			.setColor('ORANGE');
 
 		const waitingembed = await interaction.editReply({
@@ -51,7 +51,7 @@ module.exports = {
 
 		if (!apiData.data.dungeons) {
 			const nodungembed = new Discord.MessageEmbed()
-				.setDescription("This player hasn't played dungeons yet!")
+				.setDescription("This player hasn't played Dungeons yet!")
 				.setColor('ORANGE')
 				.setTimestamp();
 			waitingembed.edit({ embeds: [nodungembed] });
@@ -246,13 +246,13 @@ module.exports = {
 			.setTitle(`Dungeons Stats`)
 			.setColor('7CFC00')
 			.setFooter(
-				"Click their Name to view their SkyShiiyu\n0m 0s means they haven't gotten an S+ on said Floor yet."
+				"Click their name to view their SkyShiiyu\n0m 0s means they haven't gotten an S+ on said floor."
 			)
 			.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `http://sky.shiiyu.moe/stats/${ign}`)
 			.setDescription(
-				`Catacombs Level: **${toFixed(
+				`Catacombs level: **${toFixed(
 					apiData.data.dungeons.types.catacombs.level
-				)}**\nSecrets Count: **${toFixed(apiData.data.dungeons.secrets_found)}**`
+				)}**\nSecrets count: **${toFixed(apiData.data.dungeons.secrets_found)}**`
 			)
 			.addFields(
 				{
@@ -285,37 +285,37 @@ module.exports = {
 
 				{
 					name: '<:bonzo:852111493859115019> Floor 1',
-					value: `Completions: **${tier1}**\nFastest S+: **${min1}m ${sec1}s**\nBest Score: **${value1}**`,
+					value: `Completions: **${tier1}**\nFastest S+: **${min1}m ${sec1}s**\nBest score: **${value1}**`,
 					inline: true,
 				},
 				{
 					name: '<:scarff:852111493909446686> Floor 2',
-					value: `Completions: **${tier2}**\nFastest S+: **${min2}m ${sec2}s**\nBest Score: **${value2}**`,
+					value: `Completions: **${tier2}**\nFastest S+: **${min2}m ${sec2}s**\nBest score: **${value2}**`,
 					inline: true,
 				},
 				{
 					name: '<:professor:852111493952176148> Floor 3',
-					value: `Completions: **${tier3}**\nFastest S+: **${min3}m ${sec3}s**\nBest Score: **${value3}**`,
+					value: `Completions: **${tier3}**\nFastest S+: **${min3}m ${sec3}s**\nBest score: **${value3}**`,
 					inline: true,
 				},
 				{
 					name: '<:thorn:852111493990580284> Floor 4',
-					value: `Completions: **${tier4}**\nFastest S+: **${min4}m ${sec4}s**\nBest Score: **${value4}**`,
+					value: `Completions: **${tier4}**\nFastest S+: **${min4}m ${sec4}s**\nBest score: **${value4}**`,
 					inline: true,
 				},
 				{
 					name: '<:livid:852111493784666123> Floor 5',
-					value: `Completions: **${tier5}**\nFastest S+: **${min5}m ${sec5}s**\nBest Score: **${value5}**`,
+					value: `Completions: **${tier5}**\nFastest S+: **${min5}m ${sec5}s**\nBest score: **${value5}**`,
 					inline: true,
 				},
 				{
 					name: '<:sadan:852111495466582017> Floor 6',
-					value: `Completions: **${tier6}**\nFastest S+: **${min6}m ${sec6}s**\nBest Score: **${value6}**`,
+					value: `Completions: **${tier6}**\nFastest S+: **${min6}m ${sec6}s**\nBest score: **${value6}**`,
 					inline: true,
 				},
 				{
 					name: '<:necron:852111495575765012> Floor 7',
-					value: `Completions: **${tier7}**\nFastest S+: **${min7}m ${sec7}s**\nBest Score: **${value7}**`,
+					value: `Completions: **${tier7}**\nFastest S+: **${min7}m ${sec7}s**\nBest score: **${value7}**`,
 					inline: true,
 				},
 
@@ -323,37 +323,37 @@ module.exports = {
 
 				{
 					name: '<:bonzo:852111493859115019> Floor 1',
-					value: `Completions: **${mtier1}**\nFastest S+: **${mmin1}m ${msec1}s**\nBest Score: **${mvalue1}**`,
+					value: `Completions: **${mtier1}**\nFastest S+: **${mmin1}m ${msec1}s**\nBest score: **${mvalue1}**`,
 					inline: true,
 				},
 				{
 					name: '<:scarff:852111493909446686> Floor 2',
-					value: `Completions: **${mtier2}**\nFastest S+: **${mmin2}m ${msec2}s**\nBest Score: **${mvalue2}**`,
+					value: `Completions: **${mtier2}**\nFastest S+: **${mmin2}m ${msec2}s**\nBest score: **${mvalue2}**`,
 					inline: true,
 				},
 				{
 					name: '<:professor:852111493952176148> Floor 3',
-					value: `Completions: **${mtier3}**\nFastest S+: **${mmin3}m ${msec3}s**\nBest Score: **${mvalue3}**`,
+					value: `Completions: **${mtier3}**\nFastest S+: **${mmin3}m ${msec3}s**\nBest score: **${mvalue3}**`,
 					inline: true,
 				},
 				{
 					name: '<:thorn:852111493990580284> Floor 4',
-					value: `Completions: **${mtier4}**\nFastest S+: **${mmin4}m ${msec4}s**\nBest Score: **${mvalue4}**`,
+					value: `Completions: **${mtier4}**\nFastest S+: **${mmin4}m ${msec4}s**\nBest score: **${mvalue4}**`,
 					inline: true,
 				},
 				{
 					name: '<:livid:852111493784666123> Floor 5',
-					value: `Completions: **${mtier5}**\nFastest S+: **${mmin5}m ${msec5}s**\nBest Score: **${mvalue5}**`,
+					value: `Completions: **${mtier5}**\nFastest S+: **${mmin5}m ${msec5}s**\nBest score: **${mvalue5}**`,
 					inline: true,
 				},
 				{
 					name: '<:sadan:852111495466582017> Floor 6',
-					value: `Completions: **${mtier6}**\nFastest S+: **${mmin6}m ${msec6}s**\nBest Score: **${mvalue6}**`,
+					value: `Completions: **${mtier6}**\nFastest S+: **${mmin6}m ${msec6}s**\nBest score: **${mvalue6}**`,
 					inline: true,
 				},
 				{
 					name: '<:necron:852111495575765012> Floor 7',
-					value: `Completions: **${mtier7}**\nFastest S+: **${mmin7}m ${msec7}s**\nBest Score: **${mvalue7}**`,
+					value: `Completions: **${mtier7}**\nFastest S+: **${mmin7}m ${msec7}s**\nBest score: **${mvalue7}**`,
 					inline: true,
 				}
 			);

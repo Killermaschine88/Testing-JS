@@ -2,10 +2,11 @@ const Discord = require('discord.js');
 const leveling = require('../../constants/Simulator/Functions/leveling.js');
 const playerStats = require('../../constants/Simulator/Functions/playerStats.js');
 const catalvl = require('../../constants/Simulator/Functions/dungeonlevel.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbinfo',
-	description: 'Creates your Profile for Skyblock Simulator',
+	description: 'Creates your profile for Skyblock Simulator',
 	usage: 'sbstart',
 	perms: 'None',
 	folder: 'SkyblockSim',
@@ -22,7 +23,7 @@ module.exports = {
 		let player = await collection.findOne({ _id: id });
 
 		if (player === null) {
-			const nodata = new Discord.MessageEmbed().setColor('RED').setDescription(`No Profile found for <@!${id}>`);
+			const nodata = new Discord.MessageEmbed().setColor('RED').setDescription(`No profile found for <@!${id}>`);
 			interaction.editReply({ embeds: [nodata] });
 			return;
 		}
@@ -37,13 +38,16 @@ module.exports = {
 		let classxp = player.data.dungeons.class.selected.xp;
 
 		mining = getLevelByXp(mining);
-		foraging = getLevelByXp(foraging);
-		enchanting = getLevelByXp(enchanting);
-		farming = getLevelByXp(farming);
+		//foraging = getLevelByXp(foraging);
+		//enchanting = getLevelByXp(enchanting);
+		//farming = getLevelByXp(farming);
 		combat = getLevelByXp(combat);
 		fishing = getLevelByXp(fishing);
-		cata = catalvl(cata).level;
+		cata = catalvl(cata).level
 		classxp = catalvl(classxp).level;
+
+    //console.log(combat)
+    //console.log(cata)
 
 		let salevel = mining.level + combat.level + fishing.level;
 		salevel = salevel / 3;
@@ -190,10 +194,10 @@ module.exports = {
 		}
 
 		const foundinfo = new Discord.MessageEmbed()
-			.setFooter('Skyblock Simulator')
-			.setColor('90EE90')
+			.setFooter(getFooter(player))
+			.setColor(getColor(player))
 			.setDescription(
-				`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${
+				`**Info for <@!${id}> on profile ${player.data.profile.cute_name}**\nProfile creation: <t:${
 					player.data.profile.started
 				}:f>\nCoins: **${player.data.profile.coins.toLocaleString()} <:coins:861974605203636253>**\nGems: **${
 					player.data.profile.gems
@@ -201,7 +205,7 @@ module.exports = {
 			)
 			.addField(
 				`Skills [${sa}]`,
-				`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp} XP**`,
+				`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xpCurrent} XP / ${mining.xpForNext} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xpCurrent} XP / ${combat.xpForNext} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xpCurrent} XP / ${fishing.xpForNext} XP**`,
 				true
 			)
 			.addField(
@@ -212,7 +216,7 @@ module.exports = {
 			.addField('Location', `${player.data.misc.location}`, true);
 
 		if (player.data.misc.booster_cookie.active == true) {
-			foundinfo.addField(`Booster Cookie`, `Expiration Date: <t:${player.data.misc.booster_cookie.expires}>`);
+			foundinfo.addField(`Booster Cookie`, `Expiration: <t:${player.data.misc.booster_cookie.expires}>`);
 		}
 
 		const row = new Discord.MessageActionRow().addComponents(
@@ -267,23 +271,23 @@ module.exports = {
 				if (i.customId === 'main') {
 					await i.deferUpdate();
 					const main = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(
-							`**Info for <@!${id}> on Profile ${player.data.profile.cute_name}**\nProfile Creation: <t:${
+							`**Info for <@!${id}> on profile ${player.data.profile.cute_name}**\nProfile creation: <t:${
 								player.data.profile.started
 							}:f>\nCoins: **${player.data.profile.coins.toLocaleString()} <:coins:861974605203636253>**\nGems: **${
 								player.data.profile.gems
 							} <:gems:879264850348486696>**\nWeapon: **${eqsword}**\nArmor: **${eqarmor}**\nRod: **${eqrod}**\nPickaxe: **${eqpickaxe}**`
 						)
 						.addField(
-							`Skills [${sa}]`,
-							`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xp} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xp} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xp} XP**`,
-							true
-						)
+				`Skills [${sa}]`,
+				`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xpCurrent} XP / ${mining.xpForNext} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xpCurrent} XP / ${combat.xpForNext} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xpCurrent} XP / ${fishing.xpForNext} XP**`,
+				true
+			)
 						.addField(
 				'Stats',
-				`Effective Health: **\`${ps.health} ❤\`\n**Health: **\`${ps.hp} ❤\`**\nDefense: \`${ps.defense} ❈\`\nDamage: \`${ps.damage} ⚔️\`\nStrength: \`${ps.strength} ❁\`\nCrit Chance: \`${ps.crit_chance} ☣\`\nCrit Damage: \`${ps.crit_damage} ☠\`\nMagic Find: \`${ps.magic_find} ✯\`\nSea Creature Chance: \`${ps.sea_creature_chance} α\`\nFishing Speed: \`${playerfishingspeed} 🎣\`\nMining Speed: \`${ps.mining_speed} ⸕\`\nMining Fortune: \`${ps.mining_fortune} ☘\``,
+				`Effective health: **\`${ps.health} ❤\`\n**Health: **\`${ps.hp} ❤\`**\nDefense: \`${ps.defense} ❈\`\nDamage: \`${ps.damage} ⚔️\`\nStrength: \`${ps.strength} ❁\`\nCrit chance: \`${ps.crit_chance} ☣\`\nCrit damage: \`${ps.crit_damage} ☠\`\nMagic find: \`${ps.magic_find} ✯\`\nSea Creature chance: \`${ps.sea_creature_chance} α\`\nFishing speed: \`${playerfishingspeed} 🎣\`\nMining speed: \`${ps.mining_speed} ⸕\`\nMining fortune: \`${ps.mining_fortune} ☘\``,
 				true
 			)
 						.addField('Location', `${player.data.misc.location}`, true);
@@ -292,71 +296,73 @@ module.exports = {
 				} else if (i.customId === 'inv') {
 					await i.deferUpdate();
 					const inv = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(`**Inventory for <@${id}>**\n${str}`);
 					menu.edit({ embeds: [inv] });
 				} else if (i.customId === 'slayer') {
 					await i.deferUpdate();
 					const slayer = new Discord.MessageEmbed()
 
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
-						.setDescription(`**Slayer Info for <@${id}>**\n\n**NOT ADDED YET!!!**`)
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
+						.setDescription(`**Slayer info for <@${id}>**\n\n**NOT ADDED YET!!!**`)
 						.addField(
 							'<:rev:852892164559732806> Revenant Horror',
-							`XP: **${player.data.slayer.zombiexp}**\nBoss Kills: **${player.data.slayer.zombiekills}**`,
+							`XP: **${player.data.slayer.zombiexp}**\nBoss kills: **${player.data.slayer.zombiekills}**`,
 							true
 						)
 						.addField(
 							'<:tara:852892164392222740> Tarantula Broodfather',
-							`XP: **${player.data.slayer.spiderxp}**\nBoss Kills: **${player.data.slayer.spiderkills}**`,
+							`XP: **${player.data.slayer.spiderxp}**\nBoss kills: **${player.data.slayer.spiderkills}**`,
 							true
 						)
 						.addField(
 							'<:sven:852892164299423754> Sven Packmaster',
-							`XP: **${player.data.slayer.wolfxp}**\nBoss Kills: **${player.data.slayer.wolfkills}**`,
+							`XP: **${player.data.slayer.wolfxp}**\nBoss kills: **${player.data.slayer.wolfkills}**`,
 							true
 						)
 						.addField(
 							'<:eman:854253314747924511> Voidgloom Seraph',
-							`XP: **${player.data.slayer.endermanxp}**\nBoss Kills: **${player.data.slayer.endermankills}**`,
+							`XP: **${player.data.slayer.endermanxp}**\nBoss kills: **${player.data.slayer.endermankills}**`,
 							true
 						);
 					menu.edit({ embeds: [slayer] });
 				} else if (i.customId === 'dungeons') {
 					await i.deferUpdate();
 					const dungeons = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(
-							`**Dungeons Info for <@${id}>**\n<:catacombs:854399510951624775> Dungeons XP [${cata}]: **${player.data.dungeons.xp}**\n<:mage:852079612699607072> Selected Class [${classxp}]: \n* Name: **${player.data.dungeons.class.selected.name}**\n* XP: **${player.data.dungeons.class.selected.xp}**`
+							`**Dungeons info for <@${id}>**\n<:catacombs:854399510951624775> Dungeons XP [${cata}]: **${player.data.dungeons.xp}**\n<:mage:852079612699607072> Selected class [${classxp}]: \n* Name: **${player.data.dungeons.class.selected.name}**\n* XP: **${player.data.dungeons.class.selected.xp}**`
 						);
 					menu.edit({ embeds: [dungeons] });
 				} else if (i.customId === 'armorlist') {
 					await i.deferUpdate();
 					const dungeons = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(
-							`${armorstr}\nYou can change your Armor using \`/sb wardrobe armor itemid\`\nExample: \`/sb wardrobe armor 0\``
+							`${armorstr}\nYou can change your armor using \`/sb wardrobe armor itemid\`\nExample: \`/sb wardrobe armor 0\``
 						);
 					menu.edit({ embeds: [dungeons] });
 				} else if (i.customId === 'swordlist') {
 					await i.deferUpdate();
 					const dungeons = new Discord.MessageEmbed()
-						.setFooter('Skyblock Simulator')
-						.setColor('90EE90')
+						.setFooter(getFooter(player))
+						.setColor(getColor(player))
 						.setDescription(
-							`${swordstr}\nYou can change your Sword using \`/sb wardrobe sword itemid\`\nExample: \`/sb wardrobe sword 0\``
+							`${swordstr}\nYou can change your sword using \`/sb wardrobe sword itemid\`\nExample: \`/sb wardrobe sword 0\``
 						);
 					menu.edit({ embeds: [dungeons] });
 				} else if (i.customId == 'settings') {
 					await i.deferUpdate();
 					let settingembed = new Discord.MessageEmbed();
+          settingembed.setColor(getColor(player))
+            settingembed.setFooter(getFooter(player))
 					let set = player.data.settings.confirmation || true;
 
-					settingembed.setDescription(`Settings Info for <@${id}>`);
+					settingembed.setDescription(`Settings info for <@${id}>`);
 					settingembed.addField('Image Shown', `${player.data.settings.imgshown}`, true);
 					settingembed.addField('Confirmation Message', `${set}`);
 					interaction.editReply({ embeds: [settingembed] });
@@ -378,7 +384,7 @@ function getLevelByXp(xp, extra = {}) {
 		case 'runecrafting':
 			xp_table = leveling.runecrafting_xp;
 			break;
-		case 'dungeoneering':
+		case 'dungeons':
 			xp_table = leveling.dungeoneering_xp;
 			break;
 		default:

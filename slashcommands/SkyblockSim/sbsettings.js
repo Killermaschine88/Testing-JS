@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbsettings',
@@ -14,9 +15,10 @@ module.exports = {
 
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
+        .setFooter(getFooter(player))
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription(`Create a profile using \`/sb start\``);
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
@@ -40,6 +42,7 @@ module.exports = {
 			);
 
 			let embed = new Discord.MessageEmbed()
+        .setFooter(getFooter(player))
 				.setTitle('Setting changed')
 				.setColor('GREEN')
 				.setDescription(`Images shown is now ${show}.`);
@@ -53,9 +56,10 @@ module.exports = {
 			);
 
 			let embed = new Discord.MessageEmbed()
+        .setFooter(getFooter(player))
 				.setTitle('Setting changed')
 				.setColor('GREEN')
-				.setDescription(`Confirmation Messages are now ${show}.`);
+				.setDescription(`Confirmation messages are now ${show}.`);
 			interaction.editReply({ embeds: [embed] });
 			return;
 		}

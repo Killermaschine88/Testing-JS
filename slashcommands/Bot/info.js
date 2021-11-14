@@ -9,7 +9,7 @@ let drive = osu.drive;
 
 module.exports = {
 	name: 'Info',
-	description: 'Shows some Info about the Bot',
+	description: 'Shows some info about the Bot',
 	usage: 'info',
 	perms: 'None',
 	folder: 'Bot',
@@ -27,7 +27,7 @@ module.exports = {
 		const infoembed = new Discord.MessageEmbed()
 			.setTitle('Bot Info')
 			.setColor('BLUE')
-			.setDescription('Various Information about the Bot')
+			.setDescription('Various information about the bot')
 			.addFields(
 				{
 					name: '<:verifieddev:848830303472189461> Bot Dev',
@@ -49,7 +49,11 @@ module.exports = {
 					value: `\`${interaction.client.guilds.cache.size}\``,
 					inline: true,
 				},
-				//  { name: "ℹ️ Total User Count", value: `\`${interaction.client.users.cache.size}\``, inline: true },
+				// {
+				//	name: "ℹ️ Total User Count",
+				// 	value: `\`${interaction.client.guilds.cache.reduce((acc, g) => acc + g.memberCount, 0)}\``,
+				// 	inline: true 
+				// },
 				{
 					name: '<:uptime:847474288884842567> Bot Uptime',
 					value: `\`${pms(interaction.client.uptime)}\``,
@@ -58,18 +62,18 @@ module.exports = {
 				// { name: "Command Count", value: '\`58\`', inline: true },
 				//  { name: "Event Count", value: '\`2\`', inline: true },
 				{
-					name: 'CPU Usage',
-					value: `\`${usage}%\n${cores} Cores\``,
+					name: 'CPU',
+					value: `\`${usage}% usage\n${cores} cores\``,
 					inline: true,
 				},
 				{
 					name: 'Memory Usage',
-					value: `\`${memory.usedMemPercentage}%\n${memory.usedMemMb} Mb / ${memory.totalMemMb} Mb\``,
+					value: `\`${memory.usedMemPercentage}%\n${memory.usedMemMb} MB / ${memory.totalMemMb} MB\``,
 					inline: true,
 				},
 				{
 					name: 'Hard Drive Usage',
-					value: `\`${driver.usedPercentage}%\n${driver.usedGb} Gb / ${driver.totalGb} Gb\``,
+					value: `\`${driver.usedPercentage}%\n${driver.usedGb} GB / ${driver.totalGb} GB\``,
 					inline: true,
 				}
 			)

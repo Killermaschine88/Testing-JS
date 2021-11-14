@@ -53,7 +53,7 @@ async function start(client, mclient) {
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator Events');
 
-			let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + 15 * 60 * 60;
+			let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + 13 * 60 * 60;
 			next_eventtime = Number(next_eventtime);
 			let event_endtime = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			event_endtime = Number(event_endtime);
@@ -148,7 +148,7 @@ async function start(client, mclient) {
 	);
 
 	const sharkon1 = new CronJob(
-		'0 19 * * *',
+		'0 20 * * *',
 		async function () {
 			let timeleft = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			const mfonembed = new Discord.MessageEmbed()
@@ -159,7 +159,7 @@ async function start(client, mclient) {
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator Events');
 
-			let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + 15 * 60 * 60;
+			let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + 13 * 60 * 60;
 			next_eventtime = Number(next_eventtime);
 			let event_endtime = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			event_endtime = Number(event_endtime);
@@ -197,7 +197,7 @@ async function start(client, mclient) {
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator Events');
 
-			let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + 15 * 60 * 60;
+			let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + 10 * 60 * 60;
 			next_eventtime = Number(next_eventtime);
 			let event_endtime = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			event_endtime = Number(event_endtime);
@@ -224,7 +224,7 @@ async function start(client, mclient) {
 	);
 
 	const sharkoff1 = new CronJob(
-		'0 11 * * *',
+		'0 22 * * *',
 		async function () {
 			collection2.updateOne({ _id: 'shark_fishing' }, { $set: { enabled: false } }, { upsert: true });
 

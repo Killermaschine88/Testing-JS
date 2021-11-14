@@ -19,7 +19,7 @@ module.exports = {
 		ign = ign.replace(/\W/g, ''); // removes weird characters
 
 		const waitembed = new Discord.MessageEmbed()
-			.setDescription('Checking for Player Data . . .')
+			.setDescription('Checking for player data . . .')
 			.setColor('ORANGE');
 
 		const waitingembed = await interaction.editReply({
@@ -56,7 +56,7 @@ module.exports = {
 			const apioff = new Discord.MessageEmbed()
 				.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `https://sky.shiiyu.moe/stats/${ign}`)
 				.setDescription(
-					'This Player current has the Skills API disabled, tell them to enable it in the Skyblock Menu and then try again'
+					'This player current has the Skills API disabled, tell them to enable it in the Skyblock menu and then try again'
 				)
 				.setColor('DC143C')
 				.setTimestamp();
@@ -68,7 +68,7 @@ module.exports = {
 		if (apiData.data.dungeons == null) {
 			const nodungeonsfound = new Discord.MessageEmbed()
 				.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `https://sky.shiiyu.moe/stats/${ign}`)
-				.setDescription(`${ign} has not entered the catacombs`)
+				.setDescription(`${ign} has not entered the Catacombs`)
 				.setColor('DC143C')
 				.setTimestamp();
 			waitingembed.edit({ embeds: [nodungeonsfound] });
@@ -79,9 +79,9 @@ module.exports = {
 			.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `https://sky.shiiyu.moe/stats/${ign}`)
 			.setColor('7CFC00')
 			.setDescription(
-				`${ign}'s total Weight for their **${apiData.data.name}** profile is **${toFixed(
+				`${ign}'s total weight for their **${apiData.data.name}** profile is **${toFixed(
 					apiData.data.weight
-				)} + ${toFixed(apiData.data.weight_overflow)} Overflow (${toFixed(
+				)} + ${toFixed(apiData.data.weight_overflow)} overflow (${toFixed(
 					apiData.data.weight + apiData.data.weight_overflow
 				)} Total)**`
 			)

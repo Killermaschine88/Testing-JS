@@ -1,8 +1,9 @@
 const Discord = require('discord.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbstart',
-	description: 'Creates your Profile for Skyblock Simulator',
+	description: 'Creates your profile for Skyblock Simulator',
 	usage: 'sbstart',
 	perms: 'None',
 	folder: 'SkyblockSim',
@@ -14,7 +15,7 @@ module.exports = {
 
 		const start = new Discord.MessageEmbed()
 			.setColor('90EE90')
-			.setDescription('<a:wait:847471618272002059> Creating Profile');
+			.setDescription('<a:wait:847471618272002059> Creating your profile...');
 
 		const menu = await interaction.editReply({ embeds: [start] });
 
@@ -206,22 +207,21 @@ xp: 0, kills: 0
 				.setImage(
 					'https://cdn.discordapp.com/attachments/860131688385478666/865211353491570708/maxresdefault.png'
 				)
-				.setColor('90EE90')
-				.setTitle('<a:yes:847468695772987423> Profile Created')
+				.setColor('GREEN')
+				.setTitle('<a:yes:847468695772987423> Profile Created!')
 				.setDescription(
-					`To start Grinding Coins use \`/sb grind\`\nTo view your Profile or someone else's Profile use \`/sb info (@User)\`\n**For a Wiki including most Info check \`/sb wiki\`**`
+					`To start grinding coins, use \`/sb grind\`\nTo view a profile, use \`/sb info\`\nFor a **wiki** including most info check \`/sb wiki\``
 				)
-				.setFooter("Skyblock Simulator\nValues in () aren't needed");
+				.setFooter("Skyblock Simulator");
 
 			menu.edit({ embeds: [created] });
 			return;
 		} else {
 			const profilealready = new Discord.MessageEmbed()
-				.setFooter("Values in () aren't needed")
 				.setColor('ORANGE')
-				.setTitle('You already have a Profile')
+				.setTitle('You already have a profile')
 				.setDescription(
-					`Use \`/sb info\` to see your Stats, \`/sb grind\` to earn Money and \`/sb wiki\` for Info about the Simulator.`
+					`Use \`/sb info\` to see your stats, \`/sb grind\` to earn coins and \`/sb wiki\` for info about the simulator.`
 				)
 				.setFooter('Skyblock Simulator');
 			menu.edit({ embeds: [profilealready] });

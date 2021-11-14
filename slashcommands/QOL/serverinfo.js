@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
 	name: 'Serverinfo',
-	description: 'Shows some Stats about the current Server.',
+	description: 'Shows stats about the current server.',
 	usage: 'serverinfo',
 	perms: 'None',
 	folder: 'QOL',
@@ -15,7 +15,7 @@ module.exports = {
 					.setColor('00ff00')
 					.addFields(
 						{
-							name: 'Server Name',
+							name: 'Name',
 							value: `${interaction.guild.name}`,
 							inline: true,
 						},
@@ -25,13 +25,13 @@ module.exports = {
 							inline: true,
 						},
 						{
-							name: 'Server Verification Level',
+							name: 'Verification Level',
 							value: `${interaction.guild.verificationLevel}`,
 							inline: true,
 						},
 						{
-							name: 'Server Created On',
-							value: `${interaction.guild.createdAt}`,
+							name: 'Created',
+							value: `<t:${Math.ceil(interaction.guild.createdTimestamp/100)}:R>`,
 							inline: true,
 						}
 					),

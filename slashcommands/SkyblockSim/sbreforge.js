@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
 
 module.exports = {
 	name: 'sbreforge',
@@ -16,7 +17,7 @@ module.exports = {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
-				.setDescription(`Create a Profile using \`/sb start\``);
+				.setDescription(`Create a profile using \`/sb start\``);
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
@@ -39,8 +40,8 @@ module.exports = {
 			const embed = new Discord.MessageEmbed()
 				.setTitle('Invalid Item')
 				.setColor('RED')
-				.setFooter('Skyblock Simulator')
-				.setDescription("Can't have negative ItemId.");
+				.setFooter(getFooter(player))
+				.setDescription("Cannot have a negative item ID.");
 			return interaction.editReply({ embeds: [embed] });
 		}
 
@@ -49,10 +50,10 @@ module.exports = {
 			const errembed = new Discord.MessageEmbed()
 				.setTitle('Invalid Item Number')
 				.setDescription(
-					`You don\'t own a Sword with the Number \`${itemId}\`.\nCheck the Sword Category at \`/sb info\` to see what Items you own.`
+					`You don\'t own a Sword with the ID \`${itemId}\`.\nCheck the sword category at \`/sb info\` to see what items you own.`
 				)
 				.setColor('RED')
-				.setFooter('Skyblock Simulator');
+				.setFooter(getFooter(player));
 
 			return interaction.editReply({ embeds: [errembed] });
 		}
@@ -61,10 +62,10 @@ module.exports = {
 			const errembed = new Discord.MessageEmbed()
 				.setTitle('Invalid Item Number')
 				.setDescription(
-					`You don\'t own an Armor with the Number \`${itemId}\`.\nCheck the Armor Category at \`/sb info\` to see what Items you own.`
+					`You don\'t own an armor with the ID \`${itemId}\`.\nCheck the armor category at \`/sb info\` to see what items you own.`
 				)
 				.setColor('RED')
-				.setFooter('Skyblock Simulator');
+				.setFooter(getFooter(player));
 
 			return interaction.editReply({ embeds: [errembed] });
 		}
@@ -76,9 +77,9 @@ module.exports = {
 			if (!validreforges.includes(reforge)) {
 				const errembed = new Discord.MessageEmbed()
 					.setTitle('Invalid Reforge')
-					.setDescription('You entered an invalid Reforge Name see the Reforge tab at `/sb wiki`.')
+					.setDescription('You entered an invalid reforge name. See the reforge tab at `/sb wiki`.')
 					.setColor('RED')
-					.setFooter('Skyblock Simulator');
+					.setFooter(getFooter(player));
 
 				return interaction.editReply({ embeds: [errembed] });
 			}
@@ -88,7 +89,7 @@ module.exports = {
 					.setTitle('No Reforge Stone')
 					.setDescription(`You don't have any **${caps(reforge)}** Reforge Stones.`)
 					.setColor('RED')
-					.setFooter('Skyblock Simulator');
+					.setFooter(getFooter(player));
 
 				return interaction.editReply({ embeds: [errembed] });
 			}
@@ -142,10 +143,10 @@ module.exports = {
 			let applied = new Discord.MessageEmbed()
 				.setTitle('Reforge applied')
 				.setDescription(
-					`Successfully applied **${apply_reforge}** to **${itemname}**.\nFor the changes to work you need to re-equip the Sword.`
+					`Successfully applied **${apply_reforge}** to **${itemname}**.\nFor the changes to work you need to re-equip the sword.`
 				)
-				.setColor('90EE90')
-				.setFooter('Skyblock Simulator');
+				.setColor(getColor(player))
+				.setFooter(getFooter(player));
 
 			return interaction.editReply({ embeds: [applied] });
 		} else if (type == 'armor') {
@@ -161,9 +162,9 @@ module.exports = {
 			if (!validreforges.includes(reforge)) {
 				const errembed = new Discord.MessageEmbed()
 					.setTitle('Invalid Reforge')
-					.setDescription('You entered an invalid Reforge Name see the Reforge tab at `/sb wiki`.')
+					.setDescription('You entered an invalid reforge name. See the reforge tab at `/sb wiki`.')
 					.setColor('RED')
-					.setFooter('Skyblock Simulator');
+					.setFooter(getFooter(player));
 
 				return interaction.editReply({ embeds: [errembed] });
 			}
@@ -173,7 +174,7 @@ module.exports = {
 					.setTitle('No Reforge Stone')
 					.setDescription(`You don't have any **${caps(reforge)}** Reforge Stones.`)
 					.setColor('RED')
-					.setFooter('Skyblock Simulator');
+					.setFooter(getFooter(player));
 
 				return interaction.editReply({ embeds: [errembed] });
 			}
@@ -228,10 +229,10 @@ module.exports = {
 			let applied = new Discord.MessageEmbed()
 				.setTitle('Reforge applied')
 				.setDescription(
-					`Successfully applied **${apply_reforge}** to **${itemname}**.\nFor the changes to work you need to re-equip the Armor.`
+					`Successfully applied **${apply_reforge}** to **${itemname}**.\nFor the changes to work you need to re-equip the armor.`
 				)
-				.setColor('90EE90')
-				.setFooter('Skyblock Simulator');
+				.setColor(getColor(player))
+				.setFooter(getFooter(player));
 
 			return interaction.editReply({ embeds: [applied] });
 		} else if (type == 'pickaxe') {
@@ -240,9 +241,9 @@ module.exports = {
 			if (!validreforges.includes(reforge)) {
 				const errembed = new Discord.MessageEmbed()
 					.setTitle('Invalid Reforge')
-					.setDescription('You entered an invalid Reforge Name see the Reforge tab at `/sb wiki`.')
+					.setDescription('You entered an invalid reforge name. See the reforge tab at `/sb wiki`.')
 					.setColor('RED')
-					.setFooter('Skyblock Simulator');
+					.setFooter(getFooter(player));
 
 				return interaction.editReply({ embeds: [errembed] });
 			}
@@ -252,7 +253,7 @@ module.exports = {
 					.setTitle('No Reforge Stone')
 					.setDescription(`You don't have any **${caps(reforge)}** Reforge Stones.`)
 					.setColor('RED')
-					.setFooter('Skyblock Simulator');
+					.setFooter(getFooter(player));
 
 				return interaction.editReply({ embeds: [errembed] });
 			}
@@ -302,9 +303,9 @@ module.exports = {
 
 			let applied = new Discord.MessageEmbed()
 				.setTitle('Reforge applied')
-				.setDescription(`Successfully applied **${apply_reforge}** to **Pickaxe**.`)
-				.setColor('90EE90')
-				.setFooter('Skyblock Simulator');
+				.setDescription(`Successfully applied **${apply_reforge}** to your **pickaxe**.`)
+				.setColor(getColor(player))
+				.setFooter(getFooter(player));
 
 			return interaction.editReply({ embeds: [applied] });
 		} else if (type == 'rod') {
@@ -313,9 +314,9 @@ module.exports = {
 			if (!validreforges.includes(reforge)) {
 				const errembed = new Discord.MessageEmbed()
 					.setTitle('Invalid Reforge')
-					.setDescription('You entered an invalid Reforge Name see the Reforge tab at `/sb wiki`.')
+					.setDescription('You entered an invalid reforge name see the reforge tab at `/sb wiki`.')
 					.setColor('RED')
-					.setFooter('Skyblock Simulator');
+					.setFooter(getFooter(player));
 
 				return interaction.editReply({ embeds: [errembed] });
 			}
@@ -325,7 +326,7 @@ module.exports = {
 					.setTitle('No Reforge Stone')
 					.setDescription(`You don't have any **${caps(reforge)}** Reforge Stones.`)
 					.setColor('RED')
-					.setFooter('Skyblock Simulator');
+					.setFooter(getFooter(player));
 
 				return interaction.editReply({ embeds: [errembed] });
 			}
@@ -373,9 +374,9 @@ module.exports = {
 
 			let applied = new Discord.MessageEmbed()
 				.setTitle('Reforge applied')
-				.setDescription(`Successfully applied **${apply_reforge}** to **Fishing Rod**.`)
-				.setColor('90EE90')
-				.setFooter('Skyblock Simulator');
+				.setDescription(`Successfully applied **${apply_reforge}** to your **fishing rod**.`)
+				.setColor(getColor(player))
+				.setFooter(getFooter(player));
 
 			return interaction.editReply({ embeds: [applied] });
 		}

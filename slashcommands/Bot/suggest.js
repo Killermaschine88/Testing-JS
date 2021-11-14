@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
 	name: 'suggest',
-	description: 'Sends the Bots Invite Link',
+	description: 'Sends the bots invite link',
 	usage: 'invite',
 	perms: 'None',
 	folder: 'Bot',
@@ -15,13 +15,13 @@ module.exports = {
 			.setTitle('Suggestion sent')
 			.setColor('GREEN')
 			.setDescription(
-				'To see your suggestion join my [Support Server](https://discord.gg/Ca6XpTRQaR) and check (input channel)'
+				'To see your suggestion, join my [support server](https://discord.gg/Ca6XpTRQaR) and check suggestions channel!'
 			);
 
 		interaction.editReply({ embeds: [suggested] });
 
 		let suggestembed = new Discord.MessageEmbed()
-			.setTitle(`New Suggestion from ${interaction.user.tag}`)
+			.setTitle(`New suggestion from ${interaction.user.tag}`)
 			.setDescription(`${input}`)
 			.setFooter(`${interaction.user.id}`);
 
