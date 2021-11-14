@@ -53,7 +53,7 @@ async function start(client, mclient) {
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator Events');
 
-			let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + 13 * 60 * 60;
+			let next_eventtime = Number((Date.now() / 1000).toFixed(0)) + 14 * 60 * 60;
 			next_eventtime = Number(next_eventtime);
 			let event_endtime = Number((Date.now() / 1000).toFixed(0)) + 2 * 60 * 60;
 			event_endtime = Number(event_endtime);
@@ -239,7 +239,7 @@ async function start(client, mclient) {
 	);
 
 	const sharkoff2 = new CronJob(
-		'0 21 * * *',
+		'0 11 * * *',
 		async function () {
 			collection2.updateOne({ _id: 'shark_fishing' }, { $set: { enabled: false } }, { upsert: true });
 

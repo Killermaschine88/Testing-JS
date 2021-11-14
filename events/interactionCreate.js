@@ -53,7 +53,17 @@ module.exports = {
 					interaction.respond(found2);
 				}
 			} else if (interaction.options.getSubcommand(false) == 'sell') {
-				let items = [
+
+        const collection = mclient.db('SkyblockSim').collection('Players');
+		let player = await collection.findOne({ _id: interaction.user.id });
+
+        let items = ''
+        let seen = ''
+        let found = [];
+				let found2 = [];
+
+        if(player == null) {
+				 items = [
 					'Hardstone',
 					'Coal',
 					'Iron Ingot',
@@ -97,11 +107,51 @@ module.exports = {
 					'Potato',
 					'Shark Fin',
 				];
-				let found = [];
-				let found2 = [];
-				let seen = items.filter((item) => item.toLowerCase().includes(focused) || item.includes(focused));
+          seen = items.filter((item) => item.toLowerCase().includes(focused) || item.includes(focused));
 
-				if (seen.length != 0) {
+          if (seen.length != 0) {
+					let i = 0;
+					for (const item of seen) {
+						if (i < 15) {
+							found.push({
+								name: item,
+								value: item,
+							});
+							i++;
+						} else {
+							break;
+						}
+					}
+				}
+          
+        } else {
+          items = player.data.inventory.items
+          seen = items.filter((item) => item.amount != 0 && item.name.toLowerCase().includes(focused.toLowerCase()));
+          //console.log(seen)
+          if (seen.length != 0) {
+					let i = 0;
+					for (const item of seen) {
+            //console.log(item)
+						if (i < 15) {
+							found.push({
+								name: item.name,
+								value: item.name,
+							});
+							i++;
+						} else {
+							break;
+						}
+					}
+				}
+        }
+        //console.log(found)
+        //console.log(items)
+				
+				
+       // console.log(seen)
+      //  return
+
+				/*if (seen.length != 0) {
 					let i = 0;
 					for (const item of seen) {
 						if (i < 10) {
@@ -114,7 +164,7 @@ module.exports = {
 							break;
 						}
 					}
-				}
+				}*/
 
 				if (found.length != 0) {
 					interaction.respond(found);
