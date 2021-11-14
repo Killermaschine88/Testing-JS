@@ -36,15 +36,16 @@ module.exports = {
 		let sellallcoins = 0;
 		let sellallitems = 0;
 
-		let b4embed = new Discord.MessageEmbed()
+		let date1 = Date.now();
+
+		if (sellall == 'yes') {
+      
+      let b4embed = new Discord.MessageEmbed()
 			.setTitle('Started selling all items...')
 			.setColor('GREEN')
 			.setFooter(getFooter(player));
 		interaction.editReply({ embeds: [b4embed] });
-
-		let date1 = Date.now();
-
-		if (sellall == 'yes') {
+      
 			await collection.updateOne({ _id: interaction.user.id }, { $set: { 'data.misc.is_massselling': true } });
 			for (const item of player.data.inventory.items) {
 				if (item.amount != 0 && item.name != '') {
@@ -175,8 +176,6 @@ module.exports = {
 			const noitems = new Discord.MessageEmbed()
 				.setFooter(getFooter(player))
 				.setColor('RED')
-
-				.setDescription(`You do not have enough items to be sold.`);
 				.setDescription(`You don\'t have any ${sellitem} to be sold.`);
 			interaction.editReply({ embeds: [noitems] });
 			return;

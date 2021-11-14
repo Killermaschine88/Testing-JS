@@ -53,8 +53,8 @@ module.exports = {
 			const invalidarea = new Discord.MessageEmbed()
 				.setTitle('Not at a mining area')
 				.setDescription('You are not at a valid mining area, please choose one from /sb warp')
-				.setColor('RED');
-				.setFooter(getFooter(player))
+				.setColor('RED')
+        .setFooter(getFooter(player))
 
 			return interaction.editReply({ embeds: [invalidarea] });
 		}

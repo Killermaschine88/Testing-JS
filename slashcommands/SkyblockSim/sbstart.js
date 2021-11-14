@@ -44,7 +44,7 @@ module.exports = {
 								gems: 0,
 								cute_name: profilename,
 								started: starttime,
-								name: interaction.user.tag,
+								name: interaction.user.username,
 							},
 							stats: {
 								health: 100,

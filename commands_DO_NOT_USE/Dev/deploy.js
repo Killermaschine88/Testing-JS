@@ -13,10 +13,17 @@ module.exports = {
 
 		if (message.author.id === client.application?.owner.id) {
 			const cmdfile = require('../../constants/Bot/commands.js');
+      const cmdfile2 = require('../../constants/Bot/commandstest.js');
 
-			const command = await client.guilds.cache.get('869124249225429022')?.commands.set(cmdfile.data);
+      if(!args[0]) {
+        const command = await client.guilds.cache.get('869124249225429022')?.commands.set(cmdfile.data);
 
-			const command1 = await client.guilds.cache.get('905483235344121887')?.commands.set(cmdfile.data);
+			//const command1 = await client.guilds.cache.get('905483235344121887')?.commands.set(cmdfile.data);
+      } else {
+        const command = await client.guilds.cache.get('869124249225429022')?.commands.set(cmdfile2.data);
+      }
+
+			
 			//client.commands.set([])
 			message.channel.send('Commands deployed.');
 		}
