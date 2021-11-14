@@ -13,14 +13,7 @@ module.exports = {
 		const collection = mclient.db('SkyblockSim').collection('Players');
 		let player = await collection.findOne({ _id: interaction.user.id });
 
-		let time_now = Math.floor(Date.now() / 1000);
-		let last_claim = player.data.misc.daily.last_claimed;
-		let next_claim = last_claim + 60 * 60 * 24;
-		let failed_claim = last_claim + 60 * 60 * 48;
-		let gems = 0;
-		let streak = player.data.misc.daily.streak + 1;
-
-		if (player == null) {
+    if (player == null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No Profile found')
@@ -28,6 +21,15 @@ module.exports = {
 			interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
+
+		let time_now = Math.floor(Date.now() / 1000);
+		let last_claim = player.data.misc.daily.last_claimed;
+		let next_claim = last_claim + 60 * 60 * 24;
+		let failed_claim = last_claim + 60 * 60 * 48;
+		let gems = 0;
+		let streak = player.data.misc.daily.streak + 1;
+
+		
 
 		if (next_claim <= time_now) {
 			if (streak % 7 == 0) {
