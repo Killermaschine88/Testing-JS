@@ -30,7 +30,7 @@ async function start(client, mclient) {
 	collection1.updateMany({}, { $set: { blocked: false } });
 
 	//Handling expire auctions
-	const ahhandler = new CronJob('0 */1 * * * *', async function () {
+	const ahhandler = new CronJob('0 */10 * * * *', async function () {
 		//handle here
 		const auctions = await collection3.find({}).toArray();
 
