@@ -49,6 +49,19 @@ async function start(client, mclient) {
 					{ upsert: true }
 				);
           await collection3.deleteOne({ _id: ah._id });
+
+  const nobids = new Discord.MessageEmbed()
+          .setTitle(`Auction for ${ah.item.name} expired.`)
+          .setDescription('No one bid on the item so it has beem returned to you.')
+          .setColor('GREEN')
+          .setFooter('Skyblock Simulator • Auction House • /suggest idea')
+
+          try {
+          const user = await client.users.fetch(ah.owner.id)
+			await user.send({embeds: [nobids]})
+        } catch (e) {
+        
+        }
           
         } else {
 
