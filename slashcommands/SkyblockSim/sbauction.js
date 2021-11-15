@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { caps } = require('../../constants/Functions/general.js')
+const { getAuctionID } = require('../../constants/Functions/simulator.js')
 
 module.exports = {
 	name: 'sbauction',
@@ -41,6 +43,39 @@ module.exports = {
       if(!player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase() && item.amount != 0)) {
         return interaction.editReply('no item found with that name')
       }
+
+      const ahid = getAuctionID()
+      let expire_time = (Date.now() / 1000).toFixed()
+      expire_time = Number(expire_time) + duration * 60 * 60   
+
+      await collection2.updateOne(
+				{ _id: ahid },
+				{
+					$set: {
+owner: {
+id: interaction.user.id, tag: interaction.user.tag
+}, item: {
+name: caps(itemname), bid: startbid, last_bidid: 0, last_bidtag: 'Starting Bid'
+}, auction: {
+expiration: expire_time
+}
+          }},
+        { upsert: true })
+
+            await collection.updateOne(
+					{
+						_id: interaction.user.id, 'data.inventory.items.name': caps(itemname)
+					},
+					{ $inc: { 'data.inventory.items.$.amount': -1 } },
+					{ upsert: true }
+				);
+
+  const ahmade = new Discord.MessageEmbed()
+      .setColor('GREEN')
+      .setFooter(getFooter('Auction House'))
+       .setDescription(`Successfully created Auction with ID **${ahid}** for **${caps(itemname)}** lasting for **${duration} hours**, with a starting bid of **${startbid.toLocaleString()} Coins.**`)
+
+      return interaction.editReply({embeds: [ahmade]})
       
     } else if(action == 'bid') {
 
@@ -56,6 +91,21 @@ module.exports = {
       if(!auctions || auctions.length == 0) {
         return interaction.editReply('no auctions atm')
       }
+
+      const embed = new Discord.MessageEmbed()
+      .setColor(getColor('Auction House'))
+      .setFooter(getFooter('Auction House'))
+
+      for(const ah of auctions) {
+
+        if(embed.fields.length < 20) {
+        embed.addField(`${ah.item.name} from ${ah.owner.tag}`, `Auction ID: ${ah._id}\nCurrent Bid: ${ah.item.bid} Coins from ${ah.item.last_bidtag}\nExpires <t:${ah.auction.expiration}:R>`, true)
+        } else {
+          break;
+        }
+      }
+
+      return interaction.editReply({embeds: [embed]})
       
     } else if(action == 'view') {
 
@@ -63,40 +113,19 @@ module.exports = {
         return interaction.editReply('id needed')
       }
       
-      const auction = await collection2.findOne({ _id: auctionid });
+      const ah = await collection2.findOne({ _id: auctionid });
 
-      if(!auction) {
+      if(!ah) {
         return interaction.editReply('no auction')
-
-        const foundah = new Discord.MessageEmbed()
-        .setTitle(`Found Auction Data for ID: ${auctionid}`)
-               
       }
+
+        const embed = new Discord.MessageEmbed()
+      .setColor(getColor('Auction House'))
+          .setFooter(getFooter('Auction House'))
+          .addField(`${ah.item.name} from ${ah.owner.tag}`, `Auction ID: ${ah._id}\nCurrent Bid: ${ah.item.bid} Coins from ${ah.item.last_bidtag}\nExpires <t:${ah.auction.expiration}:R>`, true)
+
+        return interaction.editReply({embeds: [embed]})
+               
     }
   }
-}
-
-/*
-await collection2.updateOne(
-				{ _id: customid },
-				{
-					$set: {
-owner: {
-id: interaction.user.id, tag: interacrion.user.tag
-}, item: {
-name: "Item Name",
-}, auction: {
-put_up: "timestamp", expiration: "timestamp"
-}
-          },
-				},
-				{ upsert: true }
-			);
-*/
-
-function getAuctionID() {
-  const first = Date.now().toString(36).slice(-3);
-  const second = Math.random().toString(36).slice(-3);
-
-  return first + second
 }
