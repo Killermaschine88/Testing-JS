@@ -1,5 +1,6 @@
 let CronJob = require('cron').CronJob;
 let Discord = require('discord.js');
+const { addItems } = require('../../constants/Functions/simulator.js')
 
 async function start(client, mclient) {
 	//Player Collection
@@ -69,7 +70,7 @@ async function start(client, mclient) {
 
 						const player = await collection.findOne({ _id: ah.item.last_bidid });
 
-						const updatePlayer = addItems(ah.item.name, player);
+						const updatePlayer = addItems(ah.item.name, 1, player);
 
 						await collection.replaceOne({ _id: ah.item.last_bidid }, updatePlayer);
 
@@ -342,29 +343,3 @@ async function start(client, mclient) {
 }
 
 module.exports = start;
-
-function addItems(mobdrop, player) {
-	let amount = 1;
-	if (!player.data.inventory.items) player.data.inventory.items = [];
-
-	if (player.data.inventory.items.length === 0) {
-		player.data.inventory.items.push({
-			name: mobdrop,
-			amount: amount,
-		});
-		return player;
-	}
-
-	for (const item of player.data.inventory.items) {
-		if (item.name === mobdrop) {
-			item.amount += amount;
-			return player;
-		}
-	}
-
-	player.data.inventory.items.push({
-		name: mobdrop,
-		amount: amount,
-	});
-	return player;
-}

@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const lt = require('../../constants/Simulator/LootTables/loottables.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
+const { addItems } = require('../../constants/Functions/simulator.js')
+const { sleep } = require('../../constants/Functions/general.js')
 
 module.exports = {
 	name: 'sbgrind',
@@ -179,36 +181,3 @@ module.exports = {
 		menu.edit({ embeds: [endembed] });
 	},
 };
-
-function sleep(milliseconds) {
-	const date = Date.now();
-	let currentDate = null;
-	do {
-		currentDate = Date.now();
-	} while (currentDate - date < milliseconds);
-}
-
-function addItems(mobdrop, amount, player) {
-	if (!player.data.inventory.items) player.data.inventory.items = [];
-
-	if (player.data.inventory.items.length === 0) {
-		player.data.inventory.items.push({
-			name: mobdrop,
-			amount: amount,
-		});
-		return player;
-	}
-
-	for (const item of player.data.inventory.items) {
-		if (item.name === mobdrop) {
-			item.amount += amount;
-			return player;
-		}
-	}
-
-	player.data.inventory.items.push({
-		name: mobdrop,
-		amount: amount,
-	});
-	return player;
-}
