@@ -30,6 +30,6 @@ jobs:
     - run: npm install
     - run: npm run dev --if-present
       env: # Or as an environment variable
-        token: ${{ secrets.token }}
+        token: ${{ secrets.TEST_TOKEN }}
         uri: ${{ secrets.uri }}
     # - run: npm test
