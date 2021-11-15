@@ -4,7 +4,7 @@ const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 module.exports = {
 	name: 'sbwiki',
 	description: 'a',
-	usage: 'sbwiki (Setting Name)',
+	usage: 'sbwiki (Setting Namee)',
 	perms: 'None',
 	folder: 'SkyblockSim',
 	aliases: [],
