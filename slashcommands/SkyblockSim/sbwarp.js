@@ -171,7 +171,8 @@ module.exports = {
 				b4.setDisabled(true);
 			}
 
-			const row = new Discord.MessageActionRow().addComponents(b1, b2, b3, b4, b5);
+      //add b4 back for the end once added
+			const row = new Discord.MessageActionRow().addComponents(b1, b2, b3, b5);
 			menu.edit({ embeds: [combatembed], components: [row] });
 		} else if (type === 'mining') {
 			const miningembed = new Discord.MessageEmbed()

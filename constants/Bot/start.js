@@ -11,6 +11,8 @@ async function start(client, mclient) {
 	//Event Collection
 	const collection2 = mclient.db('SkyblockSim').collection('events');
 
+  const collection3 = mclient.db('SkyblockSim').collection('auctions')
+
 	//Updating the Fishing/Mining/Dungeon
 	collection.updateMany(
 		{},
@@ -26,6 +28,59 @@ async function start(client, mclient) {
 
 	//Updating blocked channels
 	collection1.updateMany({}, { $set: { blocked: false } });
+
+  //Handling expire auctions
+  const ahhandler = new CronJob('0 */10 * * * *', async function() {
+	//handke here
+    const auctions = await collection3.find({}).toArray()
+    //console.log(auctions)
+
+    if(auctions.length > 0) {
+    for(const ah of auctions) {
+      //console.log(ah)
+      if((Date.now / 1000).toFixed() > ah.auction.expiration) {
+
+        if(ah.item.last_bidtag == 'Starting Bid') {
+          await collection.updateOne(
+					{
+						_id: ah.owner.id, 'data.inventory.items.name': ah.item.name
+					},
+					{ $inc: { 'data.inventory.items.$.amount': 1 } },
+					{ upsert: true }
+				);
+          await collection3.deleteOne({ _id: ah._id });
+          
+        } else {
+
+          await collection.updateOne(
+					{
+						_id: ah.owner.id
+					},
+					{ $inc: { 'data.profile.coins': ah.item.bid } },
+					{ upsert: true }
+				);
+
+          const player = await collection.findOne({ _id: ah.item.last_bidid });
+
+          const updatePlayer = addItems(ah.item.name, player);
+
+			await collection.replaceOne({ _id: ah.item.last_bidid }, updatePlayer);
+
+          await collection3.deleteOne({ _id: ah._id });
+
+        }
+      }
+    }
+    }
+});
+  ahhandler.start()
+
+
+
+
+
+
+  
 
 	//Event Embeds
 	const mfoffembed = new Discord.MessageEmbed()
@@ -271,6 +326,33 @@ async function start(client, mclient) {
 	console.log(
 		`Shark Fishing event running? Enable: ${sharkon1.running} ${sharkon2.running}, Disable: ${sharkoff1.running} ${sharkoff2.running}`
 	);
+  console.log(`AH Handler Running? ${ahhandler.running}`)
 }
 
 module.exports = start;
+
+function addItems(mobdrop, player) {
+  let amount = 1
+	if (!player.data.inventory.items) player.data.inventory.items = [];
+
+	if (player.data.inventory.items.length === 0) {
+		player.data.inventory.items.push({
+			name: mobdrop,
+			amount: amount,
+		});
+		return player;
+	}
+
+	for (const item of player.data.inventory.items) {
+		if (item.name === mobdrop) {
+			item.amount += amount;
+			return player;
+		}
+	}
+
+	player.data.inventory.items.push({
+		name: mobdrop,
+		amount: amount,
+	});
+	return player;
+}

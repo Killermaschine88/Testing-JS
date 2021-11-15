@@ -146,7 +146,25 @@ module.exports = {
 			return false;
 		};
 		const nearDoor = () => {
+
+      if (location == undefined) {
+				collector.stop();
+				test.fields = [];
+				var noButtonedit = true;
+				let crashembed = new MessageEmbed()
+					.addField(
+						'Dungeon Run Crashed',
+						"**Reason:** User spammed a button.\nDon't spam the buttons; give the bot time to respond."
+					)
+					.setColor('RED');
+				return interaction.followUp({
+					embeds: [crashembed],
+					ephemeral: true,
+				});
+      }
+        
 			let [x, y] = location;
+      
 
 			let oldX = map[x];
 			let upX = map[x - 1];

@@ -44,7 +44,14 @@ module.exports = {
         return interaction.editReply('no item found with that name')
       }
 
-      const ahid = getAuctionID()
+      let ahid = getAuctionID()
+      const ahcheck = await collection2.findOne({ _id: ahid });
+      if(ahcheck) {
+        ahid = getAuctionID()
+      }
+
+
+      
       let expire_time = (Date.now() / 1000).toFixed()
       expire_time = Number(expire_time) + duration * 60 * 60   
 
@@ -79,10 +86,64 @@ expiration: expire_time
       
     } else if(action == 'bid') {
 
-      if(!amount) {
-        return interaction.editReply('bid amount needed')
+      //console.log(player.data.profile.coins)
+
+      if(!amount || !auctionid) {
+        return interaction.editReply('bid amount and auctionid needed')
       }
-      
+
+      const ah = await collection2.findOne({ _id: auctionid });
+     // console.log(ah)
+
+      if(!ah) {
+        return interaction.editReply('no auction')
+      }
+
+      if((Date.now() / 1000).toFixed() > ah.auction.expires) {
+        return interaction.editReply('this item expired already')
+      }
+
+      if(amount >= player.data.profile.coins || amount * 1.1 < ah.item.bid) {
+        return interaction.editReply('to little coins and new bid must the 10% more')
+      }
+
+      await collection2.updateOne(
+				{ _id: auctionid },
+				{
+					$set: {
+item: {
+bid: amount, last_bidid: interaction.user.id, last_bidtag: interaction.user.tag, name: ah.item.name
+}
+          }},
+        { upsert: true })
+
+      await collection.updateOne(
+					{
+						_id: interaction.user.id
+					},
+					{ $inc: { 'data.profile.coins': -amount } },
+					{ upsert: true }
+				);
+
+      if(ah.item.last_bidid != 0) {
+        await collection.updateOne(
+					{
+						_id: ah.item.last_bidid
+					},
+					{ $inc: { 'data.profile.coins': ah.item.bid } },
+					{ upsert: true }
+				);
+      }
+
+        console.log(ah)
+
+      const embed = new Discord.MessageEmbed()
+      .setDescription(`Successfully placed bid of ${amount} Coins on ${ah.item.name} with ID ${ah._id}`)
+      .setColor('GREEN')
+      .setFooter(getFooter('Auction House'))
+
+      return interaction.editReply({embeds: [embed]})
+    
     } else if(action == 'list') {
 
       const auctions = await collection2.find({}).toArray()
