@@ -1,6 +1,11 @@
 const Discord = require('discord.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
-const { getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress } = require('../../constants/Functions/simulator.js')
+const {
+	getSwordProgress,
+	getArmorProgress,
+	getRodProgress,
+	getPickaxeProgress,
+} = require('../../constants/Functions/simulator.js');
 
 module.exports = {
 	name: 'sbprogress',

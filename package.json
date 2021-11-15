@@ -26,7 +26,8 @@
 	"scripts": {
 		"start": "pm2 start index.js",
 		"kill": "pm2 delete 'all'",
-		"list": "pm2 list"
+		"list": "pm2 list",
+		"dev": "node index.js"
 	},
 	"keywords": [],
 	"author": "",
