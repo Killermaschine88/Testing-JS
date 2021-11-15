@@ -35,13 +35,24 @@ module.exports = {
     const auctionid = interaction.options.getString('auction-id')
     const startbid = interaction.options.getInteger('start-bid')
 
+    const err = new Discord.MessageEmbed()
+    .setFooter(getFooter('Auction House'))
+    .setColor('RED')
+
     if(action == 'create') {
 
+      if(player.data.misc.auctions == 3) {
+        embed.setDescription('You currently have 3 Auctions running, wait for them to finish to put up new ones.')
+        return interaction.editReply({embeds: [err]})
+      }
+
       if(!itemname || !duration || !startbid) {
-        return interaction.editReply('item, starting bid and duration needed')
+        err.setDescription('Item name, duration and starting bid are required when creating an auction.')
+        return interaction.editReply({embeds: [err]})
       }
       if(!player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase() && item.amount != 0)) {
-        return interaction.editReply('no item found with that name')
+        err.setDescription(`Can't find any ${caps(itemname)} in your Inventory.`)
+        return interaction.editReply({embeds: [err]})
       }
 
       let ahid = getAuctionID()
@@ -102,25 +113,30 @@ expiration: expire_time
       //console.log(player.data.profile.coins)
 
       if(!amount || !auctionid) {
-        return interaction.editReply('bid amount and auctionid needed')
+        err.setDescription('Amount of coins and auction id are required when bidding on an auction.')
+        return interaction.editReply({embeds: [err]})
       }
 
       const ah = await collection2.findOne({ _id: auctionid });
      // console.log(ah)
 
       if(!ah) {
-        return interaction.editReply('no auction')
+        err.setDescription(`Can't find any running auctions with id: ${auctionid}.`)
+        return interaction.editReply({embeds: [err]})
       }
-      /*if(ah.item.last_bidid == interaction.user.id) {
-        return interaction.editReply('cant overbid yourself')
-      }*/
+      if(ah.item.last_bidid == interaction.user.id) {
+        err.setDescription("You can't overbid yourself on an auction.")
+        return interaction.editReply({embeds: [err]})
+      }
 
       if((Date.now() / 1000).toFixed() > ah.auction.expiration) {
-        return interaction.editReply('this item expired already')
+        err.setDescription('This auction has already expired.')
+        return interaction.editReply({embeds: [err]})
       }
 
       if(amount >= player.data.profile.coins || amount * 1.1 < ah.item.bid) {
-        return interaction.editReply('to little coins and new bid must the 10% more')
+        err.setDescription("You don't have enough coins to bid on this auction or the bid amount isn't 10% more than the current bid.")
+        return interaction.editReply({embeds: [err]})
       }
 
       await collection2.updateOne(
@@ -178,13 +194,16 @@ bid: amount, last_bidid: interaction.user.id, last_bidtag: interaction.user.tag,
       const auctions = await collection2.find({}).toArray()
       //console.log(auctions)
 
-      if(!auctions || auctions.length == 0) {
-        return interaction.editReply('no auctions atm')
-      }
-
       const embed = new Discord.MessageEmbed()
       .setColor(getColor('Auction House'))
       .setFooter(getFooter('Auction House'))
+
+      if(!auctions || auctions.length == 0) {
+
+        embed.setDescription("Currently no running auctions.")
+
+        return interaction.editReply({embeds: [embed]})
+      }
 
       for(const ah of auctions) {
 
@@ -200,13 +219,15 @@ bid: amount, last_bidid: interaction.user.id, last_bidtag: interaction.user.tag,
     } else if(action == 'view') {
 
       if(!auctionid) {
-        return interaction.editReply('id needed')
+        err.setDescription("An auction id is needed when viewing an auction.")
+        return interaction.editReply({embeds: [err]})
       }
       
       const ah = await collection2.findOne({ _id: auctionid });
 
       if(!ah) {
-        return interaction.editReply('no auction')
+        err.setDescription(`No auction found with id: ${auctionid}`)
+        return interaction.editReply({embeds: [err]})
       }
 
         const embed = new Discord.MessageEmbed()
