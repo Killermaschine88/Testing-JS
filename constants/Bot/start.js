@@ -30,34 +30,33 @@ async function start(client, mclient) {
 	collection1.updateMany({}, { $set: { blocked: false } });
 
   //Handling expire auctions
-  const ahhandler = new CronJob('0 */10 * * * *', async function() {
-	//handke here
+  const ahhandler = new CronJob('0 */1 * * * *', async function() {
+	//handle here
     const auctions = await collection3.find({}).toArray()
-    //console.log(auctions)
-
-    if(auctions.length > 0) {
+    
+    if(auctions.length != 0) {
     for(const ah of auctions) {
-      //console.log(ah)
-      if((Date.now / 1000).toFixed() > ah.auction.expiration) {
+      if(Number((Date.now() / 1000).toFixed()) > ah.auction.expiration) {
 
         if(ah.item.last_bidtag == 'Starting Bid') {
+          
           await collection.updateOne(
 					{
 						_id: ah.owner.id, 'data.inventory.items.name': ah.item.name
 					},
-					{ $inc: { 'data.inventory.items.$.amount': 1 } },
+					{ $inc: { 'data.inventory.items.$.amount': 1, 'data.misc.auctions': -1 } },
 					{ upsert: true }
 				);
           await collection3.deleteOne({ _id: ah._id });
 
   const nobids = new Discord.MessageEmbed()
           .setTitle(`Auction for ${ah.item.name} expired.`)
-          .setDescription('No one bid on the item so it has beem returned to you.')
+          .setDescription('No one bid on the item so it has been returned to the owner.')
           .setColor('GREEN')
           .setFooter('Skyblock Simulator • Auction House • /suggest idea')
 
           try {
-          const user = await client.users.fetch(ah.owner.id)
+          const user = await client.channels.fetch('909714104795664424')
 			await user.send({embeds: [nobids]})
         } catch (e) {
         
@@ -69,7 +68,7 @@ async function start(client, mclient) {
 					{
 						_id: ah.owner.id
 					},
-					{ $inc: { 'data.profile.coins': ah.item.bid } },
+					{ $inc: { 'data.profile.coins': ah.item.bid, 'data.misc.auctions': -1 } },
 					{ upsert: true }
 				);
 
@@ -80,6 +79,19 @@ async function start(client, mclient) {
 			await collection.replaceOne({ _id: ah.item.last_bidid }, updatePlayer);
 
           await collection3.deleteOne({ _id: ah._id });
+
+          const nobids = new Discord.MessageEmbed()
+          .setTitle(`Auction for ${ah.item.name} expired.`)
+          .setDescription(`The item has been bought for ${ah.item.bid} Coins by ${ah.item.last_bidtag}.`)
+          .setColor('GREEN')
+          .setFooter('Skyblock Simulator • Auction House • /suggest idea')
+
+          try {
+          const user = await client.channels.fetch('909714104795664424')
+			await user.send({embeds: [nobids]})
+        } catch (e) {
+        
+        }
 
         }
       }

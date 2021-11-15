@@ -188,6 +188,7 @@ xp: 0, kills: 0
 								is_mining: false,
 								in_dungeon: false,
 								is_massselling: false,
+                auctions: 0,
 								daily: {
 									last_claimed: 0,
 									streak: 0,

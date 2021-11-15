@@ -53,7 +53,7 @@ module.exports = {
 
       
       let expire_time = (Date.now() / 1000).toFixed()
-      expire_time = Number(expire_time) + duration * 60 * 60   
+      expire_time = Number(expire_time) + Number(duration * 60 * 60)
 
       await collection2.updateOne(
 				{ _id: ahid },
@@ -73,7 +73,7 @@ expiration: expire_time
 					{
 						_id: interaction.user.id, 'data.inventory.items.name': caps(itemname)
 					},
-					{ $inc: { 'data.inventory.items.$.amount': -1 } },
+					{ $inc: { 'data.inventory.items.$.amount': -1, 'data.misc.auctions': 1 } },
 					{ upsert: true }
 				);
 
@@ -81,6 +81,19 @@ expiration: expire_time
       .setColor('GREEN')
       .setFooter(getFooter('Auction House'))
        .setDescription(`Successfully created Auction with ID **${ahid}** for **${caps(itemname)}** lasting for **${duration} hours**, with a starting bid of **${startbid.toLocaleString()} Coins.**`)
+
+      const nobids = new Discord.MessageEmbed()
+          .setTitle(`New Auction from ${interaction.user.tag} for ${caps(itemname)}`)
+          .setDescription(`Auction ID: ${ahid}\nCurrent Bid: ${startbid.toLocaleString()} Coins from Starting Bid\nExpires <t:${expire_time}:R>`)
+          .setColor('GREEN')
+          .setFooter('Skyblock Simulator • Auction House • /suggest idea')
+
+          try {
+          const user = await interaction.client.channels.fetch('909715678368518145')
+			await user.send({embeds: [nobids]})
+        } catch (e) {
+        
+        }
 
       return interaction.editReply({embeds: [ahmade]})
       
@@ -98,8 +111,11 @@ expiration: expire_time
       if(!ah) {
         return interaction.editReply('no auction')
       }
+      /*if(ah.item.last_bidid == interaction.user.id) {
+        return interaction.editReply('cant overbid yourself')
+      }*/
 
-      if((Date.now() / 1000).toFixed() > ah.auction.expires) {
+      if((Date.now() / 1000).toFixed() > ah.auction.expiration) {
         return interaction.editReply('this item expired already')
       }
 
@@ -135,12 +151,25 @@ bid: amount, last_bidid: interaction.user.id, last_bidtag: interaction.user.tag,
 				);
       }
 
-        console.log(ah)
+        //console.log(ah)
 
       const embed = new Discord.MessageEmbed()
       .setDescription(`Successfully placed bid of ${amount} Coins on ${ah.item.name} with ID ${ah._id}`)
       .setColor('GREEN')
       .setFooter(getFooter('Auction House'))
+
+      const nobids = new Discord.MessageEmbed()
+          .setTitle(`New Auction Bid from ${interaction.user.tag} for ${ah.item.name}`)
+          .setDescription(`Auction ID: ${ah._id}\nCurrent Bid: ${amount.toLocaleString()} Coins from ${interaction.user.tag}\nExpires <t:${ah.auction.expiration}:R>`)
+          .setColor('GREEN')
+          .setFooter('Skyblock Simulator • Auction House • /suggest idea')
+
+          try {
+          const user = await interaction.client.channels.fetch('909735572036255754')
+			await user.send({embeds: [nobids]})
+        } catch (e) {
+        
+        }
 
       return interaction.editReply({embeds: [embed]})
     
