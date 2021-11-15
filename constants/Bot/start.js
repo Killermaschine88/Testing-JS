@@ -1,6 +1,6 @@
 let CronJob = require('cron').CronJob;
 let Discord = require('discord.js');
-const { addItems } = require('../../constants/Functions/simulator.js')
+const { addItems } = require('../../constants/Functions/simulator.js');
 
 async function start(client, mclient) {
 	//Player Collection

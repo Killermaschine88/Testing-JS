@@ -112,7 +112,4 @@ function getPickaxeProgress(pickaxename) {
 	else if (pickaxename == 'Gemstone Gauntlet') return 7;
 }
 
-
-
-
 module.exports = { getAuctionID, addItems, getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress };
