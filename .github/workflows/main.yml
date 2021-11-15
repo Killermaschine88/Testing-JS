@@ -1,7 +1,8 @@
 name: Prettier
 
-# This action works on master and testing push
+# This action works on master and testing push and pr
 on:
+  pull_request:
   push:
     branches:
     - master
