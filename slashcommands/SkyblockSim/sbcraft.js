@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const sets = require('../../constants/Simulator/Json/dungeonloot.json');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbcraft',
@@ -31,7 +31,7 @@ module.exports = {
 			.setTitle('Crafting')
 			.setDescription('Available items with their respective stats and cost\n')
 			.setFooter(getFooter(player))
-			.setColor(getColor(player))
+			.setColor(getColor(player));
 
 		const row = new Discord.MessageActionRow();
 
@@ -114,9 +114,7 @@ module.exports = {
 				);
 			} else if (id == 'new item') {
 			} else {
-				embed.setDescription(
-					"Insufficient amount of items, or you already own the armor/sword."
-				);
+				embed.setDescription('Insufficient amount of items, or you already own the armor/sword.');
 				embed.fields = [];
 				embed.setColor('RED');
 			}

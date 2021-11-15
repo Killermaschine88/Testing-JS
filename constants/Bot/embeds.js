@@ -11,10 +11,7 @@ const COLORS = {
 };
 
 const getColor = (playerOrString) => {
-	const location =
-		typeof playerOrString === 'string'
-			? playerOrString
-			: playerOrString.data.misc.location;
+	const location = typeof playerOrString === 'string' ? playerOrString : playerOrString.data.misc.location;
 
 	/*
 		Hardcoded locations:
@@ -24,7 +21,7 @@ const getColor = (playerOrString) => {
 	switch (location) {
 		case 'Slimehill':
 		case "Pigman's Den":
-    case 'Graveyard':
+		case 'Graveyard':
 			return COLORS.ZOMBIE_GREEN;
 
 		case 'Diamond Reserve':
@@ -72,10 +69,7 @@ const getColor = (playerOrString) => {
 };
 
 const getFooter = (playerOrString) => {
-	const location =
-		typeof playerOrString === 'string'
-			? playerOrString
-			: playerOrString.data.misc.location;
+	const location = typeof playerOrString === 'string' ? playerOrString : playerOrString.data.misc.location;
 
 	return `Skyblock Simulator • ${location} • /suggest idea`;
 };

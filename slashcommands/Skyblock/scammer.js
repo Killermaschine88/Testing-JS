@@ -15,7 +15,7 @@ module.exports = {
 
 		const waitembed = new Discord.MessageEmbed()
 			.setDescription('Checking for player data . . .')
-			.setFooter("If I take longer than 10s, there was an error. Try again later.")
+			.setFooter('If I take longer than 10s, there was an error. Try again later.')
 			.setColor('ORANGE');
 
 		const waitingembed = await interaction.editReply({

@@ -31,7 +31,7 @@ module.exports = {
 						},
 						{
 							name: 'Created',
-							value: `<t:${Math.ceil(interaction.guild.createdTimestamp/100)}:R>`,
+							value: `<t:${Math.ceil(interaction.guild.createdTimestamp / 100)}:R>`,
 							inline: true,
 						}
 					),

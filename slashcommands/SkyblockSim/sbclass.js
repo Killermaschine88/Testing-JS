@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const cataLevel = require('../../constants/Simulator/Functions/dungeonlevel.js');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbclass',

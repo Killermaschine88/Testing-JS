@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbprogress',

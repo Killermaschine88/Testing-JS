@@ -3,7 +3,7 @@ const emoji = require('../../constants/Simulator/Json/emojis.json');
 const mobs = require('../../constants/Simulator/Json/mobstats.json');
 const getLevel = require('../../constants/Simulator/Functions/skilllvl.js');
 const playerStats = require('../../constants/Simulator/Functions/playerStats.js');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbmining',
@@ -30,7 +30,7 @@ module.exports = {
 
 		if (player.data.misc.is_mining === true) {
 			const alreadymining = new Discord.MessageEmbed()
-				.setTitle("You are already mining")
+				.setTitle('You are already mining')
 				.setColor('RED')
 				.setFooter(getFooter(player));
 			interaction.editReply({ embeds: [alreadymining] });
@@ -54,7 +54,7 @@ module.exports = {
 				.setTitle('Not at a mining area')
 				.setDescription('You are not at a valid mining area, please choose one from /sb warp')
 				.setColor('RED')
-        .setFooter(getFooter(player))
+				.setFooter(getFooter(player));
 
 			return interaction.editReply({ embeds: [invalidarea] });
 		}

@@ -471,66 +471,66 @@ const data = [
 				type: 'SUB_COMMAND',
 				description: 'Craft Items',
 			},
-      {
+			{
 				name: 'auction',
 				type: 'SUB_COMMAND',
 				description: 'Buy and Sell Items',
-        options: [
-          {
-            name: 'action',
-            description: 'Action to execute',
-            type: 'STRING',
-            required: true,
-            choices: [
-              {
-                name: 'create',
-                value: 'create'
-              },
-              {
-                name: 'bid',
-                value: 'bid'
-              },
-              {
-                name: 'view',
-                value: 'view'
-              },
-              {
-                name: 'list',
-                value: 'list'
-              },
-            ],
-          },
-          {
-              name: 'item-name',
-            description: 'Item to auction',
-            type: 'STRING',
-            required: false,
-            },
-          {
-              name: 'duration',
-            description: 'Duration for how long the Item should be auctioned (in Hours)',
-            type: 'INTEGER',
-            required: false,
-            },
-          {
-              name: 'start-bid',
-            description: 'Starting Bid for the Item to Auction',
-            type: 'INTEGER',
-            required: false,
-            },
-            {
-              name: 'bid-amount',
-            description: 'Amount of Coins to Bid on Item',
-            type: 'INTEGER',
-            required: false,
-            },
-          {
-              name: 'auction-id',
-            description: 'Used to view Auction Info for said Auction ID',
-            type: 'STRING',
-            required: false,
-            },
-        ],
+				options: [
+					{
+						name: 'action',
+						description: 'Action to execute',
+						type: 'STRING',
+						required: true,
+						choices: [
+							{
+								name: 'create',
+								value: 'create',
+							},
+							{
+								name: 'bid',
+								value: 'bid',
+							},
+							{
+								name: 'view',
+								value: 'view',
+							},
+							{
+								name: 'list',
+								value: 'list',
+							},
+						],
+					},
+					{
+						name: 'item-name',
+						description: 'Item to auction',
+						type: 'STRING',
+						required: false,
+					},
+					{
+						name: 'duration',
+						description: 'Duration for how long the Item should be auctioned (in Hours)',
+						type: 'INTEGER',
+						required: false,
+					},
+					{
+						name: 'start-bid',
+						description: 'Starting Bid for the Item to Auction',
+						type: 'INTEGER',
+						required: false,
+					},
+					{
+						name: 'bid-amount',
+						description: 'Amount of Coins to Bid on Item',
+						type: 'INTEGER',
+						required: false,
+					},
+					{
+						name: 'auction-id',
+						description: 'Used to view Auction Info for said Auction ID',
+						type: 'STRING',
+						required: false,
+					},
+				],
 			},
 		],
 	},

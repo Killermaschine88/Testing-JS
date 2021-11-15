@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbwarp',
@@ -171,7 +171,7 @@ module.exports = {
 				b4.setDisabled(true);
 			}
 
-      //add b4 back for the end once added
+			//add b4 back for the end once added
 			const row = new Discord.MessageActionRow().addComponents(b1, b2, b3, b5);
 			menu.edit({ embeds: [combatembed], components: [row] });
 		} else if (type === 'mining') {
@@ -180,7 +180,11 @@ module.exports = {
 				.setFooter(getFooter(player))
 				.setColor(getColor(player))
 				.setDescription('Available islands and their ores')
-				.addField('Coal Mine (mining level 0)', '<:cobblestone:869126927124938832><:coal:869126927062028298>', true)
+				.addField(
+					'Coal Mine (mining level 0)',
+					'<:cobblestone:869126927124938832><:coal:869126927062028298>',
+					true
+				)
 				.addField(
 					'Gold Mine (mining level 1)',
 					'<:cobblestone:869126927124938832><:coal:869126927062028298><:iron:869126927082991636>\n<:gold:869126927011708929>',

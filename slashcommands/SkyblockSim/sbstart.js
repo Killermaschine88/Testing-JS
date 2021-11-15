@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbstart',
@@ -188,7 +188,7 @@ xp: 0, kills: 0
 								is_mining: false,
 								in_dungeon: false,
 								is_massselling: false,
-                auctions: 0,
+								auctions: 0,
 								daily: {
 									last_claimed: 0,
 									streak: 0,
@@ -213,7 +213,7 @@ xp: 0, kills: 0
 				.setDescription(
 					`To start grinding coins, use \`/sb grind\`\nTo view a profile, use \`/sb info\`\nFor a **wiki** including most info check \`/sb wiki\``
 				)
-				.setFooter("Skyblock Simulator");
+				.setFooter('Skyblock Simulator');
 
 			menu.edit({ embeds: [created] });
 			return;

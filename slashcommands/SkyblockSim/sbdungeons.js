@@ -146,8 +146,7 @@ module.exports = {
 			return false;
 		};
 		const nearDoor = () => {
-
-      if (location == undefined) {
+			if (location == undefined) {
 				collector.stop();
 				test.fields = [];
 				var noButtonedit = true;
@@ -161,10 +160,9 @@ module.exports = {
 					embeds: [crashembed],
 					ephemeral: true,
 				});
-      }
-        
+			}
+
 			let [x, y] = location;
-      
 
 			let oldX = map[x];
 			let upX = map[x - 1];
@@ -1507,7 +1505,10 @@ module.exports = {
 				} else if (runFinished) {
 					return;
 				} else if (runiscrashed) {
-					test.addField('Dungeon Run Crashed', "**Reason**\n* User spammed a button.\nDon't spam the buttons; give the bot time to respond.");
+					test.addField(
+						'Dungeon Run Crashed',
+						"**Reason**\n* User spammed a button.\nDon't spam the buttons; give the bot time to respond."
+					);
 				}
 				test.setColor('RED');
 				await menu.edit({ embeds: [test], components: [] });

@@ -245,9 +245,7 @@ module.exports = {
 		const foundresult = new Discord.MessageEmbed()
 			.setTitle(`Dungeons Stats`)
 			.setColor('7CFC00')
-			.setFooter(
-				"Click their name to view their SkyShiiyu\n0m 0s means they haven't gotten an S+ on said floor."
-			)
+			.setFooter("Click their name to view their SkyShiiyu\n0m 0s means they haven't gotten an S+ on said floor.")
 			.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `http://sky.shiiyu.moe/stats/${ign}`)
 			.setDescription(
 				`Catacombs level: **${toFixed(

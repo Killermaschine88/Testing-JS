@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const { TYPES, GetType } = require('../../constants/Simulator/leaderboard');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbleaderboard',
@@ -34,11 +34,11 @@ module.exports = {
 		leaderSelect.addOptions(data);
 		leaderRow.addComponents(leaderSelect);
 
-		let embed = new Discord.MessageEmbed()
-			embed.setTitle('Leaderboard')
-			embed.setDescription('Choose the leaderboard you want to see from the select menu.')
-			embed.setFooter(getFooter('Skyblock'));
-    embed.setColor(getColor('Skyblock'))
+		let embed = new Discord.MessageEmbed();
+		embed.setTitle('Leaderboard');
+		embed.setDescription('Choose the leaderboard you want to see from the select menu.');
+		embed.setFooter(getFooter('Skyblock'));
+		embed.setColor(getColor('Skyblock'));
 
 		await interaction.editReply({
 			embeds: [embed],

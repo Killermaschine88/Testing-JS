@@ -53,103 +53,102 @@ module.exports = {
 					interaction.respond(found2);
 				}
 			} else if (interaction.options.getSubcommand(false) == 'sell') {
+				const collection = mclient.db('SkyblockSim').collection('Players');
+				let player = await collection.findOne({ _id: interaction.user.id });
 
-        const collection = mclient.db('SkyblockSim').collection('Players');
-		let player = await collection.findOne({ _id: interaction.user.id });
-
-        let items = ''
-        let seen = ''
-        let found = [];
+				let items = '';
+				let seen = '';
+				let found = [];
 				let found2 = [];
 
-        if(player == null) {
-				 items = [
-					'Hardstone',
-					'Coal',
-					'Iron Ingot',
-					'Gold Ingot',
-					'Lapis Lazuli',
-					'Redstone',
-					'Emerald',
-					'Diamond',
-					'Mithril',
-					'Titanium',
-					'Gemstone',
-					'Lilypad',
-					'Recombobulator 3000',
-					'Gold Nugget',
-					'Blaze Rod',
-					'Enchanted Gold Ingot',
-					'Enchanted Blaze Rod',
-					'Magma Cream',
-					'Bone',
-					'Enchanted Magma Cream',
-					'Enchanted Bone',
-					'Enchanted Coal',
-					'Ghast Tear',
-					'Enchanted Ghast Tear',
-					'Ender Pearl',
-					'Enchanted Ender Pearl',
-					'Eye of Ender',
-					'Enchanted Eye of Ender',
-					'Obsidian',
-					'Enchanted Obsidian',
-					'Summoning Eye',
-					'Arrow',
-					'Slimeball',
-					'String',
-					'Spider Eye',
-					'Enchanted Slimeball',
-					'Enchanted String',
-					'Enchanted Spider Eye',
-					'Rotten Flesh',
-					'Carrot',
-					'Potato',
-					'Shark Fin',
-				];
-          seen = items.filter((item) => item.toLowerCase().includes(focused) || item.includes(focused));
+				if (player == null) {
+					items = [
+						'Hardstone',
+						'Coal',
+						'Iron Ingot',
+						'Gold Ingot',
+						'Lapis Lazuli',
+						'Redstone',
+						'Emerald',
+						'Diamond',
+						'Mithril',
+						'Titanium',
+						'Gemstone',
+						'Lilypad',
+						'Recombobulator 3000',
+						'Gold Nugget',
+						'Blaze Rod',
+						'Enchanted Gold Ingot',
+						'Enchanted Blaze Rod',
+						'Magma Cream',
+						'Bone',
+						'Enchanted Magma Cream',
+						'Enchanted Bone',
+						'Enchanted Coal',
+						'Ghast Tear',
+						'Enchanted Ghast Tear',
+						'Ender Pearl',
+						'Enchanted Ender Pearl',
+						'Eye of Ender',
+						'Enchanted Eye of Ender',
+						'Obsidian',
+						'Enchanted Obsidian',
+						'Summoning Eye',
+						'Arrow',
+						'Slimeball',
+						'String',
+						'Spider Eye',
+						'Enchanted Slimeball',
+						'Enchanted String',
+						'Enchanted Spider Eye',
+						'Rotten Flesh',
+						'Carrot',
+						'Potato',
+						'Shark Fin',
+					];
+					seen = items.filter((item) => item.toLowerCase().includes(focused) || item.includes(focused));
 
-          if (seen.length != 0) {
-					let i = 0;
-					for (const item of seen) {
-						if (i < 15) {
-							found.push({
-								name: item,
-								value: item,
-							});
-							i++;
-						} else {
-							break;
+					if (seen.length != 0) {
+						let i = 0;
+						for (const item of seen) {
+							if (i < 15) {
+								found.push({
+									name: item,
+									value: item,
+								});
+								i++;
+							} else {
+								break;
+							}
+						}
+					}
+				} else {
+					items = player.data.inventory.items;
+					seen = items.filter(
+						(item) => item.amount != 0 && item.name.toLowerCase().includes(focused.toLowerCase())
+					);
+					//console.log(seen)
+					if (seen.length != 0) {
+						let i = 0;
+						for (const item of seen) {
+							//console.log(item)
+							if (i < 15) {
+								found.push({
+									name: item.name,
+									value: item.name,
+								});
+								i++;
+							} else {
+								break;
+							}
 						}
 					}
 				}
-          
-        } else {
-          items = player.data.inventory.items
-          seen = items.filter((item) => item.amount != 0 && item.name.toLowerCase().includes(focused.toLowerCase()));
-          //console.log(seen)
-          if (seen.length != 0) {
-					let i = 0;
-					for (const item of seen) {
-            //console.log(item)
-						if (i < 15) {
-							found.push({
-								name: item.name,
-								value: item.name,
-							});
-							i++;
-						} else {
-							break;
-						}
-					}
-				}
-        }
-        //console.log(found)
-        //console.log(items)
-				
-				
-       // console.log(seen)
-      //  return
+				//console.log(found)
+				//console.log(items)
+
+				// console.log(seen)
+				//  return
 
 				/*if (seen.length != 0) {
 					let i = 0;

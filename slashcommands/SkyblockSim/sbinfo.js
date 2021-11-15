@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const leveling = require('../../constants/Simulator/Functions/leveling.js');
 const playerStats = require('../../constants/Simulator/Functions/playerStats.js');
 const catalvl = require('../../constants/Simulator/Functions/dungeonlevel.js');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbinfo',
@@ -43,11 +43,11 @@ module.exports = {
 		//farming = getLevelByXp(farming);
 		combat = getLevelByXp(combat);
 		fishing = getLevelByXp(fishing);
-		cata = catalvl(cata).level
+		cata = catalvl(cata).level;
 		classxp = catalvl(classxp).level;
 
-    //console.log(combat)
-    //console.log(cata)
+		//console.log(combat)
+		//console.log(cata)
 
 		let salevel = mining.level + combat.level + fishing.level;
 		salevel = salevel / 3;
@@ -281,15 +281,15 @@ module.exports = {
 							} <:gems:879264850348486696>**\nWeapon: **${eqsword}**\nArmor: **${eqarmor}**\nRod: **${eqrod}**\nPickaxe: **${eqpickaxe}**`
 						)
 						.addField(
-				`Skills [${sa}]`,
-				`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xpCurrent} XP / ${mining.xpForNext} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xpCurrent} XP / ${combat.xpForNext} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xpCurrent} XP / ${fishing.xpForNext} XP**`,
-				true
-			)
+							`Skills [${sa}]`,
+							`<:mining:852069714577719306> Mining [${mining.level}]: **${mining.xpCurrent} XP / ${mining.xpForNext} XP**\n<:combat:852069714527911956> Combat [${combat.level}]: **${combat.xpCurrent} XP / ${combat.xpForNext} XP**\n<:fishing:852069714359877643> Fishing [${fishing.level}]: **${fishing.xpCurrent} XP / ${fishing.xpForNext} XP**`,
+							true
+						)
 						.addField(
-				'Stats',
-				`Effective health: **\`${ps.health} ❤\`\n**Health: **\`${ps.hp} ❤\`**\nDefense: \`${ps.defense} ❈\`\nDamage: \`${ps.damage} ⚔️\`\nStrength: \`${ps.strength} ❁\`\nCrit chance: \`${ps.crit_chance} ☣\`\nCrit damage: \`${ps.crit_damage} ☠\`\nMagic find: \`${ps.magic_find} ✯\`\nSea Creature chance: \`${ps.sea_creature_chance} α\`\nFishing speed: \`${playerfishingspeed} 🎣\`\nMining speed: \`${ps.mining_speed} ⸕\`\nMining fortune: \`${ps.mining_fortune} ☘\``,
-				true
-			)
+							'Stats',
+							`Effective health: **\`${ps.health} ❤\`\n**Health: **\`${ps.hp} ❤\`**\nDefense: \`${ps.defense} ❈\`\nDamage: \`${ps.damage} ⚔️\`\nStrength: \`${ps.strength} ❁\`\nCrit chance: \`${ps.crit_chance} ☣\`\nCrit damage: \`${ps.crit_damage} ☠\`\nMagic find: \`${ps.magic_find} ✯\`\nSea Creature chance: \`${ps.sea_creature_chance} α\`\nFishing speed: \`${playerfishingspeed} 🎣\`\nMining speed: \`${ps.mining_speed} ⸕\`\nMining fortune: \`${ps.mining_fortune} ☘\``,
+							true
+						)
 						.addField('Location', `${player.data.misc.location}`, true);
 
 					menu.edit({ embeds: [main] });
@@ -358,8 +358,8 @@ module.exports = {
 				} else if (i.customId == 'settings') {
 					await i.deferUpdate();
 					let settingembed = new Discord.MessageEmbed();
-          settingembed.setColor(getColor(player))
-            settingembed.setFooter(getFooter(player))
+					settingembed.setColor(getColor(player));
+					settingembed.setFooter(getFooter(player));
 					let set = player.data.settings.confirmation || true;
 
 					settingembed.setDescription(`Settings info for <@${id}>`);

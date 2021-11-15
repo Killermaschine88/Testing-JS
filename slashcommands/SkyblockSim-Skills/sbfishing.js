@@ -3,7 +3,7 @@ const emoji = require('../../constants/Simulator/Json/emojis.json');
 const mobs = require('../../constants/Simulator/Json/mobstats.json');
 const getLevel = require('../../constants/Simulator/Functions/skilllvl.js');
 const playerStats = require('../../constants/Simulator/Functions/playerStats.js');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbfishing',
@@ -30,7 +30,7 @@ module.exports = {
 
 		if (player.data.misc.is_fishing === true) {
 			const alreadyfishing = new Discord.MessageEmbed()
-				.setTitle("You are already fishing")
+				.setTitle('You are already fishing')
 				.setColor('RED')
 				.setFooter(getFooter('Pond'));
 			interaction.editReply({ embeds: [alreadyfishing] });
@@ -193,7 +193,10 @@ module.exports = {
 					mdmg = foundmob.dmg;
 					pond.fields = [];
 					pond.setColor('ORANGE');
-					pond.addField(`${foundmob.name} caught!`, `Player health: ❤️ **${php}**\nMob health: ❤️ **${mhp}**`);
+					pond.addField(
+						`${foundmob.name} caught!`,
+						`Player health: ❤️ **${php}**\nMob health: ❤️ **${mhp}**`
+					);
 					menu.edit({ embeds: [pond], components: [row2] });
 					rod_casted = false;
 				} else {
@@ -232,7 +235,9 @@ module.exports = {
 						pond.fields = [];
 						pond.addField(
 							`Caught a ${fishname}`,
-							`Earned **${fishxp} XP**!\nSold it for <:coins:861974605203636253> **${fishingcoins} coins** (new balance: ${player.data.profile.coins+fishingcoins} coins)`
+							`Earned **${fishxp} XP**!\nSold it for <:coins:861974605203636253> **${fishingcoins} coins** (new balance: ${
+								player.data.profile.coins + fishingcoins
+							} coins)`
 						);
 						if (player.data.settings.imgshown == true) {
 							pond.setImage(

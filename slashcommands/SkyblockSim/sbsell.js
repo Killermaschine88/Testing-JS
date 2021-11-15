@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const list = require('../../constants/Simulator/Json/prices.json');
 const fetch = require('node-fetch');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbsell',
@@ -39,13 +39,12 @@ module.exports = {
 		let date1 = Date.now();
 
 		if (sellall == 'yes') {
-      
-      let b4embed = new Discord.MessageEmbed()
-			.setTitle('Started selling all items...')
-			.setColor('GREEN')
-			.setFooter(getFooter(player));
-		interaction.editReply({ embeds: [b4embed] });
-      
+			let b4embed = new Discord.MessageEmbed()
+				.setTitle('Started selling all items...')
+				.setColor('GREEN')
+				.setFooter(getFooter(player));
+			interaction.editReply({ embeds: [b4embed] });
+
 			await collection.updateOne({ _id: interaction.user.id }, { $set: { 'data.misc.is_massselling': true } });
 			for (const item of player.data.inventory.items) {
 				if (item.amount != 0 && item.name != '') {
@@ -167,7 +166,7 @@ module.exports = {
 				.setTitle('Invalid Amount')
 				.setColor('RED')
 				.setFooter(getFooter(player))
-				.setDescription("Cannot sell a negative number of items");
+				.setDescription('Cannot sell a negative number of items');
 			return interaction.editReply({ embeds: [embed] });
 		}
 
@@ -183,8 +182,8 @@ module.exports = {
 
 		//Check if a Number higher than the owned Amount is enterd
 		if (founditem.amount < amount) {
-      amount = founditem.amount
-    }
+			amount = founditem.amount;
+		}
 
 		//Get Price for the Item and Calculate earned coins
 		let data = await getPrice1(bzname);
@@ -270,13 +269,13 @@ function addItem(sellitem, amount, player) {
 }
 
 function getPrice(sellitem) {
-  if(sellitem == 'Coins' || sellitem == 'Potatoe') {
-    return 0
-  }
+	if (sellitem == 'Coins' || sellitem == 'Potatoe') {
+		return 0;
+	}
 	const itemprice = list.filter((item) => item.name == sellitem);
-  
-	price = itemprice[0].price
-  
+
+	price = itemprice[0].price;
+
 	return price;
 }
 

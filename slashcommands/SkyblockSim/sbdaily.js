@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbdaily',
@@ -13,7 +13,7 @@ module.exports = {
 		const collection = mclient.db('SkyblockSim').collection('Players');
 		let player = await collection.findOne({ _id: interaction.user.id });
 
-    if (player == null) {
+		if (player == null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No profile found')
@@ -28,8 +28,6 @@ module.exports = {
 		let failed_claim = last_claim + 60 * 60 * 48;
 		let gems = 0;
 		let streak = player.data.misc.daily.streak + 1;
-
-		
 
 		if (next_claim <= time_now) {
 			if (streak % 7 == 0) {
@@ -115,7 +113,7 @@ module.exports = {
 				.setTitle("Can't claim daily reward yet")
 				.setDescription(`You can do it again <t:${next_claim}:R>`)
 				.setColor(getColor(player))
-				.setFooter(getFooter(player))
+				.setFooter(getFooter(player));
 
 			interaction.editReply({ embeds: [tooEarly] });
 			return;

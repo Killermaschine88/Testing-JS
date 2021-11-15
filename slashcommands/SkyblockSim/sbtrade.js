@@ -130,9 +130,7 @@ module.exports = {
 				let noitemembed = new Discord.MessageEmbed()
 					.setTitle('No item found')
 					.setDescription(
-						`Could not find any items matching \`${caps(
-							tradeitem
-						)}\` or amount being above 0.` // I don't understand what this means
+						`Could not find any items matching \`${caps(tradeitem)}\` or amount being above 0.` // I don't understand what this means
 					)
 					.setFooter('Skyblock Simulator')
 					.setColor('RED');
@@ -301,12 +299,10 @@ module.exports = {
 
 			let finditem = player.data.inventory.items.find((item) => item.name == caps(tradeitem));
 
-			if (finditem == undefined || finditem.amount == 0 && amount < 0) {
+			if (finditem == undefined || (finditem.amount == 0 && amount < 0)) {
 				let noitemembed = new Discord.MessageEmbed()
 					.setTitle('No Item found.')
-					.setDescription(
-						`Couldn\'t find any items matching \`${caps(tradeitem)}\`.`
-					)
+					.setDescription(`Couldn\'t find any items matching \`${caps(tradeitem)}\`.`)
 					.setFooter('Skyblock Simulator')
 					.setColor('RED');
 

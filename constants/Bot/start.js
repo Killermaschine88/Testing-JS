@@ -11,7 +11,7 @@ async function start(client, mclient) {
 	//Event Collection
 	const collection2 = mclient.db('SkyblockSim').collection('events');
 
-  const collection3 = mclient.db('SkyblockSim').collection('auctions')
+	const collection3 = mclient.db('SkyblockSim').collection('auctions');
 
 	//Updating the Fishing/Mining/Dungeon
 	collection.updateMany(
@@ -29,83 +29,70 @@ async function start(client, mclient) {
 	//Updating blocked channels
 	collection1.updateMany({}, { $set: { blocked: false } });
 
-  //Handling expire auctions
-  const ahhandler = new CronJob('0 */1 * * * *', async function() {
-	//handle here
-    const auctions = await collection3.find({}).toArray()
-    
-    if(auctions.length != 0) {
-    for(const ah of auctions) {
-      if(Number((Date.now() / 1000).toFixed()) > ah.auction.expiration) {
+	//Handling expire auctions
+	const ahhandler = new CronJob('0 */1 * * * *', async function () {
+		//handle here
+		const auctions = await collection3.find({}).toArray();
 
-        if(ah.item.last_bidtag == 'Starting Bid') {
-          
-          await collection.updateOne(
-					{
-						_id: ah.owner.id, 'data.inventory.items.name': ah.item.name
-					},
-					{ $inc: { 'data.inventory.items.$.amount': 1, 'data.misc.auctions': -1 } },
-					{ upsert: true }
-				);
-          await collection3.deleteOne({ _id: ah._id });
+		if (auctions.length != 0) {
+			for (const ah of auctions) {
+				if (Number((Date.now() / 1000).toFixed()) > ah.auction.expiration) {
+					if (ah.item.last_bidtag == 'Starting Bid') {
+						await collection.updateOne(
+							{
+								_id: ah.owner.id,
+								'data.inventory.items.name': ah.item.name,
+							},
+							{ $inc: { 'data.inventory.items.$.amount': 1, 'data.misc.auctions': -1 } },
+							{ upsert: true }
+						);
+						await collection3.deleteOne({ _id: ah._id });
 
-  const nobids = new Discord.MessageEmbed()
-          .setTitle(`Auction for ${ah.item.name} expired.`)
-          .setDescription('No one bid on the item so it has been returned to the owner.')
-          .setColor('GREEN')
-          .setFooter('Skyblock Simulator • Auction House • /suggest idea')
+						const nobids = new Discord.MessageEmbed()
+							.setTitle(`Auction for ${ah.item.name} expired.`)
+							.setDescription('No one bid on the item so it has been returned to the owner.')
+							.setColor('GREEN')
+							.setFooter('Skyblock Simulator • Auction House • /suggest idea');
 
-          try {
-          const user = await client.channels.fetch('909714104795664424')
-			await user.send({embeds: [nobids]})
-        } catch (e) {
-        
-        }
-          
-        } else {
+						try {
+							const user = await client.channels.fetch('909714104795664424');
+							await user.send({ embeds: [nobids] });
+						} catch (e) {}
+					} else {
+						await collection.updateOne(
+							{
+								_id: ah.owner.id,
+							},
+							{ $inc: { 'data.profile.coins': ah.item.bid, 'data.misc.auctions': -1 } },
+							{ upsert: true }
+						);
 
-          await collection.updateOne(
-					{
-						_id: ah.owner.id
-					},
-					{ $inc: { 'data.profile.coins': ah.item.bid, 'data.misc.auctions': -1 } },
-					{ upsert: true }
-				);
+						const player = await collection.findOne({ _id: ah.item.last_bidid });
 
-          const player = await collection.findOne({ _id: ah.item.last_bidid });
+						const updatePlayer = addItems(ah.item.name, player);
 
-          const updatePlayer = addItems(ah.item.name, player);
+						await collection.replaceOne({ _id: ah.item.last_bidid }, updatePlayer);
 
-			await collection.replaceOne({ _id: ah.item.last_bidid }, updatePlayer);
+						await collection3.deleteOne({ _id: ah._id });
 
-          await collection3.deleteOne({ _id: ah._id });
+						const nobids = new Discord.MessageEmbed()
+							.setTitle(`Auction for ${ah.item.name} expired.`)
+							.setDescription(
+								`The item has been bought for ${ah.item.bid} Coins by ${ah.item.last_bidtag}.`
+							)
+							.setColor('GREEN')
+							.setFooter('Skyblock Simulator • Auction House • /suggest idea');
 
-          const nobids = new Discord.MessageEmbed()
-          .setTitle(`Auction for ${ah.item.name} expired.`)
-          .setDescription(`The item has been bought for ${ah.item.bid} Coins by ${ah.item.last_bidtag}.`)
-          .setColor('GREEN')
-          .setFooter('Skyblock Simulator • Auction House • /suggest idea')
-
-          try {
-          const user = await client.channels.fetch('909714104795664424')
-			await user.send({embeds: [nobids]})
-        } catch (e) {
-        
-        }
-
-        }
-      }
-    }
-    }
-});
-  ahhandler.start()
-
-
-
-
-
-
-  
+						try {
+							const user = await client.channels.fetch('909714104795664424');
+							await user.send({ embeds: [nobids] });
+						} catch (e) {}
+					}
+				}
+			}
+		}
+	});
+	ahhandler.start();
 
 	//Event Embeds
 	const mfoffembed = new Discord.MessageEmbed()
@@ -351,13 +338,13 @@ async function start(client, mclient) {
 	console.log(
 		`Shark Fishing event running? Enable: ${sharkon1.running} ${sharkon2.running}, Disable: ${sharkoff1.running} ${sharkoff2.running}`
 	);
-  console.log(`AH Handler Running? ${ahhandler.running}`)
+	console.log(`AH Handler Running? ${ahhandler.running}`);
 }
 
 module.exports = start;
 
 function addItems(mobdrop, player) {
-  let amount = 1
+	let amount = 1;
 	if (!player.data.inventory.items) player.data.inventory.items = [];
 
 	if (player.data.inventory.items.length === 0) {

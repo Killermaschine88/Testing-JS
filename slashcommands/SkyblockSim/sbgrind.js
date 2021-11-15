@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const lt = require('../../constants/Simulator/LootTables/loottables.js');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbgrind',

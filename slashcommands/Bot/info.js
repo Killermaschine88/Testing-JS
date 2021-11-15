@@ -52,7 +52,7 @@ module.exports = {
 				// {
 				//	name: "ℹ️ Total User Count",
 				// 	value: `\`${interaction.client.guilds.cache.reduce((acc, g) => acc + g.memberCount, 0)}\``,
-				// 	inline: true 
+				// 	inline: true
 				// },
 				{
 					name: '<:uptime:847474288884842567> Bot Uptime',

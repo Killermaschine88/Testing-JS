@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const dungloot = require('../../constants/Simulator/Json/dungeonloot.json');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbshop',
@@ -278,7 +278,7 @@ module.exports = {
 		let shopembed = new Discord.MessageEmbed()
 			.setTitle('Skyblock Simulator Shop')
 			.setDescription(
-				"Upgrades or items you can buy will show up here. (If it is empty, you cannot buy anything 😭)"
+				'Upgrades or items you can buy will show up here. (If it is empty, you cannot buy anything 😭)'
 			)
 			.setFooter(getFooter(player))
 			.setColor(getColor(player));
@@ -342,7 +342,11 @@ module.exports = {
 		//Sword Fields
 		if (swordinv.find((item) => item.name == 'Leaping Sword')) {
 		} else if (swordinv.find((item) => item.name == "Tactician's Sword")) {
-			shopembed.addField('Leaping Sword', '**Cost:** 5m coins\n\n**Stats:** `150 ⚔️`, `110 ❁`, `40 ☣`, `100 ☠`', true);
+			shopembed.addField(
+				'Leaping Sword',
+				'**Cost:** 5m coins\n\n**Stats:** `150 ⚔️`, `110 ❁`, `40 ☣`, `100 ☠`',
+				true
+			);
 		} else if (swordinv.find((item) => item.name == 'Zombie Sword')) {
 			shopembed.addField(
 				"Tactician's Sword",
@@ -350,9 +354,17 @@ module.exports = {
 				true
 			);
 		} else if (swordinv.find((item) => item.name == 'Golem Sword')) {
-			shopembed.addField('Zombie Sword', '**Cost:** 100k coins\n\n**Stats:** `75 ⚔️`, `60 ❁`, `20 ☣`, `50 ☠`', true);
+			shopembed.addField(
+				'Zombie Sword',
+				'**Cost:** 100k coins\n\n**Stats:** `75 ⚔️`, `60 ❁`, `20 ☣`, `50 ☠`',
+				true
+			);
 		} else if (swordinv.find((item) => item.name == 'Undead Sword')) {
-			shopembed.addField('Golem Sword', '**Cost:** 50k coins\n\n**Stats:** `50 ⚔️`, `40 ❁`, `10 ☣`, `30 ☠`', true);
+			shopembed.addField(
+				'Golem Sword',
+				'**Cost:** 50k coins\n\n**Stats:** `50 ⚔️`, `40 ❁`, `10 ☣`, `30 ☠`',
+				true
+			);
 		} else if (swordinv.find((item) => item.name == 'Fist')) {
 			shopembed.addField('Undead Sword', '**Cost:** 15k coins\n\n**Stats:** `20 ⚔️`, `15 ❁`, `10 ☠`', true);
 		}
@@ -390,7 +402,11 @@ module.exports = {
 				true
 			);
 		} else if (armorinv.find((item) => item.name == 'Naked')) {
-			shopembed.addField('Leaflet Armor', '**Cost:** 50k coins\n\n**Stats:** `50 ❤`, `10 ❈`, `5 ☣`, `10 ☠`', true);
+			shopembed.addField(
+				'Leaflet Armor',
+				'**Cost:** 50k coins\n\n**Stats:** `50 ❤`, `10 ❈`, `5 ☣`, `10 ☠`',
+				true
+			);
 		}
 
 		//Filter and Collector
@@ -459,7 +475,7 @@ module.exports = {
 					if (gemsneeded != 0) {
 						const finished = new Discord.MessageEmbed()
 							.setTitle('Rod Upgarded')
-              .setFooter(getFooter(player))
+							.setFooter(getFooter(player))
 							.setDescription(`Purchased **${rodname}** for 50 gems and ${amount} Lilypads.`)
 							.setColor('GREEN');
 
@@ -469,7 +485,7 @@ module.exports = {
 						});
 					} else {
 						const finished = new Discord.MessageEmbed()
-              .setFooter(getFooter(player))
+							.setFooter(getFooter(player))
 							.setTitle('Rod Upgarded')
 							.setDescription(`Purchased **${rodname}** for ${cost} coins and ${amount} lilypads.`)
 							.setColor('GREEN');
@@ -500,7 +516,7 @@ module.exports = {
 					);
 
 					const purchased = new Discord.MessageEmbed()
-            .setFooter(getFooter(playef))
+						.setFooter(getFooter(playef))
 						.setDescription('Purchased Booster Cookie')
 						.setColor('GREEN');
 
@@ -579,7 +595,10 @@ module.exports = {
 						components: [],
 					});
 				} else {
-					const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED').setFooter(getFooter(player));
+					const cancelled = new Discord.MessageEmbed()
+						.setTitle('Menu Cancelled')
+						.setColor('RED')
+						.setFooter(getFooter(player));
 					interaction.editReply({
 						embeds: [cancelled],
 						components: [],

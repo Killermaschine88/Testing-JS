@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { getFooter, getColor } = require('../../constants/Bot/embeds.js')
+const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
 module.exports = {
 	name: 'sbreforge',
@@ -41,7 +41,7 @@ module.exports = {
 				.setTitle('Invalid Item')
 				.setColor('RED')
 				.setFooter(getFooter(player))
-				.setDescription("Cannot have a negative item ID.");
+				.setDescription('Cannot have a negative item ID.');
 			return interaction.editReply({ embeds: [embed] });
 		}
 
